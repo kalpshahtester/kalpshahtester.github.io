@@ -3,16 +3,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalp Shah's Portfolio</title>
+    <title>Kalp Shah | Manual QA Tester Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #3b82f6; --primary-dark: #2563eb; --secondary: #8b5cf6;
+            --accent: #10b981; --bg-dark: #0a0e1a; --bg-card: #0f172a;
+            --text-primary: #f1f5f9; --text-secondary: #94a3b8; --border: rgba(148,163,184,0.1);
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
+
+        .bg-animation {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(59,130,246,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139,92,246,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(16,185,129,0.1) 0%, transparent 50%);
+        }
+
+        nav {
+            position: fixed; top: 0; width: 100%; background: rgba(10,14,26,0.8);
+            backdrop-filter: blur(20px); z-index: 1000; padding: 1.2rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg,var(--primary),var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: 0.3s; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--primary); transition: width 0.3s;
+        }
+        .nav-links a:hover { color: var(--text-primary); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 8rem 2rem 4rem; text-align: center;
+        }
+        .hero-content { max-width: 900px; }
+
+        .profile-photo-container { margin-bottom: 2rem; }
+        .profile-photo {
+            width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--primary);
+            box-shadow: 0 20px 60px rgba(59,130,246,0.3); object-fit: cover; margin-bottom: 1rem;
+        }
+
+        .hero-tag {
+            display: inline-block; padding: 0.5rem 1.5rem; background: rgba(59,130,246,0.1);
+            border: 1px solid rgba(59,130,246,0.3); border-radius: 50px; color: var(--primary);
+            font-weight: 600; margin-bottom: 1.5rem;
+        }
+
+        .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 1.2rem; }
+        .hero h2 { font-size: 1.4rem; color: var(--text-secondary); font-weight: 400; }
+
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+        .btn {
+            padding: 1rem 2rem; border-radius: 12px; font-weight: 600; text-decoration: none;
+            transition: 0.3s; font-size: 1rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; box-shadow: 0 15px 40px rgba(59,130,246,0.3);
+        }
+        .btn-resume {
+            background: linear-gradient(135deg,var(--accent),#059669);
+            color:white; box-shadow:0 15px 40px rgba(16,185,129,0.3);
+        }
+        .btn-secondary {
+            background: transparent; border: 2px solid var(--border); color: var(--text-primary);
+        }
+
+        section { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-tag { color: var(--primary); font-size: 0.9rem; font-weight: 600; letter-spacing: 2px; }
+        .section-title { font-size: 3rem; font-weight: 700; margin-bottom: 1rem; }
+        .section-subtitle { color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+
+        /* About */
+        .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .about-image img {
+            width: 100%; max-width: 300px; border-radius: 16px; border: 2px solid var(--primary);
+            box-shadow: 0 20px 60px rgba(59,130,246,0.2);
+        }
+        .about-text p { margin-bottom: 1.2rem; color: var(--text-secondary); }
+
+        .about-stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; margin-top: 2rem; }
+        .stat-card { background: var(--bg-card); padding: 1.5rem; border-radius: 12px; text-align: center; border: 1px solid var(--border); }
+        .stat-number {
+            font-size: 2.5rem; font-weight: 700;
+            background: linear-gradient(135deg,var(--primary),var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .stat-label { color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* Skills */
+        .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }
+        .skill-card { background: var(--bg-card); padding: 2rem; border-radius:16px; border:1px solid var(--border); }
+
+        /* Experience */
+        .experience-card {
+            background: var(--bg-card); padding: 2.5rem; border-radius:16px;
+            border:1px solid var(--border); margin-bottom:2rem;
+        }
+        .experience-header { display:flex; justify-content:space-between; align-items:start; margin-bottom:1rem; }
+        .company { color: var(--primary); font-weight:600; }
+
+        /* Projects */
+        .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(350px,1fr)); gap:2rem; }
+        .project-card {
+            background: var(--bg-card); border:1px solid var(--border); border-radius:16px; padding-bottom:1rem;
+            transition:0.3s;
+        }
+        .project-card:hover { transform:translateY(-10px); }
+
+        /* Certificates */
+        .cert-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:2rem; }
+        .cert-card { background: var(--bg-card); border-radius:16px; border:1px solid var(--border); overflow:hidden; }
+        .cert-image-container img { width:100%; height:200px; object-fit:cover; }
+
+        /* Contact */
+        .contact-links { display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; margin-top:2rem; }
+        .contact-link {
+            background: var(--bg-card); padding:1rem 2rem; border-radius:12px;
+            text-decoration:none; color:var(--text-primary); border:1px solid var(--border);
+        }
+
+        footer { text-align:center; padding:2rem; color:var(--text-secondary); }
+    </style>
 </head>
+
 <body>
-    <h1>Welcome to My Portfolio</h1>
-    <h2>My Certificates</h2>
-    <img src="images/Kalp Shah Profile Photo.png" alt="Profile Photo">
-    <img src="images/Kalp Shah HCL GUVI Certification.png" alt="HCL GUVI Certification">
-    <img src="images/Kalp Shah Outskill Certificate.png" alt="Outskill Certificate">
-    <img src="images/Kalp Shah Generative AI Mastermind Course Certificate.jpeg" alt="Generative AI Course Certificate">
-    <h2>Download My Resume</h2>
-    <a href="downloads/Kalp Shah Manual Tester Resume.pdf">Download Resume</a>
+
+<div class="bg-animation"></div>
+
+<nav>
+    <div class="nav-container">
+        <div class="logo">KS</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+
+        <!-- Profile photo -->
+        <div class="profile-photo-container">
+            <img src="Kalp Shah Profile Photo.png" alt="Kalp Shah" class="profile-photo">
+        </div>
+
+        <div class="hero-tag">👋 Welcome to my portfolio</div>
+        <h1>Kalp Shah</h1>
+        <h2>Manual QA Tester specializing in <span class="hero-highlight">Functional Testing</span>, <span class="hero-highlight">UI Testing</span> & <span class="hero-highlight">Test Documentation</span></h2>
+
+        <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">View My Work</a>
+            <a href="Kalp Shah Manual Tester Resume.pdf" class="btn btn-resume" download>📥 Download Resume</a>
+            <a href="#contact" class="btn btn-secondary">Contact</a>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="section-header">
+        <div class="section-tag">About Me</div>
+        <h2 class="section-title">Quality-Driven Testing Professional</h2>
+    </div>
+
+    <div class="about-content">
+        <div class="about-text">
+            <p>I'm a dedicated Manual QA Tester with strong experience in functional, UI, regression and exploratory testing. I follow industry-standard QA methodologies and ensure high-quality software delivery.</p>
+
+            <p>I create complete QA documentation including HLR, Test Plans, Test Scenarios, Test Cases, Bug Reports, RTM, and Summary Reports. I have a strong understanding of SDLC, STLC and defect lifecycle management.</p>
+
+            <div class="about-stats">
+                <div class="stat-card"><div class="stat-number">100+</div><div class="stat-label">Users Supported</div></div>
+                <div class="stat-card"><div class="stat-number">62+</div><div class="stat-label">Test Cases</div></div>
+                <div class="stat-card"><div class="stat-number">47+</div><div class="stat-label">Scenarios</div></div>
+                <div class="stat-card"><div class="stat-number">4</div><div class="stat-label">Certifications</div></div>
+            </div>
+        </div>
+
+        <div class="about-image">
+            <img src="Kalp Shah Profile Photo.png" alt="Kalp Shah - QA Engineer">
+        </div>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <div class="section-header">
+        <div class="section-tag">Skills</div>
+        <h2 class="section-title">Technical Expertise</h2>
+    </div>
+
+    <div class="skills-grid">
+        <div class="skill-card"><h3>Functional Testing</h3><p>Verifying features against requirements</p></div>
+        <div class="skill-card"><h3>UI Testing</h3><p>Ensuring user interface quality</p></div>
+        <div class="skill-card"><h3>Regression Testing</h3><p>Ensuring stability after changes</p></div>
+        <div class="skill-card"><h3>Test Documentation</h3><p>Writing test cases, scenarios & plans</p></div>
+        <div class="skill-card"><h3>Bug Reporting</h3><p>Jira & defect lifecycle management</p></div>
+        <div class="skill-card"><h3>Exploratory Testing</h3><p>Finding hidden & edge-case issues</p></div>
+    </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+    <div class="section-header">
+        <div class="section-tag">Experience</div>
+        <h2 class="section-title">Professional Journey</h2>
+    </div>
+
+    <div class="experience-card">
+        <div class="experience-header">
+            <div>
+                <h3>Computer Engineer</h3>
+                <p class="company">J. B. And Brothers Pvt. Ltd.</p>
+            </div>
+            <div class="experience-period">2023–2024</div>
+        </div>
+
+        <p>Supported 100+ employees, resolved issues, validated systems, documented defects, and performed QA-related system testing.</p>
+
+        <ul>
+            <li>Installed & validated OS, apps and updates</li>
+            <li>Performed testing after system changes</li>
+            <li>Resolved software & network issues</li>
+            <li>Documented issues like professional bug reports</li>
+            <li>Managed permissions and domain accounts</li>
+        </ul>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="section-header">
+        <div class="section-tag">Projects</div>
+        <h2 class="section-title">Featured Work</h2>
+    </div>
+
+    <div class="projects-grid">
+        <div class="project-card">
+            <div class="project-content">
+                <h3>SauceDemo – Manual Testing Project</h3>
+                <p>Complete QA project: HLR, Test Plan, 47 Test Scenarios, 62+ Test Cases, Bug Reports, RTM, Summary.</p>
+                <a href="https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website" target="_blank" class="btn btn-primary">View Project →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+    <div class="section-header">
+        <div class="section-tag">Certifications</div>
+        <h2 class="section-title">Professional Development</h2>
+    </div>
+
+    <div class="cert-grid">
+        <div class="cert-card">
+            <div class="cert-image-container">
+                <img src="Kalp Shah HCL GUVI Certification.png" alt="GUVI x HCL Certificate">
+            </div>
+            <div class="cert-content">
+                <div class="cert-icon">✓</div>
+                <h3>Automation Testing Skills</h3>
+                <p>GUVI x HCL</p>
+            </div>
+        </div>
+
+        <div class="cert-card">
+            <div class="cert-image-container">
+                <img src="Kalp Shah Outskill Certificate.png" alt="Outskill Certificate">
+            </div>
+            <div class="cert-content">
+                <div class="cert-icon">🎓</div>
+                <h3>Generative AI Mastermind</h3>
+                <p>Outskill</p>
+            </div>
+        </div>
+
+        <div class="cert-card">
+            <div class="cert-image-container">
+                <img src="Kalp Shah Generative AI Mastermind Course Certificate.jpeg" alt="AI Mastermind Certificate">
+            </div>
+            <div class="cert-content">
+                <div class="cert-icon">🤖</div>
+                <h3>Generative AI Mastermind</h3>
+                <p>Course Completion</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="section-header">
+        <div class="section-tag">Get In Touch</div>
+        <h2 class="section-title">Let's Connect</h2>
+    </div>
+
+    <div class="contact-links">
+        <a href="mailto:manualtesterkalpshah@gmail.com" class="contact-link">✉️ Email</a>
+        <a href="https://www.linkedin.com/in/kalp-shah-software-tester/" target="_blank" class="contact-link">💼 LinkedIn</a>
+        <a href="https://github.com/kalpshahtester" target="_blank" class="contact-link">💻 GitHub</a>
+    </div>
+</section>
+
+<footer>
+    <p>© 2025 Kalp Shah – Manual QA Tester</p>
+</footer>
+
 </body>
 </html>
