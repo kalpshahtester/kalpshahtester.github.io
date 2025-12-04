@@ -53,13 +53,14 @@ https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website
 
 ## 📄 Resume  
 A downloadable version of my ATS-friendly resume is available on the website:  
-**https://kalpshahtester.github.io/#resume**
+**https://kalpshahtester.github.io/Kalp%20Shah%20Manual%20Tester%20Resume.pdf
+**
 
 ---
 
 ## 📬 Contact  
 - Email: manualtesterkalpshah@gmail.com  
-- WhatsApp: +91 8160426134  
+- WhatsApp: https://wa.me/918160426134  
 - LinkedIn: https://www.linkedin.com/in/kalp-shah-software-tester/  
 - GitHub: https://github.com/kalpshahtester  
 
