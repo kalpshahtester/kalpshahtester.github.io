@@ -3,7 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kalp Shah - Elite Manual QA Tester specializing in Functional Testing, UI Testing, and Test Documentation. 100+ users supported, 62+ test cases delivered.">
+    <meta name="keywords" content="QA Tester, Manual Testing, Software Testing, Quality Assurance, Test Cases, Bug Reporting, Functional Testing">
+    <meta name="author" content="Kalp Shah">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Kalp Shah | Elite QA Testing Professional">
+    <meta property="og:description" content="Professional Manual QA Tester with expertise in Functional Testing, UI Testing & Test Documentation">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="Kalp Shah Profile Photo.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kalp Shah | QA Testing Professional">
+    <meta name="twitter:description" content="Elite Manual QA Tester specializing in comprehensive testing and documentation">
+    
     <title>Kalp Shah | Elite QA Testing Professional</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='80' fill='%23667eea'>K</text></svg>">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -216,7 +235,7 @@
 
         .nav-links {
             display: flex;
-            gap: var(--spacing-xl);
+            gap: var(--spacing-lg);
             list-style: none;
             align-items: center;
         }
@@ -252,7 +271,7 @@
             width: 100%;
         }
 
-        /* Hero Section - Redesigned */
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -273,7 +292,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Enhanced Profile Photo with Glow Effect */
+        /* Enhanced Profile Photo */
         .profile-wrapper {
             margin-bottom: var(--spacing-xl);
             position: relative;
@@ -288,12 +307,7 @@
             border-radius: 50%;
             padding: 4px;
             background: var(--primary-gradient);
-            animation: profileRotate 10s linear infinite, profilePulse 3s ease-in-out infinite;
-        }
-
-        @keyframes profileRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            animation: profilePulse 3s ease-in-out infinite;
         }
 
         @keyframes profilePulse {
@@ -320,10 +334,6 @@
 
         .profile-wrapper:hover .profile-photo {
             transform: scale(1.05);
-        }
-
-        .profile-wrapper:hover .profile-photo-frame {
-            animation-play-state: paused;
         }
 
         /* Status Badge */
@@ -361,7 +371,7 @@
             50% { opacity: 0.3; }
         }
 
-        /* Typography Enhancement */
+        /* Typography */
         .hero h1 {
             font-family: 'Space Grotesk', sans-serif;
             font-size: clamp(3rem, 8vw, 5rem);
@@ -408,7 +418,7 @@
             border-radius: var(--radius-full);
         }
 
-        /* CTA Buttons - Enhanced */
+        /* CTA Buttons */
         .cta-group {
             display: flex;
             gap: var(--spacing-md);
@@ -484,7 +494,7 @@
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
         }
 
-        /* Sections - Enhanced Layout */
+        /* Sections */
         section {
             max-width: 1400px;
             margin: 0 auto;
@@ -536,7 +546,7 @@
             line-height: 1.8;
         }
 
-        /* About Section - Premium Grid */
+        /* About Section */
         .about-grid {
             display: grid;
             grid-template-columns: 1.2fr 1fr;
@@ -582,7 +592,7 @@
         }
 
         .profile-card:hover {
-            transform: translateY(-10px) rotateY(5deg);
+            transform: translateY(-10px);
             box-shadow: 0 30px 60px rgba(102, 126, 234, 0.3);
         }
 
@@ -666,7 +676,91 @@
             font-weight: 500;
         }
 
-        /* Skills Section - Card Grid */
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+        }
+
+        .service-box {
+            background: var(--bg-card);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border);
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity var(--transition-base);
+        }
+
+        .service-box:hover {
+            transform: translateY(-12px);
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.2);
+        }
+
+        .service-box:hover::before {
+            opacity: 0.05;
+        }
+
+        .service-icon {
+            font-size: 2.8rem;
+            margin-bottom: var(--spacing-md);
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-box h3 {
+            font-size: 1.4rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-box p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .service-features {
+            list-style: none;
+            padding: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-features li {
+            color: var(--text-secondary);
+            padding: 0.4rem 0 0.4rem 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+            font-weight: bold;
+        }
+
+        /* Skills Section */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -725,6 +819,91 @@
             line-height: 1.7;
             position: relative;
             z-index: 1;
+        }
+
+        /* Tools Section */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-2xl);
+        }
+
+        .tool-box {
+            background: var(--bg-card);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all var(--transition-base);
+        }
+
+        .tool-box:hover {
+            transform: translateY(-8px);
+            border-color: var(--border-hover);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .tool-box h4 {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Process Section */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-2xl);
+        }
+
+        .process-step {
+            background: var(--bg-card);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border);
+            position: relative;
+            transition: all var(--transition-base);
+        }
+
+        .process-step::before {
+            content: attr(data-step);
+            position: absolute;
+            top: -15px;
+            left: 30px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .process-step:hover {
+            transform: translateY(-10px);
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.2);
+        }
+
+        .process-step h3 {
+            font-size: 1.3rem;
+            margin: var(--spacing-lg) 0 var(--spacing-sm);
+            color: var(--text-primary);
+        }
+
+        .process-step p {
+            color: var(--text-secondary);
+            line-height: 1.8;
         }
 
         /* Experience Cards */
@@ -884,6 +1063,23 @@
             line-height: 1.8;
         }
 
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary-light);
+            padding: 0.4rem 0.9rem;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
         /* Certifications Grid */
         .cert-grid {
             display: grid;
@@ -936,19 +1132,92 @@
             font-size: 1.25rem;
             margin-bottom: 0.4rem;
             color: var(--text-primary);
+            font-weight: 600;
         }
 
         .cert-content p {
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 1rem;
+            font-weight: 500;
         }
 
-        /* Contact Section */
-        .contact-grid {
+        /* FAQ Section */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-md);
+            overflow: hidden;
+            transition: all var(--transition-base);
+        }
+
+        .faq-item:hover {
+            border-color: var(--border-hover);
+        }
+
+        .faq-question {
+            padding: var(--spacing-lg);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-md);
+            transition: all var(--transition-base);
+        }
+
+        .faq-question:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .faq-question h3 {
+            font-size: 1.15rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            color: var(--primary-light);
+            transition: transform var(--transition-base);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-base), padding var(--transition-base);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 var(--spacing-lg) var(--spacing-lg);
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Contact Form */
+        .contact-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--spacing-lg);
+            grid-template-columns: 1fr 1.2fr;
+            gap: var(--spacing-3xl);
             margin-top: var(--spacing-2xl);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
         }
 
         .contact-box {
@@ -979,7 +1248,53 @@
 
         .contact-text {
             font-family: 'Space Grotesk', monospace;
+            font-size: 0.9rem;
+            word-break: break-all;
+            line-height: 1.4;
+        }
+
+        .contact-form-wrapper {
+            background: var(--bg-card);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
             font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all var(--transition-base);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
         }
 
         /* Toast Notification */
@@ -1054,7 +1369,8 @@
 
         /* Responsive Design */
         @media (max-width: 1024px) {
-            .about-grid {
+            .about-grid,
+            .contact-layout {
                 grid-template-columns: 1fr;
                 gap: var(--spacing-2xl);
             }
@@ -1071,8 +1387,13 @@
                 --spacing-3xl: 4rem;
             }
             
+            .nav-container {
+                padding: 0 var(--spacing-md);
+            }
+            
             .nav-links {
-                gap: var(--spacing-md);
+                gap: var(--spacing-sm);
+                font-size: 0.85rem;
             }
             
             .hero h1 {
@@ -1090,11 +1411,27 @@
             .btn {
                 width: 100%;
                 justify-content: center;
+                font-size: 0.95rem;
+                padding: 0.9rem 1.8rem;
             }
             
             .stats-grid {
                 grid-template-columns: 1fr;
                 gap: var(--spacing-md);
+            }
+            
+            .contact-box {
+                padding: var(--spacing-md);
+            }
+            
+            .contact-text {
+                font-size: 0.85rem;
+            }
+            
+            .projects-grid,
+            .cert-grid,
+            .tools-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -1105,16 +1442,47 @@
             }
             
             .nav-container {
-                padding: 0 var(--spacing-md);
+                padding: 0 var(--spacing-sm);
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: var(--spacing-sm);
+            }
+            
+            .logo {
+                font-size: 1.5rem;
             }
             
             .nav-links {
-                flex-direction: column;
-                gap: var(--spacing-sm);
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: var(--spacing-xs);
+            }
+            
+            .nav-links a {
+                font-size: 0.8rem;
             }
             
             .hero h1 {
                 font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .contact-text {
+                font-size: 0.75rem;
+            }
+            
+            .contact-box {
+                flex-direction: column;
+                text-align: center;
+                gap: var(--spacing-xs);
             }
         }
     </style>
@@ -1140,13 +1508,15 @@
 <!-- Navigation -->
 <nav id="navbar">
     <div class="nav-container">
-        <div class="logo">KS</div>
+        <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">KS</div>
         <ul class="nav-links">
             <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#experience">Experience</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#certifications">Certifications</a></li>
+            <li><a href="#faq">FAQ</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </div>
@@ -1234,6 +1604,96 @@
     </div>
 </section>
 
+<!-- Services Section (NEW) -->
+<section id="services">
+    <div class="section-header">
+        <span class="section-label">Services</span>
+        <h2 class="section-title">What I Offer</h2>
+        <p class="section-description">Comprehensive QA testing services for your software needs</p>
+    </div>
+
+    <div class="services-grid">
+        <div class="service-box">
+            <div class="service-icon">🔍</div>
+            <h3>Manual Testing</h3>
+            <p>Complete manual testing services including functional, UI, regression, and exploratory testing</p>
+            <ul class="service-features">
+                <li>End-to-end functional testing</li>
+                <li>Cross-browser compatibility</li>
+                <li>User acceptance testing (UAT)</li>
+                <li>Smoke & sanity testing</li>
+            </ul>
+        </div>
+
+        <div class="service-box">
+            <div class="service-icon">📝</div>
+            <h3>Test Documentation</h3>
+            <p>Detailed documentation for complete test coverage and traceability</p>
+            <ul class="service-features">
+                <li>Test plans & strategies</li>
+                <li>Test cases & scenarios</li>
+                <li>Bug reports with Jira</li>
+                <li>RTM & summary reports</li>
+            </ul>
+        </div>
+
+        <div class="service-box">
+            <div class="service-icon">🎯</div>
+            <h3>Quality Consulting</h3>
+            <p>Expert guidance on QA processes and best practices implementation</p>
+            <ul class="service-features">
+                <li>QA process setup</li>
+                <li>Testing strategy design</li>
+                <li>Team training</li>
+                <li>Quality audits</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- My Process Section (NEW) -->
+<section id="process" style="background: rgba(102, 126, 234, 0.02); margin: 0; max-width: 100%; padding: var(--spacing-3xl) var(--spacing-xl);">
+    <div style="max-width: 1400px; margin: 0 auto;">
+        <div class="section-header">
+            <span class="section-label">My Process</span>
+            <h2 class="section-title">How I Work</h2>
+            <p class="section-description">A systematic approach to ensure quality at every step</p>
+        </div>
+
+        <div class="process-grid">
+            <div class="process-step" data-step="1">
+                <h3>Requirements Analysis</h3>
+                <p>Thoroughly understand project requirements, user stories, and acceptance criteria to create comprehensive test coverage</p>
+            </div>
+
+            <div class="process-step" data-step="2">
+                <h3>Test Planning</h3>
+                <p>Develop detailed test plans, identify test scenarios, and create test cases with clear expected results</p>
+            </div>
+
+            <div class="process-step" data-step="3">
+                <h3>Test Execution</h3>
+                <p>Execute test cases systematically, document results, and identify bugs with detailed reproduction steps</p>
+            </div>
+
+            <div class="process-step" data-step="4">
+                <h3>Bug Reporting</h3>
+                <p>Create detailed bug reports in Jira with severity classification, screenshots, and clear descriptions</p>
+            </div>
+
+            <div class="process-step" data-step="5">
+                <h3>Regression Testing</h3>
+                <p>Verify bug fixes and ensure new changes don't break existing functionality</p>
+            </div>
+
+            <div class="process-step" data-step="6">
+                <h3>Documentation & Reporting</h3>
+                <p>Maintain complete test documentation and provide comprehensive summary reports</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Skills Section -->
 <section id="skills">
     <div class="section-header">
@@ -1272,6 +1732,41 @@
             <div class="skill-icon">🔍</div>
             <h3>Exploratory Testing</h3>
             <p>Finding hidden issues and edge cases through creative, unscripted testing approaches</p>
+        </div>
+    </div>
+
+    <!-- Tools & Technologies (NEW) -->
+    <div style="margin-top: var(--spacing-3xl);">
+        <div class="section-header">
+            <span class="section-label">Tools & Technologies</span>
+            <h2 class="section-title" style="font-size: 2.5rem;">My Testing Toolkit</h2>
+        </div>
+
+        <div class="tools-grid">
+            <div class="tool-box">
+                <div class="tool-icon">🐞</div>
+                <h4>Jira</h4>
+            </div>
+            <div class="tool-box">
+                <div class="tool-icon">📊</div>
+                <h4>Excel</h4>
+            </div>
+            <div class="tool-box">
+                <div class="tool-icon">📝</div>
+                <h4>Google Sheets</h4>
+            </div>
+            <div class="tool-box">
+                <div class="tool-icon">🌐</div>
+                <h4>Chrome DevTools</h4>
+            </div>
+            <div class="tool-box">
+                <div class="tool-icon">💻</div>
+                <h4>Git</h4>
+            </div>
+            <div class="tool-box">
+                <div class="tool-icon">📱</div>
+                <h4>Postman</h4>
+            </div>
         </div>
     </div>
 </section>
@@ -1319,6 +1814,14 @@
                 <div class="project-icon">🛒</div>
                 <h3>SauceDemo – Manual Testing Project</h3>
                 <p>Complete end-to-end QA project including High Level Requirements (HLR), comprehensive Test Plan, 47 detailed Test Scenarios, 62+ Test Cases covering all functionalities, Bug Reports with severity classification, Requirements Traceability Matrix (RTM), and Executive Summary Report.</p>
+                
+                <div class="project-tags">
+                    <span class="tag">Manual Testing</span>
+                    <span class="tag">Test Cases</span>
+                    <span class="tag">Bug Reports</span>
+                    <span class="tag">Documentation</span>
+                </div>
+
                 <a href="https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website" target="_blank" class="btn btn-primary">
                     <span>View Project</span>
                     <span>→</span>
@@ -1372,35 +1875,132 @@
     </div>
 </section>
 
+<!-- FAQ Section (NEW) -->
+<section id="faq">
+    <div class="section-header">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-description">Everything you need to know about working with me</p>
+    </div>
+
+    <div class="faq-container">
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <h3>What types of testing do you specialize in?</h3>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>I specialize in Manual Testing including Functional Testing, UI/UX Testing, Regression Testing, Exploratory Testing, Smoke & Sanity Testing, and User Acceptance Testing (UAT). I also have knowledge of automation testing concepts and tools.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <h3>What documentation do you provide?</h3>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>I provide complete QA documentation including High Level Requirements (HLR), Test Plans, Test Scenarios, detailed Test Cases, Bug Reports, Requirements Traceability Matrix (RTM), and comprehensive Summary Reports. All documentation follows industry standards.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <h3>Which tools do you use for bug tracking?</h3>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>I primarily use Jira for bug tracking and project management. I'm also proficient with Excel and Google Sheets for test case management. I can adapt to any bug tracking tool your team uses.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <h3>Are you available for freelance projects?</h3>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>Yes! I'm currently available for freelance QA testing projects. Whether you need one-time testing for a specific release or ongoing QA support, I'm here to help. Contact me to discuss your project requirements.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <h3>What is your testing process?</h3>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>My process includes: Requirements Analysis → Test Planning → Test Case Creation → Test Execution → Bug Reporting → Regression Testing → Documentation & Reporting. I follow STLC (Software Testing Life Cycle) and ensure complete coverage.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <h3>How do you ensure test coverage?</h3>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>I ensure test coverage through Requirements Traceability Matrix (RTM) which maps each requirement to corresponding test cases. I also use boundary value analysis, equivalence partitioning, and exploratory testing to find edge cases.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Contact Section -->
 <section id="contact">
     <div class="section-header">
-        <span class="section-label">Get In Touch</span>
+        <span class="section-label">Contact Me</span>
         <h2 class="section-title">Let's Connect</h2>
         <p class="section-description">Ready to discuss your QA testing needs</p>
     </div>
 
-    <div class="contact-grid">
-        <div class="contact-box" onclick="copyEmail()" title="Click to copy email">
-            <span class="contact-icon">✉️</span>
-            <span class="contact-text" id="emailText">manualtesterkalpshah@gmail.com</span>
+    <div class="contact-layout">
+        <div class="contact-info">
+            <div class="contact-box" onclick="copyEmail()" title="Click to copy email">
+                <span class="contact-icon">✉️</span>
+                <span class="contact-text" id="emailText">manualtesterkalpshah@gmail.com</span>
+            </div>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=manualtesterkalpshah@gmail.com" target="_blank" class="contact-box">
+                <span class="contact-icon">📧</span>
+                <span class="contact-text">Gmail</span>
+            </a>
+            <a href="https://wa.me/918160426134" target="_blank" class="contact-box">
+                <span class="contact-icon">💬</span>
+                <span class="contact-text">WhatsApp</span>
+            </a>
+            <a href="https://www.linkedin.com/in/kalp-shah-software-tester/" target="_blank" class="contact-box">
+                <span class="contact-icon">💼</span>
+                <span class="contact-text">LinkedIn</span>
+            </a>
+            <a href="https://github.com/kalpshahtester" target="_blank" class="contact-box">
+                <span class="contact-icon">💻</span>
+                <span class="contact-text">GitHub</span>
+            </a>
         </div>
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=manualtesterkalpshah@gmail.com" target="_blank" class="contact-box">
-            <span class="contact-icon">📧</span>
-            <span class="contact-text">Gmail</span>
-        </a>
-        <a href="https://wa.me/918160426134" target="_blank" class="contact-box">
-            <span class="contact-icon">💬</span>
-            <span class="contact-text">WhatsApp</span>
-        </a>
-        <a href="https://www.linkedin.com/in/kalp-shah-software-tester/" target="_blank" class="contact-box">
-            <span class="contact-icon">💼</span>
-            <span class="contact-text">LinkedIn</span>
-        </a>
-        <a href="https://github.com/kalpshahtester" target="_blank" class="contact-box">
-            <span class="contact-icon">💻</span>
-            <span class="contact-text">GitHub</span>
-        </a>
+
+        <div class="contact-form-wrapper">
+            <form id="contactForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Your Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="Tell me about your project or testing needs..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <span>Send Message</span>
+                    <span>→</span>
+                </button>
+            </form>
+        </div>
     </div>
 </section>
 
@@ -1412,7 +2012,7 @@
 <!-- Toast Notification -->
 <div class="toast" id="toast">
     <span>✓</span>
-    <span>Email copied to clipboard!</span>
+    <span id="toastMessage">Email copied to clipboard!</span>
 </div>
 
 <!-- Scroll to Top -->
@@ -1427,14 +2027,56 @@
     function copyEmail() {
         const email = 'manualtesterkalpshah@gmail.com';
         navigator.clipboard.writeText(email).then(() => {
-            const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            showToast('Email copied to clipboard!');
         }).catch(err => {
             console.error('Failed to copy:', err);
+            showToast('Failed to copy email');
         });
+    }
+
+    // Toast Function
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+        toastMessage.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    // Contact Form Handler
+    function handleSubmit(event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+        
+        // Create mailto link
+        const mailtoLink = `mailto:manualtesterkalpshah@gmail.com?subject=Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0A%0AFrom: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}`;
+        
+        window.location.href = mailtoLink;
+        
+        showToast('Opening your email client...');
+        
+        // Reset form
+        document.getElementById('contactForm').reset();
+    }
+
+    // FAQ Toggle
+    function toggleFAQ(element) {
+        const faqItem = element.parentElement;
+        const isActive = faqItem.classList.contains('active');
+        
+        // Close all FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Toggle current item
+        if (!isActive) {
+            faqItem.classList.add('active');
+        }
     }
 
     // Navbar Scroll Effect
@@ -1470,9 +2112,10 @@
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                const offsetTop = target.offsetTop - 80;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
                 });
             }
         });
@@ -1494,7 +2137,7 @@
     }, observerOptions);
 
     // Observe elements for animation
-    document.querySelectorAll('.stat-box, .skill-box, .project-box, .cert-box, .experience-box').forEach(el => {
+    document.querySelectorAll('.stat-box, .skill-box, .project-box, .cert-box, .experience-box, .service-box, .tool-box, .process-step, .faq-item').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(40px)';
         el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
@@ -1513,6 +2156,18 @@
     document.querySelectorAll('.stats-grid .stat-box').forEach((el, index) => {
         el.style.transitionDelay = `${index * 0.1}s`;
     });
+
+    document.querySelectorAll('.tools-grid .tool-box').forEach((el, index) => {
+        el.style.transitionDelay = `${index * 0.05}s`;
+    });
+
+    document.querySelectorAll('.process-grid .process-step').forEach((el, index) => {
+        el.style.transitionDelay = `${index * 0.1}s`;
+    });
+
+    // Console message
+    console.log('%c👋 Hi! Welcome to my portfolio!', 'font-size: 20px; color: #667eea; font-weight: bold;');
+    console.log('%cLooking for a dedicated QA Tester? Let\'s connect!', 'font-size: 14px; color: #8b9eff;');
 </script>
 
 </body>
