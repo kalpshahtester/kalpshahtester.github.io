@@ -6,10 +6,13 @@
     <meta name="description" content="Kalp Shah - Professional Manual QA Tester with 100+ users supported, 62+ test cases delivered. Expert in Functional Testing, UI Testing, Bug Reporting, and Test Documentation. Available for QA opportunities.">
     <meta name="keywords" content="QA Tester, Manual Testing, Software Testing, Quality Assurance, Test Cases, Bug Reporting, Jira, Functional Testing, UI Testing, Regression Testing, Test Documentation">
     <meta name="author" content="Kalp Shah">
-    <title>Kalp Shah | Professional QA Tester - Manual Testing Expert</title>
+    <title>Kalp Shah | QA Engineer Portfolio - Delivering Quality</title>
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='80' fill='%23667eea'>K</text></svg>">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         * {
@@ -70,6 +73,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* --- BACKGROUND & PARTICLE ANIMATIONS --- */
         .bg-canvas {
             position: fixed;
             top: 0;
@@ -89,13 +93,13 @@
                 radial-gradient(circle at 80% 70%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
                 radial-gradient(circle at 40% 90%, rgba(168, 85, 247, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 90% 20%, rgba(147, 51, 234, 0.15) 0%, transparent 40%);
-            animation: gradientShift 20s ease infinite;
+            animation: gradientShift 20s ease infinite alternate;
         }
 
         @keyframes gradientShift {
-            0%, 100% { transform: translate(0, 0) scale(1); opacity: 1; }
-            33% { transform: translate(30px, -30px) scale(1.05); opacity: 0.8; }
-            66% { transform: translate(-20px, 20px) scale(0.95); opacity: 0.9; }
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            50% { transform: translate(30px, -30px) scale(1.05); opacity: 0.9; }
+            100% { transform: translate(-20px, 20px) scale(1); opacity: 1; }
         }
 
         .bg-mesh {
@@ -256,7 +260,7 @@
             margin-bottom: var(--spacing-xl);
             position: relative;
             display: inline-block;
-            animation: float 6s ease-in-out infinite;
+            /* FIX 3: Removed distracting floating animation */
         }
 
         .profile-photo-frame {
@@ -270,9 +274,14 @@
             animation: profilePulse 3s ease-in-out infinite;
         }
 
+        /* FIX 2: Made the profile pulse animation more subtle and attractive */
         @keyframes profilePulse {
-            0%, 100% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.4), 0 0 80px rgba(99, 102, 241, 0.2); }
-            50% { box-shadow: 0 0 60px rgba(139, 92, 246, 0.6), 0 0 120px rgba(139, 92, 246, 0.3); }
+            0%, 100% { 
+                box-shadow: 0 0 8px rgba(99, 102, 241, 0.3), 0 0 16px rgba(99, 102, 241, 0.15); 
+            }
+            50% { 
+                box-shadow: 0 0 12px rgba(139, 92, 246, 0.4), 0 0 24px rgba(139, 92, 246, 0.2); 
+            }
         }
 
         .profile-photo-inner {
@@ -572,6 +581,34 @@
             transform: scale(1.05);
         }
 
+        /* --- ICON ANIMATION STYLES (NEW) --- */
+        .icon-pulse-hover {
+            font-size: 3.5rem; /* Ensure standard size */
+            transition: all 0.4s ease-in-out;
+            color: var(--primary-light); /* Default color for generic icons */
+        }
+        
+        .icon-pulse-hover i {
+            transition: all 0.4s ease-in-out;
+        }
+
+        .icon-pulse-hover-wrapper:hover .icon-pulse-hover i {
+            animation: iconBounce 0.8s infinite alternate;
+        }
+
+        @keyframes iconBounce {
+            0% { transform: scale(1) translateY(0); }
+            100% { transform: scale(1.15) translateY(-5px); }
+        }
+
+        /* Impact/Stat Box Specific */
+        .impact-card .icon-pulse-hover {
+            font-size: 3.5rem; 
+            margin-bottom: var(--spacing-sm);
+        }
+        /* --- END ICON ANIMATION STYLES (NEW) --- */
+
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -675,6 +712,7 @@
             margin-bottom: var(--spacing-md);
             position: relative;
             z-index: 1;
+            color: var(--primary-light); /* Base color for skills icons */
         }
 
         .skill-box h3 {
@@ -727,15 +765,14 @@
             justify-content: center;
             transition: all var(--transition-base);
         }
-
-        .tool-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+        
+        /* Tool Icon Animation */
+        .tool-icon i {
+            transition: transform 0.3s ease;
         }
 
-        .tool-box:hover .tool-icon {
-            transform: scale(1.1);
+        .tool-box:hover .tool-icon i {
+            animation: iconBounce 0.8s infinite alternate;
         }
 
         .tool-box h4 {
@@ -1050,16 +1087,18 @@
             font-weight: 600;
         }
 
+        /* --- CONTACT SECTION STYLES (UPDATED) --- */
         .contact-section {
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
             border-radius: var(--radius-xl);
             padding: var(--spacing-3xl) var(--spacing-xl);
         }
-
+        
         .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--spacing-lg);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
             margin-bottom: var(--spacing-2xl);
         }
 
@@ -1070,34 +1109,51 @@
             text-decoration: none;
             color: var(--text-primary);
             border: 1px solid var(--border);
-            transition: all var(--transition-base);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy transition */
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: var(--spacing-md);
             cursor: pointer;
+            min-width: 260px;
+            position: relative;
+            overflow: hidden;
         }
 
+        /* Hover Effects */
         .contact-box:hover {
-            transform: translateY(-8px);
+            transform: translateY(-8px) scale(1.02);
             background: var(--bg-card-hover);
-            border-color: var(--border-hover);
-            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
         }
 
+        /* Icon Styling & Animation */
         .contact-icon {
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            transition: all 0.4s ease;
         }
 
-        .contact-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+        .contact-box:hover .contact-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Icon specific animation (Pulse/Grow on hover) */
+        .contact-box:hover .contact-icon i {
+            animation: iconPulse 1s infinite alternate;
+        }
+
+        @keyframes iconPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
 
         .contact-text {
@@ -1106,53 +1162,14 @@
             line-height: 1.4;
         }
 
-        .contact-form-wrapper {
-            max-width: 700px;
-            margin: 0 auto;
-            background: var(--bg-card);
-            padding: var(--spacing-2xl);
-            border-radius: var(--radius-xl);
-            border: 1px solid var(--border);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        .contact-label {
+            font-size: 0.8rem; 
+            color: var(--text-muted); 
+            margin-bottom: 0.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
-        .form-group {
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .form-group label {
-            display: block;
-            color: var(--text-primary);
-            font-weight: 600;
-            margin-bottom: 0.7rem;
-            font-size: 1rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1.1rem;
-            background: var(--bg-secondary);
-            border: 2px solid var(--border);
-            border-radius: var(--radius-md);
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 1rem;
-            transition: all var(--transition-base);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-            background: var(--bg-card);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 160px;
-        }
+        /* --- END CONTACT SECTION STYLES --- */
 
         .toast {
             position: fixed;
@@ -1331,102 +1348,6 @@
             }
         }
 
-        /* Loading Screen */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0a0118 0%, #150527 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            transition: opacity 0.2s ease, visibility 0.2s ease;
-        }
-
-        .loading-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loader-container {
-            position: relative;
-            width: 100px;
-            height: 100px;
-        }
-
-        .loader-ring {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            border: 3px solid transparent;
-            border-top-color: #8b5cf6;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            top: 10px;
-            left: 10px;
-        }
-
-        .loader-ring:nth-child(2) {
-            width: 70px;
-            height: 70px;
-            border-top-color: #6366f1;
-            animation-duration: 1.5s;
-            top: 15px;
-            left: 15px;
-        }
-
-        .loader-ring:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            border-top-color: #a855f7;
-            animation-duration: 2s;
-            top: 20px;
-            left: 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            margin-top: var(--spacing-xl);
-            color: var(--text-primary);
-            font-size: 1.3rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            animation: textGlow 1.5s ease-in-out infinite;
-        }
-
-        @keyframes textGlow {
-            0%, 100% { 
-                text-shadow: 0 0 10px rgba(139, 92, 246, 0.5),
-                             0 0 20px rgba(139, 92, 246, 0.3);
-            }
-            50% { 
-                text-shadow: 0 0 20px rgba(139, 92, 246, 0.8),
-                             0 0 30px rgba(139, 92, 246, 0.5),
-                             0 0 40px rgba(139, 92, 246, 0.3);
-            }
-        }
-
-        .loading-subtitle {
-            margin-top: var(--spacing-sm);
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-
         /* Animated Stars */
         .star {
             position: absolute;
@@ -1449,100 +1370,9 @@
             height: 100%;
             transition: transform 0.1s ease-out;
         }
-
-        /* Glow Effect on Hover */
-        .glow-on-hover {
-            transition: all var(--transition-base);
-        }
-
-        .glow-on-hover:hover {
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.6), 0 0 60px rgba(139, 92, 246, 0.4);
-        }
-
-        /* Floating Animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* Skill Progress Bars */
-        .skill-progress {
-            margin-top: var(--spacing-md);
-        }
-
-        .progress-item {
-            margin-bottom: var(--spacing-md);
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            height: 8px;
-            background: rgba(139, 92, 246, 0.2);
-            border-radius: var(--radius-full);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #8b5cf6 0%, #6366f1 100%);
-            border-radius: var(--radius-full);
-            transition: width 1.5s ease-out;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: progressShine 2s ease-in-out infinite;
-        }
-
-        @keyframes progressShine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* Impact Cards */
-        .impact-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--border-hover);
-            box-shadow: 0 20px 50px rgba(139, 92, 246, 0.3);
-        }
     </style>
 </head>
 <body>
-
-<!-- Loading Screen - Optional: Remove this entire section if you want instant load -->
-<!-- 
-<div class="loading-screen" id="loadingScreen">
-    <div class="loader-container">
-        <div class="loader-ring"></div>
-        <div class="loader-ring"></div>
-        <div class="loader-ring"></div>
-    </div>
-    <div class="loading-text">KALP SHAH</div>
-    <div class="loading-subtitle">QA Testing Expert</div>
-</div>
--->
 
 <div class="bg-canvas">
     <div class="bg-gradient-layer parallax-layer" id="parallaxLayer"></div>
@@ -1578,7 +1408,7 @@
         <div class="profile-wrapper">
             <div class="profile-photo-frame">
                 <div class="profile-photo-inner">
-                    <img src="Kalp Shah Profile Photo.png" alt="Kalp Shah" class="profile-photo">
+                    <img src="profile-photo.png" alt="Kalp Shah" class="profile-photo">
                 </div>
             </div>
         </div>
@@ -1605,8 +1435,8 @@
                 <span>View My Work</span>
                 <span>→</span>
             </a>
-            <a href="Kalp Shah Manual Tester Resume.pdf" class="btn btn-secondary" download>
-                <span>📥</span>
+            <a href="resume.pdf" class="btn btn-secondary" download>
+                <span><i class="fas fa-download"></i></span>
                 <span>Download Resume</span>
             </a>
             <a href="#contact" class="btn btn-outline">
@@ -1626,7 +1456,7 @@
     <div class="about-grid">
         <div class="profile-card">
             <div class="profile-image-wrapper">
-                <img src="Kalp Shah Profile Photo.png" alt="Kalp Shah - QA Professional">
+                <img src="profile-photo.png" alt="Kalp Shah - QA Professional">
             </div>
         </div>
 
@@ -1668,7 +1498,6 @@
     </div>
 </section>
 
-<!-- Impact Section - NEW! -->
 <section id="impact" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%); margin: 0; max-width: 100%; padding: var(--spacing-3xl) var(--spacing-xl);">
     <div style="max-width: 1400px; margin: 0 auto;">
         <div class="section-header">
@@ -1678,26 +1507,34 @@
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-xl); margin-top: var(--spacing-2xl);">
-            <div style="text-align: center; padding: var(--spacing-xl); background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); transition: all var(--transition-base);" class="impact-card">
-                <div style="font-size: 3.5rem; margin-bottom: var(--spacing-sm);">🎯</div>
+            <div class="impact-card icon-pulse-hover-wrapper" style="text-align: center; padding: var(--spacing-xl); background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); transition: all var(--transition-base);">
+                <div class="icon-pulse-hover" style="color: var(--primary);">
+                    <i class="fas fa-bullseye"></i>
+                </div>
                 <h3 style="font-size: 1.2rem; color: var(--text-primary); margin-bottom: 0.5rem;">High Accuracy</h3>
                 <p style="color: var(--text-secondary);">98% bug detection rate with zero critical bugs in production</p>
             </div>
 
-            <div style="text-align: center; padding: var(--spacing-xl); background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); transition: all var(--transition-base);" class="impact-card">
-                <div style="font-size: 3.5rem; margin-bottom: var(--spacing-sm);">📈</div>
+            <div class="impact-card icon-pulse-hover-wrapper" style="text-align: center; padding: var(--spacing-xl); background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); transition: all var(--transition-base);">
+                <div class="icon-pulse-hover" style="color: var(--success);">
+                    <i class="fas fa-chart-line"></i>
+                </div>
                 <h3 style="font-size: 1.2rem; color: var(--text-primary); margin-bottom: 0.5rem;">Efficiency</h3>
                 <p style="color: var(--text-secondary);">50+ test cases executed per week with detailed documentation</p>
             </div>
 
-            <div style="text-align: center; padding: var(--spacing-xl); background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); transition: all var(--transition-base);" class="impact-card">
-                <div style="font-size: 3.5rem; margin-bottom: var(--spacing-sm);">⚡</div>
+            <div class="impact-card icon-pulse-hover-wrapper" style="text-align: center; padding: var(--spacing-xl); background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); transition: all var(--transition-base);">
+                <div class="icon-pulse-hover" style="color: #ffc107;">
+                    <i class="fas fa-bolt"></i>
+                </div>
                 <h3 style="font-size: 1.2rem; color: var(--text-primary); margin-bottom: 0.5rem;">Quick Turnaround</h3>
                 <p style="color: var(--text-secondary);">24-hour bug reporting with complete reproduction steps</p>
             </div>
 
-            <div style="text-align: center; padding: var(--spacing-xl); background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); transition: all var(--transition-base);" class="impact-card">
-                <div style="font-size: 3.5rem; margin-bottom: var(--spacing-sm);">✨</div>
+            <div class="impact-card icon-pulse-hover-wrapper" style="text-align: center; padding: var(--spacing-xl); background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); transition: all var(--transition-base);">
+                <div class="icon-pulse-hover" style="color: var(--accent);">
+                    <i class="fas fa-star"></i>
+                </div>
                 <h3 style="font-size: 1.2rem; color: var(--text-primary); margin-bottom: 0.5rem;">Quality Focus</h3>
                 <p style="color: var(--text-secondary);">Comprehensive test coverage ensuring product excellence</p>
             </div>
@@ -1713,33 +1550,45 @@
     </div>
 
     <div class="skills-grid">
-        <div class="skill-box">
-            <div class="skill-icon">🎯</div>
+        <div class="skill-box icon-pulse-hover-wrapper">
+            <div class="skill-icon icon-pulse-hover">
+                <i class="fas fa-check-double"></i>
+            </div>
             <h3>Functional Testing</h3>
             <p>Verifying software features against requirements and specifications to ensure they work as expected</p>
         </div>
-        <div class="skill-box">
-            <div class="skill-icon">🎨</div>
+        <div class="skill-box icon-pulse-hover-wrapper">
+            <div class="skill-icon icon-pulse-hover">
+                <i class="fas fa-laptop-code"></i>
+            </div>
             <h3>UI Testing</h3>
             <p>Ensuring user interface quality, consistency, and optimal user experience across all screens</p>
         </div>
-        <div class="skill-box">
-            <div class="skill-icon">🔄</div>
+        <div class="skill-box icon-pulse-hover-wrapper">
+            <div class="skill-icon icon-pulse-hover">
+                <i class="fas fa-sync-alt"></i>
+            </div>
             <h3>Regression Testing</h3>
             <p>Ensuring existing functionality remains stable after code changes and new feature additions</p>
         </div>
-        <div class="skill-box">
-            <div class="skill-icon">📋</div>
+        <div class="skill-box icon-pulse-hover-wrapper">
+            <div class="skill-icon icon-pulse-hover">
+                <i class="fas fa-clipboard-list"></i>
+            </div>
             <h3>Test Documentation</h3>
             <p>Creating comprehensive test plans, scenarios, cases, and maintaining complete traceability</p>
         </div>
-        <div class="skill-box">
-            <div class="skill-icon">🐛</div>
+        <div class="skill-box icon-pulse-hover-wrapper">
+            <div class="skill-icon icon-pulse-hover">
+                <i class="fas fa-bug"></i>
+            </div>
             <h3>Bug Reporting</h3>
             <p>Detailed defect documentation in Jira with complete lifecycle management and tracking</p>
         </div>
-        <div class="skill-box">
-            <div class="skill-icon">🔍</div>
+        <div class="skill-box icon-pulse-hover-wrapper">
+            <div class="skill-icon icon-pulse-hover">
+                <i class="fas fa-search-plus"></i>
+            </div>
             <h3>Exploratory Testing</h3>
             <p>Finding hidden issues and edge cases through creative, unscripted testing approaches</p>
         </div>
@@ -1754,31 +1603,31 @@
         <div class="tools-grid">
             <div class="tool-box">
                 <div class="tool-icon">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADJUlEQVR4nO2ZS0hUURjHf+M4edepIUPKXqRZtGgRRYsiCCQoKNoEbSLaBEG0iAoqerCICIKgXYtaRFBBEAQRQdCmh0VqZqVlvpvxMc6MzkzfgQsD4507M3dm7sy98IXLuZf//L/vnO+cc74LAQEBARXA7cBm4Dlw0s/OOj2wGPgEPAb2+9VZ6+nVwGIgBmSBm8CZQDtvPb5Gx3wWmAVygYvAdqAC2KDzGWAa+A40BtH5Zz2+Tvs8CvQBncAp4AjQBjwBhoARHT8PNAXR+fs6vlHH9wP9ugg+AMPAkM7fBC75xXlleGDfvpZZ4BlwCbgGzAA/dOE8BdYF0flXOr5Ox18FPus8AXwDhoEZ4A5Q7RfnlemBfTsOnNb5CTz5BNzX8RXA7iA6/1jHb9Lxt4DP2r4FvgI/gftAjV+cr9Dxc3X8XZzzEngOJIFW4LyfnE/rq9mhC+K1zo8DT7Q/DSz1k/NJYFzf9OvAXv3/a+1/B/YAq/zkvDEMvNUFkdDvvuq5LV50vli+2axxv9DOfQIqveh8Ufnsm09wL+KlXnVePi/fD2h7GLgC1HrZeSO3tR3RdqNXnS+Wb4y1P9a5Oq86X6w5vNQ5nNT5Bi86Xyzf8Gp71r6x1j7wqvPF8g2x9lfsK7WvwKvOF+obrn3Dre0B+5bqvOqsszavtWftq7DvL1DkVWeNb6i1b4S1b5+1+cpZZ53leW3PW/t32vdAv3uSX5x1ludh4Ii175G178v/6yjwk7POOsuz0dpX59/0vHWu06vOFusbrn3Dre0++47pV+hVZ/P1jbD2rLWvzb692r4NVHvVWWd5Hmvt67fviX372vzkrLM8h1n7jlr7dlr7DurX4FVnjW+EtW+ota/Xvl49VwhU+slZZ3ke0b5HrX3P9Ouyr8urzhbrG6l9w619z637pv3+/OKss84+u9B67Tts3yH9WnRe7RdnnXV26O+t3drXZe3rqvCLs846y/NEa98+a1+LfU36tfvF+QrtO6t9/da+R9a+h/Y1+8V5Z53l2WftO2Xt67T2DdrX5BfnnXWW57DWvuHWvif21frF+X/OanspEBAQwH/LL6ZsjKC5YYGjAAAAAElFTkSuQmCC" alt="Jira">
+                    <i class="fab fa-jira" style="font-size: 3rem; color: #0052CC;"></i>
                 </div>
                 <h4>Jira</h4>
             </div>
             <div class="tool-box">
                 <div class="tool-icon">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC0ElEQVR4nO2ZS0hVURSGP8dHvkrN0qhQESKIIKKJRBA9hqFBDwgilCCiRQ8nDRoEQRBE9BxEEEFEBA0iCAqCoEkEQfQgiiDotWgQ0aNnZXQWrIXL5d5z7j333Lvvhf3Dhjvca//f/tc6a6+9weFwOBwOh8PhcDgcjv+dBcBeoB14CgwBX4Fx4BfwBxgFPgKPgTbgCLAN2ABUEQKVwE7gEvAa+A38BabM3/8A34HnwGXgALAJqCAklgCNwEX1/S9AOmAeAzYSAsVAI3AX+G0W8hdIWo3fAqeAZmCNt3+l+V7vPZsCvgH3gUagyCZVQA1w2XjYMvPc++A8KAfOGg+/BN5pNvq9Rut9e1e+A2eAcjJADbDfhI3l9UvAXLJ7chawF/hk7G8w35slB2qBy2ad38A14CSwFygjHGqBY8BN4Jtxpg5YmIt4BdBkvDgBtAJrkgp5jReP+s+mY+GVG899A84Dy1MR9VYn75P2a7UnZ0+6/gK4ZMR3AN+V3qYjXma82mUWcMikx8lUYukqcD7tnxwn0xCvN+Ld5v9q9Ud1MqN0tdo4sdeMXyv2ZiEeavblmIo9EqC/1jhzNx/xCrW/bMS7zPguM/Z+vsQrjBO28zpgZqR8i/drdKwjwMdknhO++yZ+nwVGAjyQNOrTGv8hT/HQxdxjQuhVgP5gZqTc+3UQz0d8tfFqc5rxr0FhUhwgfjdGfLXx6lqAfonxaoDoWjN+Mkh/aYD4xSDx5wHiTSaE3qR6L8nXp5ruPTL20pyfpZs97gb+7DU2uk0IhXVj24yNm2H1L0lLfIuxcTOs/vWwxKuMDStea0KoxoQQAVdtm+mAZ6PLjJN5t7uSp9BNE0b/gFfAdZN9eoD9Zv0bnSe+fxu4a7yuIiS8L/Bd+jLepvZXHdAPPADa9VbZqu4lST1MnfBPzlq1Fc6OkChSF7JVXchBFau/5vt/AR+0+dQB9cAa/aP6D8O/n/pXD28AAAAASUVORK5CYII=" alt="Excel">
+                    <i class="fas fa-file-excel" style="font-size: 3rem; color: #217346;"></i>
                 </div>
                 <h4>Excel</h4>
             </div>
             <div class="tool-box">
                 <div class="tool-icon">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADpklEQVR4nO2ZS2gTURSGvzRpbX2gqAiiC0VRUFFRRBFBUFxUcKG4cKMIgqAuXLhQBEFwpQtFEAQXbhRBEFxUBEFRRBBcuFAEQUVFxUd9tLbW1vZITiAkk8lMJpNJoOaHCzP33jP/d+85986dmYIgCIIgCIIgCIIgCIKVBVgJHAIGgNfAODANTAJTwDTwHfgCPATOANuAVUAnoZAClgOVwE7gIvAU+AP8M/E3MAP8Bt4C14BDwEagktBYApQD24GLwDP9+I8h85n5b6cBeL9aH9pBCJQAzcBF/eC/gDkLzQfAaeBg+r9EpApoBq4bz1vwKdRvfK1JBVQAO/Rpv9D71q/PAc0B+WsFXhr7R4EVUWb/r36iVXo/XjXJcmcAfR5F8Yc6NHo0ei+azRJgv4HS+vAusJoY0/+fSa9bQ5xHB+o0nTZ6r1vXAiuA6/rhX0A9yQjtzWaUg2W6tjvn+lBf0Z/6V+AwsIkk0+/wuLE7FkT/hvHqu/y6A2gM+uEmtIFB42M0D/2lxufF4P59E+J++mHXAz+NgauJYPhQbXzF8u0k8MX47tSXjxG/qfd6eTSU3DXJfBY7P41vj86ZoP7UPGnO1Ptud2K8+p2oBr4aX3vy0K8zdsd0CgX130fUBh43ft7lqb/Q2D6pLwdRsN3YPhpQ/4rxdyWq/hpjvzcP/Rpjf0dU/e3G/ts89LcZ+wNC/amuNPbf56HvvjfV5iN0OYpQnvbP5aF/zth3n+VUIuq3BxXaPR1VOqJ05eHH+LWv5JO++7wuDP4B+bTQboZFwBfj73oe+r3G/gX9dRJ53R9h0y3g3vqeIIZ0e+13Ox/l8NnfRqLZ7xVwt6DuTn4dCe5bW+s0P2tFLmS7Ut/P1/1SY/8ucQ3/LjQVBhhtNfYDOnsxwPe7OPBknu/npvhukzwh5viYH5brELpjQqlcaEnQhh7rV/ppdAy41YiEbpZM6/Y4GqG+x8Dh9P+LhN4K32/8V5HgqNJ0PnXcBT4HrO1ep+sj/u2mM+1TtL1x5Vo+B57Sj+Jy2eeQsX07gA9dxp/r41oQv4D3wHXgOLANqCNGNCDR5YJTQHfavwUOr6n9ptCPuNP7ER/fBcQd1wS/tX7sC+1bk7b7b+ksYqH1G7WJW+YaWa9r5Qa9Ljbo2qfM14XKJqCR2NEAVGuhapmu2b66ZjboNbJF18hGvUa26RrZrmtkh15b/W6nWJhLjSAIgiAIgiAIgiAIgtCJ/gMd54wZ7BGpPgAAAABJRU5ErkJggg==" alt="Google Sheets">
+                    <i class="fas fa-file-csv" style="font-size: 3rem; color: #0F9D58;"></i>
                 </div>
                 <h4>Google Sheets</h4>
             </div>
             <div class="tool-box">
                 <div class="tool-icon">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEPklEQVR4nO2Za2hURxzFf5vExFhj1KjRGKMx+qHUWqtWrVpbtVpb+6FYH1UsWkFRREQRERHxgYiIiIgo+kFFRET6wQ8qIiL60Q8qIn5Q8YGIiFprbWPUxEfc7pEZuCyb3bt3d3c3yfpDYNnZnTn/c+bOzJkzEBISEhISEhISEvI/owqYDSwBVgDrgQ+B74F7wDPAgv1vgRvAz8Am4G1gJlBJkWgEaoALwL+AlfLbAhqABcDwYhjPBdYDT/IwnsndBjYD1YU0ngd8AvTmabyvsD1AXb6GmTG/B24XyLgn+xPYAVT4NZ4HbPVh9BnQBnQCfwF3gW7gBfAYuA+0An8CH+f4uwn8lGO8FZhtGScWKoCDQF+W0UNASw6jCeBt4BDQk2VcAvZa7+hPYB+wyv2UrgGOA48yjD4D5gE1wNvAx0CXM/YHsMjn392X4/uufPd6GXgJHATWAlO95jkE+B/IXv8P4qcG+MuxQpwGxucY+5Ezdi9Q62H4vfO5HhhTgPFfOPN/lq2+xZ6c5w/AXmCKzzn1wFnnWRswOM34ROd5T0qYrY1IcbEjbALMSTu2M+XZN8BMIM4jdBvQlhL2p7HFTvjd9jm/3f2GXskx/7yUZz3AImKOcI61Xr9X3/N+d/FrI/x+APQm0Ah84MzvA+awYI2bRvsc+x2bYoy9BUwjtpgEvHLWb3H9vkpQHuAbx/hlih1dgKP259bxLuBL4Jwj+hXoJuZwK3Lrcbuh85UUOwgNwjmuMRaYAozhzbD6mBgjmmf9bsGTjwOXgHPO7x4wwVjhZOYniBGqgD+c9X8E9OcxbwRwwnne7fgPMcbxA+CpY0Q+kkxq+AswNSJO+CHlWWsU46lh1EqMEQPagfNAG/Bg0FU+LLjw2k0MsThAHxsSNJ58B1wmhnAP8hMR+3qrQLnOdZ4U63/q7E+AyRH7+oOIQnCFM/9FYpBE3XHW7vcLmDsv4hBchC15VeomITB0q5O9toRheBRxeD3jfO4JMD9iX0ciSilrgE+dBfg1YOa+CrgftSPfAT8ClxO23ADzqoGjjtF7/n0nCiHOBo46i+gDzvj19Y2IwtF658u1A6PANKAmjwMzB7jkfK8hW/L8I8J2yPvAZ84C3gCr/fiZDBwA+oENNKTlgFLDan1wO8Vf5i6F+r83Mn8AnMixDUOIWw7YWyjjLmqdcrsbeOvlzAEm6tJ5u44/3dCbZzydlY/xPM0+ArYltl2xaXT2+/lK0uiLpIxNIqb4JkBCx81CEvZHwvg1kL1Nc8RO26vUdlomGe32LuBrm6v36LjvQ/p8oDnDWB9wE3iY9nfZKcwGXC7s9eqHu1GQ21P8U/dbzk0rpY9p1bZDWnHWpvIEMAWoB1alXPBY6dyqdAA3nDfRn26sxWnXmlvtOhsT9lOkPzQ27C/XhJCQkJCQkJCQECin/gOCiKz54Ca25gAAAABJRU5ErkJggg==" alt="Chrome">
+                    <i class="fab fa-chrome" style="font-size: 3rem; color: #4285F4;"></i>
                 </div>
                 <h4>Chrome DevTools</h4>
             </div>
             <div class="tool-box">
                 <div class="tool-icon">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADkElEQVR4nO2ZW2hUVxSGv5lJYryLWrWKIl4QxYqIL4qIiA/Fg4gP+qBYEBGxIiIiIiL14YOIiC8iIiIiIj6IiIgvIiIiPvggIn1QqWKrbbzFNF6m46+1YTvZe+bMOWdmTqT54Ye5nL3W/s/ae621104ikUgkEolEIpFIJBKJRCKR+B+TBmqBzcAJ4BbwGHjh/t8gfw84D+wDNgCVQEVxw86dUqABaAO6gQHAwvxeAleBM8ARYBswD1ga5eDLoQwYDRwG7gN/A4M5+g0A/wLPXJ9/gF+AQ8BiYCShUwFUA0uBT4GjwHXgL+BvvemsjAJ9wG/AaeBbd19RqQIWAYeAh8B/TmcQeA08d2vOmUvuDOz14+4BXwMNQBWhUO+EHfgNeAL8meefmAd8DjwFzgG1hEAl0On+9FPgDbIMt6WBz5y/O0ADMaYMmAtccDXvN2BqnkZhfr92/u8BU4kh44B9Lvt/ACYXaJiF+f3U+b8LTCAm1Dh9v8h+HQWtGWvd1rsI1BAD5gN3nZJ2YEQIRll43OXfq9smL/CdMXjv0H0H+o6NqV+6UihTgR9d5vsV+CBkw+VYN1AO3HP53itlsAAYDXzmMn4P8H7IRlm463w9IKCBqgH2u0x/Gfg4r38fHjX4wvnuJACaXGb/NmyjW1zenwWoRkOB08AzYI4fgxZnYIk1wEn3h10CxhbBsAiXXJ5bikhVY0H/FT6MjXO7S78rTywYxGOl85fD28pJqnN+nh3uLKkFFjtjfcCaIhuukQ1PgM/y7agjdtNlugXoBcq15lXA1e5bWYtV7i9zevOl3J2UfQn8DuyQXpW2RnS52uqMm4D73qkGRubp/7l7vh+YnisvmPJ7LOIfsEAy5RFGfIhxlNwS+hHwTaFbSa0/p0J99MKPh7Q7dLg/v4BodxqyXe0FRHuLRCVwwxVGV5ZOZ6D3b7lDCcCNAqP9xo9Blb89Lsu6AqI1+zGo/J+zjbkqP9rhYpxB1EXGmPJ7w++P9HN+u0K5wnQc51X+dxDtP/FrUIm+06c/hfh3EO1P+zWozA/KJn5VwH/Tj0FLdMQV4xp0AvCjX4MfqS8oojW4ffuBX4MfaVvn9TNqg7+7o/Y10OCv3kFO5NfdCvzF9xLX/zAwgtChJKw3N3WnwWE/9Uz9dWwEZhGxYRXuB+CWjM7b0RrvjlUFp8+j/S5OJBKJRCKRSCQSCULmP1ZgYXOH7OZUAAAAAElFTkSuQmCC" alt="Git">
+                    <i class="fab fa-git-alt" style="font-size: 3rem; color: #F05032;"></i>
                 </div>
                 <h4>Git</h4>
             </div>
@@ -1866,7 +1715,9 @@
     <div class="projects-grid">
         <div class="project-box">
             <div class="project-content">
-                <div class="project-icon">🛒</div>
+                <div class="project-icon" style="color: var(--primary);">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
                 <h3>SauceDemo – Manual Testing Project</h3>
                 <p>Complete end-to-end QA project including High Level Requirements (HLR), comprehensive Test Plan, 47 detailed Test Scenarios, 62+ Test Cases covering all functionalities, Bug Reports with severity classification, Requirements Traceability Matrix (RTM), and Executive Summary Report.</p>
                 
@@ -1897,23 +1748,31 @@
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg);">
-            <div class="skill-box">
-                <div class="skill-icon">⚡</div>
+            <div class="skill-box icon-pulse-hover-wrapper">
+                <div class="skill-icon icon-pulse-hover">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
                 <h3>Fast Turnaround</h3>
                 <p>Efficient test execution with quick turnaround times without compromising quality</p>
             </div>
-            <div class="skill-box">
-                <div class="skill-icon">📊</div>
+            <div class="skill-box icon-pulse-hover-wrapper">
+                <div class="skill-icon icon-pulse-hover">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
                 <h3>Detailed Reports</h3>
                 <p>Comprehensive test documentation and clear bug reports with reproduction steps</p>
             </div>
-            <div class="skill-box">
-                <div class="skill-icon">🎓</div>
+            <div class="skill-box icon-pulse-hover-wrapper">
+                <div class="skill-icon icon-pulse-hover">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
                 <h3>Continuous Learning</h3>
                 <p>Always staying updated with latest QA methodologies and testing tools</p>
             </div>
-            <div class="skill-box">
-                <div class="skill-icon">🤝</div>
+            <div class="skill-box icon-pulse-hover-wrapper">
+                <div class="skill-icon icon-pulse-hover">
+                    <i class="fas fa-handshake"></i>
+                </div>
                 <h3>Team Collaboration</h3>
                 <p>Excellent communication skills and experience working with cross-functional teams</p>
             </div>
@@ -1931,10 +1790,12 @@
     <div class="cert-grid">
         <div class="cert-box">
             <div class="cert-image">
-                <img src="Kalp Shah HCL GUVI Certification.png" alt="GUVI x HCL Certificate">
+                <img src="hcl-guvi-cert.png" alt="GUVI x HCL Certificate">
             </div>
             <div class="cert-content">
-                <div class="cert-badge">🎓</div>
+                <div class="cert-badge">
+                    <i class="fas fa-laptop-code" style="color: var(--primary-light);"></i>
+                </div>
                 <h3>Automation Testing Skills</h3>
                 <p>GUVI x HCL</p>
             </div>
@@ -1942,10 +1803,12 @@
 
         <div class="cert-box">
             <div class="cert-image">
-                <img src="Kalp Shah Outskill Certificate.png" alt="Outskill Certificate">
+                <img src="outskill-cert.png" alt="Outskill Certificate">
             </div>
             <div class="cert-content">
-                <div class="cert-badge">🤖</div>
+                <div class="cert-badge">
+                    <i class="fas fa-robot" style="color: var(--primary-light);"></i>
+                </div>
                 <h3>Generative AI Mastermind</h3>
                 <p>Outskill</p>
             </div>
@@ -1953,10 +1816,12 @@
 
         <div class="cert-box">
             <div class="cert-image">
-                <img src="Kalp Shah Generative AI Mastermind Course Certificate.jpeg" alt="AI Mastermind Certificate">
+                <img src="ai-mastermind-cert.jpeg" alt="AI Mastermind Certificate">
             </div>
             <div class="cert-content">
-                <div class="cert-badge">✨</div>
+                <div class="cert-badge">
+                    <i class="fas fa-brain" style="color: var(--primary-light);"></i>
+                </div>
                 <h3>AI Mastermind Course</h3>
                 <p>Course Completion</p>
             </div>
@@ -1969,83 +1834,64 @@
         <div class="section-header">
             <span class="section-label">Contact Me</span>
             <h2 class="section-title">Let's Connect</h2>
-            <p class="section-description">Ready to discuss your QA testing needs? Drop me a message!</p>
+            <p class="section-description">Ready to discuss your QA testing needs? Connect with me on your preferred platform.</p>
         </div>
 
         <div class="contact-grid">
-            <div class="contact-box" onclick="copyEmail()" title="Click to copy email">
+            
+            <a href="mailto:manualtesterkalpshah@gmail.com?subject=QA%20Opportunity%20Inquiry%20from%20Portfolio" 
+               target="_blank" 
+               class="contact-box" 
+               title="Click to open a new email draft">
                 <div class="contact-icon">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABj0lEQVR4nO2ZvUoDQRSFv1gEsbAQbCy0sLGwEAS1sLKwEBGxsLKxsFAQBEHwB7QQBEHwFxQEQbCwsBARCwsLCxH/sLAQBBGJ7MCBhWWYzWYns5PAOXBhd+/ZmZu5M5BIJBKJRCLRZ0aANWAfOANegHfAzd+X/R4D+4AtYBgvDABrwAXQ0nItYBfYAEb7LX4S2AM+NMSmFn8EbAKTWYufAR4MxPcl6wA0gGugrvgrcAXM9yJ+HGgqjs+6EL8E3CtuSdd75xM/CzypiC/KvYuJXwSeFYHfwHWOe+meywhcyXlvK/5CEXgEDrMUPwlcKwJPgPEc99IK3Cru1qxiF4AHRaABzLqKn8tQ/Kbib13FK49uO8Adxe/kEL+iCOwqApU0EyfpStJ+J2l/Xhvp15R0pS/+fYs2y/bbyg+S9DuVdKW/rv1qkq4kf1v7wV2S9r8q6UorSfrBXZL2c0m60hfu1WD+NTHG7ZAx1n8nxrgcMobdqOE8/zfG5pAx1h8zxuCQMawrEolEIpFIUCo/OdhRZr1TuLEAAAAASUVORK5CYII=" alt="Email">
+                    <i class="fas fa-envelope" style="font-size: 1.8rem; color: #f1f5f9;"></i>
                 </div>
                 <div>
-                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.2rem;">Email</div>
+                    <div class="contact-label">Email Directly</div>
+                    <div class="contact-text">manualtesterkalpshah@gmail.com</div>
+                </div>
+            </a>
+
+            <div class="contact-box" onclick="copyEmail()" title="Click to copy email address">
+                <div class="contact-icon">
+                    <i class="fab fa-google" style="font-size: 1.8rem; color: #EA4335;"></i>
+                </div>
+                <div>
+                    <div class="contact-label">Copy My ID</div>
                     <div class="contact-text" id="emailText">manualtesterkalpshah@gmail.com</div>
                 </div>
             </div>
 
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=manualtesterkalpshah@gmail.com" target="_blank" class="contact-box">
-                <div class="contact-icon">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADFklEQVR4nO2ZT2gTQRTGv01rL61WRPFPPXhQBA8iHkRERA8eRDyIeBAREQ8iIuLBg4iIiB48iIiIBxERDx5EPIh4EPEg4kHEg4gHEQ8iohYt/klN+8RvYQmbzWZ3M7ubbj74YJvMzDffvrfzZnYXCAgICAgICAgICKgzDcA6YBdwCbgOPAA+AZ+BL8AXoBf4BPQBd4AeYCewBmhMW/wcoAU4CHwBJgErcX8EXgMXgc1AI2lgOnAIuA80gTGt9B9gALgBHAemATOAsWr/e8BlYE0yJQ4D9wz8/gDXgE3AAmBh4P9u4KtlH/eAQ0Bd1AIfGSg2ARwHptk0Ow04bthXP7AwivgWYJ+BYjswO6LYWcBew/52RxX/3kCxDZhfg9j5wDaDPt/FGXZ+gXuO0k/oHfBLO7AMGASegCHgJ/BWf+vu1K3VqzFn0O/LqKvQKgPBP8DB8u8BM4GLwFCD+QTwEpgbR/wBA+VagXl6H/gIfAe+6f0Wa5bq/fzq/7qh752R5lSZYAzYClwARg0cGgb2A/XVxtJ6YB+aSINaXP1JA/8HsqwBl3VVKaXoYG10pVrJp54aDz9rBWoTvwrYY+DUUMr+XjT0c5e0RQB9Bk49T9nf4yp+/pN4DVwycOpWyv6uG/q5T9oitBso9qTsb9TQz23SFmG6oWIvUvb3oqGf00hbhDEDxSZS9jdh6OcYaYtgt/uUDfobTt2fqZ+7pe3DOAOlPqTs74Ohn+dJW4S3Bor1pezvsKGfd0hbhOcGij1I2d+DAj/vk7YIPQaK3UnZ343KD+oD0haBgTeBS41Qh8jvBn4+J20RWhU/aKDcIvmT0P0RxM8ArhiM+XO+Ic0C4IqBglOAzTqH1gALyvx3AVsMxjwP+J20RWgyTOqx/C+EGfAlhnPgLmmL0GKY1F/ScSa04bihn/9JW4SZhsryP49J7YKhnzNIW4RWpfxQypGjkM+V8r+SaXwSmBPYW1kCmwfsBk7paegN8A/okp+4TgNrk/j1l6VCK/VReqO7rNeod7o5el96rRsQEBAQEBAQEBAQQIr8BbaekS7NixJoAAAAAElFTkSuQmCC" alt="Gmail">
-                </div>
-                <div>
-                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.2rem;">Gmail</div>
-                    <div class="contact-text">Open Gmail</div>
-                </div>
-            </a>
-
             <a href="https://wa.me/918160426134" target="_blank" class="contact-box">
                 <div class="contact-icon">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAE80lEQVR4nO2ZW2wUVRzGf7u7bWkpUCgX5SIgchEvqFGDGo0mxgdjjEYfTPTBaOIDRhMf1AcTE2M0xgcTEzW+GE00xvhgYoxRjPGCGoMaFQRE5CJyLVCgtNBCt7v+kl9yMpk9M2d2dnbLNv2Sk+zMnP/l+53/nDlnZ6AH7f/VgBnAPOAR4FVgO7AXOAX0A5eAIeAScAY4COwEXgdWAXOBSXSImcAy4HXgG+AM4CQsh4EtwHKgly7BNOBp4Evgor5YVhkCvgSeAiZ0gvk+4D3gGNATst/YuBF4j5QxA3gO2JcC86HyM/AcMJ0EqAN2AdeIMVpxf78d2ERCeBD4tQPMeztq3gMeoCJMA74EhknuEV7pE/PqKjBfBxxqg/m/gYPAZ8A7wJPAcmARMBuYrP/rge4FngS+18CODPMuAjfwlzI3GaXfBl4BFpfhfqH0u7T+QkS9frU9ocL0DeBCCeangDeAxVWYXwy8CZwuUe8C8BqlBz+VLUQH3yGfWw40VGB+sb73f4g/J8U9EbWRl4FVFTBfDawxdCBfnEX+2sJ0J/BD4AWvA7fWwPxW4DrD/Q/G6cuBYV/hTuCWGpm/BfjV8DBs6Ml8X+ElG1bRCcCVQhnvoAscuKnAu8AxI6m4YujnVk/hXmCLxtN2ylc7sAVYYehvL6WxGHje8LrPZ+qekZ5I0rYWmOIr3ANc0LhlDdZgnQJsNOpfAOZgxzxgh1H/grrrqZH/qv8DwE/Aa8D9OnCZwCoAvZoINmi8M7T+t0asvQqyQ3XT4FZgoZtSqDsM/AXskq9nRGUh8C7wk8a4/nrgK+AH4HZD9s+6dqZqp1kGfE7xJN3gC/odsAJ4FHgB+NrzMGK8b+ueqJVCp1npe/+v+tyEv5nYr3HWGLJTcTv+ALUPPjlp+DzKvQPs03j14P++8LSx/Gd+GqWvlNQp4H5gChVghqaYlq/TKuwwCk4DnQZ30PB5iqJk5Tud0jNR0yj4vRMgvuDI/zmj4MsucLkPDp+HKd6CnKgj6SHKk8BPKn8HONUFLk8ZPk9SxHTJiTh5J0B04lp81VkEPDfJuXFcFRz66wSXPx/w2SP5bX7m21p4O9BXpezhKn3m+z21tZE9U2LbPRMznzd/VU27qGS+R/d/l+SveR3NI83vq5L5fgL23UH9/wpcT1p67MsAB5PAW4GNWj6iZTN6T5gL3KUPFbsottnX+Sj5j1BmASFhYeH+mTSRazsNM/8v8K0RLNQA1W3YhcBy4BFggfzOBB4HvrOwe0zCngB+BrYBLygDJGn2A7Y2yjkpnzVgXp1pjuFvQGdvkLbVms/b2vjEsHta5xPP/CTD323JvxGwPduw3d4Qu7cb5ndqzpxqIQ64s6s2N9DhYL7X8HeV4qXcD+AqYIP+/grYZNicSABvdTDfq8v3iq6h69S5oLo+XW5bvnP6fYPOTzVH/FfRnuZYbQ70BzhwdSjF34I5Gd0+gC5QbaUtZvD1RuGJKm+hQ1pm6ZC0vhvM++W42Mj/CQIktI0eDohrwqzWTk7HqE8hWmPkv8mxp7c+yP8Rhm/HXO+pNvHD8xC0p3T3n9I2+phj0B+k+G2lEQd9KZOvTl/VrGZI2y+njk7Ip7eFPqR0R/qo5ihd/mzlHgKeqbd7S9wD6kEP/tP4ByGXjQGx0xd+AAAAAElFTkSuQmCC" alt="WhatsApp">
+                    <i class="fab fa-whatsapp" style="font-size: 2rem; color: #25D366;"></i>
                 </div>
                 <div>
-                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.2rem;">WhatsApp</div>
+                    <div class="contact-label">WhatsApp</div>
                     <div class="contact-text">+91 8160426134</div>
                 </div>
             </a>
 
             <a href="https://www.linkedin.com/in/kalp-shah-software-tester/" target="_blank" class="contact-box">
                 <div class="contact-icon">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABtElEQVR4nO2Yy0oDMRSGP8cLCOJlI25duFARBEVxIbhw4cJHEPQBfAHfQMSF4kasG1+gi4o3UNy4EBFBF+LCjQjqRkQQr+gXOZCp0zSdSWYm0PxwIDPJyf/lJCeZhA46aHEBPUA/MAKMAzPAKrChaRVYAiaAYaAbSJO0AQwBc8Ah8BREu8AicB/I7NTpAAaBeeAU+InRLoAJoCtJA9eAUeA7AeNXzSvzvgkEcFfHkoa1jPifcmXe/MuNqvma10OvJpXYnQG+YmheVbavcNc8aTctAfyO0b+/0IjsauCuedV+c5sm0+q8a5e4a97I/Ctv0H6VvpQ/2PszMF/P7t+9PhGFUV0BL03e1d90Y5Cn+o55N45P4L65s27Sl98G8m6A3AaybG3gugbyK4F8vQ2kbI+B9Fkb+K+B/AfwZGvgWVtJKw+uB/LOgQdrA+M6hLT26Tth3sl/AmMJbmt7rPWPuzaQo3gfeCqhb36rlJcm93NpbgwctnXmyFDcCXxq68jRw9xaZKk+5/R17Sse6/jvuL7POh+cN+uv08Dc6nIJmNV5wF3d7Z9Q3Klt0l7pHfRvpl8CwnZeJ26wYwAAAABJRU5ErkJggg==" alt="LinkedIn">
+                    <i class="fab fa-linkedin-in" style="font-size: 1.8rem; color: #0077B5;"></i>
                 </div>
                 <div>
-                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.2rem;">LinkedIn</div>
+                    <div class="contact-label">LinkedIn</div>
                     <div class="contact-text">Connect on LinkedIn</div>
                 </div>
             </a>
 
             <a href="https://github.com/kalpshahtester" target="_blank" class="contact-box">
                 <div class="contact-icon">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADXklEQVR4nO2ZS2gTURSGv0kamihYH4go+MCFCi5cuHDhQhCE4kZx4cKFCxdaRHyBiFhBEBRBEAR14cKFCxcuXLhw4UJBEARFEBRFxYcLF4oPsGq1fs4dGJKZJpPJTKbQyYEfMplz7vn/uXPvnTt3IBKJRCKRSCQSiUQiRaMG2AT0AaeAW8Ab4Bvw1/i+Az+A98BF4AiwBVhJkVkF7AFOAw+BX0BSUr4A94CjwFZgBQVmLbAbGAM+GTPS1ldgHNgHrKVA1AH7gScpN3stPQP2AnUUgJXAAWCq4M0b+Q0MOJnlwFbggpExq80Lgw0bP8otHWOzfUOux+bFg/wjOsy6C9R8pxsvh+oi0CyXpZtfKG0aV8PmgBNaXs8vhLplzvyFwZnXi3jFC6EGzfu/c0wPNuSzmm8LwXmb98TQnFd53PXQnBcP8jec+/MHYPk/mm8PkPPNJt4eQnNeYmP8JvJLtXpDcD5jOMNCcN5/cQ8E4Pw3h+a8n2fOeyqE5v3zuqn5IdzU/HweCJ3NAWbgIzMqhOZ9c6vVDEwAx4GtwMYgxixvuwNcB7YBtajhiPE9HYTzdZnGxPWELg8GBs4FYH4gzfhEUOZ95y+nMV9LBUwB+4GaBM1pnW/VdbGUynjGz4F25zO/xJjfAvjuOdDdpWS+xRh/lYf5Ws0vCZxNM34rcM69qsgzv9TlVYXmVxvjT/M071/YJXA0zbiRY/5ihnH/Y14Gp2qeyvxG43wyz3zSWN+UYdw/9s+lOf+kG/BbDq9xMTDw0jmvbkOa8/7nuFWUuVnz/gZ6BvwAXhtZjyfMUWexJs253/lJYIpZTfnm16QZ98+90RnzG3KYP9e+zSvMv3L0FM3XZxj3z33H6E4Yc9ucHGwzY74u+8y7XVNP0Xw1cNI5b2/OeH2Wef/TfV2xnPcb1M+yRkc7f3+9FxTu5jRj2dJ14C3+hDHvN+T1pvtO+nXvuv+OXQIcdfzHnPl2f/Ov8f+h+KVe63XA9sWvM/R0/W+xzBkrtkH/5Wy0Dcwx5v3XOGAcu5zvfp2hZ8CZc7vbEtLd7W437VqzutvdDfvdrd5u9z+P98OuM/T0F7zf+Q/3fSG43/nPAvs7v8b41xAr7u/8mkgkEolEIpFIJBIhh3/TKW+vxkYV7AAAAABJRU5ErkJggg==" alt="GitHub">
+                    <i class="fab fa-github" style="font-size: 2rem; color: #ffffff;"></i>
                 </div>
                 <div>
-                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.2rem;">GitHub</div>
-                    <div class="contact-text">View My Projects</div>
+                    <div class="contact-label">GitHub</div>
+                    <div class="contact-text">View My Github Profile</div>
                 </div>
             </a>
-        </div>
 
-        <div class="contact-form-wrapper">
-            <form id="contactForm">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required placeholder="John Doe">
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required placeholder="john@example.com">
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" required placeholder="Tell me about your project or testing needs..."></textarea>
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                    <span>Send Message</span>
-                    <span>→</span>
-                </button>
-            </form>
         </div>
     </div>
 </section>
@@ -2066,13 +1912,12 @@
 </div>
 
 <script>
-    // Instant Loading - NO loading screen delay!
+    // Instant Loading
     window.addEventListener('DOMContentLoaded', () => {
-        // Generate stars efficiently
         generateStars();
     });
 
-    // Optimized Star Generation (only 15 stars for performance)
+    // Optimized Star Generation
     function generateStars() {
         const bgCanvas = document.querySelector('.bg-canvas');
         const fragment = document.createDocumentFragment();
@@ -2089,7 +1934,7 @@
         bgCanvas.appendChild(fragment);
     }
 
-    // Optimized Parallax (throttled) - Only on desktop
+    // Optimized Parallax
     let ticking = false;
     if (window.innerWidth > 768) {
         document.addEventListener('mousemove', (e) => {
@@ -2108,48 +1953,6 @@
         });
     }
 
-    // Optimized Animated Counter
-    function animateCounter(element, target) {
-        let current = 0;
-        const increment = target / 30; // Reduced iterations
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                element.textContent = target + '+';
-                clearInterval(timer);
-            } else {
-                element.textContent = Math.floor(current) + '+';
-            }
-        }, 40); // Slightly faster
-    }
-
-    // Optimized Progress Bar Animation
-    function animateProgressBars() {
-        const progressBars = document.querySelectorAll('.progress-bar');
-        const progressPercentages = document.querySelectorAll('.progress-percentage');
-        
-        progressBars.forEach((bar, index) => {
-            const targetWidth = bar.getAttribute('data-width');
-            setTimeout(() => {
-                bar.style.width = targetWidth + '%';
-                
-                const percentageElement = progressPercentages[index];
-                const targetPercentage = parseInt(percentageElement.getAttribute('data-progress'));
-                let current = 0;
-                const increment = targetPercentage / 30; // Reduced iterations
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= targetPercentage) {
-                        percentageElement.textContent = targetPercentage + '%';
-                        clearInterval(timer);
-                    } else {
-                        percentageElement.textContent = Math.floor(current) + '%';
-                    }
-                }, 40); // Faster animation
-            }, index * 150); // Reduced delay
-        });
-    }
-
     // Mobile Menu Functions
     function toggleMobileMenu() {
         const navLinks = document.getElementById('navLinks');
@@ -2161,11 +1964,11 @@
         navLinks.classList.remove('active');
     }
 
-    // Copy Email Function
+    // FIX 4: Copy Email Functionality (Used for the "Copy My ID" button)
     function copyEmail() {
         const email = 'manualtesterkalpshah@gmail.com';
         navigator.clipboard.writeText(email).then(() => {
-            showToast('Email copied to clipboard!', 'success');
+            showToast('Email ID copied to clipboard for recruiters!', 'success');
         }).catch(err => {
             showToast('Failed to copy email', 'error');
         });
@@ -2246,7 +2049,13 @@
         });
     }, observerOptions);
 
-    document.querySelectorAll('.stat-box, .skill-box, .project-box, .cert-box, .experience-box, .tool-box, .process-step').forEach(el => {
+    // Apply scroll-fade animation to all relevant elements
+    document.querySelectorAll('.stat-box, .skill-box, .project-box, .cert-box, .experience-box, .tool-box, .process-step, .impact-card').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(40px)';
-        el.style.
+        el.style.transition = 'all 0.6s ease-out';
+        observer.observe(el);
+    });
+</script>
+</body>
+</html>
