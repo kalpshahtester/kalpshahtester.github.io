@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f5f1">
+<meta name="description" content="Kalp Shah — Software QA Tester portfolio. Manual testing, WordPress QA, test design, bug reporting and Playwright-based QA automation.">
+<meta name="keywords" content="Kalp Shah, QA Tester, Manual Testing, WordPress QA, Playwright, Test Cases, Bug Reporting, SauceDemo">
+<meta name="author" content="Kalp Shah">
+<title>Kalp Shah — Software QA Tester</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--paper:#f6f5f1;--surface:#fff;--ink:#20231f;--muted:#74786f;--line:#e5e5dd;--accent:#e76b3c;--accent-soft:#fff0e8;--green:#267c58;--green-soft:#e7f5ec;--amber:#a66a14;--amber-soft:#fff3dc;--shadow:0 12px 34px rgba(32,35,31,.055);--radius:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--paper);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}a{color:inherit}button,a{-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible{outline:3px solid #e76b3c88;outline-offset:3px}.shell{width:min(1160px,calc(100% - 40px));margin:auto}.mono,.eyebrow,.tag,.metric-label,.nav-kicker{font-family:"DM Mono",monospace;letter-spacing:.035em}.topbar{position:sticky;top:0;z-index:10;background:#f6f5f1eF;backdrop-filter:blur(16px);border-bottom:1px solid #e5e5dd}.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700}.brand-mark{width:34px;height:34px;border-radius:11px;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:"Space Grotesk";font-size:15px}.nav-links{display:flex;align-items:center;gap:24px}.nav-links a{text-decoration:none;color:#555a51;font-size:13px;font-weight:600}.nav-links a:hover{color:var(--accent)}.nav-cta{background:var(--ink);color:#fff!important;padding:10px 14px;border-radius:10px}.menu-toggle{display:none;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font:inherit}.hero{padding:72px 0 36px}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:stretch}.hero-copy{padding:28px 0 18px}.eyebrow{font-size:11px;text-transform:uppercase;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:9px}.eyebrow:before{content:"";width:23px;height:1px;background:var(--accent)}h1,h2,h3,p{margin-top:0}h1{font:600 clamp(42px,6.3vw,76px)/1.02 "Space Grotesk",sans-serif;letter-spacing:-.065em;margin:22px 0 20px;max-width:720px}h1 em{font-style:normal;color:var(--accent)}.intro{max-width:590px;font-size:17px;color:#666b62;line-height:1.8}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;border-radius:11px;padding:12px 16px;font-size:13px;font-weight:700;border:1px solid var(--line);background:#fff;transition:transform .18s,box-shadow .18s}.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}.status-line{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px;margin-top:23px}.status-dot{width:8px;height:8px;background:#3aa675;border-radius:50%;box-shadow:0 0 0 4px #3aa67520}.dashboard{background:var(--ink);color:#f7f6f1;border-radius:22px;padding:24px;box-shadow:0 20px 50px #20231f17;position:relative;overflow:hidden}.dashboard:after{content:"";position:absolute;width:210px;height:210px;border-radius:50%;right:-90px;top:-100px;background:#e76b3c22;pointer-events:none}.dash-head{display:flex;justify-content:space-between;gap:12px;align-items:center;padding-bottom:20px;border-bottom:1px solid #ffffff20;position:relative;z-index:1}.dash-title{font:600 17px "Space Grotesk"}.dash-sub{font-size:11px;color:#a9aea5;margin-top:3px}.live-pill{font:10px "DM Mono";color:#b7e8c8;background:#267c5835;border:1px solid #4caa7d50;border-radius:100px;padding:6px 9px;white-space:nowrap}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:17px 0}.metric{padding:15px;border:1px solid #ffffff18;background:#ffffff08;border-radius:13px}.metric-label{font-size:10px;color:#b1b5ad;text-transform:uppercase}.metric-value{font:600 29px "Space Grotesk";margin-top:5px}.metric-note{font-size:10px;color:#b1b5ad;margin-top:2px}.dash-bottom{border-top:1px solid #ffffff20;padding-top:17px}.dash-bottom h3{font:500 12px "DM Mono";color:#c8cbc4;margin-bottom:12px}.quality-row{display:flex;justify-content:space-between;font-size:11px;color:#d9dbd5;margin:9px 0 5px}.bar{height:5px;border-radius:9px;background:#ffffff1c;overflow:hidden}.bar span{display:block;height:100%;background:var(--accent);border-radius:9px}.dashboard-foot{font-size:10px;color:#a9aea5;margin-top:14px}.section{padding:54px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:22px}.section-head h2{font:600 clamp(27px,4vw,38px)/1.1 "Space Grotesk";letter-spacing:-.045em;margin:9px 0 0}.section-note{color:var(--muted);font-size:12px;max-width:300px}.overview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.info-card,.project-card,.timeline-card,.contact-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:0 3px 12px #20231f03}.card-index{font:11px "DM Mono";color:var(--accent)}.info-card h3{font:600 18px "Space Grotesk";margin:12px 0 8px}.info-card p,.project-card p,.timeline-card p{font-size:13px;color:var(--muted);margin-bottom:0}.tag-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}.tag{font-size:10px;padding:6px 8px;background:#f4f3ee;border:1px solid #e9e8e1;border-radius:7px;color:#565a52}.projects{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.project-card{display:flex;flex-direction:column;min-height:260px}.project-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.project-type{font:10px "DM Mono";text-transform:uppercase;color:var(--accent)}.project-status{font-size:10px;border-radius:100px;background:var(--green-soft);color:var(--green);padding:5px 8px}.project-card h3{font:600 22px "Space Grotesk";letter-spacing:-.025em;margin:20px 0 8px}.project-card p{line-height:1.8}.project-card .tag-list{margin-bottom:18px}.project-link{margin-top:auto;text-decoration:none;font-size:12px;font-weight:700;color:var(--accent);display:inline-flex;gap:8px;align-items:center}.project-link:hover{text-decoration:underline}.experience-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:16px}.experience-summary{background:var(--accent-soft);border:1px solid #f7d8c8;border-radius:var(--radius);padding:25px}.experience-summary h3{font:600 23px/1.2 "Space Grotesk";letter-spacing:-.04em;margin:13px 0}.experience-summary p{font-size:13px;color:#765e52}.timeline{display:grid;gap:12px}.timeline-card h3{font:600 17px "Space Grotesk";margin:7px 0}.timeline-meta{font:10px "DM Mono";color:var(--accent);text-transform:uppercase}.skills-layout{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.skill-group{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px}.skill-group h3{font:600 16px "Space Grotesk";margin:0 0 10px}.skill-group p{font-size:12px;color:var(--muted);margin:0}.skill-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}.skill-chips span{font-size:11px;background:#f4f3ee;border-radius:7px;padding:6px 8px}.contact-wrap{background:var(--ink);color:#fff;border-radius:22px;padding:32px;display:grid;grid-template-columns:1.2fr .8fr;gap:25px;align-items:center}.contact-wrap h2{font:600 clamp(30px,4vw,44px)/1.08 "Space Grotesk";letter-spacing:-.05em;margin:12px 0}.contact-wrap p{font-size:13px;color:#c3c7be;max-width:450px}.contact-links{display:grid;gap:9px}.contact-links a{padding:12px 14px;border:1px solid #ffffff25;border-radius:10px;text-decoration:none;font-size:12px;display:flex;justify-content:space-between;gap:10px}.contact-links a:hover{border-color:var(--accent);color:#ffb395}.footer{padding:24px 0 34px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.footer a{color:inherit}.reveal{opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s ease}.reveal.visible{opacity:1;transform:none}.skip-link{position:absolute;top:-60px;left:10px;background:#fff;padding:10px;z-index:20}.skip-link:focus{top:10px}
+@media(max-width:800px){.hero{padding-top:38px}.hero-grid,.experience-grid,.contact-wrap{grid-template-columns:1fr}.hero-copy{padding-top:16px}.dashboard{max-width:none}.overview-grid,.skills-layout{grid-template-columns:repeat(2,1fr)}.section{padding:40px 0}.section-head{align-items:start;flex-direction:column}.section-note{max-width:none}.contact-wrap{padding:25px}}
+@media(max-width:600px){.shell{width:min(100% - 28px,1160px)}.nav{min-height:62px}.menu-toggle{display:block}.nav-links{display:none;position:absolute;top:61px;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--line);padding:15px 20px 20px;flex-direction:column;align-items:stretch;gap:4px}.nav-links.open{display:flex}.nav-links a{padding:10px}.nav-cta{text-align:center}.hero{padding-top:27px}.hero-grid{gap:20px}h1{font-size:clamp(41px,13vw,60px)}.intro{font-size:15px}.dashboard{padding:18px}.metric-value{font-size:25px}.overview-grid,.projects,.skills-layout{grid-template-columns:1fr}.info-card,.project-card,.skill-group{padding:18px}.project-card{min-height:0}.project-link{margin-top:14px}.section{padding:34px 0}.section-head h2{font-size:30px}.contact-wrap{padding:22px}.footer{padding-bottom:25px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="topbar">
+ <div class="shell nav">
+  <a class="brand" href="#home" aria-label="Kalp Shah home"><span class="brand-mark">KS</span><span>kalp shah<span style="color:var(--accent)">.</span></span></a>
+  <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+  <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+   <a href="#overview">Overview</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a class="nav-cta" href="#contact">Let's connect ↗</a>
+  </nav>
+ </div>
+</header>
+<main id="main">
+<section class="hero" id="home"><div class="shell hero-grid">
+ <div class="hero-copy">
+  <div class="eyebrow">Software quality assurance · Portfolio</div>
+  <h1>Building better software, <em>one test</em> at a time.</h1>
+  <p class="intro">I'm Kalp Shah, a QA Tester focused on thoughtful test design, reliable web experiences, clear defect reporting, and practical automation that helps teams ship with confidence.</p>
+  <div class="actions"><a class="btn btn-primary" href="#projects">Explore my work <span aria-hidden="true">↗</span></a><a class="btn" href="https://github.com/kalpshahtester" target="_blank" rel="noopener noreferrer">GitHub profile ↗</a></div>
+  <div class="status-line"><span class="status-dot" aria-hidden="true"></span>Open to QA opportunities · Surat, Gujarat, India</div>
+ </div>
+ <aside class="dashboard" aria-label="QA portfolio snapshot">
+  <div class="dash-head"><div><div class="dash-title">QA snapshot</div><div class="dash-sub">Selected portfolio highlights</div></div><span class="live-pill">● PORTFOLIO</span></div>
+  <div class="metrics">
+   <div class="metric"><div class="metric-label">Test cases</div><div class="metric-value">62+</div><div class="metric-note">SauceDemo project documentation</div></div>
+   <div class="metric"><div class="metric-label">User support</div><div class="metric-value">100+</div><div class="metric-note">Users supported in prior IT role</div></div>
+   <div class="metric"><div class="metric-label">QA focus</div><div class="metric-value">Web</div><div class="metric-note">Manual & WordPress testing</div></div>
+   <div class="metric"><div class="metric-label">Automation</div><div class="metric-value">PW</div><div class="metric-note">Playwright learning & QA checks</div></div>
+  </div>
+  <div class="dash-bottom"><h3>CORE QUALITY PRACTICE</h3>
+   <div class="quality-row"><span>Test design & execution</span><span>Core</span></div><div class="bar"><span style="width:92%"></span></div>
+   <div class="quality-row"><span>Defect documentation</span><span>Core</span></div><div class="bar"><span style="width:88%"></span></div>
+   <div class="quality-row"><span>Web QA automation</span><span>Growing</span></div><div class="bar"><span style="width:58%"></span></div>
+   <div class="dashboard-foot">Focus areas, not measured performance scores.</div>
+  </div>
+ </aside>
+</div></section>
+<section class="section" id="overview"><div class="shell">
+ <div class="section-head"><div><div class="eyebrow">01 / Overview</div><h2>Quality is in the details.</h2></div><p class="section-note">A practical QA mindset from requirements to release confidence.</p></div>
+ <div class="overview-grid">
+  <article class="info-card reveal"><span class="card-index">01 — TEST</span><h3>Structured test coverage</h3><p>Translate requirements into scenarios and test cases, covering happy paths, negative cases, boundaries, and regression risks.</p><div class="tag-list"><span class="tag">STLC</span><span class="tag">Test plans</span><span class="tag">RTM</span></div></article>
+  <article class="info-card reveal"><span class="card-index">02 — REPORT</span><h3>Actionable bug reports</h3><p>Document clear reproduction steps, expected versus actual results, severity, priority, environment, and supporting evidence.</p><div class="tag-list"><span class="tag">Bug lifecycle</span><span class="tag">ClickUp</span><span class="tag">Excel</span></div></article>
+  <article class="info-card reveal"><span class="card-index">03 — IMPROVE</span><h3>Web & SEO QA</h3><p>Check responsive UI, links, content consistency, accessibility basics, metadata, image quality, and repeatable browser checks.</p><div class="tag-list"><span class="tag">WordPress</span><span class="tag">SEO QA</span><span class="tag">Playwright</span></div></article>
+ </div>
+</div></section>
+<section class="section" id="projects"><div class="shell">
+ <div class="section-head"><div><div class="eyebrow">02 / Selected work</div><h2>Projects with purpose.</h2></div><p class="section-note">Hands-on testing work and repeatable quality checks.</p></div>
+ <div class="projects">
+  <article class="project-card reveal"><div class="project-top"><span class="project-type">Manual testing · Featured</span><span class="project-status">Documentation</span></div><h3>SauceDemo — Manual Testing</h3><p>End-to-end practice project covering requirements, test planning, scenarios, test cases, bug reporting, traceability, and a test summary for an e-commerce demo application.</p><div class="tag-list"><span class="tag">62+ test cases</span><span class="tag">Functional</span><span class="tag">Regression</span><span class="tag">Negative testing</span><span class="tag">RTM</span></div><a class="project-link" href="https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website" target="_blank" rel="noopener noreferrer">View project repository ↗</a></article>
+  <article class="project-card reveal"><div class="project-top"><span class="project-type">Web QA · Automation</span><span class="project-status">Practice / iteration</span></div><h3>Website & SEO QA checks</h3><p>Playwright-based checks for page metadata, heading structure, image alt text and formats, image sizes, external links, and content consistency between source documents and live pages.</p><div class="tag-list"><span class="tag">Playwright</span><span class="tag">JavaScript / TypeScript</span><span class="tag">SEO</span><span class="tag">Content validation</span></div><a class="project-link" href="https://github.com/kalpshahtester" target="_blank" rel="noopener noreferrer">Explore GitHub repositories ↗</a></article>
+ </div>
+</div></section>
+<section class="section" id="experience"><div class="shell">
+ <div class="section-head"><div><div class="eyebrow">03 / Experience</div><h2>Support-minded. Quality-focused.</h2></div></div>
+ <div class="experience-grid">
+  <aside class="experience-summary"><div class="eyebrow">Professional approach</div><h3>Think like a user. Investigate like a tester.</h3><p>My IT support background strengthened my troubleshooting, communication, and problem-solving habits. I apply those strengths to finding, explaining, and helping prevent product defects.</p></aside>
+  <div class="timeline">
+   <article class="timeline-card reveal"><div class="timeline-meta">Current / recent role · 2026</div><h3>Manual QA Tester — WordPress & Web QA</h3><p>Testing web pages and user journeys; validating UI, content, forms, links, responsive behavior, and SEO details; documenting defects and coordinating follow-up with development teams using ClickUp, Slack, and spreadsheets.</p></article>
+   <article class="timeline-card reveal"><div class="timeline-meta">Previous IT experience</div><h3>Computer Engineer / IT Support</h3><p>System validation, troubleshooting, and end-user support for 100+ users, building a foundation in issue investigation, clear communication, and reliable technical operations.</p></article>
+   <article class="timeline-card reveal"><div class="timeline-meta">Education & training</div><h3>Diploma in Information Technology</h3><p>Dr. S. & S. S. Ghandhy College of Engineering & Technology. Manual Testing training completed at TOPS Technologies; continuing to develop automation testing skills.</p></article>
+  </div>
+ </div>
+</div></section>
+<section class="section" id="skills"><div class="shell">
+ <div class="section-head"><div><div class="eyebrow">04 / Toolkit</div><h2>Tools & testing skills.</h2></div><p class="section-note">A growing toolkit for practical web quality assurance.</p></div>
+ <div class="skills-layout">
+  <article class="skill-group reveal"><h3>Manual QA</h3><p>Planning, execution, and defect verification.</p><div class="skill-chips"><span>SDLC / STLC</span><span>Test scenarios</span><span>Test cases</span><span>Smoke testing</span><span>Sanity testing</span><span>Regression</span><span>Retesting</span><span>RTM</span></div></article>
+  <article class="skill-group reveal"><h3>Web & WordPress</h3><p>Functional and content quality across web journeys.</p><div class="skill-chips"><span>UI testing</span><span>Responsive QA</span><span>Forms</span><span>Cross-browser</span><span>SEO checks</span><span>Accessibility basics</span></div></article>
+  <article class="skill-group reveal"><h3>Tools & automation</h3><p>Test collaboration, documentation, and browser checks.</p><div class="skill-chips"><span>Playwright</span><span>JavaScript / TypeScript</span><span>ClickUp</span><span>Slack</span><span>Google Sheets</span><span>Excel</span><span>GitHub</span><span>Postman basics</span></div></article>
+ </div>
+</div></section>
+<section class="section" id="contact"><div class="shell"><div class="contact-wrap reveal">
+ <div><div class="eyebrow">05 / Contact</div><h2>Let's make software more reliable.</h2><p>Have a QA opportunity, collaboration idea, or feedback on my projects? Reach out or explore my work online.</p><a class="btn btn-primary" href="mailto:manualtesterkalpshah@gmail.com">Email me ↗</a></div>
+ <div class="contact-links"><a href="https://www.linkedin.com/in/kalp-shah-software-tester/" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><span>↗</span></a><a href="https://github.com/kalpshahtester" target="_blank" rel="noopener noreferrer"><span>GitHub</span><span>↗</span></a><a href="https://wa.me/918160426134" target="_blank" rel="noopener noreferrer"><span>WhatsApp</span><span>↗</span></a><a href="Kalp%20Shah%20Manual%20Tester%20Resume.pdf"><span>Resume PDF</span><span>↓</span></a></div>
+</div></div></section>
+</main>
+<footer class="shell footer"><span>© <span id="year"></span> Kalp Shah · Software QA Tester</span><span>Designed for clarity, built for quality · <a href="#home">Back to top ↑</a></span></footer>
+<script>
+(function(){
+ const toggle=document.getElementById('menuToggle');
+ const links=document.getElementById('navLinks');
+ toggle.addEventListener('click',function(){const open=links.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'Close':'Menu';});
+ links.querySelectorAll('a').forEach(function(link){link.addEventListener('click',function(){links.classList.remove('open');toggle.setAttribute('aria-expanded','false');toggle.textContent='Menu';});});
+ document.getElementById('year').textContent=new Date().getFullYear();
+ const items=document.querySelectorAll('.reveal');
+ if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}});},{threshold:.12});
+  items.forEach(function(item){observer.observe(item);});
+ }else{items.forEach(function(item){item.classList.add('visible');});}
+})();
+</script>
+</body>
+</html>
