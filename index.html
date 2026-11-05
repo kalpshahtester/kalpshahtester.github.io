@@ -113,12 +113,13 @@ footer{padding:24px 0;font: .68rem var(--mono);color:var(--muted);display:flex;j
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 
-/* Portrait framing fix: constrain the image on all screen sizes. */
-.portrait{width:min(100%,500px);aspect-ratio:4/5;display:grid;grid-template-rows:minmax(0,1fr) auto;align-self:start;overflow:visible}
-.portrait img{width:100%;height:100%;min-height:0;aspect-ratio:auto;object-fit:cover;object-position:50% 24%;}
-.portrait .photo-caption{min-width:0;}
-@media(max-width:850px){.portrait{width:min(88%,420px);aspect-ratio:4/5;margin:0 auto}.portrait img{object-position:50% 23%}}
-@media(max-width:600px){.portrait{width:min(88%,380px);aspect-ratio:4/5}.portrait img{object-position:50% 22%}.portrait:before{inset:8px -8px -8px 8px}}
+/* Portrait layout correction: let the figure size naturally; only crop the photo itself. */
+.portrait{display:block;width:min(100%,500px);max-width:500px;height:auto;aspect-ratio:auto;justify-self:end;align-self:center;position:relative;overflow:visible;margin:0}
+.portrait img{display:block;position:relative;z-index:1;width:100%;height:auto;min-height:0;aspect-ratio:4/5;object-fit:cover;object-position:center 35%;border:1px solid var(--ink);}
+.portrait:before{content:"";position:absolute;inset:16px -16px -16px 16px;background:var(--accent2);z-index:0}
+.portrait .photo-caption{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:13px 0 0;min-width:0}
+@media(max-width:850px){.portrait{width:min(88%,420px);margin:0 auto}.portrait img{object-position:center 35%}}
+@media(max-width:600px){.portrait{width:min(88%,380px)}.portrait img{object-position:center 35%}.portrait:before{inset:8px -8px -8px 8px}}
 @media(max-width:360px){.portrait{width:min(92%,320px)}}
 </style>
 </head>
