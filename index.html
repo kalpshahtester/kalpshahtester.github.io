@@ -24,6 +24,27 @@ a{color:inherit}button{font:inherit;cursor:pointer}img{display:block;max-width:1
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}.reveal.visible{opacity:1;transform:none}.backtop{position:fixed;right:20px;bottom:20px;z-index:10;width:46px;height:46px;background:var(--green);color:white;border:0;display:none}.backtop.show{display:block}
 @media(max-width:760px){.wrap{width:min(100% - 30px,620px)}.nav{height:64px}.menu-btn{display:block}.nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:var(--bg);padding:18px 20px;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:15px}.nav-links.open{display:flex}.hero{padding:45px 0 38px}.hero-grid{grid-template-columns:1fr;gap:38px}.hero h1{font-size:clamp(3.4rem,15vw,5.6rem);margin:22px 0}.hero-copy{font-size:1rem}.portrait{width:min(86%,390px);margin:0 auto}.portrait-stamp{right:-12px}.photo-caption{left:-14px}.stats{grid-template-columns:1fr 1fr}.stat{padding:20px 14px;border-bottom:1px solid var(--line)}.stat:nth-child(2){border-right:0}.stat:first-child{padding-left:14px}.stat strong{font-size:2.8rem}.section{padding:68px 0}.section-head{grid-template-columns:1fr;gap:8px;margin-bottom:30px}.section-num{padding:0}.about-grid{grid-template-columns:1fr;gap:20px}.projects{grid-template-columns:1fr}.project.feature{grid-column:auto;display:flex}.project-visual{min-height:230px}.lab{padding:22px 16px}.lab-head{display:block}.lab-panel{grid-template-columns:1fr;padding:18px}.checklist{grid-template-columns:1fr}.workflow{grid-template-columns:1fr 1fr}.step{padding:16px;min-height:145px}.skills{grid-template-columns:1fr}.contact{padding:55px 0}.contact-grid{grid-template-columns:1fr}.contact h2{font-size:clamp(3rem,14vw,5rem)}footer{flex-direction:column}.ticker-inner{animation-duration:40s}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* Contrast + portrait refinement */
+:root{--bg:#f7f4ec;--paper:#fffdf8;--ink:#202825;--muted:#58645d;--line:#d2cec3;--accent:#c94f32;--green:#285744;--green2:#e2ebe4;--shadow:6px 6px 0 #202825}
+body.dark{--bg:#17221e;--paper:#202d27;--ink:#f4f1e9;--muted:#c4cec7;--line:#526159;--accent:#f19a7b;--green:#a9d4ba;--green2:#2b4136;--shadow:6px 6px 0 #0c1410}
+body.dark h1,body.dark h2,body.dark h3,body.dark h4,body.dark .about-statement,body.dark .project h3,body.dark .job h3,body.dark .skill h3,body.dark .lab-head h3,body.dark .lab-panel h4,body.dark .step h3{color:var(--ink)}
+body.dark .hero h1 em,body.dark .section h2 em{color:#a9d4ba}
+body.dark .hero-copy,body.dark .section-intro,body.dark .about-text,body.dark .about-text p,body.dark .project p,body.dark .step p,body.dark .job p,body.dark .skill p,body.dark .stat span,body.dark .photo-caption small{color:var(--muted)}
+body.dark .project,body.dark .skill,body.dark .photo-caption{background:var(--paper);color:var(--ink);border-color:var(--line)}
+body.dark .lab{background:#202d27;color:var(--ink);border-color:var(--line)}
+body.dark .lab-tabs .lab-tab{color:var(--ink);border-color:var(--line)}
+body.dark .lab-tabs .lab-tab[aria-selected=true]{background:var(--accent);color:#17221e;border-color:var(--accent)}
+body.dark .lab-panel{border-color:var(--line)}
+body.dark .lab-panel p,body.dark .lab-note{color:var(--muted)}
+body.dark .contact{background:#b84b30;color:#fff}
+body.dark .contact p{color:#fff4ee}
+body.dark .contact-links a{color:#fff;border-color:#ffffff75}
+body.dark .contact-links a:first-child{background:#17221e;color:#fff;border-color:#17221e}
+body.dark .contact-links a:hover{background:#fff;color:#9e3c26}
+body.dark .btn.primary{background:#a9d4ba;color:#17221e;border-color:#a9d4ba}
+body.dark .brand-mark{background:#a9d4ba;color:#17221e}
+@media(max-width:760px){.portrait{width:min(86%,390px);margin:0 auto 38px}.photo-caption{left:0;bottom:-34px;max-width:calc(100% - 20px);padding:10px 14px;box-shadow:4px 4px 0 var(--accent)}.portrait-stamp{right:-10px;top:14px;padding:10px 8px;font-size:.58rem}.hero{overflow:visible}body.dark .nav-links{background:var(--paper);border-color:var(--line)}}
 </style>
 </head>
 <body>
