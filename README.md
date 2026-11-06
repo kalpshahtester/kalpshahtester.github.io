@@ -1,71 +1,41 @@
-# 🌐 Kalp Shah – Manual QA Tester Portfolio Website
+# Kalp Shah — Manual QA Tester Portfolio
 
-This repository hosts my personal QA Portfolio Website, designed to showcase my  
-professional skills, manual testing projects, certifications, documentation work,  
-and overall experience as a Manual QA Tester.
+Official portfolio: https://kalpshahtester.github.io/
 
-### 🔗 Live Portfolio Website  
-Visit: **https://kalpshahtester.github.io/**
+This repository contains the source for Kalp Shah's personal QA portfolio, published with GitHub Pages from the `main` branch.
 
----
+## Portfolio highlights
 
-## 📌 About This Portfolio  
-My portfolio website provides a complete overview of my work as a QA Tester, including:
+- Manual QA, WordPress QA, and web application testing
+- SauceDemo end-to-end manual testing project
+- MakeMyTrip testing assessment
+- QA workflow, test design, execution, defect reporting, retesting, and regression
+- Professional experience, education, and skills
+- Downloadable resume and contact links
 
-- High-Level Requirements (HLR)
-- Test Plans, Test Scenarios, and Test Cases  
-- Bug Reports & Summary Reports  
-- Requirements Traceability Matrix (RTM)  
-- End-to-end Manual Testing Project (SauceDemo)  
-- Resume (Downloadable)  
-- Certifications & Professional Achievements  
-- Contact Information with WhatsApp, Email, GitHub, and LinkedIn links  
+## Featured work
 
-The goal of this portfolio is to demonstrate hands-on QA knowledge, structured documentation,  
-analytical problem-solving skills, and practical test execution abilities aligned with QA standards.
+- [SauceDemo Manual Testing Project](https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website)
+- [MakeMyTrip Testing Assessment](https://github.com/kalpshahtester/MakeMyTrip-Testing-Assessment)
+- [GitHub profile and QA repositories](https://github.com/kalpshahtester)
 
----
+## Website files
 
-## 🧪 Featured Project  
-### **SauceDemo – Manual Testing Project**
-A full manual testing project including:
+- `index.html` — published homepage
+- `Kalp Shah Profile Photo.png` — homepage portrait
+- `Kalp Shah Manual Tester Resume.pdf` — downloadable resume
+- `portfolio-v2/index.html` — secondary portfolio version (not the root homepage)
 
-- 50+ High-Level Requirements  
-- 60+ Test Scenarios  
-- 65+ Test Cases  
-- Bug Report  
-- RTM  
-- Test Summary  
-- Functional, UI, Regression, Negative Testing  
+## Local preview
 
-GitHub Project Link:  
-https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website
+Open `index.html` in a modern browser. The site is static HTML, CSS, and JavaScript; no build dependencies are required for local preview.
 
----
+## Deployment
 
-## 🧑‍💻 Tech Stack Used  
-- **HTML5, CSS3** (Portfolio Website)  
-- **GitHub Pages** for hosting  
-- **Jira** (Test Management)  
-- **MS Excel** (Test Documentation)
+GitHub Pages publishes the root site from the `main` branch. Changes to `index.html` and its referenced assets are reflected after the Pages deployment completes.
 
----
+## Contact
 
-## 📄 Resume  
-A downloadable version of my ATS-friendly resume is available on the website:  
-**https://kalpshahtester.github.io/Kalp%20Shah%20Manual%20Tester%20Resume.pdf
-**
-
----
-
-## 📬 Contact  
-- Email: manualtesterkalpshah@gmail.com  
-- WhatsApp: https://wa.me/918160426134  
-- LinkedIn: https://www.linkedin.com/in/kalp-shah-software-tester/  
-- GitHub: https://github.com/kalpshahtester  
-
----
-
-## ⭐ Feedback  
-If you found my portfolio helpful or impressive, feel free to give a **star** to this repository.
-
+- Email: manualtesterkalpshah@gmail.com
+- LinkedIn: https://www.linkedin.com/in/kalp-shah-software-tester/
+- GitHub: https://github.com/kalpshahtester
