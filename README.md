@@ -25,6 +25,15 @@ This repository contains the source for Kalp Shah's personal QA portfolio, publi
 - `Kalp Shah Profile Photo.png` — homepage portrait
 - `Kalp Shah Manual Tester Resume.pdf` — downloadable resume
 - `portfolio-v2/index.html` — secondary portfolio version (not the root homepage)
+- `AI_PORTFOLIO_MASTER_PROMPT.md` — verified profile data, project references, design brief and implementation/QA instructions for AI coding agents
+
+## Technology direction
+
+The live portfolio uses Three.js with React Three Fiber for its 3D QA scene, GSAP/ScrollTrigger for motion, and Lenis for smooth scrolling. The QA runner is a clearly labelled portfolio simulation, not a live test service.
+
+## AI handoff
+
+Read [AI_PORTFOLIO_MASTER_PROMPT.md](AI_PORTFOLIO_MASTER_PROMPT.md) before asking an AI coding agent to redesign or extend the portfolio. It includes verified profile details and strict rules against invented personal information or credentials.
 
 ## Local preview
 
@@ -37,5 +46,5 @@ GitHub Pages publishes the root site from the `main` branch. Changes to `index.h
 ## Contact
 
 - Email: manualtesterkalpshah@gmail.com
-- LinkedIn: https://www.linkedin.com/in/kalp-shah-software-tester/
+- LinkedIn: https://www.linkedin.com/in/kalp-shah-a9965b395/
 - GitHub: https://github.com/kalpshahtester
