@@ -185,11 +185,14 @@ menu.addEventListener('click',function(){
 nav.querySelectorAll('a').forEach(function(link){
  link.addEventListener('click',function(){closeMenu(false);});
 });
+document.addEventListener('click',function(event){
+ if(nav.classList.contains('open')&&!nav.contains(event.target)&&!menu.contains(event.target))closeMenu(false);
+});
 document.addEventListener('keydown',function(event){
  if(event.key==='Escape'&&nav.classList.contains('open'))closeMenu(true);
 });
-window.addEventListener('resize',function(){
- if(window.innerWidth>850)closeMenu(false);
+mobileNavQuery.addEventListener('change',function(event){
+ if(!event.matches)closeMenu(false);
 });
 
 const datasets={
