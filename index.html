@@ -315,12 +315,54 @@ back.addEventListener('click',function(){
 })();
 
 </script>
+<script type="importmap">{"imports":{"react":"https://esm.sh/react@18.3.1","react-dom":"https://esm.sh/react-dom@18.3.1","three":"https://esm.sh/three@0.166.1"}}</script>
 <script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js';
-import { gsap } from 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js';
-import Lenis from 'https://cdn.jsdelivr.net/npm/lenis@1.1.20/+esm';
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,canvas=document.getElementById('qaWorldCanvas'),hero=document.querySelector('.hero');
-if(canvas&&hero&&!reduce){const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(45,1,.1,100);camera.position.set(0,0,11);const group=new THREE.Group();scene.add(group);const core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.35,2),new THREE.MeshStandardMaterial({color:0x193c66,metalness:.72,roughness:.25,wireframe:true}));group.add(core);group.add(new THREE.Mesh(new THREE.IcosahedronGeometry(1.48,1),new THREE.MeshBasicMaterial({color:0x53e8ff,wireframe:true,transparent:true,opacity:.15})));for(let i=0;i<3;i++){const ring=new THREE.Mesh(new THREE.TorusGeometry(2.05+i*.28,.009,8,100),new THREE.MeshBasicMaterial({color:0x947dff,transparent:true,opacity:.7}));ring.rotation.x=Math.PI/2+i*.5;ring.rotation.y=i*.7;group.add(ring)}const nodes=new THREE.Group();group.add(nodes);for(let i=0;i<38;i++){const a=i*2.399,r=2.3+(i%5)*.18,d=new THREE.Mesh(new THREE.SphereGeometry(.025+(i%3)*.008,8,8),new THREE.MeshBasicMaterial({color:i%4===0?0x9b7cff:0x53e8ff}));d.position.set(Math.cos(a)*r,Math.sin(i*1.7)*1.5,Math.sin(a)*r);nodes.add(d)}scene.add(new THREE.AmbientLight(0xffffff,1.5));const light=new THREE.PointLight(0x53e8ff,24,25);light.position.set(3,4,6);scene.add(light);let frame;function resize(){const w=hero.clientWidth,h=hero.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();group.position.set(w<850?0:2.1,.1,0);group.scale.setScalar(w<850?.8:1.05)}resize();addEventListener('resize',resize,{passive:true});function tick(){frame=requestAnimationFrame(tick);group.rotation.y+=.0018;group.rotation.x=Math.sin(Date.now()*.00025)*.12;nodes.rotation.y=-group.rotation.y*.45;renderer.render(scene,camera)}tick();hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();gsap.to(group.rotation,{x:((e.clientY-r.top)/r.height-.5)*.18,y:((e.clientX-r.left)/r.width-.5)*.28,duration:.7,ease:'power2.out'})});document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(frame);else tick()})}
-if(!reduce){const lenis=new Lenis({duration:1.05,smoothWheel:true,anchors:true});function raf(t){lenis.raf(t);requestAnimationFrame(raf)}requestAnimationFrame(raf);gsap.utils.toArray('.section-head,.project,.world-window,.world-terminal').forEach(el=>gsap.from(el,{y:28,opacity:0,duration:.7,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',once:true}}))}
-const rows=[...document.querySelectorAll('[data-test]')],meter=document.getElementById('qaRunMeter'),status=document.getElementById('qaRunStatus');let timer=null;function reset(){if(timer)clearInterval(timer);timer=null;rows.forEach(x=>{x.textContent='READY';x.className='terminal-pass'});meter.style.width='0%';status.textContent='Awaiting test execution. Start the demo suite.'}document.getElementById('resetQaDemo').addEventListener('click',reset);document.getElementById('runQaDemo').addEventListener('click',()=>{reset();let n=0;status.textContent='Running simulated checks…';timer=setInterval(()=>{if(n>=rows.length){clearInterval(timer);timer=null;status.textContent='Demo complete: 5 simulated checks passed. No live site was tested.';return}rows[n].textContent='PASS';meter.style.width=((n+1)/rows.length*100)+'%';status.textContent='Executing check '+(n+1)+' of '+rows.length+'…';n++},450)});
+import React from "react";
+import {createRoot} from "https://esm.sh/react-dom@18.3.1/client?external=react";
+import {Canvas,useFrame} from "https://esm.sh/@react-three/fiber@8.17.10?external=react,react-dom,three";
+import {gsap} from "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js";
+import {ScrollTrigger} from "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js";
+import Lenis from "https://cdn.jsdelivr.net/npm/lenis@1.1.20/+esm";
+gsap.registerPlugin(ScrollTrigger);
+const h=React.createElement, reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function QAWorld(){
+ const rig=React.useRef(),core=React.useRef(),particles=React.useRef();
+ useFrame((state,delta)=>{
+  if(!reduced&&rig.current){rig.current.rotation.y+=delta*.12;rig.current.rotation.x=Math.sin(state.clock.elapsedTime*.25)*.09}
+  if(core.current&&!reduced)core.current.rotation.y-=delta*.18;
+  if(particles.current&&!reduced)particles.current.rotation.y+=delta*.035;
+ });
+ const dots=Array.from({length:34},(_,i)=>{const a=i*2.399,r=2.05+(i%4)*.18;return h("mesh",{key:i,position:[Math.cos(a)*r,Math.sin(i*1.61)*1.35,Math.sin(a)*r]},h("sphereGeometry",{args:[.025+(i%3)*.009,8,8]}),h("meshBasicMaterial",{color:i%5===0?"#a78bfa":"#53e8ff"}))});
+ return h("group",{ref:rig},
+  h("mesh",{ref:core},h("icosahedronGeometry",{args:[1.18,2]}),h("meshStandardMaterial",{color:"#173b63",wireframe:true,metalness:.7,roughness:.24})),
+  h("mesh",null,h("icosahedronGeometry",{args:[1.32,1]}),h("meshBasicMaterial",{color:"#53e8ff",wireframe:true,transparent:true,opacity:.13})),
+  ...[0,1,2].map(i=>h("mesh",{key:"ring"+i,rotation:[Math.PI/2+i*.43,i*.68,0]},h("torusGeometry",{args:[1.85+i*.28,.008,8,100]}),h("meshBasicMaterial",{color:i===1?"#a78bfa":"#53e8ff",transparent:true,opacity:.62}))),
+  h("group",{ref:particles},...dots),
+  h("pointLight",{position:[3,3,4],intensity:16,color:"#53e8ff"}),
+  h("ambientLight",{intensity:1.5})
+ );
+}
+const worldRoot=document.getElementById("qaWorldCanvas");
+if(worldRoot){try{createRoot(worldRoot).render(h(Canvas,{camera:{position:[0,0,7],fov:44},dpr:[1,1.5],gl:{alpha:true,antialias:true},style:{width:"100%",height:"100%"}},h(QAWorld)));}catch(error){console.warn("3D scene could not initialize; static hero remains available.",error)}}
+if(!reduced){
+ const lenis=new Lenis({duration:1.05,smoothWheel:true,anchors:true});
+ lenis.on("scroll",ScrollTrigger.update);
+ gsap.ticker.add(time=>lenis.raf(time*1000));gsap.ticker.lagSmoothing(0);
+ gsap.utils.toArray(".section-head,.project,.world-window,.world-terminal,.profile-fact,.credential").forEach(el=>{
+  gsap.fromTo(el,{y:26,opacity:0},{y:0,opacity:1,duration:.72,ease:"power2.out",scrollTrigger:{trigger:el,start:"top 89%",once:true}});
+ });
+ ScrollTrigger.refresh();
+}
+const rows=[...document.querySelectorAll("[data-test]")],meter=document.getElementById("qaRunMeter"),status=document.getElementById("qaRunStatus");
+let timer=null;
+function reset(){if(timer)clearInterval(timer);timer=null;rows.forEach(x=>{x.textContent="READY";x.className="terminal-pass"});if(meter)meter.style.width="0%";if(status)status.textContent="Awaiting test execution. Start the demo suite."}
+document.getElementById("resetQaDemo")?.addEventListener("click",reset);
+document.getElementById("runQaDemo")?.addEventListener("click",()=>{
+ reset();let n=0;if(status)status.textContent="Running simulated checks…";
+ timer=setInterval(()=>{
+  if(n>=rows.length){clearInterval(timer);timer=null;if(status)status.textContent="Demo complete: 5 simulated checks passed. No live site was tested.";return}
+  rows[n].textContent="PASS";if(meter)meter.style.width=((n+1)/rows.length*100)+"%";
+  if(status)status.textContent="Executing check "+(n+1)+" of "+rows.length+"…";n++;
+ },450);
+});
 </script></body></html>
