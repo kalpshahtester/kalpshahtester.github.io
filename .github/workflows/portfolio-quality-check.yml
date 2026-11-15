@@ -2,7 +2,7 @@ name: Portfolio quality checks
 
 on:
   push:
-    branches: [main, recruiter-portfolio-refresh, premium-portfolio-v2, website-quality-fixes]
+    branches: [main, recruiter-portfolio-refresh, premium-portfolio-v2, website-quality-fixes, deep-quality-audit]
   pull_request:
     branches: [main]
   workflow_dispatch:
