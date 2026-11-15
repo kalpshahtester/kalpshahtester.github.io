@@ -224,14 +224,15 @@
 
       const heroTimeline = gsap.timeline({ defaults: { ease: "power4.out" } });
       heroTimeline
-        .from(".hero-eyebrow", { y: 16, opacity: 0, duration: .65 })
-        .from(".hero-title", { y: 52, opacity: 0, duration: 1.05 }, "-=.35")
-        .from(".hero-description", { y: 20, opacity: 0, duration: .7 }, "-=.62")
-        .from(".hero-actions .button", { y: 18, opacity: 0, stagger: .12, duration: .6 }, "-=.48")
-        .from(".hero-current", { y: 14, opacity: 0, duration: .55 }, "-=.38")
+        // Keep readable text at full contrast during motion; animate position, not opacity.
+        .from(".hero-eyebrow", { y: 16, duration: .65 })
+        .from(".hero-title", { y: 52, duration: 1.05 }, "-=.35")
+        .from(".hero-description", { y: 20, duration: .7 }, "-=.62")
+        .from(".hero-actions .button", { y: 18, stagger: .12, duration: .6 }, "-=.48")
+        .from(".hero-current", { y: 14, duration: .55 }, "-=.38")
         .from(".portrait-frame", { y: 34, opacity: 0, rotate: 7, duration: 1.1 }, "-=1.1")
-        .from(".float-card", { y: 18, opacity: 0, stagger: .13, duration: .65 }, "-=.66")
-        .from(".hero-foot", { opacity: 0, duration: .45 }, "-=.35");
+        .from(".float-card", { y: 18, stagger: .13, duration: .65 }, "-=.66")
+        .from(".hero-foot", { y: 8, duration: .45 }, "-=.35");
 
       gsap.to(".orbit-one", { rotation: 337, duration: 42, ease: "none", repeat: -1 });
       gsap.to(".orbit-two", { rotation: -321, duration: 58, ease: "none", repeat: -1 });
@@ -240,13 +241,10 @@
 
       if (ScrollTrigger) {
         gsap.utils.toArray("[data-reveal]").forEach((element, index) => {
-          gsap.fromTo(element,
-            { y: 38, opacity: 0 },
-            {
-              y: 0, opacity: 1, duration: .82, delay: (index % 3) * .045,
-              scrollTrigger: { trigger: element, start: "top 88%", once: true }
-            }
-          );
+          gsap.from(element, {
+            y: 38, duration: .82, delay: (index % 3) * .045,
+            scrollTrigger: { trigger: element, start: "top 88%", once: true }
+          });
         });
 
         gsap.to(".portrait-frame", {
@@ -265,7 +263,7 @@
         ScrollTrigger.refresh();
       } else {
         gsap.utils.toArray("[data-reveal]").forEach(element => {
-          gsap.from(element, { y: 28, opacity: 0, duration: .7 });
+          gsap.from(element, { y: 28, duration: .7 });
         });
       }
 
