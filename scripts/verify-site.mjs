@@ -7,6 +7,9 @@ const required = [
   "index.html",
   "assets/css/site.css",
   "assets/js/site.js",
+  "assets/css/premium.css",
+  "assets/js/premium.js",
+  "assets/favicon.svg",
   "projects/saucedemo.html",
   "projects/makemytrip.html"
 ];
@@ -20,6 +23,13 @@ for (const page of pages) {
   assert.match(html, /name="description"/i, page + ": missing meta description");
   assert.match(html, /<main\b/i, page + ": missing main landmark");
   assert.match(html, /class="skip-link"/i, page + ": missing skip link");
+
+  const ids = [...html.matchAll(/\bid="([^"]+)"/gi)].map(match => match[1]);
+  assert.equal(new Set(ids).size, ids.length, page + ": duplicate id attribute");
+  assert.equal([...html.matchAll(/<h1\b/gi)].length, 1, page + ": expected exactly one H1");
+  for (const match of html.matchAll(/href="#([^"]+)"/gi)) {
+    assert.ok(ids.includes(match[1]), page + ": broken in-page anchor #" + match[1]);
+  }
 
   for (const match of html.matchAll(/<img\b([^>]*)>/gi)) {
     assert.match(match[1], /\balt="/i, page + ": image without alt text");
@@ -39,10 +49,18 @@ const home = fs.readFileSync(path.join(root, "index.html"), "utf8");
 assert.match(home, /47/, "missing verified scenario metric");
 assert.match(home, /62\+/, "missing verified test-case metric");
 assert.match(home, /282/, "missing verified execution metric");
+assert.ok(home.includes('href="/assets/css/premium.css"'), "homepage must load its premium stylesheet");
+assert.match(home, /aria-label="Primary navigation"/i, "missing accessible primary navigation");
+assert.match(home, /Illustrative animation only/i, "interactive QA sample must be clearly labelled");
 assert.doesNotMatch(home, /7 critical defects|Playwright QA Automation|kalp-shah-software-tester/i, "unverified or outdated profile claim found");
 
-const css = fs.readFileSync(path.join(root, "assets/css/site.css"), "utf8");
-assert.match(css, /prefers-reduced-motion/i, "missing reduced-motion handling");
-assert.match(css, /:focus-visible/i, "missing keyboard focus styling");
+for (const cssPath of ["assets/css/site.css", "assets/css/premium.css"]) {
+  const css = fs.readFileSync(path.join(root, cssPath), "utf8");
+  assert.match(css, /prefers-reduced-motion/i, cssPath + ": missing reduced-motion handling");
+  assert.match(css, /:focus-visible/i, cssPath + ": missing keyboard focus styling");
+}
 
-console.log("Portfolio structure checks passed for " + pages.length + " pages.");
+const js = fs.readFileSync(path.join(root, "assets/js/premium.js"), "utf8");
+assert.match(js, /Promise\.allSettled/, "animation imports must fail gracefully");
+assert.match(js, /Escape/, "navigation must support keyboard dismissal");
+console.log("Portfolio structure, accessibility markers, local links and motion fallbacks passed for " + pages.length + " pages.");
