@@ -1,368 +1,326 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f6f4ef">
-<meta name="color-scheme" content="light dark">
-<meta name="description" content="Kalp Shah — Manual QA Tester in Surat, Gujarat. Manual testing, WordPress QA, web application testing, test design and defect reporting, with an interactive 3D QA portfolio.">
-<meta name="author" content="Kalp Shah"><meta name="robots" content="index,follow">
-<link rel="canonical" href="https://kalpshahtester.github.io/">
-<meta property="og:type" content="website"><meta property="og:url" content="https://kalpshahtester.github.io/"><meta property="og:title" content="Kalp Shah — Manual QA Tester"><meta property="og:description" content="I test the details that make digital experiences work."><meta property="og:image" content="https://kalpshahtester.github.io/Kalp%20Shah%20Profile%20Photo.png"><meta name="twitter:card" content="summary_large_image">
-<title>Kalp Shah — Manual QA / Web & WordPress</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,400,ital@1&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#f6f4ef;--paper:#fffefa;--ink:#171b22;--muted:#5b626b;--line:#d5d6d3;--accent:#244bff;--accent2:#d5ff3f;--green:#1c2927;--green2:#e6e9e3;--mono:'DM Mono',monospace;--sans:'Manrope',Arial,sans-serif;--serif:'Newsreader',Georgia,serif;--shadow:8px 8px 0 #171b22}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;font-size:15px;overflow-x:hidden}body.dark{--bg:#151916;--paper:#202722;--ink:#f1f0e9;--muted:#b7beb8;--line:#414a43;--accent:#a8baff;--accent2:#d5ff3f;--green:#f1f0e9;--green2:#28352d;--shadow:8px 8px 0 #050706}
-a{color:inherit}button{font:inherit;cursor:pointer}img{display:block;max-width:100%}.wrap{width:min(1320px,calc(100% - 64px));margin:auto}.mono,.eyebrow,.tag,.small-label,.section-num,.stat span,.job time{font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;font-size:.68rem}
-.skip-link{position:fixed;z-index:1000;left:12px;top:10px;transform:translateY(-160%);padding:10px 14px;background:var(--accent);color:white;font-weight:700}.skip-link:focus{transform:translateY(0)}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
-.topbar{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line)}.nav{height:76px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:800;letter-spacing:-.06em}.brand-mark{width:42px;height:42px;display:grid;place-items:center;background:var(--accent);color:white;font:500 .78rem var(--mono);letter-spacing:0}.brand span:last-child{font-size:1.05rem}.nav-right{display:flex;align-items:center;gap:10px}.nav-links{display:flex;align-items:center;gap:27px;margin-right:22px}.nav-links a{text-decoration:none;font-size:.78rem;font-weight:700}.nav-links a:hover{color:var(--accent)}.icon-btn,.menu-btn{height:42px;min-width:42px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:1.1rem}.menu-btn{display:none}
-.hero{padding:clamp(52px,7vw,108px) 0 70px;position:relative;border-bottom:1px solid var(--line)}.hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.68fr);gap:8%;align-items:center}.hero .eyebrow{color:var(--accent);display:flex;gap:10px;align-items:center}.hero .eyebrow:before{content:"";width:38px;height:2px;background:var(--accent)}.hero h1{font-size:clamp(4rem,9vw,9rem);line-height:.87;letter-spacing:-.095em;font-weight:800;margin:34px 0 28px;max-width:850px}.hero h1 em{font:italic 500 1em/.9 var(--serif);letter-spacing:-.06em;color:var(--accent)}.hero-copy{max-width:570px;font-size:clamp(1rem,1.4vw,1.22rem);color:var(--muted);line-height:1.8}.actions{display:flex;gap:12px;flex-wrap:wrap;margin:30px 0 24px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:15px 20px;text-decoration:none;border:1px solid var(--ink);font-size:.78rem;font-weight:800;transition:background .2s,color .2s,transform .2s}.btn:hover{transform:translateY(-3px)}.btn.primary{background:var(--accent);color:white;border-color:var(--accent)}body.dark .btn.primary{color:#151916}body.dark .lab-tab[aria-selected=true]{color:#151916}body.dark .backtop{color:#151916}.btn.primary:hover{background:var(--ink);border-color:var(--ink)}.btn.secondary{background:transparent}.availability{font: .7rem var(--mono);color:var(--muted);display:flex;align-items:center;gap:10px}.dot{width:8px;height:8px;background:#28a66a;border-radius:50%;box-shadow:0 0 0 5px #28a66a20}.portrait{margin:0;max-width:500px;justify-self:end;position:relative;width:100%}.portrait:before{content:"";position:absolute;inset:16px -16px -16px 16px;background:var(--accent2);z-index:0}.portrait img{position:relative;z-index:1;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 20%;border:1px solid var(--ink);filter:saturate(.9)}.photo-caption{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:13px 0 0}.photo-caption strong{font:500 1.8rem var(--serif)}.photo-caption small{font: .6rem var(--mono);letter-spacing:.06em;color:var(--muted);text-align:right}.portrait-stamp{display:none}
-.ticker{background:var(--accent);color:white;overflow:hidden;white-space:nowrap;padding:13px 0;font: .68rem var(--mono);letter-spacing:.1em}.ticker-inner{display:flex;gap:35px;width:max-content;animation:marquee 34s linear infinite}.ticker span{display:flex;gap:35px}.ticker b{color:var(--accent2)}@keyframes marquee{to{transform:translateX(-50%)}}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}.stat{padding:28px 24px;border-right:1px solid var(--line)}.stat:first-child{padding-left:0}.stat:last-child{border-right:0}.stat strong{font:500 clamp(2.6rem,5vw,5rem)/1 var(--serif);letter-spacing:-.06em}.stat strong i{font-style:normal;color:var(--accent)}.stat span{display:block;color:var(--muted);margin-top:10px;line-height:1.5}
-.section{padding:clamp(72px,9vw,140px) 0}.section-head{display:grid;grid-template-columns:180px 1fr;gap:24px;margin-bottom:54px}.section-num{color:var(--accent);padding-top:13px}.section h2{font:500 clamp(3rem,6vw,6.8rem)/.94 var(--serif);letter-spacing:-.065em;margin:0;max-width:950px}.section h2 em{color:var(--accent);font-style:italic}.section-intro{max-width:650px;color:var(--muted);font-size:1rem;margin:20px 0 0;line-height:1.75}
-.about-grid{display:grid;grid-template-columns:.85fr 1fr;gap:9%;align-items:start}.about-statement{font:500 clamp(2.3rem,4.5vw,4.8rem)/1.02 var(--serif);letter-spacing:-.055em;position:sticky;top:110px}.about-text p{color:var(--muted);margin:0 0 18px}.principles{margin-top:32px;border-top:1px solid var(--line)}.principle{display:grid;grid-template-columns:40px 1fr;gap:15px;padding:17px 0;border-bottom:1px solid var(--line)}.principle .number{font: .7rem var(--mono);color:var(--accent)}.principle strong{font-size:.9rem}.principle p{margin:5px 0 0;font-size:.84rem}
-#work{background:var(--paper)}.projects{display:grid;grid-template-columns:1fr 1fr;gap:16px}.project{position:relative;background:var(--bg);border:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}.project:hover{transform:translateY(-6px);box-shadow:var(--shadow)}.project.feature{grid-column:1/-1;display:grid;grid-template-columns:1fr .9fr}.project-body{padding:clamp(22px,3vw,42px);display:flex;flex-direction:column;align-items:flex-start}.project-meta{display:flex;justify-content:space-between;gap:12px;width:100%;color:var(--accent);font: .66rem var(--mono);letter-spacing:.08em;text-transform:uppercase}.project h3{font:500 clamp(2rem,3.4vw,3.7rem)/1 var(--serif);letter-spacing:-.05em;margin:24px 0 14px;max-width:520px}.project p{color:var(--muted);font-size:.9rem;line-height:1.7}.project-visual{background:var(--green2);padding:clamp(20px,4vw,50px);display:grid;place-items:center;min-height:260px;overflow:hidden;position:relative}.project-visual:before{content:"";position:absolute;width:260px;height:260px;border:1px solid var(--line);border-radius:50%;transform:translate(35%,20%)}.paper-report{background:var(--paper);color:var(--ink);border:1px solid var(--ink);padding:22px;width:min(100%,400px);position:relative;z-index:1;transform:rotate(-2deg);box-shadow:9px 9px 0 var(--accent);transition:transform .5s}.project:hover .paper-report{transform:rotate(0) translateY(-4px)}.paper-report .small-label{color:var(--accent)}.report-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:10px 0;font-size:.78rem}.report-row b{font:500 .75rem var(--mono)}.tags{display:flex;gap:7px;flex-wrap:wrap;margin:20px 0}.tag{font-size:.6rem;border:1px solid var(--line);padding:6px 8px;color:var(--muted);letter-spacing:.03em}.project-link{margin-top:auto;display:inline-block;font-weight:800;font-size:.78rem;text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:4px}.project-link:hover{color:var(--accent)}
-.lab{background:var(--green2);color:var(--ink);padding:clamp(22px,4vw,55px);border:1px solid var(--line)}.lab-head{display:flex;justify-content:space-between;align-items:start;gap:24px}.lab-head h3{font:500 clamp(2.2rem,4vw,4.2rem)/1 var(--serif);margin:10px 0}.lab-head p{color:var(--muted);max-width:550px}.lab-tabs{display:flex;gap:0;flex-wrap:wrap;margin:28px 0;border-bottom:1px solid var(--line)}.lab-tab{background:transparent;color:var(--ink);border:0;border-bottom:2px solid transparent;padding:12px 16px;font-size:.76rem;font-weight:700}.lab-tab[aria-selected=true]{background:var(--accent);color:white;border-color:var(--accent)}.lab-panel{background:var(--paper);border:1px solid var(--line);padding:clamp(20px,3vw,38px);display:grid;grid-template-columns:.8fr 1fr;gap:32px}.lab-panel h4{font:500 clamp(1.9rem,3vw,3rem)/1 var(--serif);margin:10px 0}.lab-panel p{color:var(--muted)}.checklist{display:grid;grid-template-columns:1fr 1fr;gap:14px}.check{display:flex;align-items:start;gap:10px;font-size:.82rem;cursor:pointer}.check input{accent-color:var(--accent);margin-top:5px;width:16px;height:16px}.progress{height:5px;background:var(--line);margin-top:22px}.progress span{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}.lab-note{font: .68rem var(--mono);color:var(--muted);margin-top:12px}
-.workflow{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.step{padding:24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:180px;transition:background .2s}.step:hover{background:var(--green2)}.step .num{font: .68rem var(--mono);color:var(--accent)}.step h3{margin:20px 0 7px;font-size:.95rem}.step p{color:var(--muted);font-size:.82rem;margin:0}
-.experience{border-left:1px solid var(--line);margin-left:12px;padding-left:32px}.job{position:relative;padding:0 0 38px}.job:before{content:'';position:absolute;left:-38px;top:7px;width:10px;height:10px;background:var(--accent);border:3px solid var(--bg);border-radius:50%}.job time{color:var(--accent)}.job h3{font:500 1.8rem var(--serif);margin:8px 0}.job p{color:var(--muted);max-width:780px}.skills{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}.skill{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:25px;background:transparent;transition:background .2s}.skill:hover{background:var(--green2)}.skill h3{font-size:.9rem;margin:0 0 10px}.skill p{font-size:.82rem;color:var(--muted);margin:0}
-.contact{background:var(--accent);color:white;padding:clamp(65px,9vw,125px) 0;position:relative;overflow:hidden}.contact:after{content:"QA";position:absolute;right:-.05em;bottom:-.45em;font:600 35vw/.8 var(--serif);color:#ffffff0b;pointer-events:none}.contact-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:end;position:relative;z-index:1}.contact h2{font:500 clamp(3.3rem,8vw,8rem)/.88 var(--serif);letter-spacing:-.07em;margin:22px 0}.contact p{max-width:600px;color:#f5e9e6}.contact-links{display:grid;gap:0}.contact-links a{border-top:1px solid #ffffff70;padding:16px 0;text-decoration:none;display:flex;justify-content:space-between;font-weight:700}.contact-links a:last-child{border-bottom:1px solid #ffffff70}.contact-links a:hover{padding-left:10px;color:var(--accent2)}.contact .btn{background:#fff;color:#171b22;border-color:#fff}
-footer{padding:24px 0;font: .68rem var(--mono);color:var(--muted);display:flex;justify-content:space-between;gap:20px}.reveal{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s cubic-bezier(.2,.8,.2,1)}.reveal.visible{opacity:1;transform:none}.backtop{position:fixed;right:24px;bottom:24px;z-index:20;width:48px;height:48px;background:var(--accent);color:white;border:0;display:none;font-size:1.2rem}.backtop.show{display:block}
-@media(max-width:850px){.wrap{width:calc(100% - 36px)}.nav{height:66px}.menu-btn{display:block}.nav-links{display:none;position:absolute;top:66px;left:0;right:0;background:var(--bg);padding:20px;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:16px;margin:0}.nav-links.open{display:flex}.hero{padding:45px 0 40px}.hero-grid{grid-template-columns:1fr;gap:38px}.hero h1{font-size:clamp(3.6rem,15vw,6.4rem);margin:24px 0}.hero-copy{font-size:1rem}.portrait{width:min(82%,420px);justify-self:center;margin:0 auto}.portrait:before{inset:10px -10px -10px 10px}.photo-caption strong{font-size:1.45rem}.stats{grid-template-columns:1fr 1fr}.stat{padding:20px 14px;border-bottom:1px solid var(--line)}.stat:nth-child(2){border-right:0}.stat:first-child{padding-left:0}.stat strong{font-size:3rem}.section{padding:72px 0}.section-head{grid-template-columns:1fr;gap:8px;margin-bottom:32px}.section-num{padding:0}.about-grid{grid-template-columns:1fr;gap:25px}.about-statement{position:static}.projects{grid-template-columns:1fr}.project.feature{grid-column:auto;display:flex}.project-visual{min-height:230px}.lab{padding:22px 14px}.lab-head{display:block}.lab-panel{grid-template-columns:1fr;padding:20px}.checklist{grid-template-columns:1fr}.workflow{grid-template-columns:1fr 1fr}.step{padding:16px;min-height:150px}.skills{grid-template-columns:1fr 1fr}.skill{padding:18px}.contact{padding:65px 0}.contact-grid{grid-template-columns:1fr}.contact h2{font-size:clamp(3.5rem,14vw,6rem)}footer{flex-direction:column}.ticker-inner{animation-duration:45s}}
-@media(max-width:420px){.wrap{width:calc(100% - 28px)}.hero h1{font-size:clamp(3.2rem,15.5vw,4.5rem)}.portrait{width:87%}.project-body{padding:20px}.project h3{font-size:2.1rem}.workflow{grid-template-columns:1fr 1fr}.skills{grid-template-columns:1fr}.lab-tab{padding:10px 9px;font-size:.7rem}.section h2{font-size:3rem}.photo-caption{align-items:flex-start;flex-direction:column}.photo-caption small{text-align:left}}
-/* Responsive refinements: desktop, laptop, tablet, phone, and very narrow screens */
-@media (min-width:851px) and (max-width:1100px){
- .wrap{width:calc(100% - 48px)}
- .hero-grid{grid-template-columns:minmax(0,1.1fr) minmax(260px,.7fr);gap:5%}
- .hero h1{font-size:clamp(4.4rem,8vw,7rem)}
- .section-head{grid-template-columns:130px 1fr}
- .workflow{grid-template-columns:repeat(3,1fr)}
- .nav-links{gap:16px;margin-right:12px}
-}
-@media (max-width:850px){
- .wrap{width:calc(100% - 36px)}
- .nav{height:66px}
- .menu-btn{display:block}
- .nav-links{display:none;position:absolute;top:66px;left:0;right:0;background:var(--bg);padding:20px;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:16px;margin:0}
- .nav-links.open{display:flex}
- .hero{padding:45px 0 40px}
- .hero-grid{grid-template-columns:1fr;gap:38px}
- .hero h1{font-size:clamp(3.6rem,15vw,6.4rem);margin:24px 0}
- .hero-copy{font-size:1rem}
- .portrait{width:min(82%,420px);justify-self:center;margin:0 auto}
- .portrait:before{inset:10px -10px -10px 10px}
- .photo-caption strong{font-size:1.45rem}
- .stats{grid-template-columns:1fr 1fr}
- .stat{padding:20px 14px;border-bottom:1px solid var(--line)}
- .stat:nth-child(2){border-right:0}
- .stat:first-child{padding-left:0}
- .stat strong{font-size:3rem}
- .section{padding:72px 0}
- .section-head{grid-template-columns:1fr;gap:8px;margin-bottom:32px}
- .section-num{padding:0}
- .about-grid{grid-template-columns:1fr;gap:25px}
- .about-statement{position:static}
- .projects{grid-template-columns:1fr}
- .project.feature{grid-column:auto;display:flex}
- .project-visual{min-height:230px}
- .lab{padding:22px 14px}
- .lab-head{display:block}
- .lab-panel{grid-template-columns:1fr;padding:20px}
- .checklist{grid-template-columns:1fr}
- .workflow{grid-template-columns:1fr 1fr}
- .step{padding:16px;min-height:150px}
- .skills{grid-template-columns:1fr 1fr}
- .skill{padding:18px}
- .contact{padding:65px 0}
- .contact-grid{grid-template-columns:1fr}
- .contact h2{font-size:clamp(3.5rem,14vw,6rem)}
- footer{flex-direction:column}
- .ticker-inner{animation-duration:45s}
-}
-@media (max-width:600px){
- .wrap{width:calc(100% - 28px)}
- .hero{padding-top:34px}
- .hero h1{font-size:clamp(3rem,14.8vw,5rem);letter-spacing:-.09em}
- .actions{gap:8px}
- .btn{min-height:44px;padding:12px 14px}
- .portrait{width:min(88%,380px)}
- .portrait img{aspect-ratio:4/5;object-position:50% 28%}
- .stat{padding:18px 10px}
- .stat strong{font-size:2.65rem}
- .stat span{font-size:.6rem}
- .section h2{font-size:clamp(2.7rem,12vw,4rem)}
- .project-body{padding:20px}
- .project h3{font-size:2.1rem}
- .workflow{grid-template-columns:1fr 1fr}
- .skills{grid-template-columns:1fr}
- .lab-tab{padding:10px 9px;font-size:.7rem}
- .lab-panel{padding:16px}
- .photo-caption{align-items:flex-start;flex-direction:column}
- .photo-caption small{text-align:left}
- .backtop{right:14px;bottom:16px;width:44px;height:44px}
-}
-@media(max-width:360px){
- .brand span:last-child{font-size:.9rem}
- .brand-mark{width:36px;height:36px}
- .nav-right{gap:6px}
- .hero h1{font-size:clamp(2.7rem,14vw,3.4rem)}
- .actions .btn{width:100%}
- .stats{grid-template-columns:1fr 1fr}
- .stat strong{font-size:2.2rem}
- .workflow{grid-template-columns:1fr}
- .contact h2{font-size:3rem}
-}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
-
-/* Portrait layout correction: let the figure size naturally; only crop the photo itself. */
-.portrait{display:block;width:min(100%,500px);max-width:500px;height:auto;aspect-ratio:auto;justify-self:end;align-self:center;position:relative;overflow:visible;margin:0}
-.portrait img{display:block;position:relative;z-index:1;width:100%;height:auto;min-height:0;aspect-ratio:4/5;object-fit:cover;object-position:center 35%;border:1px solid var(--ink);}
-.portrait:before{content:"";position:absolute;inset:16px -16px -16px 16px;background:var(--accent2);z-index:0}
-.portrait .photo-caption{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:13px 0 0;min-width:0}
-@media(max-width:850px){.portrait{width:min(88%,420px);margin:0 auto}.portrait img{object-position:center 35%}}
-@media(max-width:600px){.portrait{width:min(88%,380px)}.portrait img{object-position:center 35%}.portrait:before{inset:8px -8px -8px 8px}}
-@media(max-width:360px){.portrait{width:min(92%,320px)}}
-
-/* Progressive enhancement and dark-theme contrast fixes. */
-.reveal{opacity:1;transform:none}
-body.js-enabled .reveal{opacity:0;transform:translateY(28px)}
-body.js-enabled .reveal.visible{opacity:1;transform:none}
-body.dark .brand-mark,body.dark .skip-link{color:#151916}
-body.dark .contact{color:#151916}
-body.dark .contact p{color:#202722}
-body.dark .contact-links a{border-color:#15191670}
-body.dark .contact-links a:last-child{border-color:#15191670}
-body.dark .contact .btn{background:#151916;color:#f1f0e9;border-color:#151916}
-.profile-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.profile-fact{border:1px solid var(--line);padding:20px;background:var(--paper);min-width:0}.profile-fact .small-label{color:var(--accent)}.profile-fact h3{font:500 1.25rem var(--serif);margin:10px 0 5px}.profile-fact p{font-size:.82rem;color:var(--muted);margin:0;line-height:1.65}.credentials{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}.credential{border:1px solid var(--line);padding:18px;background:var(--paper)}.credential strong{display:block;font-size:.88rem;margin:7px 0}.credential p{font-size:.78rem;color:var(--muted);margin:0}.stack-note{font:10px var(--mono);color:#9eb6d4;margin-top:12px}#qaWorldCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.9}@media(max-width:850px){.profile-facts,.credentials{grid-template-columns:1fr 1fr}}@media(max-width:520px){.profile-facts,.credentials{grid-template-columns:1fr}}</style>
-<style>/* CINEMATIC QA WORLD */:root{--qa-bg:#070b16;--qa-panel:#101a2c;--qa-cyan:#53e8ff;--qa-violet:#9b7cff;--qa-green:#71f5b2}
-body,body.dark{--bg:#070b16;--paper:#0d1423;--ink:#edf4ff;--muted:#aab9d0;--line:#23334c;--accent:#53e8ff;--accent2:#9b7cff;--green:#edf4ff;--green2:#101b30;--shadow:0 20px 60px #0009;background:#070b16;color:#edf4ff}
-.topbar{background:#070b16ed;border-color:#23334c;backdrop-filter:blur(18px)}
-.hero{min-height:calc(100svh - 76px);display:grid;align-items:center;overflow:hidden;background:radial-gradient(ellipse at 74% 42%,#253d6a66,transparent 43%),linear-gradient(120deg,#070b16,#0b1427 58%,#080d1b)}
-.hero-grid{position:relative;z-index:2}.hero h1{font-size:clamp(3.8rem,8.5vw,8rem);color:#f4f8ff}.hero h1 em,.section h2 em{color:#53e8ff}
-.portrait:before{background:linear-gradient(135deg,#53e8ff,#987cff)}.portrait img{border-color:#53e8ff;box-shadow:0 0 70px #53e8ff22}.photo-caption strong,.section h2{color:#f2f6ff}
-.ticker{background:#101a2c;color:#dceaff;border-block:1px solid #23334c}.ticker b{color:#53e8ff}
-#work,.project,.lab-panel,.paper-report{background:#0d1423;color:#edf4ff}.project{border-color:#263954}.project-visual,.lab{background:#101b30}.lab{border-color:#263954}.lab-tab{color:#edf4ff}.lab-tab[aria-selected=true]{background:linear-gradient(120deg,#53e8ff,#9b7cff);color:#07101c}.lab-panel{border-color:#263954}.workflow,.skills,.step,.skill{border-color:#263954}.step:hover,.skill:hover{background:#14233b}
-.contact{background:linear-gradient(120deg,#153b69,#463278);color:#fff}.contact .btn{background:#edf4ff;color:#07101c}.backtop,.brand-mark,.btn.primary{background:linear-gradient(135deg,#53e8ff,#9b7cff);color:#07101c;border-color:transparent}
-.qa-world{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}#qaWorldCanvas{position:absolute;inset:0;width:100%;height:100%;opacity:.85}
-.world-hud{position:absolute;z-index:3;right:2.5%;bottom:7%;width:min(300px,28vw);padding:16px;border:1px solid #53e8ff66;background:#081326c9;backdrop-filter:blur(14px);box-shadow:0 0 45px #53e8ff18;font:11px var(--mono);color:#dceaff}
-.world-hud strong{display:block;font:600 13px var(--mono);color:#53e8ff;margin-bottom:10px}.hud-line{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid #ffffff18}.hud-ok{color:#71f5b2}.hud-run{color:#ffd36a}.world-chip{display:inline-block;border:1px solid #53e8ff55;border-radius:99px;padding:5px 9px;margin:4px 4px 0 0;color:#9beeff}
-.world-section{padding:90px 0;background:radial-gradient(ellipse at 50% 0%,#1b2d4a,transparent 65%),#080e1b;border-block:1px solid #243550}
-.world-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:30px}.world-head h2{font:500 clamp(2.5rem,5vw,5rem)/.95 var(--serif);letter-spacing:-.06em;margin:0;color:#f2f6ff}.world-head p{max-width:520px;color:#aab9d0;margin:0}
-.world-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.world-window,.world-terminal{border:1px solid #2b4568;background:#0d1729;box-shadow:0 18px 60px #0006;min-width:0}.window-bar{display:flex;align-items:center;gap:7px;padding:12px 15px;background:#14233a;border-bottom:1px solid #2b4568}.window-dot{width:8px;height:8px;border-radius:50%;background:#ff6d7b}.window-dot:nth-child(2){background:#ffd36a}.window-dot:nth-child(3){background:#71f5b2}.window-url{margin-left:10px;color:#92a9c8;font:10px var(--mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.browser-body{padding:22px;min-height:285px;position:relative;overflow:hidden}.browser-banner{height:90px;background:linear-gradient(110deg,#183b69,#4a357e);display:flex;align-items:center;padding:20px;color:white;font:500 24px var(--serif)}.browser-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.browser-card{height:75px;border:1px solid #294364;background:linear-gradient(145deg,#142640,#0d1729);padding:10px}.browser-card i{display:block;width:55%;height:5px;background:#53e8ff66;margin-bottom:8px}.browser-card b{display:block;width:90%;height:4px;background:#ffffff23;margin-top:8px}.bug-entity{position:absolute;right:13%;top:43%;font-size:35px;filter:drop-shadow(0 0 12px #ff6688);animation:qaBug 5s ease-in-out infinite}@keyframes qaBug{0%,100%{transform:translate(0,0) rotate(-12deg)}50%{transform:translate(-35px,22px) rotate(12deg)}}
-.world-terminal{padding:20px;font:11px/1.8 var(--mono);color:#bbcee8}.terminal-title{color:#53e8ff;font-weight:500;margin-bottom:12px}.terminal-row{display:flex;gap:10px;border-bottom:1px solid #ffffff12;padding:8px 0}.terminal-row span:first-child{color:#7892b5}.terminal-pass{margin-left:auto;color:#71f5b2}.world-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.world-action{border:1px solid #53e8ff66;background:#11213a;color:#dff8ff;padding:11px 15px;font:11px var(--mono);cursor:pointer}.world-action:hover,.world-action:focus-visible{background:#53e8ff;color:#07101c}.run-status{color:#aab9d0;font:11px var(--mono);margin-top:12px;min-height:20px}.world-meter{height:5px;background:#253852;margin-top:12px}.world-meter span{display:block;height:100%;width:0;background:linear-gradient(90deg,#53e8ff,#9b7cff);transition:width .4s}
-@media(max-width:850px){.hero{min-height:auto;padding:58px 0 50px}.world-hud{position:relative;right:auto;bottom:auto;width:min(100%,500px);margin:22px auto 0}.world-grid{grid-template-columns:1fr}.world-head{display:block}.world-head p{margin-top:14px}.world-section{padding:65px 0}}@media(prefers-reduced-motion:reduce){.bug-entity{animation:none}}
-</style></head>
-<body>
-<a class="skip-link" href="#top">Skip to content</a>
-<header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="Kalp Shah home"><span class="brand-mark">KS</span><span>kalp shah<span style="color:var(--accent)">.</span></span></a><div class="nav-right"><nav class="nav-links" id="navLinks" aria-label="Main navigation"><a href="#about">About</a><a href="#work">Work</a><a href="#lab">QA Lab</a><a href="#experience">Experience</a><a href="#contact">Contact</a></nav><button class="icon-btn" id="themeToggle" type="button" aria-label="Switch to dark theme" aria-pressed="false" title="Toggle light and dark theme">◐</button><button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">☰</button></div></div></header>
-<main id="top">
-<section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">Manual QA Tester · Surat, India</div><h1>I test the details<br>that make things<br><em>feel right.</em></h1><p class="hero-copy">I'm Kalp Shah — a Manual QA Tester focused on WordPress and web applications. I explore real user journeys, challenge edge cases, and turn confusing bugs into clear, actionable reports.</p><div class="actions"><a class="btn primary" href="#work">Explore my work ↘</a><a class="btn secondary" href="Kalp%20Shah%20Manual%20Tester%20Resume.pdf" download="Kalp-Shah-Manual-QA-Resume.pdf">Download Resume ↓</a></div><div class="availability"><span class="dot"></span> Open to Manual QA opportunities</div><p class="mono" style="color:var(--muted);font-size:.68rem;margin-top:12px">WORDPRESS · WEB QA · TEST DESIGN</p></div><figure class="portrait"><img src="Kalp%20Shah%20Profile%20Photo.png" alt="Portrait of Kalp Shah" width="900" height="1125" loading="eager" decoding="async" fetchpriority="high"><figcaption class="photo-caption"><strong>Kalp Shah</strong><small>MANUAL QA · WORDPRESS & WEB</small></figcaption></figure></div><div class="qa-world" aria-hidden="true"><div id="qaWorldCanvas"></div></div><div class="world-hud" aria-label="Decorative QA system status"><strong>◈ QA ENVIRONMENT / LIVE</strong><div class="hud-line"><span>Browser nodes</span><b>03 ACTIVE</b></div><div class="hud-line"><span>Regression suite</span><b class="hud-ok">READY</b></div><div class="hud-line"><span>Defect monitor</span><b class="hud-run">SCANNING</b></div><span class="world-chip">MANUAL QA</span><span class="world-chip">WEB TESTING</span></div></section>
-<div class="ticker" aria-label="QA disciplines"><div class="ticker-inner"><span>TEST DESIGN <b>✳</b> EXPLORATORY QA <b>✳</b> REGRESSION <b>✳</b> DEFECT REPORTING <b>✳</b> WORDPRESS QA <b>✳</b> ACCESSIBILITY <b>✳</b></span><span aria-hidden="true">TEST DESIGN <b>✳</b> EXPLORATORY QA <b>✳</b> REGRESSION <b>✳</b> DEFECT REPORTING <b>✳</b> WORDPRESS QA <b>✳</b> ACCESSIBILITY <b>✳</b></span></div></div>
-<div class="wrap"><div class="stats reveal"><div class="stat"><strong>47<i>+</i></strong><span>Test scenarios · SauceDemo</span></div><div class="stat"><strong>62<i>+</i></strong><span>Documented test cases</span></div><div class="stat"><strong>282</strong><span>Execution records · SauceDemo</span></div><div class="stat"><strong>100<i>+</i></strong><span>Users supported in IT role</span></div></div></div>
-<section class="section" id="about"><div class="wrap"><div class="section-head"><div class="section-num">01 / ABOUT</div><div><h2>Curiosity is the start.<br><em>Clarity is the craft.</em></h2><p class="section-intro">A practical, user-first approach to finding issues early, communicating them clearly, and checking that fixes actually work.</p></div></div><div class="about-grid reveal"><div class="about-statement">Think like a user.<br>Investigate like a tester.</div><div class="about-text"><p>My focus is manual testing across WordPress websites and web applications: functional behavior, responsive layouts, forms, navigation, content quality, and SEO-related checks.</p><p>I care about more than finding a bug. I want the report to be easy to reproduce, the impact to be understood, and the fix to be verified without creating another problem.</p><p>Before moving into QA, I supported more than 100 users in IT. That experience shaped how I troubleshoot, prioritize, and explain technical issues.</p><div class="principles"><div class="principle"><span class="number">01</span><div><strong>Observe the whole journey</strong><p>Understand what a real person is trying to do—not just whether a button responds.</p></div></div><div class="principle"><span class="number">02</span><div><strong>Challenge the expected path</strong><p>Test invalid inputs, boundaries, alternate flows, and the states between steps.</p></div></div><div class="principle"><span class="number">03</span><div><strong>Make defects actionable</strong><p>Record clear steps, expected and actual results, impact, and supporting evidence.</p></div></div><div class="principle"><span class="number">04</span><div><strong>Verify what changed</strong><p>Retest fixes and check connected areas before considering the work complete.</p></div></div></div></div></div></div></section>
-<section class="world-section" id="qa-world"><div class="wrap"><div class="world-head"><div><div class="eyebrow" style="color:#53e8ff;margin-bottom:16px">07 / INTERACTIVE QA SIMULATION</div><h2>The QA testing<br>command centre.</h2></div><p>A miniature testing environment. Inspect a browser under test, run a simulated regression sequence, and watch the dashboard report each check. This is a portfolio demonstration—not a connection to a production service.</p></div><div class="world-grid"><div class="world-window"><div class="window-bar"><i class="window-dot"></i><i class="window-dot"></i><i class="window-dot"></i><span class="window-url">https://demo-store.example / checkout</span></div><div class="browser-body"><div class="browser-banner">Your next great discovery.</div><div class="browser-cards"><div class="browser-card"><i></i><b></b><b></b></div><div class="browser-card"><i></i><b></b><b></b></div><div class="browser-card"><i></i><b></b><b></b></div></div><div class="bug-entity" aria-label="Decorative animated bug">🐞</div></div></div><div class="world-terminal"><div class="terminal-title">● TEST RUNNER / PORTFOLIO DEMO</div><div class="terminal-row"><span>01</span><span>Load application shell</span><b class="terminal-pass" data-test="0">READY</b></div><div class="terminal-row"><span>02</span><span>Validate navigation</span><b class="terminal-pass" data-test="1">READY</b></div><div class="terminal-row"><span>03</span><span>Check form validation</span><b class="terminal-pass" data-test="2">READY</b></div><div class="terminal-row"><span>04</span><span>Verify responsive layout</span><b class="terminal-pass" data-test="3">READY</b></div><div class="terminal-row"><span>05</span><span>Review console signals</span><b class="terminal-pass" data-test="4">READY</b></div><div class="world-meter"><span id="qaRunMeter"></span></div><div class="world-actions"><button class="world-action" type="button" id="runQaDemo">▶ RUN DEMO SUITE</button><button class="world-action" type="button" id="resetQaDemo">↺ RESET</button></div><div class="run-status" id="qaRunStatus" role="status" aria-live="polite">Awaiting test execution. Start the demo suite.</div></div></div><p class="stack-note">3D EXPERIENCE / THREE.JS · REACT THREE FIBER · GSAP + SCROLLTRIGGER · LENIS</p></div></section><section class="section" id="work" style="background:var(--paper)"><div class="wrap"><div class="section-head"><div class="section-num">02 / SELECTED WORK</div><div><h2>Evidence over<br><em>empty claims.</em></h2><p class="section-intro">A few examples of test coverage, assessment work, and the QA discipline I bring to web experiences.</p></div></div><div class="projects reveal">
-<article class="project feature"><div class="project-body"><div class="project-meta"><span>Featured project / 01</span><span>Manual testing</span></div><h3>SauceDemo —<br>End-to-end QA</h3><p>Manual testing of a demo e-commerce journey from login and product browsing through cart and checkout. Coverage includes standard flows, negative paths, and multiple demo-user types.</p><div class="tags"><span class="tag">47 scenarios</span><span class="tag">62+ test cases</span><span class="tag">282 execution records</span><span class="tag">6 demo users</span></div><a class="project-link" href="https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website" target="_blank" rel="noopener">Explore SauceDemo project ↗</a></div><div class="project-visual"><div class="paper-report"><div class="small-label">QA evidence / SauceDemo</div><h3 style="font:500 1.6rem var(--serif);margin:12px 0">Test execution record</h3><div class="report-row"><span>Test scenarios</span><b>47</b></div><div class="report-row"><span>Documented test cases</span><b>62+</b></div><div class="report-row"><span>Execution records</span><b>282</b></div><div class="report-row"><span>User types covered</span><b>6 demo users</b></div><span class="tag" style="display:inline-block;margin-top:12px">Manual testing project</span></div></div></article>
-<article class="project"><div class="project-body"><div class="project-meta"><span>Assessment / 02</span><span>Travel booking</span></div><h3>MakeMyTrip<br>Testing Assessment</h3><p>Manual testing of key travel workflows including login, registration, flight and hotel booking, input validation, and negative scenarios.</p><div class="tags"><span class="tag">Functional testing</span><span class="tag">UI validation</span><span class="tag">Negative testing</span></div><a class="project-link" href="https://github.com/kalpshahtester/MakeMyTrip-Testing-Assessment" target="_blank" rel="noopener">View MakeMyTrip assessment ↗</a></div></article>
-<article class="project"><div class="project-body"><div class="project-meta"><span>Professional focus / 03</span><span>WordPress & web</span></div><h3>QA in real<br>workflows</h3><p>Hands-on testing of layout, responsive behavior, navigation, forms, product/account journeys, content, and SEO elements. Client-specific screenshots and confidential details are intentionally not published.</p><div class="tags"><span class="tag">WordPress</span><span class="tag">Responsive UI</span><span class="tag">Content checks</span><span class="tag">Regression</span></div><a class="project-link" href="https://github.com/kalpshahtester" target="_blank" rel="noopener">Explore QA repositories ↗</a></div></article></div></div></section>
-<section class="section" id="lab"><div class="wrap"><div class="section-head"><div class="section-num">03 / INTERACTIVE QA LAB</div><div><h2>Try my testing<br><em>mindset.</em></h2><p class="section-intro">Select a test area and explore a mini checklist. This demo is interactive and does not connect to or modify a live website.</p></div></div><div class="lab reveal"><div class="lab-head"><div><div class="eyebrow">QA field notes / test explorer</div><h3>What would you test?</h3></div><span class="small-label">Demo checklist</span></div><div class="lab-tabs" role="tablist" aria-label="Testing categories"><button class="lab-tab" id="tab-journey" type="button" role="tab" aria-controls="labPanel" aria-selected="true" tabindex="0" data-tab="journey">User journeys</button><button class="lab-tab" id="tab-forms" type="button" role="tab" aria-controls="labPanel" aria-selected="false" tabindex="-1" data-tab="forms">Forms</button><button class="lab-tab" id="tab-responsive" type="button" role="tab" aria-controls="labPanel" aria-selected="false" tabindex="-1" data-tab="responsive">Responsive UI</button><button class="lab-tab" id="tab-seo" type="button" role="tab" aria-controls="labPanel" aria-selected="false" tabindex="-1" data-tab="seo">Content & SEO</button></div><div class="lab-panel" role="tabpanel" id="labPanel" aria-labelledby="tab-journey" tabindex="0" aria-live="polite" aria-atomic="true"><div><div class="small-label" style="color:#e17b5f">Testing lens / 01</div><h4 id="labTitle">Follow the user's journey</h4><p id="labDescription">Validate that each step leads to the right next step—and that the user can recover when something goes wrong.</p></div><div><div class="checklist" id="labChecks"><label class="check"><input type="checkbox"> Navigation and key actions</label><label class="check"><input type="checkbox"> Successful and failed paths</label><label class="check"><input type="checkbox"> Session and redirect behavior</label><label class="check"><input type="checkbox"> Back, refresh, and repeat actions</label></div><div class="progress" id="progressTrack" role="progressbar" aria-label="QA checklist completion" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><span id="progressBar"></span></div><div class="lab-note" id="progressText" aria-live="polite">0 / 4 checks complete</div></div></div></div></div></section>
-<section class="section" id="workflow" style="background:var(--paper)"><div class="wrap"><div class="section-head"><div class="section-num">04 / QA WORKFLOW</div><div><h2>A method that makes<br><em>quality visible.</em></h2><p class="section-intro">A repeatable workflow keeps coverage traceable, defect follow-up clear, and releases more predictable.</p></div></div><div class="workflow reveal"><div class="step"><span class="num">01 / Understand</span><h3>Clarify the goal</h3><p>Review requirements, user stories, acceptance criteria, and risk areas.</p></div><div class="step"><span class="num">02 / Design</span><h3>Plan coverage</h3><p>Prepare scenarios, cases, test data, and traceability.</p></div><div class="step"><span class="num">03 / Execute</span><h3>Explore behavior</h3><p>Run positive, negative, boundary, and exploratory checks.</p></div><div class="step"><span class="num">04 / Report</span><h3>Explain the defect</h3><p>Capture reproducible steps, impact, and evidence.</p></div><div class="step"><span class="num">05 / Verify</span><h3>Retest and regress</h3><p>Check the fix and related journeys before sign-off.</p></div><div class="step"><span class="num">06 / Summarize</span><h3>Share status</h3><p>Record outcomes, risks, and coverage status.</p></div><div class="step"><span class="num">07 / Collaborate</span><h3>Keep it actionable</h3><p>Coordinate follow-up and communicate clearly with the team.</p></div><div class="step"><span class="num">08 / Improve</span><h3>Learn from findings</h3><p>Use recurring defects to strengthen future test coverage.</p></div></div></div></section>
-<section class="section" id="experience"><div class="wrap"><div class="section-head"><div class="section-num">05 / EXPERIENCE</div><div><h2>Built on<br><em>troubleshooting.</em></h2><p class="section-intro">Technical support taught me to investigate carefully, stay close to user impact, and communicate clearly.</p></div></div><div class="experience reveal"><article class="job"><time>May 2026 — Present · Surat</time><h3>Manual QA Tester — WordPress & Web QA</h3><strong>NXS Infotech Pvt. Ltd.</strong><p>Testing WordPress and client websites, including PatchMD. Validating UI behavior, product and account journeys, forms, navigation, responsive layouts, content, and SEO details. Documenting reproducible defects, retesting fixes, and coordinating QA follow-up using ClickUp, Slack, Google Sheets, and Google Drive.</p></article><article class="job"><time>2020 — 2025</time><h3>Computer Engineer / IT Support</h3><strong>J. B. And Brothers Pvt. Ltd.</strong><p>Supported 100+ users, validated systems and software, resolved hardware, application, and network issues, managed access, and documented technical problems and verification steps.</p></article><article class="job"><time>Professional training</time><h3>Manual Testing</h3><strong>TOPS Technologies · Completed</strong><p>Training in SDLC, STLC, test design, test execution, defect lifecycle, and software testing fundamentals.</p></article></div></div></section>
-<section class="section" id="skills" style="background:var(--paper)"><div class="wrap"><div class="section-head"><div class="section-num">06 / SKILLS & TOOLKIT</div><div><h2>The disciplines<br><em>behind the work.</em></h2><p class="section-intro">Focused on hands-on manual QA, WordPress websites, web usability, and reliable test documentation.</p></div></div><div class="skills reveal"><div class="skill"><h3>Manual testing</h3><p>Functional · Smoke · Sanity · Regression · Retesting · Exploratory · Negative · Boundary testing</p></div><div class="skill"><h3>Web & WordPress QA</h3><p>UI testing · Responsive layouts · Cross-browser checks · Forms · Navigation · Content QA · SEO checks</p></div><div class="skill"><h3>Test documentation</h3><p>HLR · Test plans · Scenarios · Test cases · Bug reports · RTM · Test summary</p></div><div class="skill"><h3>QA collaboration</h3><p>ClickUp · Slack · Google Sheets · Google Drive · Excel</p></div><div class="skill"><h3>Browser inspection</h3><p>Chrome DevTools · Lighthouse · Browser checks</p></div><div class="skill"><h3>Version control & portfolio</h3><p>Git · GitHub · Markdown</p></div></div><div class="profile-facts reveal" aria-label="Personal and education details"><div class="profile-fact"><span class="small-label">Based in</span><h3>Surat, Gujarat, India</h3><p>Open to relevant Manual QA and Web QA opportunities across India.</p></div><div class="profile-fact"><span class="small-label">Education</span><h3>Diploma in Information Technology</h3><p>Dr. S. & S. S. Ghandhy College of Engineering & Technology, Gujarat.</p></div><div class="profile-fact"><span class="small-label">Languages</span><h3>Gujarati · Hindi · English</h3><p>Communication across technical and non-technical teams.</p></div><div class="profile-fact"><span class="small-label">School education</span><h3>Secondary School (10th)</h3><p>L. H. Boghra (Shishuvihar) School.</p></div><div class="profile-fact"><span class="small-label">Professional focus</span><h3>Manual QA · Web · WordPress</h3><p>Functional behavior, responsive UI, forms, content quality and defect verification.</p></div><div class="profile-fact"><span class="small-label">Previous IT experience</span><h3>4+ years · Systems support</h3><p>Computer Engineer experience supporting systems and 100+ users.</p></div></div><div class="credentials reveal" aria-label="Training and certificates"><div class="credential"><span class="small-label">March 2026</span><strong>Manual Testing Training</strong><p>TOPS Technologies · Completed.</p></div><div class="credential"><span class="small-label">November 2025</span><strong>Automation Testing Masterclass</strong><p>HCL GUVI · Course certificate. Not presented as professional automation experience.</p></div><div class="credential"><span class="small-label">Course completion</span><strong>Generative AI Mastermind</strong><p>Outskill · Completion certificate.</p></div></div></div></section>
-<section class="contact" id="contact"><div class="wrap contact-grid"><div><div class="eyebrow" style="color:#fff">Have a QA opportunity?</div><h2>Let’s make the<br>next release better.</h2><p>Open to Manual QA, Web Testing, and WordPress QA opportunities. Reach out to discuss how I can contribute.</p><a class="btn" style="background:var(--bg);color:var(--ink);border-color:var(--bg)" href="mailto:manualtesterkalpshah@gmail.com">Email me ↗</a></div><div class="contact-links"><a href="mailto:manualtesterkalpshah@gmail.com">Email <span>↗</span></a><a href="https://www.linkedin.com/in/kalp-shah-a9965b395/" target="_blank" rel="noopener">LinkedIn <span>↗</span></a><a href="https://github.com/kalpshahtester" target="_blank" rel="noopener">GitHub <span>↗</span></a><a href="https://kalpshahtester.github.io/" target="_blank" rel="noopener">Portfolio <span>↗</span></a></div></div></section>
-</main><footer class="wrap"><span>© 2026 Kalp Shah · Manual QA Tester</span><span>Made with curiosity, tested with care. <a href="#top">Back to top ↑</a></span></footer><button class="backtop" id="backtop" aria-label="Back to top">↑</button>
-<script>
-
-(function(){
-'use strict';
-const body=document.body;
-body.classList.add('js-enabled');
-const theme=document.getElementById('themeToggle');
-const themeMeta=document.querySelector('meta[name="theme-color"]');
-const menu=document.getElementById('menuBtn');
-const nav=document.getElementById('navLinks');
-const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const mobileNavQuery=window.matchMedia('(max-width: 850px)');
-
-let savedTheme='light';
-try{savedTheme=localStorage.getItem('kalp-theme')||'light';}catch(error){}
-function applyTheme(mode){
- const dark=mode==='dark';
- body.classList.toggle('dark',dark);
- theme.textContent=dark?'☀':'◐';
- theme.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');
- theme.setAttribute('aria-pressed',String(dark));
- themeMeta.setAttribute('content',dark?'#151916':'#f6f4ef');
-}
-applyTheme(savedTheme);
-theme.addEventListener('click',function(){
- const next=body.classList.contains('dark')?'light':'dark';
- applyTheme(next);
- try{localStorage.setItem('kalp-theme',next);}catch(error){}
-});
-
-function closeMenu(restoreFocus){
- nav.classList.remove('open');
- menu.setAttribute('aria-expanded','false');
- menu.setAttribute('aria-label','Open menu');
- menu.textContent='☰';
- if(restoreFocus)menu.focus();
-}
-menu.addEventListener('click',function(){
- const open=nav.classList.toggle('open');
- menu.setAttribute('aria-expanded',String(open));
- menu.setAttribute('aria-label',open?'Close menu':'Open menu');
- menu.textContent=open?'×':'☰';
-});
-nav.querySelectorAll('a').forEach(function(link){
- link.addEventListener('click',function(){closeMenu(false);});
-});
-document.addEventListener('click',function(event){
- if(nav.classList.contains('open')&&!nav.contains(event.target)&&!menu.contains(event.target))closeMenu(false);
-});
-document.addEventListener('keydown',function(event){
- if(event.key==='Escape'&&nav.classList.contains('open'))closeMenu(true);
-});
-mobileNavQuery.addEventListener('change',function(event){
- if(!event.matches)closeMenu(false);
-});
-
-const datasets={
- journey:{title:"Follow the user's journey",desc:"Validate that each step leads to the right next step—and that the user can recover when something goes wrong.",items:["Navigation and key actions","Successful and failed paths","Session and redirect behavior","Back, refresh, and repeat actions"]},
- forms:{title:"Break the form safely",desc:"Check how form fields behave with real-world, invalid, missing, and boundary data.",items:["Required fields and error messages","Invalid email / malformed values","Boundary length and whitespace","Submit twice / preserve entered data"]},
- responsive:{title:"Test beyond one viewport",desc:"Make sure content and controls remain usable across device widths and interaction modes.",items:["Small mobile and tablet breakpoints","No horizontal overflow","Touch targets and focus visibility","Menu, modal, and orientation behavior"]},
- seo:{title:"Review content and SEO basics",desc:"Inspect page structure and content presentation without confusing SEO checks with functional correctness.",items:["One clear H1 and logical headings","Title and meta description present","Images have meaningful alt text","Links, content, and canonical reviewed"]}
-};
-const tabs=Array.from(document.querySelectorAll('.lab-tab'));
-const panel=document.getElementById('labPanel');
-const title=document.getElementById('labTitle');
-const desc=document.getElementById('labDescription');
-const checks=document.getElementById('labChecks');
-const bar=document.getElementById('progressBar');
-const track=document.getElementById('progressTrack');
-const status=document.getElementById('progressText');
-
-function updateProgress(){
- const inputs=Array.from(checks.querySelectorAll('input[type="checkbox"]'));
- const done=inputs.filter(function(input){return input.checked;}).length;
- const total=inputs.length;
- bar.style.width=(total?done/total*100:0)+'%';
- track.setAttribute('aria-valuemax',String(total));
- track.setAttribute('aria-valuenow',String(done));
- status.textContent=done+' / '+total+' checks complete';
-}
-function renderTab(key,focusTab){
- const data=datasets[key];
- if(!data)return;
- title.textContent=data.title;
- desc.textContent=data.desc;
- checks.replaceChildren();
- data.items.forEach(function(item){
-  const label=document.createElement('label');
-  label.className='check';
-  const input=document.createElement('input');
-  input.type='checkbox';
-  label.appendChild(input);
-  label.appendChild(document.createTextNode(' '+item));
-  checks.appendChild(label);
-  input.addEventListener('change',updateProgress);
- });
- updateProgress();
- tabs.forEach(function(tab){
-  const active=tab.dataset.tab===key;
-  tab.setAttribute('aria-selected',String(active));
-  tab.tabIndex=active?0:-1;
-  if(active){
-   panel.setAttribute('aria-labelledby',tab.id);
-   if(focusTab)tab.focus();
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08111e">
+  <meta name="description" content="Kalp Shah is a Manual QA Tester in Surat, Gujarat, focused on functional testing, web and WordPress QA, test design, defect reporting, retesting and regression.">
+  <meta name="author" content="Kalp Shah">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://kalpshahtester.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kalpshahtester.github.io/">
+  <meta property="og:title" content="Kalp Shah — Manual QA Tester">
+  <meta property="og:description" content="Evidence-led manual QA, web testing and WordPress quality assurance.">
+  <meta property="og:image" content="https://kalpshahtester.github.io/Kalp%20Shah%20Profile%20Photo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Kalp Shah | Manual QA Tester · Web & WordPress QA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Kalp Shah",
+    "jobTitle": "Manual QA Tester",
+    "url": "https://kalpshahtester.github.io/",
+    "image": "https://kalpshahtester.github.io/Kalp%20Shah%20Profile%20Photo.png",
+    "email": "mailto:manualtesterkalpshah@gmail.com",
+    "address": {"@type":"PostalAddress","addressLocality":"Surat","addressRegion":"Gujarat","addressCountry":"IN"},
+    "sameAs": [
+      "https://github.com/kalpshahtester",
+      "https://www.linkedin.com/in/kalp-shah-a9965b395/"
+    ]
   }
- });
-}
-tabs.forEach(function(tab,index){
- tab.addEventListener('click',function(){renderTab(tab.dataset.tab,false);});
- tab.addEventListener('keydown',function(event){
-  if(!['ArrowRight','ArrowLeft','Home','End'].includes(event.key))return;
-  event.preventDefault();
-  let next=index;
-  if(event.key==='ArrowRight')next=(index+1)%tabs.length;
-  if(event.key==='ArrowLeft')next=(index-1+tabs.length)%tabs.length;
-  if(event.key==='Home')next=0;
-  if(event.key==='End')next=tabs.length-1;
-  renderTab(tabs[next].dataset.tab,true);
- });
-});
-renderTab('journey',false);
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
 
-const revealItems=document.querySelectorAll('.reveal');
-if('IntersectionObserver'in window&&!reducedMotion){
- const observer=new IntersectionObserver(function(entries){
-  entries.forEach(function(entry){
-   if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}
-  });
- },{threshold:.12});
- revealItems.forEach(function(element){observer.observe(element);});
-}else{
- revealItems.forEach(function(element){element.classList.add('visible');});
-}
+  <header class="site-header" id="siteHeader">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="Kalp Shah home">
+        <span class="brand-mark">KS</span><span>Kalp Shah</span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open navigation">
+        <span></span><span></span>
+      </button>
+      <nav class="primary-nav" id="primaryNav" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#qa-lab">QA Lab</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="nav-resume" href="/Kalp%20Shah%20Manual%20Tester%20Resume.pdf" target="_blank" rel="noopener">Resume <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
 
-const back=document.getElementById('backtop');
-window.addEventListener('scroll',function(){
- back.classList.toggle('show',window.scrollY>500);
-},{passive:true});
-back.addEventListener('click',function(){
- window.scrollTo({top:0,behavior:reducedMotion?'auto':'smooth'});
-});
-})();
+  <main id="main">
+    <section class="hero section-shell" id="top" aria-labelledby="hero-title">
+      <div class="hero-grid container">
+        <div class="hero-copy" data-reveal>
+          <p class="eyebrow"><span class="status-dot"></span> Manual QA · Web · WordPress</p>
+          <p class="hero-kicker">QUALITY ASSURANCE / SURAT, INDIA</p>
+          <h1 id="hero-title">I test the details<br>that make digital<br><em>experiences work.</em></h1>
+          <p class="hero-intro">I’m Kalp Shah, a Manual QA Tester focused on thoughtful test coverage, clear defect evidence, reliable retesting and better web experiences.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">Explore projects <span aria-hidden="true">↗</span></a>
+            <a class="button button-secondary" href="/Kalp%20Shah%20Manual%20Tester%20Resume.pdf" target="_blank" rel="noopener">View resume <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="hero-meta">
+            <span><i class="mini-dot"></i> Currently at NXS Infotech</span>
+            <span>Open to relevant QA opportunities</span>
+          </div>
+        </div>
 
-</script>
-<script type="importmap">{"imports":{"react":"https://esm.sh/react@18.3.1","react-dom":"https://esm.sh/react-dom@18.3.1","three":"https://esm.sh/three@0.166.1"}}</script>
-<script type="module">
-import React from "react";
-import {createRoot} from "https://esm.sh/react-dom@18.3.1/client?external=react";
-import {Canvas,useFrame} from "https://esm.sh/@react-three/fiber@8.17.10?external=react,react-dom,three";
-import {gsap} from "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js";
-import {ScrollTrigger} from "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js";
-import Lenis from "https://cdn.jsdelivr.net/npm/lenis@1.1.20/+esm";
-gsap.registerPlugin(ScrollTrigger);
-const h=React.createElement, reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-function QAWorld(){
- const rig=React.useRef(),core=React.useRef(),particles=React.useRef();
- useFrame((state,delta)=>{
-  if(!reduced&&rig.current){rig.current.rotation.y+=delta*.12;rig.current.rotation.x=Math.sin(state.clock.elapsedTime*.25)*.09}
-  if(core.current&&!reduced)core.current.rotation.y-=delta*.18;
-  if(particles.current&&!reduced)particles.current.rotation.y+=delta*.035;
- });
- const dots=Array.from({length:34},(_,i)=>{const a=i*2.399,r=2.05+(i%4)*.18;return h("mesh",{key:i,position:[Math.cos(a)*r,Math.sin(i*1.61)*1.35,Math.sin(a)*r]},h("sphereGeometry",{args:[.025+(i%3)*.009,8,8]}),h("meshBasicMaterial",{color:i%5===0?"#a78bfa":"#53e8ff"}))});
- return h("group",{ref:rig},
-  h("mesh",{ref:core},h("icosahedronGeometry",{args:[1.18,2]}),h("meshStandardMaterial",{color:"#173b63",wireframe:true,metalness:.7,roughness:.24})),
-  h("mesh",null,h("icosahedronGeometry",{args:[1.32,1]}),h("meshBasicMaterial",{color:"#53e8ff",wireframe:true,transparent:true,opacity:.13})),
-  ...[0,1,2].map(i=>h("mesh",{key:"ring"+i,rotation:[Math.PI/2+i*.43,i*.68,0]},h("torusGeometry",{args:[1.85+i*.28,.008,8,100]}),h("meshBasicMaterial",{color:i===1?"#a78bfa":"#53e8ff",transparent:true,opacity:.62}))),
-  h("group",{ref:particles},...dots),
-  h("pointLight",{position:[3,3,4],intensity:16,color:"#53e8ff"}),
-  h("ambientLight",{intensity:1.5})
- );
-}
-const worldRoot=document.getElementById("qaWorldCanvas");
-if(worldRoot){try{createRoot(worldRoot).render(h(Canvas,{camera:{position:[0,0,7],fov:44},dpr:[1,1.5],gl:{alpha:true,antialias:true},style:{width:"100%",height:"100%"}},h(QAWorld)));}catch(error){console.warn("3D scene could not initialize; static hero remains available.",error)}}
-if(!reduced){
- const lenis=new Lenis({duration:1.05,smoothWheel:true,anchors:true});
- lenis.on("scroll",ScrollTrigger.update);
- gsap.ticker.add(time=>lenis.raf(time*1000));gsap.ticker.lagSmoothing(0);
- gsap.utils.toArray(".section-head,.project,.world-window,.world-terminal,.profile-fact,.credential").forEach(el=>{
-  gsap.fromTo(el,{y:26,opacity:0},{y:0,opacity:1,duration:.72,ease:"power2.out",scrollTrigger:{trigger:el,start:"top 89%",once:true}});
- });
- ScrollTrigger.refresh();
-}
-const rows=[...document.querySelectorAll("[data-test]")],meter=document.getElementById("qaRunMeter"),status=document.getElementById("qaRunStatus");
-let timer=null;
-function reset(){if(timer)clearInterval(timer);timer=null;rows.forEach(x=>{x.textContent="READY";x.className="terminal-pass"});if(meter)meter.style.width="0%";if(status)status.textContent="Awaiting test execution. Start the demo suite."}
-document.getElementById("resetQaDemo")?.addEventListener("click",reset);
-document.getElementById("runQaDemo")?.addEventListener("click",()=>{
- reset();let n=0;if(status)status.textContent="Running simulated checks…";
- timer=setInterval(()=>{
-  if(n>=rows.length){clearInterval(timer);timer=null;if(status)status.textContent="Demo complete: 5 simulated checks passed. No live site was tested.";return}
-  rows[n].textContent="PASS";if(meter)meter.style.width=((n+1)/rows.length*100)+"%";
-  if(status)status.textContent="Executing check "+(n+1)+" of "+rows.length+"…";n++;
- },450);
-});
-</script></body></html>
+        <div class="hero-visual" data-reveal data-reveal-delay="120">
+          <div class="portrait-frame">
+            <div class="portrait-backdrop" aria-hidden="true"></div>
+            <img
+              class="profile-photo"
+              src="https://kalpshahtester.github.io/Kalp%20Shah%20Profile%20Photo.png"
+              alt="Portrait of Kalp Shah"
+              width="800"
+              height="1000"
+              fetchpriority="high"
+              decoding="async">
+            <div class="portrait-label">
+              <span class="mono-label">PROFILE / 001</span>
+              <strong>Kalp Shah</strong>
+              <span class="portrait-role">Manual QA Tester</span>
+            </div>
+          </div>
+          <div class="orbit-card orbit-card-top" aria-hidden="true"><span class="orbit-icon">✓</span><span>Test with evidence</span></div>
+          <div class="orbit-card orbit-card-bottom" aria-hidden="true"><span class="orbit-pulse"></span><span>Quality is a process</span></div>
+        </div>
+      </div>
+      <div class="hero-bottom container">
+        <span class="mono-label">SCROLL TO EXPLORE</span>
+        <span class="scroll-line" aria-hidden="true"></span>
+        <span class="mono-label">01 — 09</span>
+      </div>
+    </section>
+
+    <section class="proof-strip" aria-labelledby="proof-title">
+      <div class="container">
+        <div class="section-overline"><span class="mono-label">PROJECT EVIDENCE</span><span id="proof-title">Measured work, clearly labelled.</span></div>
+        <div class="proof-grid">
+          <article class="proof-item"><strong>47</strong><span>Test scenarios<br><small>SauceDemo project</small></span></article>
+          <article class="proof-item"><strong>62<span>+</span></strong><span>Test cases<br><small>SauceDemo project</small></span></article>
+          <article class="proof-item"><strong>282</strong><span>Execution records<br><small>SauceDemo project</small></span></article>
+          <article class="proof-item"><strong>100<span>+</span></strong><span>Users supported<br><small>Previous IT role</small></span></article>
+        </div>
+        <p class="proof-note">Figures describe separate project and IT-support work; they are not combined into one QA delivery metric.</p>
+      </div>
+    </section>
+
+    <section class="section-shell section-pad" id="about" aria-labelledby="about-title">
+      <div class="container section-grid">
+        <div class="section-aside" data-reveal>
+          <p class="section-index">01 / ABOUT</p>
+          <p class="aside-note">Curiosity finds the edge case. Structure makes it repeatable.</p>
+        </div>
+        <div class="section-main" data-reveal data-reveal-delay="100">
+          <h2 id="about-title">A practical QA mindset, built on <em>clear evidence.</em></h2>
+          <div class="about-columns">
+            <p class="lead-copy">My earlier experience in IT support taught me to reproduce problems, isolate causes, help users and document solutions. I now bring that troubleshooting discipline to manual software testing.</p>
+            <div class="body-copy">
+              <p>I work across functional testing, UI validation, exploratory and negative testing, regression, retesting, WordPress QA and web application journeys.</p>
+              <p>I focus on understanding expected behaviour, covering realistic user paths and communicating defects in a way that helps teams reproduce and resolve them.</p>
+              <div class="tag-cloud" aria-label="QA focus areas">
+                <span>Functional testing</span><span>UI testing</span><span>Regression</span><span>Exploratory testing</span><span>Negative testing</span><span>WordPress QA</span><span>Test documentation</span><span>Defect reporting</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-shell section-pad projects-section" id="projects" aria-labelledby="projects-title">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <div><p class="section-index">02 / SELECTED WORK</p><h2 id="projects-title">Projects that show <em>how I test.</em></h2></div>
+          <p class="heading-aside">Explore the scope, approach and available QA evidence behind each project.</p>
+        </div>
+        <div class="project-grid">
+          <article class="project-card project-featured" data-reveal>
+            <div class="project-art art-saucedemo" aria-hidden="true">
+              <div class="art-window">
+                <div class="art-window-top"><i></i><i></i><i></i><span>e-commerce / test flow</span></div>
+                <div class="art-body">
+                  <div class="art-side"><b>PRODUCTS</b><i></i><i></i><i></i><i></i></div>
+                  <div class="art-products"><span></span><span></span><span></span><span></span></div>
+                </div>
+                <div class="art-status"><b>TEST RUN</b><span>PASS</span><span>PASS</span><span>PASS</span></div>
+              </div>
+              <span class="art-caption">CASE STUDY / 001</span>
+            </div>
+            <div class="project-content">
+              <div class="project-topline"><span>01 — FEATURED PROJECT</span><span>MANUAL QA</span></div>
+              <h3>SauceDemo<br>End-to-end testing</h3>
+              <p>Manual QA of an e-commerce demo journey, covering login, product browsing, cart and checkout, including positive and negative paths.</p>
+              <div class="project-metrics"><span><b>47</b> scenarios</span><span><b>62+</b> test cases</span><span><b>282</b> execution records</span></div>
+              <div class="project-tags"><span>Test design</span><span>Execution</span><span>RTM</span><span>Defect reporting</span></div>
+              <a class="text-link" href="/projects/saucedemo.html">Explore case study <span aria-hidden="true">↗</span></a>
+              <a class="sub-link" href="https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website" target="_blank" rel="noopener noreferrer">View GitHub repository ↗</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-reveal data-reveal-delay="100">
+            <div class="project-art art-travel" aria-hidden="true">
+              <div class="travel-panel"><span class="mono-label">TRAVEL FLOW / QA</span><div class="route-line"><b>STAY</b><i></i><b>FLY</b></div><div class="route-bars"><i></i><i></i><i></i></div><div class="route-check">✓ UI & FLOW REVIEW</div></div>
+              <span class="art-caption">ASSESSMENT / 002</span>
+            </div>
+            <div class="project-content">
+              <div class="project-topline"><span>02 — ASSESSMENT</span><span>WEB QA</span></div>
+              <h3>MakeMyTrip<br>Testing assessment</h3>
+              <p>Assessment work across travel workflows, including authentication, flight and hotel journeys, UI validation and negative scenarios.</p>
+              <div class="project-tags"><span>User journeys</span><span>UI validation</span><span>Negative paths</span></div>
+              <a class="text-link" href="/projects/makemytrip.html">Explore case study <span aria-hidden="true">↗</span></a>
+              <a class="sub-link" href="https://github.com/kalpshahtester/MakeMyTrip-Testing-Assessment" target="_blank" rel="noopener noreferrer">View GitHub repository ↗</a>
+            </div>
+          </article>
+        </div>
+        <p class="client-note">Client website work is described at a high level only; confidential client information and private evidence are not published.</p>
+      </div>
+    </section>
+
+    <section class="section-shell section-pad lab-section" id="qa-lab" aria-labelledby="lab-title">
+      <div class="container section-grid">
+        <div class="section-aside" data-reveal>
+          <p class="section-index">03 / INTERACTIVE QA LAB</p>
+          <p class="aside-note">A small, hands-on illustration of test planning and execution.</p>
+        </div>
+        <div class="section-main" data-reveal data-reveal-delay="100">
+          <div class="section-heading compact-heading"><div><h2 id="lab-title">Think in scenarios.<br><em>Test beyond happy paths.</em></h2></div><p class="heading-aside">Choose a test area and run the local demo checklist.</p></div>
+          <div class="qa-console">
+            <div class="console-top"><span><i class="console-dot"></i> QA PLAYGROUND</span><span class="console-badge">PORTFOLIO SIMULATION</span></div>
+            <div class="console-content">
+              <div class="console-controls">
+                <label class="field-label" for="testArea">TEST AREA</label>
+                <select id="testArea">
+                  <option value="journey">User journey</option>
+                  <option value="forms">Form validation</option>
+                  <option value="responsive">Responsive interface</option>
+                  <option value="content">Content & metadata</option>
+                </select>
+                <button class="button button-primary run-button" id="runSimulation" type="button">Run simulation <span aria-hidden="true">▶</span></button>
+                <button class="button button-quiet" id="resetSimulation" type="button">Reset</button>
+              </div>
+              <div class="console-results" aria-live="polite" aria-atomic="false">
+                <div class="console-results-head"><span id="scenarioTitle">User journey checks</span><span id="runStatus">READY</span></div>
+                <p id="scenarioDescription">Check that key user actions work in sequence and that users can recover from an interrupted flow.</p>
+                <ol id="scenarioChecks" class="scenario-checks">
+                  <li>Primary navigation and key actions</li>
+                  <li>Successful and unsuccessful paths</li>
+                  <li>Back, refresh and repeat actions</li>
+                  <li>Session and redirect behaviour</li>
+                </ol>
+                <div class="progress-track"><span id="simulationProgress"></span></div>
+                <p class="console-footnote" id="simulationMessage">Ready. This demo does not connect to or test a live website.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-shell section-pad" id="workflow" aria-labelledby="workflow-title">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <div><p class="section-index">04 / QA METHOD</p><h2 id="workflow-title">A repeatable path from requirement to <em>confidence.</em></h2></div>
+          <p class="heading-aside">A clear workflow helps make testing traceable, focused and useful.</p>
+        </div>
+        <div class="workflow-grid">
+          <article class="workflow-step" data-reveal><span>01</span><h3>Understand</h3><p>Review requirements, expected behaviour and acceptance criteria.</p></article>
+          <article class="workflow-step" data-reveal><span>02</span><h3>Plan coverage</h3><p>Identify risks, test scope, scenarios and priority areas.</p></article>
+          <article class="workflow-step" data-reveal><span>03</span><h3>Design tests</h3><p>Prepare positive, negative, boundary and exploratory checks.</p></article>
+          <article class="workflow-step" data-reveal><span>04</span><h3>Execute</h3><p>Run tests, record actual results and capture clear evidence.</p></article>
+          <article class="workflow-step" data-reveal><span>05</span><h3>Report defects</h3><p>Write reproducible steps with expected and actual results.</p></article>
+          <article class="workflow-step" data-reveal><span>06</span><h3>Retest & regress</h3><p>Verify fixes and check related functionality for regressions.</p></article>
+          <article class="workflow-step workflow-step-wide" data-reveal><span>07</span><h3>Communicate status</h3><p>Summarise coverage, outstanding issues, risks and test outcomes.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-shell section-pad experience-section" id="experience" aria-labelledby="experience-title">
+      <div class="container section-grid">
+        <div class="section-aside" data-reveal>
+          <p class="section-index">05 / EXPERIENCE</p>
+          <p class="aside-note">Troubleshooting discipline, now applied to software quality.</p>
+        </div>
+        <div class="section-main" data-reveal data-reveal-delay="100">
+          <h2 id="experience-title">Experience grounded in <em>problem solving.</em></h2>
+          <div class="timeline">
+            <article class="timeline-item">
+              <div class="timeline-date">MAY 2026 — PRESENT</div>
+              <div><h3>Manual QA Tester — WordPress & Web QA</h3><p class="timeline-company">NXS Infotech Private Limited · Surat</p><p>Testing WordPress and client websites across UI behaviour, navigation, forms, product and account journeys, responsive layouts, content and SEO details. Documenting reproducible defects, retesting fixes and coordinating QA follow-up.</p><div class="project-tags"><span>WordPress QA</span><span>Web testing</span><span>Defect reporting</span><span>Retesting</span></div></div>
+            </article>
+            <article class="timeline-item">
+              <div class="timeline-date">2020 — 2025</div>
+              <div><h3>Computer Engineer / IT Support</h3><p class="timeline-company">J. B. And Brothers Pvt. Ltd. · Surat</p><p>Supported systems and 100+ users through Windows and business-software setup, hardware and network troubleshooting, access support, issue documentation and functional checks after updates or configuration changes.</p><div class="project-tags"><span>IT support</span><span>Troubleshooting</span><span>System validation</span></div></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-shell section-pad skills-section" id="skills" aria-labelledby="skills-title">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <div><p class="section-index">06 / SKILLS & TOOLS</p><h2 id="skills-title">The disciplines behind <em>the work.</em></h2></div>
+          <p class="heading-aside">Manual-first QA skills, supported by practical web and collaboration tools.</p>
+        </div>
+        <div class="skills-grid">
+          <article class="skill-card" data-reveal><span class="skill-number">01</span><h3>Manual testing</h3><p>Functional, UI, smoke, sanity, regression, exploratory, negative, boundary and retesting.</p></article>
+          <article class="skill-card" data-reveal><span class="skill-number">02</span><h3>Test documentation</h3><p>Test plans, scenarios, test cases, execution records, RTM, defect reports and test summaries.</p></article>
+          <article class="skill-card" data-reveal><span class="skill-number">03</span><h3>Web & WordPress QA</h3><p>Forms, navigation, account journeys, responsive layouts, content, image and SEO checks.</p></article>
+          <article class="skill-card" data-reveal><span class="skill-number">04</span><h3>Tools & collaboration</h3><p>Jira, ClickUp, Chrome DevTools, Lighthouse, Google Sheets, Drive, Slack, Excel, Git and GitHub.</p></article>
+        </div>
+        <div class="credentials-row">
+          <div class="credential-block"><p class="section-index">07 / EDUCATION</p><h3>Diploma in Information Technology</h3><p>Dr. S. & S. S. Ghandhy College of Engineering & Technology, Gujarat</p><span>Secondary School (10th) · L. H. Boghra (Shishuvihar) School</span></div>
+          <div class="credential-block"><p class="section-index">08 / TRAINING & LEARNING</p><ul class="credential-list">
+            <li><span>Manual Testing Training</span><small>TOPS Technologies Pvt. Ltd. · March 2026</small></li>
+            <li><span>Automation Testing Masterclass</span><small>HCL GUVI · November 2025</small></li>
+            <li><span>Generative AI Mastermind</span><small>Outskill · Certificate of completion</small></li>
+          </ul></div>
+        </div>
+        <div class="certificate-links" aria-label="Certificate images">
+          <a href="/Kalp%20Shah%20HCL%20GUVI%20Certification.png" target="_blank" rel="noopener">View HCL GUVI certificate ↗</a>
+          <a href="/Kalp%20Shah%20Generative%20AI%20Mastermind%20Course%20Certificate.jpeg" target="_blank" rel="noopener">View Generative AI certificate ↗</a>
+          <a href="/Kalp%20Shah%20Outskill%20Certificate.png" target="_blank" rel="noopener">View Outskill certificate ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="container contact-grid">
+        <div data-reveal>
+          <p class="section-index">09 / CONTACT</p>
+          <h2 id="contact-title">Let’s make the next release <em>better.</em></h2>
+          <p class="contact-copy">For Manual QA, Web QA or WordPress testing opportunities, get in touch.</p>
+          <a class="button button-light" href="mailto:manualtesterkalpshah@gmail.com">Email me <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="contact-links" data-reveal data-reveal-delay="100">
+          <a href="mailto:manualtesterkalpshah@gmail.com"><span>Email</span><b>manualtesterkalpshah@gmail.com ↗</b></a>
+          <a href="https://www.linkedin.com/in/kalp-shah-a9965b395/" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><b>Professional profile ↗</b></a>
+          <a href="https://github.com/kalpshahtester" target="_blank" rel="noopener noreferrer"><span>GitHub</span><b>Testing projects ↗</b></a>
+          <a href="/Kalp%20Shah%20Manual%20Tester%20Resume.pdf" target="_blank" rel="noopener"><span>Resume</span><b>Open PDF ↗</b></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner"><a class="brand footer-brand" href="#top"><span class="brand-mark">KS</span><span>Kalp Shah</span></a><span>Manual QA · Web · WordPress</span><span>© <span id="year"></span> Kalp Shah</span></div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
+  <script src="/assets/js/site.js" defer></script>
+</body>
+</html>
