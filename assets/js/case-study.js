@@ -117,12 +117,13 @@
       }
       gsap.registerPlugin(ScrollTrigger);
       window.__caseStudyMotionState = { status: "ready", gsap: true, scrollTrigger: true };
-      gsap.from(".case-breadcrumbs", { y: 12, opacity: 0, duration: .6 });
-      gsap.from(".case-title", { y: 40, opacity: 0, duration: .9, delay: .12 });
-      gsap.from(".case-lead", { y: 16, opacity: 0, duration: .65, delay: .3 });
+      // Never fade body copy below normal contrast; use a restrained positional entrance.
+      gsap.from(".case-breadcrumbs", { y: 12, duration: .6 });
+      gsap.from(".case-title", { y: 40, duration: .9, delay: .12 });
+      gsap.from(".case-lead", { y: 16, duration: .65, delay: .3 });
       gsap.utils.toArray("[data-reveal]").forEach((element, index) => {
         gsap.from(element, {
-          y: 28, opacity: 0, duration: .7, delay: (index % 3) * .04,
+          y: 28, duration: .7, delay: (index % 3) * .04,
           scrollTrigger: { trigger: element, start: "top 88%", once: true }
         });
       });
