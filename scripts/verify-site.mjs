@@ -118,7 +118,8 @@ assert.match(faviconSvg, /<svg\b[^>]*viewBox="0 0 64 64"/i, "SVG favicon must ha
 assert.match(faviconSvg, /<path\b/i, "SVG favicon must include the K monogram");
 assert.match(faviconSvg, /#D2FF4B/i, "SVG favicon must preserve the brand accent");
 assert.ok(routes.every(({file}) => pageHtml.get(file === "index.html" ? "/" : file === "projects/saucedemo.html" ? "/projects/saucedemo.html" : "/projects/makemytrip.html").indexOf('favicon-32x32.png?v=5') < pageHtml.get(file === "index.html" ? "/" : file === "projects/saucedemo.html" ? "/projects/saucedemo.html" : "/projects/makemytrip.html").indexOf('favicon.svg?v=5')), "PNG favicon must be the first browser fallback");
-assert.match(home, /\.portrait-topline/i, "portrait label visibility rules must be maintained in the production stylesheet");
+const premiumCss = fs.readFileSync(path.join(root, "assets/css/premium.css"), "utf8");
+assert.match(premiumCss, /\.portrait-topline,\.portrait-bottomline[\\s\\S]*background:rgba\\(5,9,15,\\.86\\)/, "portrait labels must use a high-contrast backing");
 
 for (const { file, size } of [
   { file: "assets/favicon-16x16.png", size: 16 },
