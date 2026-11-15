@@ -79,10 +79,11 @@ try {
 
     // Verify every favicon format and the browser-facing references on each route.
     const iconLinks = await page.locator('link[rel~="icon"],link[rel="apple-touch-icon"]').evaluateAll(links => links.map(link => new URL(link.getAttribute("href"), location.href).pathname));
-    for (const expectedPath of ["/assets/favicon.svg", "/assets/favicon-16x16.png", "/assets/favicon-32x32.png", "/favicon.ico", "/assets/apple-touch-icon.png"]) {
+    for (const expectedPath of ["/favicon.svg", "/assets/favicon.svg", "/assets/favicon-16x16.png", "/assets/favicon-32x32.png", "/favicon.ico", "/assets/apple-touch-icon.png"]) {
       assert.ok(iconLinks.includes(expectedPath), route.path + " is missing favicon reference " + expectedPath);
     }
     const iconAssets = [
+      { path: "/favicon.svg", type: "image/svg+xml" },
       { path: "/assets/favicon.svg", type: "image/svg+xml" },
       { path: "/assets/favicon-16x16.png", type: "image/png", size: 16 },
       { path: "/assets/favicon-32x32.png", type: "image/png", size: 32 },
