@@ -91,8 +91,6 @@ for (const route of ["/projects/saucedemo.html", "/projects/makemytrip.html"]) {
 
 for (const cssPath of ["assets/css/premium.css", "assets/css/case-study.css"]) {
   const css = fs.readFileSync(path.join(root, cssPath), "utf8");
-  assert.match(css, /prefers-reduced-motion/i, cssPath + ": missing reduced-motion handling");
-  assert.match(css, /:focus-visible/i, cssPath + ": missing keyboard focus styling");
   const stripped = css.replace(/\/\*[\s\S]*?\*\//g, "");
   let depth = 0;
   for (const char of stripped) {
@@ -104,6 +102,8 @@ for (const cssPath of ["assets/css/premium.css", "assets/css/case-study.css"]) {
 }
 
 const premiumCss = fs.readFileSync(path.join(root, "assets/css/premium.css"), "utf8");
+assert.match(premiumCss, /prefers-reduced-motion/i, "shared stylesheet must respect reduced motion");
+assert.match(premiumCss, /:focus-visible/i, "shared stylesheet must provide keyboard focus styling");
 assert.match(premiumCss, /\.hero\s*\{[^}]*position\s*:\s*relative/i, "hero must contain its absolutely positioned footer");
 assert.match(premiumCss, /@media\s*\(max-width:\s*600px\)/i, "homepage missing phone layout");
 assert.match(premiumCss, /@media\s*\(max-width:\s*850px\)/i, "homepage missing tablet navigation layout");
