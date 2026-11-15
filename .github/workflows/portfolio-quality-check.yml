@@ -28,11 +28,13 @@ jobs:
           node --check scripts/verify-site.mjs
           node --check scripts/serve-site.mjs
           node --check scripts/browser-smoke.mjs
+      - name: Validate HTML5 markup
+        run: npx html-validate index.html projects/saucedemo.html projects/makemytrip.html
       - name: Check portfolio structure, accessibility markers and local paths
         run: node scripts/verify-site.mjs
       - name: Install Playwright
         run: |
-          npm install --no-save --package-lock=false playwright@1.65.1
+          npm install --no-save --package-lock=false playwright@1.65.1 @axe-core/playwright@4.14.0 html-validate@11.21.1
           npx playwright install --with-deps chromium
       - name: Start local portfolio server
         run: node scripts/serve-site.mjs > /tmp/portfolio-server.log 2>&1 &
