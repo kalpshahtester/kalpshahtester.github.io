@@ -455,6 +455,13 @@ html.cursor-ready,html.cursor-ready a,html.cursor-ready button{cursor:none}
   .footer-copy{font-size:7px}
   .back-to-top{right:15px;bottom:15px;width:38px;height:38px}
 }
+@media (max-width:360px){
+  .hero-title{font-size:clamp(40px,14.5vw,52px);letter-spacing:-.08em}
+  .hero-eyebrow{font-size:7px;letter-spacing:.07em}
+  .hero-current{gap:8px}
+  .current-date{white-space:normal}
+  .project-meta{flex-wrap:wrap;row-gap:5px}
+}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   [data-reveal]{opacity:1!important;transform:none!important}
