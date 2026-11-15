@@ -507,3 +507,28 @@ html.lenis,html.lenis body{height:auto}
   .portrait-topline{top:17px}
   .portrait-bottomline{bottom:15px}
 }
+
+
+/* Final portrait visibility pass: keep the real photo unobstructed and uncropped. */
+.portrait-frame{z-index:7;overflow:hidden}
+.portrait-frame img{
+  display:block;
+  object-fit:contain;
+  object-position:50% 50%;
+  background:#080b12;
+  border-radius:170px 170px 5px 5px;
+}
+.portrait-topline,.portrait-bottomline{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  align-items:center;
+  gap:8px;
+  text-align:left;
+}
+.portrait-topline span:last-child,.portrait-bottomline span:last-child{text-align:right}
+.float-card{z-index:2}
+@media(max-width:600px){
+  .portrait-frame{z-index:7;width:min(76%,300px);height:370px}
+  .portrait-frame img{object-fit:contain;object-position:center center}
+  .float-card{display:none}
+}
