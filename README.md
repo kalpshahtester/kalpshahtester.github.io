@@ -1,41 +1,56 @@
 # Kalp Shah — Manual QA Tester Portfolio
 
-This branch contains a recruiter-focused refresh proposal for the published portfolio at https://kalpshahtester.github.io/.
+Live website: **https://kalpshahtester.github.io/**
 
-## Preview branch
-- Branch: `recruiter-portfolio-refresh`
-- The published `main` branch is not changed by this preview.
-- The refresh is implemented as static HTML, CSS and JavaScript so it remains compatible with GitHub Pages without adding a backend or mandatory build system.
+This repository contains the published portfolio for Kalp Shah, a Manual QA Tester focused on web and WordPress quality assurance.
 
-## Structure
-- `index.html` — recruiter-focused homepage
-- `projects/saucedemo.html` — SauceDemo manual QA case study
-- `projects/makemytrip.html` — MakeMyTrip assessment case study
-- `assets/css/site.css` — responsive design system and components
-- `assets/js/site.js` — accessible navigation, progressive reveals and the clearly labelled QA simulation
-- `scripts/verify-site.mjs` — local structural checks
+## Production structure
 
-## Design and implementation choices
-- Semantic HTML and progressive enhancement.
-- Manrope, Space Grotesk and DM Mono typography.
-- A navy / cyan / violet design system with responsive layouts.
-- Native scrolling and CSS transitions as the baseline.
-- GSAP + ScrollTrigger loaded as a progressive enhancement; the page remains usable if the animation CDN is unavailable.
-- No heavy 3D runtime or autoplay media on the recruiter landing page.
-- Reduced-motion support, visible focus states, skip link and keyboard-operable navigation.
+- \`index.html\` — main portfolio and professional profile
+- \`projects/saucedemo.html\` — SauceDemo manual QA case study
+- \`projects/makemytrip.html\` — MakeMyTrip testing assessment
+- \`assets/css/premium.css\` — shared visual system, responsive layout and motion fallbacks
+- \`assets/css/case-study.css\` — case-study layouts and responsive content
+- \`assets/js/premium.js\` — homepage interactions, progressive GSAP/ScrollTrigger and Lenis enhancements
+- \`assets/js/case-study.js\` — case-study navigation and progressive motion
+- \`scripts/verify-site.mjs\` — static structural, accessibility-marker and local-link checks
+- \`scripts/browser-smoke.mjs\` — Chromium smoke checks across 11 viewport sizes
+- \`scripts/serve-site.mjs\` — local static server used by browser QA
 
-## Accuracy and privacy
-- The primary positioning remains Manual QA / Web / WordPress QA.
-- Project metrics are labelled by source; SauceDemo uses 47 scenarios, 62+ test cases and 282 execution records.
-- No unverified critical-defect count, automation proficiency, API-testing claim, client name or confidential client evidence is advertised.
-- The current LinkedIn URL and existing public resume / certificate assets are retained.
-- The existing public profile image is referenced from the live site. A professionally retouched replacement is not included yet because the source pixels need to be supplied for an accurate edit.
+## Stack and progressive enhancement
 
-## Quality checks
-Run:
-```bash
+The site is intentionally static and GitHub Pages compatible. It uses semantic HTML, CSS, vanilla JavaScript, Space Grotesk / DM Sans / DM Mono typography, GSAP with ScrollTrigger, and Lenis for optional smooth scrolling on the homepage.
+
+Animation libraries are progressive enhancements. The site content remains accessible if a CDN is unavailable or a visitor requests reduced motion. The case-study pages use native scrolling.
+
+## Accuracy and transparency
+
+- The professional positioning is Manual QA / Web / WordPress QA.
+- SauceDemo project figures are labelled: 47 scenarios, 62+ test cases and 282 execution records.
+- The 100+ users figure refers to the earlier IT support role, not QA users.
+- SauceDemo is a public demo application used for a portfolio project. MakeMyTrip is a testing assessment.
+- Decorative interactive visuals are clearly labelled; they do not report live website test execution.
+- No unverified client work, production access, defect totals or professional automation experience is claimed.
+
+## Run checks locally
+
+Use Node.js 24 or newer.
+
+\`\`\`bash
 node scripts/verify-site.mjs
-node --check assets/js/site.js
-```
+node --check assets/js/premium.js
+node --check assets/js/case-study.js
+npm install --no-save --package-lock=false playwright@1.65.1
+npx playwright install chromium
+node scripts/serve-site.mjs
+\`\`\`
 
-This branch is a review candidate. Merge it into `main` only after reviewing the pages, checking the real portrait crop on devices, and confirming the public profile details.
+In a second terminal:
+
+\`\`\`bash
+BASE_URL=http://127.0.0.1:4173 node scripts/browser-smoke.mjs
+\`\`\`
+
+## Deployment
+
+GitHub Pages publishes the root of the \`main\` branch. The quality workflow runs on pull requests, branch pushes and production-branch pushes. It checks JavaScript syntax, static structure, accessibility markers, local asset paths and responsive Chromium behaviour before changes are merged.

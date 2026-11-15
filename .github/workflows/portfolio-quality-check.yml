@@ -2,7 +2,7 @@ name: Portfolio quality checks
 
 on:
   push:
-    branches: [recruiter-portfolio-refresh, premium-portfolio-v2]
+    branches: [main, recruiter-portfolio-refresh, premium-portfolio-v2, website-quality-fixes]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -15,14 +15,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
+          package-manager-cache: false
       - name: Check JavaScript syntax
         run: |
-          node --check assets/js/site.js
           node --check assets/js/premium.js
-      - name: Check portfolio structure and local links
+          node --check assets/js/case-study.js
+          node --check scripts/verify-site.mjs
+          node --check scripts/serve-site.mjs
+          node --check scripts/browser-smoke.mjs
+      - name: Check portfolio structure, accessibility markers and local paths
         run: node scripts/verify-site.mjs
+      - name: Install Playwright
+        run: |
+          npm install --no-save --package-lock=false playwright@1.65.1
+          npx playwright install --with-deps chromium
+      - name: Start local portfolio server
+        run: node scripts/serve-site.mjs > /tmp/portfolio-server.log 2>&1 &
+      - name: Wait for local server
+        run: |
+          for attempt in $(seq 1 30); do
+            if curl --silent --fail http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/portfolio-server.log
+          exit 1
+      - name: Run responsive Chromium browser checks
+        env:
+          BASE_URL: http://127.0.0.1:4173
+        run: node scripts/browser-smoke.mjs

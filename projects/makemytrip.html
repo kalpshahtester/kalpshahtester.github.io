@@ -1,44 +1,115 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="MakeMyTrip testing assessment case study by Kalp Shah, covering travel user journeys, login and registration, flight and hotel booking flows, UI validation and negative scenarios.">
-  <meta name="author" content="Kalp Shah"><meta name="theme-color" content="#08111e">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b12">
+  <meta name="description" content="Manual web testing assessment by Kalp Shah, exploring travel-platform login, flight and hotel booking journeys, interface validation and negative scenarios.">
+  <meta name="author" content="Kalp Shah">
   <link rel="canonical" href="https://kalpshahtester.github.io/projects/makemytrip.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://kalpshahtester.github.io/projects/makemytrip.html">
+  <meta property="og:title" content="MakeMyTrip Testing Assessment | Kalp Shah">
+  <meta property="og:description" content="Manual web testing assessment by Kalp Shah, exploring travel-platform login, flight and hotel booking journeys, interface validation and negative scenarios.">
+  <meta property="og:image" content="https://kalpshahtester.github.io/Kalp%20Shah%20Profile%20Photo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/premium.css">
+  <link rel="stylesheet" href="/assets/css/case-study.css">
   <title>MakeMyTrip Testing Assessment | Kalp Shah</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/site.css">
-</head>
-<body>
+</head><body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header" id="siteHeader"><div class="container nav-wrap">
-    <a class="brand" href="/" aria-label="Kalp Shah home"><span class="brand-mark">KS</span><span>Kalp Shah</span></a>
-    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open navigation"><span></span><span></span></button>
-    <nav class="primary-nav" id="primaryNav" aria-label="Main navigation"><a href="/#about">About</a><a href="/#projects">Projects</a><a href="/#experience">Experience</a><a href="/#contact">Contact</a></nav>
-    <a class="nav-resume" href="/Kalp%20Shah%20Manual%20Tester%20Resume.pdf" target="_blank" rel="noopener">Resume ↗</a>
-  </div></header>
-  <main id="main">
-    <section class="case-hero"><div class="container">
-      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/#projects">Projects</a><span>/</span><span>MakeMyTrip</span></nav>
-      <p class="section-index" style="margin-top:32px">CASE STUDY / 002 · TESTING ASSESSMENT</p>
-      <h1>MakeMyTrip —<br><em>travel workflow assessment.</em></h1>
-      <p class="case-intro">A testing assessment focused on travel-platform workflows, user-facing interface behaviour and negative scenarios across login, flight and hotel journeys.</p>
-      <div class="case-actions"><a class="button button-primary" href="https://github.com/kalpshahtester/MakeMyTrip-Testing-Assessment" target="_blank" rel="noopener noreferrer">Open GitHub project ↗</a><a class="button button-secondary" href="/#projects">Back to portfolio</a></div>
-    </div></section>
-    <section class="case-content"><div class="container case-layout">
-      <aside class="case-sidebar" aria-label="Case study sections"><a href="#overview">Overview</a><a href="#scope">Testing scope</a><a href="#approach">Approach</a><a href="#evidence">Project evidence</a><a href="#notes">Notes</a></aside>
-      <div>
-        <section class="case-section" id="overview"><h2>Project overview</h2><p>This assessment explores representative travel-platform user journeys and the kinds of functional and interface checks needed to keep those journeys understandable and usable. The focus is on validating the experience from a user's perspective and probing failure paths—not claiming production ownership or live service coverage.</p></section>
-        <section class="case-section" id="scope"><h2>Testing scope</h2><ul><li>Login and registration workflows.</li><li>Flight search and booking journey checks.</li><li>Hotel search and booking journey checks.</li><li>UI consistency and navigation behaviour.</li><li>Negative scenarios and validation behaviour.</li></ul></section>
-        <section class="case-section" id="approach"><h2>Test approach</h2><p>Start with the key user goal, map the steps required to reach it, then inspect expected and unexpected inputs at each decision point. Check that errors are understandable, navigation remains predictable and the user can recover from an unsuccessful action.</p><ul><li>Review the main happy path and key alternate paths.</li><li>Check required fields, invalid values and incomplete submissions.</li><li>Validate that search and booking information remains clear through the journey.</li><li>Record reproducible observations and distinguish functional issues from presentation issues.</li></ul></section>
-        <section class="case-section" id="evidence"><h2>Project evidence</h2><p>The repository is the source of truth for the assessment artefacts and implementation details. Use the link below to review the actual project files.</p><p style="margin-top:18px"><a class="text-link" href="https://github.com/kalpshahtester/MakeMyTrip-Testing-Assessment" target="_blank" rel="noopener noreferrer">Review the project repository ↗</a></p></section>
-        <section class="case-section" id="notes"><h2>Scope and transparency</h2><p>This is an assessment project, not a statement that Kalp tested MakeMyTrip's live production systems or worked for the company. No test counts or outcome metrics are published here because they have not been independently confirmed from the current project brief.</p></section>
-        <div class="case-footer-nav"><a href="/projects/saucedemo.html">← Previous: SauceDemo</a><a href="/#projects">All projects →</a></div>
+  <div class="reading-line" id="readingProgress" aria-hidden="true"></div>
+  <header class="site-header" id="siteHeader">
+    <div class="nav-shell">
+      <a class="brand" href="/" aria-label="Kalp Shah, home"><span class="brand-symbol">K<span>.</span></span><span class="brand-name">KALP SHAH<small>QUALITY ENGINEERING MINDSET</small></span></a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open navigation"><span></span><span></span></button>
+      <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation">
+        <a href="/#about">About</a><a href="/#projects">Selected work</a><a href="/#approach">Approach</a><a href="/#experience">Experience</a><a href="/#toolkit">Toolkit</a><a class="nav-contact" href="/#contact">Let’s talk <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="case-page">
+    <section class="case-hero page-wrap" aria-labelledby="case-title">
+      <div class="case-breadcrumbs"><a href="/">Home</a><span>/</span><a href="/#projects">Selected work</a><span>/</span><span>MakeMyTrip</span></div>
+      <div class="case-hero-grid">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-pulse"></span> CASE STUDY / 002 · TESTING ASSESSMENT</div>
+          <h1 class="case-title" id="case-title">Travel journeys,<br><em>tested thoughtfully.</em></h1>
+          <p class="case-lead">A web testing assessment focused on representative travel-platform workflows, user-facing interface behaviour and negative scenarios across login, flight and hotel journeys.</p>
+          <div class="case-actions">
+            <a class="button button-primary magnetic" href="https://github.com/kalpshahtester/MakeMyTrip-Testing-Assessment" target="_blank" rel="noopener noreferrer"><span>Open GitHub project</span><span class="button-arrow" aria-hidden="true">↗</span></a>
+            <a class="button button-ghost" href="/#projects"><span>Back to portfolio</span><span class="button-arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <aside class="case-summary-card" data-reveal aria-label="Assessment summary">
+          <span class="summary-label">ASSESSMENT SNAPSHOT</span>
+          <div class="summary-line"><span>DOMAIN</span><strong>TRAVEL / BOOKINGS</strong></div>
+          <div class="summary-line"><span>TEST TYPE</span><strong>MANUAL / WEB</strong></div>
+          <div class="summary-line"><span>FOCUS</span><strong>USER JOURNEYS</strong></div>
+          <div class="summary-footer">ASSESSMENT PROJECT · NOT PRODUCTION</div>
+        </aside>
       </div>
-    </div></section>
-  </main>
-  <footer class="site-footer"><div class="container footer-inner"><a class="brand footer-brand" href="/"><span class="brand-mark">KS</span><span>Kalp Shah</span></a><span>Manual QA · Web · WordPress</span><span>© <span id="year"></span> Kalp Shah</span></div></footer>
+      <div class="case-topic-strip"><span>LOGIN &amp; REGISTRATION</span><i></i><span>FLIGHT SEARCH</span><i></i><span>HOTEL SEARCH</span><i></i><span>NEGATIVE PATHS</span></div>
+    </section>
+
+    <div class="case-content page-wrap">
+      <aside class="case-sidebar" aria-label="Case study sections">
+        <span class="sidebar-label">ON THIS PAGE</span>
+        <a href="#overview">01 / Overview</a><a href="#scope">02 / Scope</a><a href="#approach">03 / Approach</a><a href="#evidence">04 / Evidence</a><a href="#transparency">05 / Notes</a>
+        <a class="sidebar-back" href="/#projects">← All projects</a>
+      </aside>
+      <div class="case-article">
+        <section class="case-section" id="overview" data-reveal>
+          <div class="section-kicker"><span>01</span><span>PROJECT OVERVIEW</span></div>
+          <h2>Testing the steps<br><em>that make a trip.</em></h2>
+          <p>This assessment explores representative travel-platform user journeys and the functional and interface checks needed to keep them understandable and usable. The focus is on validating the experience from a user's perspective and probing failure paths—not claiming production ownership or live service coverage.</p>
+          <div class="case-callout"><span class="callout-mark">✳</span><p>Travel flows combine forms, changing search criteria, multi-step decisions and confirmation details. Good test coverage checks the transitions between those steps, not only the final screen.</p></div>
+        </section>
+        <section class="case-section" id="scope" data-reveal>
+          <div class="section-kicker"><span>02</span><span>TESTING SCOPE</span></div>
+          <h2>Key journeys<br><em>under review.</em></h2>
+          <div class="scope-grid">
+            <article><span>01</span><h3>Login &amp; registration</h3><p>Entry points, required information, invalid inputs and unsuccessful sign-in paths.</p></article>
+            <article><span>02</span><h3>Flight search</h3><p>Search form behaviour, mandatory fields, route selection and result presentation.</p></article>
+            <article><span>03</span><h3>Hotel search</h3><p>Destination and date inputs, guest details and the progression through the search journey.</p></article>
+            <article><span>04</span><h3>Interface behaviour</h3><p>Navigation consistency, validation feedback and understandable recovery from errors.</p></article>
+          </div>
+          <ul class="case-bullet-list"><li>Happy paths and alternate user journeys.</li><li>Required fields, invalid values and incomplete submissions.</li><li>Back navigation and retained search information where applicable.</li></ul>
+        </section>
+        <section class="case-section" id="approach" data-reveal>
+          <div class="section-kicker"><span>03</span><span>TEST APPROACH</span></div>
+          <h2>Start with the user<br><em>goal, then probe.</em></h2>
+          <div class="case-process">
+            <div><b>01</b><span><strong>Map the journey</strong><small>Identify the user's goal and the steps required to reach it.</small></span></div>
+            <div><b>02</b><span><strong>Check decision points</strong><small>Inspect required values, route choices and alternate paths.</small></span></div>
+            <div><b>03</b><span><strong>Challenge inputs</strong><small>Try missing, malformed and incomplete information.</small></span></div>
+            <div><b>04</b><span><strong>Review feedback</strong><small>Check whether errors and next steps are understandable.</small></span></div>
+            <div><b>05</b><span><strong>Record findings</strong><small>Describe reproducible observations and their user impact.</small></span></div>
+          </div>
+        </section>
+        <section class="case-section" id="evidence" data-reveal>
+          <div class="section-kicker"><span>04</span><span>PROJECT EVIDENCE</span></div>
+          <h2>Review the work<br><em>at its source.</em></h2>
+          <p>The repository is the source of truth for assessment artefacts and implementation details. Use the project link to inspect the actual files and scope.</p>
+          <a class="button button-secondary" href="https://github.com/kalpshahtester/MakeMyTrip-Testing-Assessment" target="_blank" rel="noopener noreferrer">Inspect the project repository <span class="button-arrow" aria-hidden="true">↗</span></a>
+        </section>
+        <section class="case-section" id="transparency" data-reveal>
+          <div class="section-kicker"><span>05</span><span>SCOPE &amp; TRANSPARENCY</span></div>
+          <h2>An assessment,<br><em>not a client claim.</em></h2>
+          <p>This is a testing assessment project, not a statement that I tested MakeMyTrip's live production systems or worked for the company. No test counts or outcome metrics are published here because they have not been independently confirmed from the current project evidence.</p>
+        </section>
+        <nav class="case-footer-nav" aria-label="Other case studies"><a href="/projects/saucedemo.html">← Previous: SauceDemo</a><a href="/#projects">All projects →</a></nav>
+      </div>
+    </div>  </main>
+  <footer class="site-footer"><div class="footer-inner page-wrap">
+    <a class="brand footer-brand" href="/" aria-label="Kalp Shah home"><span class="brand-symbol">K<span>.</span></span><span class="brand-name">KALP SHAH<small>MANUAL QA TESTER</small></span></a>
+    <span class="footer-note">BUILT WITH CURIOSITY. CHECKED WITH CARE.</span><span class="footer-copy">© <span id="year">2026</span> KALP SHAH</span>
+  </div></footer>
   <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-  <script src="/assets/js/site.js" defer></script>
-</body></html>
+  <script src="/assets/js/case-study.js" defer></script>
+</body>
+</html>

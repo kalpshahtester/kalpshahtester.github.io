@@ -121,8 +121,12 @@
 
   // Back to top works with or without the optional smooth-scroll dependency.
   backToTop?.addEventListener("click", () => {
-    if (window.__portfolioLenis) window.__portfolioLenis.scrollTo(0);
-    else window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    if (window.__portfolioLenis) {
+      if (location.hash) history.pushState({ portfolioAnchor: "#top" }, "", location.pathname + location.search);
+      window.__portfolioLenis.scrollTo(0);
+    } else {
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    }
   });
 
   // Desktop pointer treatment. Native pointers remain available on touch devices.
@@ -282,8 +286,16 @@
       if (!target) return;
       if (window.__portfolioLenis) {
         event.preventDefault();
+        const hash = link.getAttribute("href");
+        if (hash && location.hash !== hash) history.pushState({ portfolioAnchor: hash }, "", hash);
         window.__portfolioLenis.scrollTo(target, { offset: -78 });
       }
     });
+  });
+
+  window.addEventListener("popstate", () => {
+    if (!window.__portfolioLenis) return;
+    const destination = location.hash ? document.querySelector(location.hash) : document.querySelector("#top");
+    window.__portfolioLenis.scrollTo(destination || 0, { offset: destination ? -78 : 0 });
   });
 })();
