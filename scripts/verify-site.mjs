@@ -13,53 +13,78 @@ const required = [
   "projects/saucedemo.html",
   "projects/makemytrip.html",
   "scripts/serve-site.mjs",
-  "scripts/browser-smoke.mjs"
+  "scripts/browser-smoke.mjs",
+  "Kalp Shah Profile Photo.png",
+  "Kalp Shah Manual Tester Resume.pdf",
+  "Kalp Shah HCL GUVI Certification.png",
+  "Kalp Shah Generative AI Mastermind Course Certificate.jpeg",
+  "Kalp Shah Outskill Certificate.png",
+  "robots.txt",
+  "sitemap.xml"
 ];
-for (const file of required) assert.ok(fs.existsSync(path.join(root, file)), "Missing file: " + file);
+for (const file of required) {
+  assert.ok(fs.existsSync(path.join(root, file)), "Missing production file: " + file);
+}
 
-const pages = ["/", "/projects/saucedemo.html", "/projects/makemytrip.html"];
+const routes = [
+  { route: "/", file: "index.html" },
+  { route: "/projects/saucedemo.html", file: "projects/saucedemo.html" },
+  { route: "/projects/makemytrip.html", file: "projects/makemytrip.html" }
+];
 const pageHtml = new Map();
 
-for (const route of pages) {
-  const relative = route === "/" ? "index.html" : route.slice(1);
-  const html = fs.readFileSync(path.join(root, relative), "utf8");
+for (const { route, file } of routes) {
+  const html = fs.readFileSync(path.join(root, file), "utf8");
   pageHtml.set(route, html);
 
-  assert.match(html, /<html lang="en">/i, relative + ": missing document language");
-  assert.match(html, /<meta name="viewport"/i, relative + ": missing responsive viewport");
-  assert.match(html, /<title>[^<]+<\/title>/i, relative + ": missing title");
-  assert.match(html, /name="description"/i, relative + ": missing meta description");
-  assert.match(html, /property="og:title"/i, relative + ": missing social title");
-  assert.match(html, /property="og:image"/i, relative + ": missing social image");
-  assert.match(html, /<main\b/i, relative + ": missing main landmark");
-  assert.match(html, /class="skip-link"/i, relative + ": missing skip link");
+  assert.match(html, /<!doctype html>/i, file + ": missing HTML5 doctype");
+  assert.match(html, /<html lang="en">/i, file + ": missing document language");
+  assert.match(html, /<meta name="viewport"/i, file + ": missing responsive viewport");
+  assert.match(html, /<title>[^<]+<\/title>/i, file + ": missing title");
+  assert.match(html, /name="description"/i, file + ": missing meta description");
+  assert.match(html, /property="og:title"/i, file + ": missing social title");
+  assert.match(html, /property="og:image"/i, file + ": missing social image");
+  assert.match(html, /rel="canonical"/i, file + ": missing canonical URL");
+  assert.match(html, /<header\b/i, file + ": missing header landmark");
+  assert.match(html, /<main\b/i, file + ": missing main landmark");
+  assert.match(html, /<footer\b/i, file + ": missing footer landmark");
+  assert.match(html, /class="skip-link"/i, file + ": missing skip link");
 
   const ids = [...html.matchAll(/\bid="([^"]+)"/gi)].map(match => match[1]);
-  assert.equal(new Set(ids).size, ids.length, relative + ": duplicate id attribute");
-  assert.equal([...html.matchAll(/<h1\b/gi)].length, 1, relative + ": expected exactly one H1");
+  assert.equal(new Set(ids).size, ids.length, file + ": duplicate id attribute");
+  assert.equal([...html.matchAll(/<h1\b/gi)].length, 1, file + ": expected exactly one H1");
 
   for (const match of html.matchAll(/href="#([^"]+)"/gi)) {
-    assert.ok(ids.includes(match[1]), relative + ": broken in-page anchor #" + match[1]);
+    assert.ok(ids.includes(match[1]), file + ": broken in-page anchor #" + match[1]);
   }
-  for (const match of html.matchAll(/\baria-(?:labelledby|controls)="([^"]+)"/gi)) {
+  for (const match of html.matchAll(/\baria-(?:labelledby|describedby|controls|owns|flowto)="([^"]+)"/gi)) {
     for (const id of match[1].split(/\s+/)) {
-      assert.ok(ids.includes(id), relative + ": ARIA reference points to missing id #" + id);
+      assert.ok(ids.includes(id), file + ": ARIA reference points to missing id #" + id);
     }
   }
   for (const match of html.matchAll(/<img\b([^>]*)>/gi)) {
-    assert.match(match[1], /\balt="/i, relative + ": image without alt text");
+    assert.match(match[1], /\balt="/i, file + ": image without alt text");
+    assert.match(match[1], /\bsrc="/i, file + ": image without src");
   }
   for (const match of html.matchAll(/<button\b([^>]*)>/gi)) {
-    assert.match(match[1], /\btype="(?:button|submit|reset)"/i, relative + ": button missing explicit type");
+    assert.match(match[1], /\btype="(?:button|submit|reset)"/i, file + ": button missing explicit type");
+    assert.ok(/\baria-label=/.test(match[1]) || />\s*[^<\s]/.test(match[0]), file + ": button has no accessible name");
+  }
+  for (const match of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)) {
+    const attrs = match[1];
+    const inner = match[2].replace(/<[^>]+>/g, "").replace(/&nbsp;|&#160;/g, " ").trim();
+    assert.match(attrs, /\bhref="/i, file + ": anchor without href");
+    assert.ok(inner || /\baria-label=/.test(attrs) || /<img\b[^>]*\balt="[^"]+"/i.test(match[2]), file + ": link has no accessible name");
   }
   for (const match of html.matchAll(/<a\b([^>]*target="_blank"[^>]*)>/gi)) {
-    assert.match(match[1], /\brel="[^"]*noopener/i, relative + ": unsafe target=_blank link");
+    assert.match(match[1], /\brel="[^"]*noopener/i, file + ": unsafe target=_blank link");
   }
 
-  for (const match of html.matchAll(/(?:href|src)="(\/[^"#?]+)"/g)) {
-    const urlPath = decodeURIComponent(match[1]).replace(/^\//, "");
+  for (const match of html.matchAll(/(?:href|src)="(\/[^"]+)"/g)) {
+    const rawPath = match[1].split(/[?#]/)[0];
+    const urlPath = decodeURIComponent(rawPath).replace(/^\//, "");
     if (!urlPath || urlPath.endsWith("/")) continue;
-    assert.ok(fs.existsSync(path.join(root, urlPath)), relative + ": broken local path /" + urlPath);
+    assert.ok(fs.existsSync(path.join(root, urlPath)), file + ": broken local path /" + urlPath);
   }
 }
 
@@ -76,6 +101,8 @@ for (const [route, html] of pageHtml) {
 const home = pageHtml.get("/");
 assert.ok(home.includes('href="/assets/css/premium.css"'), "homepage must load the premium stylesheet");
 assert.ok(home.includes('src="/assets/js/premium.js"'), "homepage must load the premium JavaScript");
+assert.match(home, /role="group" aria-label="Profile portrait/i, "hero profile visual needs an accessible semantic group");
+assert.match(home, /role="img" aria-label="Decorative interface illustration/i, "SauceDemo project visual needs an accessible name");
 assert.match(home, /47/, "missing verified scenario metric");
 assert.match(home, /62\+/, "missing verified test-case metric");
 assert.match(home, /282/, "missing verified execution metric");
@@ -87,6 +114,7 @@ for (const route of ["/projects/saucedemo.html", "/projects/makemytrip.html"]) {
   assert.ok(html.includes('href="/assets/css/premium.css"'), route + ": premium global stylesheet missing");
   assert.ok(html.includes('href="/assets/css/case-study.css"'), route + ": case-study stylesheet missing");
   assert.ok(html.includes('src="/assets/js/case-study.js"'), route + ": case-study JavaScript missing");
+  assert.match(html, /<main id="main" class="case-page" tabindex="-1">/, route + ": main region must be focusable for the skip link");
 }
 
 for (const cssPath of ["assets/css/premium.css", "assets/css/case-study.css"]) {
@@ -108,4 +136,8 @@ assert.match(premiumCss, /\.hero\s*\{[^}]*position\s*:\s*relative/i, "hero must 
 assert.match(premiumCss, /@media\s*\(max-width:\s*600px\)/i, "homepage missing phone layout");
 assert.match(premiumCss, /@media\s*\(max-width:\s*850px\)/i, "homepage missing tablet navigation layout");
 
-console.log("Static portfolio checks passed across " + pages.length + " pages.");
+const sitemap = fs.readFileSync(path.join(root, "sitemap.xml"), "utf8");
+for (const { route } of routes) {
+  assert.ok(sitemap.includes("https://kalpshahtester.github.io" + route), "sitemap missing " + route);
+}
+console.log("Static structure, metadata, accessibility references and all local production assets passed across " + routes.length + " pages.");
