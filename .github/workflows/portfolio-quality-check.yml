@@ -1,0 +1,26 @@
+name: Portfolio quality checks
+
+on:
+  push:
+    branches: [recruiter-portfolio-refresh]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Check JavaScript syntax
+        run: node --check assets/js/site.js
+      - name: Check portfolio structure and local links
+        run: node scripts/verify-site.mjs
