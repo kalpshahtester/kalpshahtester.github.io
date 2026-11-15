@@ -2,7 +2,7 @@ name: Portfolio quality checks
 
 on:
   push:
-    branches: [recruiter-portfolio-refresh]
+    branches: [recruiter-portfolio-refresh, premium-portfolio-v2]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -21,6 +21,8 @@ jobs:
         with:
           node-version: 24
       - name: Check JavaScript syntax
-        run: node --check assets/js/site.js
+        run: |
+          node --check assets/js/site.js
+          node --check assets/js/premium.js
       - name: Check portfolio structure and local links
         run: node scripts/verify-site.mjs
