@@ -78,6 +78,16 @@ try {
     assert.match(await page.getByRole("heading", { level: 1 }).innerText(), route.heading);
     await page.evaluate(() => document.fonts?.ready);
     await page.waitForTimeout(300);
+    if (route.path !== "/") {
+      // Audit the settled, fully opaque intro state rather than measuring text midway through a fade-in.
+      await page.waitForFunction(() => {
+        const intro = [".case-breadcrumbs", ".case-title", ".case-lead"];
+        return intro.every(selector => {
+          const element = document.querySelector(selector);
+          return !element || Number(getComputedStyle(element).opacity) >= 0.99;
+        });
+      }, null, { timeout: 8_000 });
+    }
 
     // Verify that the production CSS and JavaScript have actually loaded.
     const loadedAssets = await page.evaluate(() => [...document.querySelectorAll('link[rel="stylesheet"],script[src]')]
