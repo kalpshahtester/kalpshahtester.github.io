@@ -71,7 +71,6 @@ for (const { route, file } of routes) {
     const buttonText = match[2].replace(/<[^>]+>/g, "").trim();
     assert.ok(/\baria-label=/.test(match[1]) || buttonText.length > 0 || /<img\b[^>]*\balt="[^"]+"/i.test(match[2]), file + ": button has no accessible name");
   }
-  }
   for (const match of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)) {
     const attrs = match[1];
     const inner = match[2].replace(/<[^>]+>/g, "").replace(/&nbsp;|&#160;/g, " ").trim();
