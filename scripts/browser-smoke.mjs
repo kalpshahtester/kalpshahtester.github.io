@@ -77,6 +77,39 @@ try {
     await page.getByRole("heading", { level: 1 }).waitFor({ state: "visible" });
     assert.match(await page.getByRole("heading", { level: 1 }).innerText(), route.heading);
 
+    // Verify every favicon format and the browser-facing references on each route.
+    const iconLinks = await page.locator('link[rel~="icon"],link[rel="apple-touch-icon"]').evaluateAll(links => links.map(link => new URL(link.getAttribute("href"), location.href).pathname));
+    for (const expectedPath of ["/assets/favicon.svg", "/assets/favicon-16x16.png", "/assets/favicon-32x32.png", "/favicon.ico", "/assets/apple-touch-icon.png"]) {
+      assert.ok(iconLinks.includes(expectedPath), route.path + " is missing favicon reference " + expectedPath);
+    }
+    const iconAssets = [
+      { path: "/assets/favicon.svg", type: "image/svg+xml" },
+      { path: "/assets/favicon-16x16.png", type: "image/png", size: 16 },
+      { path: "/assets/favicon-32x32.png", type: "image/png", size: 32 },
+      { path: "/assets/apple-touch-icon.png", type: "image/png", size: 180 },
+      { path: "/favicon.ico", type: ["image/x-icon", "image/vnd.microsoft.icon"] }
+    ];
+    for (const icon of iconAssets) {
+      const iconResponse = await page.request.get(baseURL + icon.path);
+      assert.equal(iconResponse.status(), 200, route.path + " favicon returned a non-200 response: " + icon.path);
+      const contentType = iconResponse.headers()["content-type"] || "";
+      const acceptedTypes = Array.isArray(icon.type) ? icon.type : [icon.type];
+      assert.ok(acceptedTypes.some(type => contentType.includes(type)), icon.path + " returned an unsupported MIME type: " + contentType);
+      const iconBody = await iconResponse.body();
+      if (icon.type === "image/png") {
+        assert.deepEqual([...iconBody.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10], icon.path + " is not a valid PNG");
+        assert.equal(iconBody.readUInt32BE(16), icon.size, icon.path + " has an unexpected width");
+        assert.equal(iconBody.readUInt32BE(20), icon.size, icon.path + " has an unexpected height");
+      } else if (icon.path === "/favicon.ico") {
+        assert.equal(iconBody.readUInt16LE(0), 0, "ICO reserved header must be zero");
+        assert.equal(iconBody.readUInt16LE(2), 1, "ICO type must be 1");
+        assert.ok(iconBody.readUInt16LE(4) >= 3, "ICO must include multiple sizes");
+      } else {
+        assert.match(iconBody.toString("utf8"), /viewBox="0 0 64 64"/, "SVG favicon must expose its icon viewBox");
+      }
+    }
+    checks += iconLinks.length + iconAssets.length;
+
     // The first keyboard stop is the skip link, and activating it focuses main.
     await page.keyboard.press("Tab");
     assert.equal(await page.evaluate(() => document.activeElement?.className), "skip-link", route.path + " skip link must be first keyboard stop");

@@ -54,3 +54,12 @@ A separate production smoke workflow has been added. After a successful GitHub P
 ## Limitations
 
 Automated checks cannot prove the absence of every possible defect. They do not replace hands-on review with physical touch devices, screen readers, real-world network conditions, or every browser/OS combination. The test suite is designed to catch repeatable structural, accessibility, responsive, loading and interaction regressions before and after release.
+
+
+## Favicon compatibility follow-up — 15 November 2026
+
+A final browser-compatibility review found that the site referenced only an SVG favicon. That left older browser fallbacks and mobile home-screen icons undefined.
+
+The production pages now share a crisp K monogram in five formats: SVG, 16×16 PNG, 32×32 PNG, a multi-size 16/32/48 ICO at the root, and a 180×180 Apple touch icon. The HTML links use a versioned URL so browsers can refresh the previously cached icon.
+
+The static validator checks each file's signature and dimensions, validates the SVG viewBox and checks the ICO directory entries. The browser suite now requests each icon from every published route, checks HTTP 200 and MIME types, validates PNG dimensions and the ICO header, and confirms every page references the expected icon files.

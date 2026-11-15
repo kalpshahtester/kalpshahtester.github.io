@@ -10,6 +10,10 @@ const required = [
   "assets/js/premium.js",
   "assets/js/case-study.js",
   "assets/favicon.svg",
+  "assets/favicon-16x16.png",
+  "assets/favicon-32x32.png",
+  "assets/apple-touch-icon.png",
+  "favicon.ico",
   "projects/saucedemo.html",
   "projects/makemytrip.html",
   "scripts/serve-site.mjs",
@@ -40,6 +44,12 @@ const pageHtml = new Map();
 for (const { route, file } of routes) {
   const html = fs.readFileSync(path.join(root, file), "utf8");
   pageHtml.set(route, html);
+
+  assert.ok(html.includes('href="/assets/favicon.svg?v=4"'), file + ": missing versioned SVG favicon");
+  assert.ok(html.includes('href="/assets/favicon-32x32.png?v=4"'), file + ": missing PNG favicon fallback");
+  assert.ok(html.includes('href="/assets/favicon-16x16.png?v=4"'), file + ": missing small PNG favicon");
+  assert.ok(html.includes('href="/favicon.ico?v=4"'), file + ": missing legacy ICO favicon");
+  assert.ok(html.includes('href="/assets/apple-touch-icon.png?v=4"'), file + ": missing Apple touch icon");
 
   assert.match(html, /<!doctype html>/i, file + ": missing HTML5 doctype");
   assert.match(html, /<html lang="en">/i, file + ": missing document language");
@@ -101,6 +111,33 @@ for (const [route, html] of pageHtml) {
     const destinationIds = [...destinationHtml.matchAll(/\bid="([^"]+)"/gi)].map(item => item[1]);
     assert.ok(destinationIds.includes(match[2]), route + ": linked route has no #" + match[2]);
   }
+}
+
+const faviconSvg = fs.readFileSync(path.join(root, "assets/favicon.svg"), "utf8");
+assert.match(faviconSvg, /<svg\b[^>]*viewBox="0 0 64 64"/i, "SVG favicon must have a 64px viewBox");
+assert.match(faviconSvg, /<path\b/i, "SVG favicon must include the K monogram");
+assert.match(faviconSvg, /#D2FF4B/i, "SVG favicon must preserve the brand accent");
+
+for (const { file, size } of [
+  { file: "assets/favicon-16x16.png", size: 16 },
+  { file: "assets/favicon-32x32.png", size: 32 },
+  { file: "assets/apple-touch-icon.png", size: 180 }
+]) {
+  const png = fs.readFileSync(path.join(root, file));
+  assert.ok(png.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])), file + ": invalid PNG signature");
+  assert.equal(png.readUInt32BE(16), size, file + ": unexpected width");
+  assert.equal(png.readUInt32BE(20), size, file + ": unexpected height");
+}
+const ico = fs.readFileSync(path.join(root, "favicon.ico"));
+assert.equal(ico.readUInt16LE(0), 0, "ICO reserved header must be zero");
+assert.equal(ico.readUInt16LE(2), 1, "root favicon must be a Windows icon");
+assert.ok(ico.readUInt16LE(4) >= 3, "ICO must include multiple browser-size variants");
+const icoSizes = Array.from({ length: ico.readUInt16LE(4) }, (_, index) => {
+  const offset = 6 + index * 16;
+  return [ico.readUInt8(offset) || 256, ico.readUInt8(offset + 1) || 256].join("x");
+});
+for (const expected of ["16x16", "32x32", "48x48"]) {
+  assert.ok(icoSizes.includes(expected), "ICO is missing " + expected + " variant");
 }
 
 const home = pageHtml.get("/");
