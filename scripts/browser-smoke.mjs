@@ -49,7 +49,8 @@ async function runAccessibilityAudit(page, route, viewportName) {
 
 try {
   for (const route of routes) {
-    const page = await browser.newPage({ viewport: { width: 1366, height: 900 } });
+    const context = await browser.newContext({ viewport: { width: 1366, height: 900 } });
+    const page = await context.newPage();
     page.setDefaultTimeout(15_000);
     page.on("pageerror", error => failures.push(route.path + " uncaught page error: " + error.message));
     page.on("console", message => {
@@ -211,11 +212,12 @@ try {
     assert.ok(await page.getByRole("heading", { level: 1 }).isVisible(), route.path + " content must remain visible with reduced motion enabled");
     checks += 2;
 
-    await page.close();
+    await context.close();
   }
 
   // Optional animation-CDN failure must not block page content or interactions.
-  const fallbackPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  const fallbackContext = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const fallbackPage = await fallbackContext.newPage();
   await fallbackPage.route("https://cdn.jsdelivr.net/**", route => route.abort());
   await fallbackPage.goto(baseURL + "/", { waitUntil: "domcontentloaded" });
   await fallbackPage.waitForFunction(() => window.__portfolioMotionState?.status === "fallback");
@@ -223,7 +225,7 @@ try {
   await fallbackPage.getByRole("button", { name: /run sample/i }).click();
   await fallbackPage.waitForFunction(() => document.querySelectorAll(".console-check.done").length === 4);
   checks += 2;
-  await fallbackPage.close();
+  await fallbackContext.close();
 
   assert.deepEqual(failures, [], "Browser runtime, console and critical asset errors were detected");
   console.log("Browser and accessibility checks passed: " + checks + " assertions across " + routes.length + " pages, " + viewports.length + " viewport sizes and " + auditResults.length + " axe scans.");
