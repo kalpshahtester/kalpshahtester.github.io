@@ -2,6 +2,7 @@
   "use strict";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.__portfolioMotionState = { status: reduceMotion ? "reduced-motion" : "loading", gsap: false, scrollTrigger: false, lenis: false };
   const finePointer = window.matchMedia("(pointer: fine) and (hover: hover)").matches;
   const header = document.getElementById("siteHeader");
   const progress = document.getElementById("readingProgress");
@@ -119,14 +120,25 @@
     }, delay);
   });
 
-  // Back to top works with or without the optional smooth-scroll dependency.
-  backToTop?.addEventListener("click", () => {
+  // In-page navigation keeps the URL, keyboard focus and scroll position in sync.
+  const focusTarget = target => {
+    if (!target) return;
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+  };
+  const scrollToTarget = target => {
+    if (!target) return;
+    focusTarget(target);
     if (window.__portfolioLenis) {
-      if (location.hash) history.pushState({ portfolioAnchor: "#top" }, "", location.pathname + location.search);
-      window.__portfolioLenis.scrollTo(0);
+      window.__portfolioLenis.scrollTo(target, { offset: -78 });
     } else {
-      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+      target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
     }
+  };
+
+  backToTop?.addEventListener("click", () => {
+    if (location.hash) history.pushState({ portfolioAnchor: "#top" }, "", location.pathname + location.search);
+    scrollToTarget(document.getElementById("top"));
   });
 
   // Desktop pointer treatment. Native pointers remain available on touch devices.
@@ -178,10 +190,14 @@
       const ScrollTrigger = scrollModule?.ScrollTrigger || scrollModule?.default?.ScrollTrigger;
       const Lenis = lenisModule?.default || lenisModule?.Lenis;
 
-      if (!gsap) return;
+      if (!gsap) {
+        window.__portfolioMotionState = { status: "fallback", gsap: false, scrollTrigger: false, lenis: false };
+        return;
+      }
       if (ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 
       // Lenis uses native scroll and is optional; GSAP works with native scrolling too.
+      let lenisEnabled = false;
       if (Lenis) {
         try {
           const lenis = new Lenis({ autoRaf: false, smoothWheel: true, lerp: 0.085, wheelMultiplier: 0.9 });
@@ -189,10 +205,17 @@
           if (ScrollTrigger) lenis.on("scroll", ScrollTrigger.update);
           gsap.ticker.add(time => lenis.raf(time * 1000));
           gsap.ticker.lagSmoothing(0);
+          lenisEnabled = true;
         } catch (error) {
           console.warn("Smooth scrolling enhancement was skipped.", error);
         }
       }
+      window.__portfolioMotionState = {
+        status: "ready",
+        gsap: true,
+        scrollTrigger: Boolean(ScrollTrigger),
+        lenis: lenisEnabled
+      };
 
       gsap.defaults({ ease: "power3.out" });
 
@@ -275,27 +298,31 @@
       }
     }).catch(error => {
       // If an animation library fails to load, all content remains readable and usable.
+      window.__portfolioMotionState = { status: "fallback", gsap: false, scrollTrigger: false, lenis: false };
       console.warn("Optional motion libraries could not be loaded.", error);
     });
   }
 
-  // A native fallback for smooth in-page anchor movement when Lenis is unavailable.
+  // Handle hash links consistently, including the skip link when Lenis is active.
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener("click", event => {
-      const target = document.querySelector(link.getAttribute("href"));
+      const href = link.getAttribute("href");
+      if (!href || href === "#") return;
+      let id;
+      try { id = decodeURIComponent(href.slice(1)); } catch { return; }
+      const target = document.getElementById(id);
       if (!target) return;
-      if (window.__portfolioLenis) {
-        event.preventDefault();
-        const hash = link.getAttribute("href");
-        if (hash && location.hash !== hash) history.pushState({ portfolioAnchor: hash }, "", hash);
-        window.__portfolioLenis.scrollTo(target, { offset: -78 });
-      }
+      event.preventDefault();
+      if (location.hash !== href) history.pushState({ portfolioAnchor: href }, "", href);
+      scrollToTarget(target);
     });
   });
 
   window.addEventListener("popstate", () => {
-    if (!window.__portfolioLenis) return;
-    const destination = location.hash ? document.querySelector(location.hash) : document.querySelector("#top");
-    window.__portfolioLenis.scrollTo(destination || 0, { offset: destination ? -78 : 0 });
+    let id = "top";
+    if (location.hash) {
+      try { id = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+    }
+    scrollToTarget(document.getElementById(id) || document.getElementById("top"));
   });
 })();
