@@ -175,7 +175,14 @@ try {
       assert.equal(await page.evaluate(() => document.activeElement?.id), "projects", "in-page navigation should move keyboard focus to the destination");
       await page.goBack();
       await page.waitForFunction(() => location.hash === "");
-      checks += 6;
+
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await page.locator("#backToTop").waitFor({ state: "visible" });
+      await page.locator("#backToTop").click();
+      await page.waitForFunction(() => window.scrollY < 4);
+      assert.equal(await page.evaluate(() => document.activeElement?.id), "top", "homepage back-to-top should focus the hero section");
+      assert.equal(await page.evaluate(() => location.hash), "", "homepage back-to-top should not leave a stale hash");
+      checks += 9;
 
       // Check the custom cursor enhancement without allowing it to hide the only pointer.
       await page.setViewportSize({ width: 1366, height: 900 });
@@ -196,7 +203,14 @@ try {
       await page.keyboard.press("Escape");
       assert.equal(await toggle.getAttribute("aria-expanded"), "false", "case-study Escape should close the mobile menu");
       assert.equal(await page.evaluate(() => document.activeElement?.id), "menuToggle", "case-study Escape should restore focus");
-      checks += 5;
+
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await page.locator("#backToTop").waitFor({ state: "visible" });
+      await page.locator("#backToTop").click();
+      await page.waitForFunction(() => window.scrollY < 4);
+      assert.equal(await page.evaluate(() => location.hash), "", "case-study back-to-top should remove the previous hash");
+      assert.equal(await page.evaluate(() => document.activeElement?.id), "main", "case-study back-to-top should restore main focus");
+      checks += 8;
     }
 
     // Every viewport must remain within the viewport without clipping user-facing content.
