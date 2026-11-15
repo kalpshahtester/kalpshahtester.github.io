@@ -76,6 +76,15 @@ try {
     assert.ok(await page.title(), route.path + " must have a title");
     await page.getByRole("heading", { level: 1 }).waitFor({ state: "visible" });
     assert.match(await page.getByRole("heading", { level: 1 }).innerText(), route.heading);
+
+    // The first keyboard stop is the skip link, and activating it focuses main.
+    await page.keyboard.press("Tab");
+    assert.equal(await page.evaluate(() => document.activeElement?.className), "skip-link", route.path + " skip link must be first keyboard stop");
+    await page.keyboard.press("Enter");
+    await page.waitForFunction(() => document.activeElement?.id === "main");
+    await page.evaluate(() => history.replaceState({}, "", location.pathname + location.search));
+    checks += 2;
+
     await page.evaluate(() => document.fonts?.ready);
     await page.waitForTimeout(300);
     if (route.path !== "/") {
@@ -211,6 +220,9 @@ try {
         route.path + " visible horizontal overflow at " + viewport.width + "px: " + JSON.stringify({ ...dimensions, visibleOverflow })
       );
       checks += 1;
+      if (viewport.width === 390 || viewport.width === 768) {
+        await runAccessibilityAudit(page, route.path, viewport.width + "px responsive");
+      }
     }
 
     // Test the reduced-motion path from a fresh page load, not after runtime settings change.
