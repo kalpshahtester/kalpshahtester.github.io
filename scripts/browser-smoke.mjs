@@ -87,18 +87,20 @@ try {
       { path: "/assets/favicon-16x16.png", type: "image/png", size: 16 },
       { path: "/assets/favicon-32x32.png", type: "image/png", size: 32 },
       { path: "/assets/apple-touch-icon.png", type: "image/png", size: 180 },
-      { path: "/favicon.ico", type: "image/x-icon" }
+      { path: "/favicon.ico", type: ["image/x-icon", "image/vnd.microsoft.icon"] }
     ];
     for (const icon of iconAssets) {
       const iconResponse = await page.request.get(baseURL + icon.path);
       assert.equal(iconResponse.status(), 200, route.path + " favicon returned a non-200 response: " + icon.path);
-      assert.ok((iconResponse.headers()["content-type"] || "").includes(icon.type), icon.path + " returned the wrong MIME type");
+      const contentType = iconResponse.headers()["content-type"] || "";
+      const acceptedTypes = Array.isArray(icon.type) ? icon.type : [icon.type];
+      assert.ok(acceptedTypes.some(type => contentType.includes(type)), icon.path + " returned an unsupported MIME type: " + contentType);
       const iconBody = await iconResponse.body();
       if (icon.type === "image/png") {
         assert.deepEqual([...iconBody.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10], icon.path + " is not a valid PNG");
         assert.equal(iconBody.readUInt32BE(16), icon.size, icon.path + " has an unexpected width");
         assert.equal(iconBody.readUInt32BE(20), icon.size, icon.path + " has an unexpected height");
-      } else if (icon.type === "image/x-icon") {
+      } else if (icon.path === "/favicon.ico") {
         assert.equal(iconBody.readUInt16LE(0), 0, "ICO reserved header must be zero");
         assert.equal(iconBody.readUInt16LE(2), 1, "ICO type must be 1");
         assert.ok(iconBody.readUInt16LE(4) >= 3, "ICO must include multiple sizes");
