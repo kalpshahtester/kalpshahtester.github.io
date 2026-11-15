@@ -472,28 +472,38 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-stopped{overflow:hidden}
 
 
-/* Portrait labels: keep the identity text legible over both light and dark parts of the photo. */
+/* Portrait identity labels: opaque high-contrast plates remain readable on every photo crop. */
+.portrait-frame{transform:rotate(0deg)}
+.portrait-frame img{position:relative;z-index:1;filter:saturate(.92) contrast(1.06)}
+.portrait-frame::before{z-index:2;border-color:rgba(255,255,255,.2)}
 .portrait-topline,.portrait-bottomline{
+  position:absolute;
+  z-index:6;
   left:18px;
   right:18px;
-  min-height:25px;
-  padding:0 9px;
-  border:1px solid rgba(255,255,255,.22);
-  border-radius:4px;
-  background:rgba(5,9,15,.86);
+  min-height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:0 11px;
+  border:1px solid rgba(210,255,75,.72);
+  border-radius:5px;
+  background:#03070d;
   color:#fff;
-  font:500 10px/1.2 var(--mono);
-  letter-spacing:.12em;
-  text-shadow:0 1px 2px rgba(0,0,0,.8);
-  box-shadow:0 3px 12px rgba(0,0,0,.28);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
+  font:600 11px/1.25 var(--mono);
+  letter-spacing:.095em;
+  text-shadow:none;
+  box-shadow:0 5px 18px rgba(0,0,0,.65);
+  opacity:1;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
 }
-.portrait-topline{top:22px}
-.portrait-bottomline{bottom:20px}
-.portrait-frame img{filter:saturate(.9) contrast(1.04)}
+.portrait-topline{top:20px}
+.portrait-bottomline{bottom:18px}
+.portrait-bottomline i{flex:0 0 6px;width:6px;height:6px;margin-left:3px;border-radius:50%;background:var(--acid);box-shadow:0 0 8px rgba(210,255,75,.75)}
 @media(max-width:600px){
-  .portrait-topline,.portrait-bottomline{left:14px;right:14px;min-height:27px;padding-inline:7px;font-size:9px;letter-spacing:.1em}
-  .portrait-topline{top:19px}
-  .portrait-bottomline{bottom:17px}
+  .portrait-topline,.portrait-bottomline{left:13px;right:13px;min-height:32px;padding-inline:7px;font-size:9.5px;letter-spacing:.055em}
+  .portrait-topline{top:17px}
+  .portrait-bottomline{bottom:15px}
 }
