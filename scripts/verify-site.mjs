@@ -42,7 +42,7 @@ const home = fs.readFileSync(path.join(root, "index.html"), "utf8");
 assert.match(home, /47/, "missing verified scenario metric");
 assert.match(home, /62\+/, "missing verified test-case metric");
 assert.match(home, /282/, "missing verified execution metric");
-assert.match(home, /prefers-reduced-motion/i, "homepage must load reduced-motion support from its stylesheet");
+assert.match(home, /href="\\/assets\\/css\\/premium\\.css"/i, "homepage must load its premium stylesheet");
 assert.match(home, /aria-label="Primary navigation"/i, "missing accessible primary navigation");
 assert.match(home, /Illustrative animation only/i, "interactive QA sample must be clearly labelled");
 assert.doesNotMatch(home, /7 critical defects|Playwright QA Automation|kalp-shah-software-tester/i, "unverified or outdated profile claim found");
