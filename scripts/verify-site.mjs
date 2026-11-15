@@ -114,8 +114,8 @@ for (const [route, html] of pageHtml) {
 }
 
 const faviconSvg = fs.readFileSync(path.join(root, "assets/favicon.svg"), "utf8");
-assert.match(faviconSvg, /<svg\\b[^>]*viewBox="0 0 64 64"/i, "SVG favicon must have a 64px viewBox");
-assert.match(faviconSvg, /<path\\b/i, "SVG favicon must include the K monogram");
+assert.match(faviconSvg, /<svg\b[^>]*viewBox="0 0 64 64"/i, "SVG favicon must have a 64px viewBox");
+assert.match(faviconSvg, /<path\b/i, "SVG favicon must include the K monogram");
 assert.match(faviconSvg, /#D2FF4B/i, "SVG favicon must preserve the brand accent");
 
 for (const { file, size } of [
