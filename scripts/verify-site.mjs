@@ -14,6 +14,7 @@ const required = [
   "assets/favicon-32x32.png",
   "assets/apple-touch-icon.png",
   "favicon.ico",
+  "favicon.svg",
   "projects/saucedemo.html",
   "projects/makemytrip.html",
   "scripts/serve-site.mjs",
@@ -45,11 +46,11 @@ for (const { route, file } of routes) {
   const html = fs.readFileSync(path.join(root, file), "utf8");
   pageHtml.set(route, html);
 
-  assert.ok(html.includes('href="/assets/favicon.svg?v=5"'), file + ": missing versioned SVG favicon");
-  assert.ok(html.includes('href="/assets/favicon-32x32.png?v=5"'), file + ": missing PNG favicon fallback");
-  assert.ok(html.includes('href="/assets/favicon-16x16.png?v=5"'), file + ": missing small PNG favicon");
-  assert.ok(html.includes('href="/favicon.ico?v=5"'), file + ": missing legacy ICO favicon");
-  assert.ok(html.includes('href="/assets/apple-touch-icon.png?v=5"'), file + ": missing Apple touch icon");
+  assert.ok(html.includes('href="/assets/favicon.svg?v=6"'), file + ": missing versioned SVG favicon");
+  assert.ok(html.includes('href="/assets/favicon-32x32.png?v=6"'), file + ": missing PNG favicon fallback");
+  assert.ok(html.includes('href="/assets/favicon-16x16.png?v=6"'), file + ": missing small PNG favicon");
+  assert.ok(html.includes('href="/favicon.ico?v=6"'), file + ": missing legacy ICO favicon");
+  assert.ok(html.includes('href="/assets/apple-touch-icon.png?v=6"'), file + ": missing Apple touch icon");
 
   assert.match(html, /<!doctype html>/i, file + ": missing HTML5 doctype");
   assert.match(html, /<html lang="en">/i, file + ": missing document language");
@@ -117,9 +118,9 @@ const faviconSvg = fs.readFileSync(path.join(root, "assets/favicon.svg"), "utf8"
 assert.match(faviconSvg, /<svg\b[^>]*viewBox="0 0 64 64"/i, "SVG favicon must have a 64px viewBox");
 assert.match(faviconSvg, /<path\b/i, "SVG favicon must include the K monogram");
 assert.match(faviconSvg, /#D2FF4B/i, "SVG favicon must preserve the brand accent");
-assert.ok(routes.every(({file}) => pageHtml.get(file === "index.html" ? "/" : file === "projects/saucedemo.html" ? "/projects/saucedemo.html" : "/projects/makemytrip.html").indexOf('favicon-32x32.png?v=5') < pageHtml.get(file === "index.html" ? "/" : file === "projects/saucedemo.html" ? "/projects/saucedemo.html" : "/projects/makemytrip.html").indexOf('favicon.svg?v=5')), "PNG favicon must be the first browser fallback");
+assert.ok(routes.every(({file}) => pageHtml.get(file === "index.html" ? "/" : file === "projects/saucedemo.html" ? "/projects/saucedemo.html" : "/projects/makemytrip.html").includes('href="/favicon.svg?v=6"')), "all routes must reference the root SVG favicon");
 const portraitCss = fs.readFileSync(path.join(root, "assets/css/premium.css"), "utf8");
-assert.ok(portraitCss.includes(".portrait-topline,.portrait-bottomline{") && portraitCss.includes("background:rgba(5,9,15,.86)"), "portrait labels must use a high-contrast backing");
+assert.ok(portraitCss.includes(".portrait-topline,.portrait-bottomline{") && portraitCss.includes("background:#03070d") && portraitCss.includes("font:600 11px/1.25 var(--mono)"), "portrait labels must use opaque high-contrast plates and readable type");
 
 for (const { file, size } of [
   { file: "assets/favicon-16x16.png", size: 16 },
