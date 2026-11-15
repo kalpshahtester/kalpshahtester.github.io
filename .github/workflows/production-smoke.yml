@@ -1,0 +1,34 @@
+name: Production portfolio smoke test
+
+on:
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    branches: [main]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-live-site:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the deployed main branch
+        uses: actions/checkout@v7
+        with:
+          ref: main
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Install browser and accessibility test tools
+        run: |
+          npm install --no-save --package-lock=false playwright@1.65.1 @axe-core/playwright@4.14.0
+          npx playwright install --with-deps chromium
+      - name: Run smoke tests against the deployed GitHub Pages site
+        env:
+          BASE_URL: https://kalpshahtester.github.io
+        run: node scripts/browser-smoke.mjs
