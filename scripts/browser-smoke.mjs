@@ -224,10 +224,27 @@ try {
       }));
       const visibleOverflow = await page.evaluate(() => {
         const selectors = "main h1,main h2,main h3,main p,main a,main button,main li,main .project-card,main .case-content,main .contact-card";
-        return [...document.querySelectorAll(selectors)].filter(element => !element.closest(".case-sidebar")).map(element => {
-          const rect = element.getBoundingClientRect();
-          return { tag: element.tagName, className: typeof element.className === "string" ? element.className : "", left: Math.round(rect.left), right: Math.round(rect.right) };
-        }).filter(element => element.left < -1 || element.right > innerWidth + 1);
+        const boxOverflow = [...document.querySelectorAll(selectors)].filter(element => !element.closest(".case-sidebar")).map(el => {
+          const rect = el.getBoundingClientRect();
+          return {
+            selector: el.tagName.toLowerCase() + (el.className && typeof el.className === "string" ? "." + el.className.trim().replace(/\\s+/g, ".") : ""),
+            left: Math.round(rect.left),
+            right: Math.round(rect.right),
+            kind: "element box"
+          };
+        }).filter(item => item.left < -1 || item.right > innerWidth + 1);
+        // Element boxes can fit while oversized glyphs still paint outside the viewport.
+        const textOverflow = [...document.querySelectorAll("main h1,main h2")].flatMap(el => {
+          const range = document.createRange();
+          range.selectNodeContents(el);
+          return [...range.getClientRects()].map(rect => ({
+            selector: el.tagName.toLowerCase() + (el.id ? "#" + el.id : ""),
+            left: Math.round(rect.left),
+            right: Math.round(rect.right),
+            kind: "rendered heading text"
+          })).filter(item => item.left < -1 || item.right > innerWidth + 1);
+        });
+        return [...boxOverflow, ...textOverflow];
       });
       assert.ok(
         dimensions.document <= dimensions.viewport + 1 && visibleOverflow.length === 0,
