@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: 24
           package-manager-cache: false
+      - name: Validate GitHub Actions workflow YAML
+        run: |
+          ruby -e 'require "yaml"; Dir[".github/workflows/*.yml"].each { |path| YAML.load_file(path, aliases: true); puts "#{path}: YAML syntax OK" }'
       - name: Check JavaScript syntax
         run: |
           node --check assets/js/premium.js
