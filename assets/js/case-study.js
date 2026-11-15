@@ -1,6 +1,7 @@
 (() => {
   "use strict";
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.__caseStudyMotionState = { status: reduceMotion ? "reduced-motion" : "loading", gsap: false, scrollTrigger: false };
   const header = document.getElementById("siteHeader");
   const progress = document.getElementById("readingProgress");
   const backToTop = document.getElementById("backToTop");
@@ -61,7 +62,44 @@
     sections.forEach(section => observer.observe(section));
   }
 
-  backToTop?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }));
+  const focusTarget = target => {
+    if (!target) return;
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+  };
+  const scrollToTarget = target => {
+    if (!target) return;
+    focusTarget(target);
+    target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  };
+
+  backToTop?.addEventListener("click", () => {
+    if (location.hash) history.pushState({ portfolioAnchor: "#top" }, "", location.pathname + location.search);
+    scrollToTarget(document.getElementById("main"));
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", event => {
+      const href = link.getAttribute("href");
+      if (!href || href === "#") return;
+      let id;
+      try { id = decodeURIComponent(href.slice(1)); } catch { return; }
+      const target = document.getElementById(id);
+      if (!target) return;
+      event.preventDefault();
+      if (location.hash !== href) history.pushState({ portfolioAnchor: href }, "", href);
+      scrollToTarget(target);
+    });
+  });
+
+  window.addEventListener("popstate", () => {
+    let id = "main";
+    if (location.hash) {
+      try { id = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+    }
+    scrollToTarget(document.getElementById(id) || document.getElementById("main"));
+  });
 
   if (!reduceMotion) {
     Promise.allSettled([
@@ -73,8 +111,12 @@
       const scrollModule = results[1].value;
       const gsap = gsapModule.gsap || gsapModule.default;
       const ScrollTrigger = scrollModule.ScrollTrigger;
-      if (!gsap || !ScrollTrigger) return;
+      if (!gsap || !ScrollTrigger) {
+        window.__caseStudyMotionState = { status: "fallback", gsap: Boolean(gsap), scrollTrigger: Boolean(ScrollTrigger) };
+        return;
+      }
       gsap.registerPlugin(ScrollTrigger);
+      window.__caseStudyMotionState = { status: "ready", gsap: true, scrollTrigger: true };
       gsap.from(".case-breadcrumbs", { y: 12, opacity: 0, duration: .6 });
       gsap.from(".case-title", { y: 40, opacity: 0, duration: .9, delay: .12 });
       gsap.from(".case-lead", { y: 16, opacity: 0, duration: .65, delay: .3 });
@@ -85,6 +127,9 @@
         });
       });
       ScrollTrigger.refresh();
-    }).catch(error => console.warn("Optional case-study motion was skipped.", error));
+    }).catch(error => {
+      window.__caseStudyMotionState = { status: "fallback", gsap: false, scrollTrigger: false };
+      console.warn("Optional case-study motion was skipped.", error);
+    });
   }
 })();
