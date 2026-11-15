@@ -79,7 +79,7 @@ try {
             width: Math.round(rect.width),
             position: getComputedStyle(el).position
           };
-        }).filter(el => el.right > innerWidth + 1 && el.width > 0).slice(0, 12)
+        }).filter(el => (el.right > innerWidth + 1 || el.left < -1) && el.width > 0).sort((a, b) => b.right - a.right).slice(0, 24)
       }));
       assert.ok(
         dimensions.document <= dimensions.viewport + 1 && dimensions.body <= dimensions.viewport + 1,
