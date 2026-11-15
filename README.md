@@ -1,50 +1,41 @@
 # Kalp Shah — Manual QA Tester Portfolio
 
-Official portfolio: https://kalpshahtester.github.io/
+This branch contains a recruiter-focused refresh proposal for the published portfolio at https://kalpshahtester.github.io/.
 
-This repository contains the source for Kalp Shah's personal QA portfolio, published with GitHub Pages from the `main` branch.
+## Preview branch
+- Branch: `recruiter-portfolio-refresh`
+- The published `main` branch is not changed by this preview.
+- The refresh is implemented as static HTML, CSS and JavaScript so it remains compatible with GitHub Pages without adding a backend or mandatory build system.
 
-## Portfolio highlights
+## Structure
+- `index.html` — recruiter-focused homepage
+- `projects/saucedemo.html` — SauceDemo manual QA case study
+- `projects/makemytrip.html` — MakeMyTrip assessment case study
+- `assets/css/site.css` — responsive design system and components
+- `assets/js/site.js` — accessible navigation, progressive reveals and the clearly labelled QA simulation
+- `scripts/verify-site.mjs` — local structural checks
 
-- Manual QA, WordPress QA, and web application testing
-- SauceDemo end-to-end manual testing project
-- MakeMyTrip testing assessment
-- QA workflow, test design, execution, defect reporting, retesting, and regression
-- Professional experience, education, and skills
-- Downloadable resume and contact links
+## Design and implementation choices
+- Semantic HTML and progressive enhancement.
+- Manrope, Space Grotesk and DM Mono typography.
+- A navy / cyan / violet design system with responsive layouts.
+- Native scrolling and CSS transitions as the baseline.
+- GSAP + ScrollTrigger loaded as a progressive enhancement; the page remains usable if the animation CDN is unavailable.
+- No heavy 3D runtime or autoplay media on the recruiter landing page.
+- Reduced-motion support, visible focus states, skip link and keyboard-operable navigation.
 
-## Featured work
+## Accuracy and privacy
+- The primary positioning remains Manual QA / Web / WordPress QA.
+- Project metrics are labelled by source; SauceDemo uses 47 scenarios, 62+ test cases and 282 execution records.
+- No unverified critical-defect count, automation proficiency, API-testing claim, client name or confidential client evidence is advertised.
+- The current LinkedIn URL and existing public resume / certificate assets are retained.
+- The existing public profile image is referenced from the live site. A professionally retouched replacement is not included yet because the source pixels need to be supplied for an accurate edit.
 
-- [SauceDemo Manual Testing Project](https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website)
-- [MakeMyTrip Testing Assessment](https://github.com/kalpshahtester/MakeMyTrip-Testing-Assessment)
-- [GitHub profile and QA repositories](https://github.com/kalpshahtester)
+## Quality checks
+Run:
+```bash
+node scripts/verify-site.mjs
+node --check assets/js/site.js
+```
 
-## Website files
-
-- `index.html` — published homepage
-- `Kalp Shah Profile Photo.png` — homepage portrait
-- `Kalp Shah Manual Tester Resume.pdf` — downloadable resume
-- `portfolio-v2/index.html` — secondary portfolio version (not the root homepage)
-- `AI_PORTFOLIO_MASTER_PROMPT.md` — verified profile data, project references, design brief and implementation/QA instructions for AI coding agents
-
-## Technology direction
-
-The live portfolio uses Three.js with React Three Fiber for its 3D QA scene, GSAP/ScrollTrigger for motion, and Lenis for smooth scrolling. The QA runner is a clearly labelled portfolio simulation, not a live test service.
-
-## AI handoff
-
-Read [AI_PORTFOLIO_MASTER_PROMPT.md](AI_PORTFOLIO_MASTER_PROMPT.md) before asking an AI coding agent to redesign or extend the portfolio. It includes verified profile details and strict rules against invented personal information or credentials.
-
-## Local preview
-
-Open `index.html` in a modern browser. The site is static HTML, CSS, and JavaScript; no build dependencies are required for local preview.
-
-## Deployment
-
-GitHub Pages publishes the root site from the `main` branch. Changes to `index.html` and its referenced assets are reflected after the Pages deployment completes.
-
-## Contact
-
-- Email: manualtesterkalpshah@gmail.com
-- LinkedIn: https://www.linkedin.com/in/kalp-shah-a9965b395/
-- GitHub: https://github.com/kalpshahtester
+This branch is a review candidate. Merge it into `main` only after reviewing the pages, checking the real portrait crop on devices, and confirming the public profile details.
