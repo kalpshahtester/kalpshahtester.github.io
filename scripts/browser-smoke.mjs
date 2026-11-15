@@ -67,7 +67,19 @@ try {
       const dimensions = await page.evaluate(() => ({
         viewport: document.documentElement.clientWidth,
         document: document.documentElement.scrollWidth,
-        body: document.body.scrollWidth
+        body: document.body.scrollWidth,
+        offenders: [...document.querySelectorAll("body *")].map(el => {
+          const rect = el.getBoundingClientRect();
+          return {
+            tag: el.tagName.toLowerCase(),
+            className: typeof el.className === "string" ? el.className : "",
+            id: el.id || "",
+            left: Math.round(rect.left),
+            right: Math.round(rect.right),
+            width: Math.round(rect.width),
+            position: getComputedStyle(el).position
+          };
+        }).filter(el => el.right > innerWidth + 1 && el.width > 0).slice(0, 12)
       }));
       assert.ok(
         dimensions.document <= dimensions.viewport + 1 && dimensions.body <= dimensions.viewport + 1,
