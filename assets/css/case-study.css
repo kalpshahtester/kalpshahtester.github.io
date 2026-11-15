@@ -9,7 +9,7 @@
 .case-hero-grid .eyebrow{display:flex;width:max-content;max-width:100%;margin-bottom:25px}
 .case-title{margin:0;font:600 clamp(54px,7vw,88px)/1.01 var(--display);letter-spacing:-.075em}
 .case-title em{color:var(--acid);font-style:normal}
-.case-lead{max-width:680px;margin:25px 0 0;color:var(--muted);font-size:15px;line-height:1.85}
+.case-lead{max-width:680px;margin:25px 0 0;color:#b9c5d2;font-size:15px;line-height:1.85}
 .case-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .case-actions .button{min-height:48px;font-size:10px}
 .case-summary-card{position:relative;padding:25px 25px 18px;border:1px solid rgba(210,255,75,.24);border-radius:7px;background:linear-gradient(145deg,rgba(210,255,75,.07),rgba(255,255,255,.015) 55%);box-shadow:0 28px 70px rgba(0,0,0,.2)}
