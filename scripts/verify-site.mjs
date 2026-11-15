@@ -121,6 +121,8 @@ assert.match(faviconSvg, /#D2FF4B/i, "SVG favicon must preserve the brand accent
 assert.ok(routes.every(({file}) => pageHtml.get(file === "index.html" ? "/" : file === "projects/saucedemo.html" ? "/projects/saucedemo.html" : "/projects/makemytrip.html").includes('href="/favicon.svg?v=6"')), "all routes must reference the root SVG favicon");
 const portraitCss = fs.readFileSync(path.join(root, "assets/css/premium.css"), "utf8");
 assert.ok(portraitCss.includes(".portrait-topline,.portrait-bottomline{") && portraitCss.includes("background:#03070d") && portraitCss.includes("font:600 11px/1.25 var(--mono)"), "portrait labels must use opaque high-contrast plates and readable type");
+assert.ok(portraitCss.includes("object-fit:contain") && portraitCss.includes("object-position:50% 50%"), "profile portrait must remain fully visible without cover cropping");
+assert.ok(portraitCss.includes(".float-card{z-index:2}") && portraitCss.includes(".float-card{display:none}"), "decorative cards must not cover the portrait on mobile");
 
 for (const { file, size } of [
   { file: "assets/favicon-16x16.png", size: 16 },
