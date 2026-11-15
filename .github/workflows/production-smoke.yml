@@ -1,10 +1,7 @@
 name: Production portfolio smoke test
 
 on:
-  workflow_run:
-    workflows: ["pages build and deployment"]
-    branches: [main]
-    types: [completed]
+  deployment_status:
   workflow_dispatch:
 
 permissions:
@@ -12,7 +9,7 @@ permissions:
 
 jobs:
   verify-live-site:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out the deployed main branch
