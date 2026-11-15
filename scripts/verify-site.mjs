@@ -24,9 +24,9 @@ for (const page of pages) {
   assert.match(html, /<main\b/i, page + ": missing main landmark");
   assert.match(html, /class="skip-link"/i, page + ": missing skip link");
 
-  const ids = [...html.matchAll(/\\bid="([^"]+)"/gi)].map(match => match[1]);
+  const ids = [...html.matchAll(/\bid="([^"]+)"/gi)].map(match => match[1]);
   assert.equal(new Set(ids).size, ids.length, page + ": duplicate id attribute");
-  assert.equal([...html.matchAll(/<h1\\b/gi)].length, 1, page + ": expected exactly one H1");
+  assert.equal([...html.matchAll(/<h1\b/gi)].length, 1, page + ": expected exactly one H1");
   for (const match of html.matchAll(/href="#([^"]+)"/gi)) {
     assert.ok(ids.includes(match[1]), page + ": broken in-page anchor #" + match[1]);
   }
