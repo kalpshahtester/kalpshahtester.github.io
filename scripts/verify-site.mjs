@@ -66,10 +66,11 @@ for (const { route, file } of routes) {
     assert.match(match[1], /\balt="/i, file + ": image without alt text");
     assert.match(match[1], /\bsrc="/i, file + ": image without src");
   }
-  for (const match of html.matchAll(/<button\\b([^>]*)>([\\s\\S]*?)<\\/button>/gi)) {
-    assert.match(match[1], /\\btype="(?:button|submit|reset)"/i, file + ": button missing explicit type");
+  for (const match of html.matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/gi)) {
+    assert.match(match[1], /\btype="(?:button|submit|reset)"/i, file + ": button missing explicit type");
     const buttonText = match[2].replace(/<[^>]+>/g, "").trim();
-    assert.ok(/\\baria-label=/.test(match[1]) || buttonText.length > 0 || /<img\\b[^>]*\\balt="[^"]+"/i.test(match[2]), file + ": button has no accessible name");
+    assert.ok(/\baria-label=/.test(match[1]) || buttonText.length > 0 || /<img\b[^>]*\balt="[^"]+"/i.test(match[2]), file + ": button has no accessible name");
+  }
   }
   for (const match of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)) {
     const attrs = match[1];
