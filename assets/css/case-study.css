@@ -100,7 +100,7 @@
 }
 @media(max-width:360px){
   .case-hero-grid .eyebrow{font-size:8px}
-  .case-title{font-size:48px}
+  .case-title{font-size:clamp(40px,14.3vw,48px)}
   .case-actions .button{width:100%;justify-content:space-between}
   .case-metrics>div{padding-right:9px}
   .case-metrics span{font-size:7px}
