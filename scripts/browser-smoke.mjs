@@ -81,9 +81,20 @@ try {
           };
         }).filter(el => (el.right > innerWidth + 1 || el.left < -1) && el.width > 0).sort((a, b) => b.right - a.right).slice(0, 24)
       }));
+      const visibleOverflow = await page.evaluate(() => {
+        const selectors = "main h1, main h2, main p, main .button, main .project-card, main .case-content, main .contact-card";
+        return [...document.querySelectorAll(selectors)].map(el => {
+          const rect = el.getBoundingClientRect();
+          return {
+            selector: el.tagName.toLowerCase() + (el.className && typeof el.className === "string" ? "." + el.className.trim().replace(/\\s+/g, ".") : ""),
+            left: Math.round(rect.left),
+            right: Math.round(rect.right)
+          };
+        }).filter(item => item.left < -1 || item.right > innerWidth + 1);
+      });
       assert.ok(
-        dimensions.document <= dimensions.viewport + 1 && dimensions.body <= dimensions.viewport + 1,
-        route.path + " horizontal overflow at " + viewport.width + "px: " + JSON.stringify(dimensions)
+        dimensions.document <= dimensions.viewport + 1 && visibleOverflow.length === 0,
+        route.path + " visible horizontal overflow at " + viewport.width + "px: " + JSON.stringify({ ...dimensions, visibleOverflow })
       );
       checks += 1;
     }
