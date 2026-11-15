@@ -146,22 +146,22 @@
   const ring = document.querySelector(".cursor-ring");
   if (finePointer && dot && ring && !reduceMotion) {
     document.documentElement.classList.add("cursor-ready");
-    let pointerX = -100, pointerY = -100, ringX = -100, ringY = -100, ringFrame = 0;
-    const animateRing = () => {
-      ringX += (pointerX - ringX) * .24;
-      ringY += (pointerY - ringY) * .24;
+    let pointerX = -100, pointerY = -100, ringX = -100, ringY = -100, pointerFrame = 0;
+    const animateCursor = () => {
+      dot.style.transform = "translate3d(" + pointerX + "px," + pointerY + "px,0) translate(-50%,-50%)";
+      ringX += (pointerX - ringX) * .22;
+      ringY += (pointerY - ringY) * .22;
       ring.style.transform = "translate3d(" + ringX + "px," + ringY + "px,0) translate(-50%,-50%)";
-      if (Math.abs(pointerX - ringX) > .2 || Math.abs(pointerY - ringY) > .2) {
-        ringFrame = window.requestAnimationFrame(animateRing);
+      if (Math.abs(pointerX - ringX) > .5 || Math.abs(pointerY - ringY) > .5) {
+        pointerFrame = window.requestAnimationFrame(animateCursor);
       } else {
-        ringFrame = 0;
+        pointerFrame = 0;
       }
     };
     const moveCursor = event => {
       pointerX = event.clientX;
       pointerY = event.clientY;
-      dot.style.transform = "translate3d(" + pointerX + "px," + pointerY + "px,0) translate(-50%,-50%)";
-      if (!ringFrame) ringFrame = window.requestAnimationFrame(animateRing);
+      if (!pointerFrame) pointerFrame = window.requestAnimationFrame(animateCursor);
     };
     window.addEventListener("pointermove", moveCursor, { passive: true });
     document.querySelectorAll("a,button,.project-card,.toolkit-card").forEach(target => {
