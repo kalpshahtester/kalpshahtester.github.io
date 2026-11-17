@@ -4,7 +4,7 @@ Premium, evidence-led portfolio for Manual QA, web and WordPress testing. The ho
 
 ## Local development
 
-Requirements: Node.js 22 and npm. Python 3 with Pillow is needed only to generate the optimized profile image for a production-style build.
+Requirements: Node.js 22 and npm.
 
 ```bash
 npm ci
@@ -17,8 +17,6 @@ The user-site uses `base: "/"`. Public case-study routes and root-level assets a
 
 ```bash
 node scripts/stage-pages-assets.mjs
-python -m pip install Pillow
-python scripts/generate-profile-webp.py
 npm run check
 npm run build
 node scripts/verify-pages-build.mjs
@@ -41,14 +39,14 @@ On Windows PowerShell, set environment variables with `$env:SITE_ROOT="dist"`, `
 ## Quality gates
 
 - `npm run check` validates JavaScript syntax and the current three-page source structure: unique IDs, local anchors and cross-page fragments, ARIA references, accessible names, image alt text, safe external links, local assets, social metadata, CSS block balance and sitemap entries.
-- `node scripts/verify-pages-build.mjs` validates the actual generated Pages artifact, including the bundled Vite CSS / JavaScript, case-study assets, résumé, original portrait, generated WebP and all certificates.
+- `node scripts/verify-pages-build.mjs` validates the actual generated Pages artifact, including the bundled Vite CSS / JavaScript, case-study assets, résumé, original portrait and all certificates.
 - `npm run smoke` fetches each published route and every locally referenced resource, checking HTTP status, content type and non-empty responses.
-- The same stage, image generation, build and artifact validation steps run in pull-request CI and Pages deployment. A separate production smoke workflow runs against the public URL after deployment.
+- The same staging, build and artifact validation steps run in pull-request CI and Pages deployment. A separate production smoke workflow runs against the public URL after deployment.
 - Lighthouse runs after deployment and stores measured HTML / JSON reports as a GitHub Actions artifact. Scores are not hardcoded into the page.
 
 ## Images and identity
 
-The original profile PNG is retained. The build produces a WebP derivative at the same pixel dimensions and uses it as the preferred hero source with the original PNG as fallback. No crop, face replacement or retouching is performed. The three existing certificate files are displayed as responsive previews and link to the full-size originals.
+The original profile PNG is used directly by the hero image and retained as the source of truth. The deployed page does not depend on an optional image conversion or CDN derivative. No crop, face replacement or retouching is performed. The three existing certificate files are displayed as responsive previews and link to the full-size originals.
 
 ## Content accuracy
 
