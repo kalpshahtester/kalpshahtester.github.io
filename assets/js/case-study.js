@@ -37,6 +37,7 @@
     const open = nav?.classList.toggle("is-open") || false;
     menuToggle.setAttribute("aria-expanded", String(open));
     menuToggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+    if (open) nav?.querySelector("a")?.focus();
   });
   nav?.querySelectorAll("a").forEach(link => link.addEventListener("click", () => closeMenu()));
   document.addEventListener("keydown", event => {
@@ -106,7 +107,10 @@
       import("https://cdn.jsdelivr.net/npm/gsap@3.15.1/+esm"),
       import("https://cdn.jsdelivr.net/npm/gsap@3.15.1/ScrollTrigger/+esm")
     ]).then(results => {
-      if (results[0].status !== "fulfilled" || results[1].status !== "fulfilled") return;
+      if (results[0].status !== "fulfilled" || results[1].status !== "fulfilled") {
+        window.__caseStudyMotionState = { status: "fallback", gsap: false, scrollTrigger: false };
+        return;
+      }
       const gsapModule = results[0].value;
       const scrollModule = results[1].value;
       const gsap = gsapModule.gsap || gsapModule.default;
