@@ -9,10 +9,29 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Check published routes
+      - name: Check published routes and visual assets
         run: |
           for path in / /projects/saucedemo.html /projects/makemytrip.html; do
             curl --fail --silent --show-error --location "https://kalpshahtester.github.io${path}" > /tmp/page.html
             grep -qi "Kalp Shah" /tmp/page.html
           done
 
+          # Accept both optimized Vite output and raw-source Pages fallback.
+          css_path=$(grep -oE 'href="/(src/styles/main\.css|assets/[^"]+\.css)"' /tmp/page.html | head -n 1 | cut -d '"' -f 2)
+          if [ -z "$css_path" ]; then
+            echo "No local portfolio stylesheet is linked from the production homepage."
+            exit 1
+          fi
+          curl --fail --silent --show-error --location "https://kalpshahtester.github.io${css_path}" > /tmp/portfolio.css
+          grep -q -- '--bg:#070709' /tmp/portfolio.css
+          grep -q '\.hud-nav' /tmp/portfolio.css
+          echo "Production stylesheet is reachable and contains the portfolio design rules."
+
+          js_path=$(grep -oE 'src="/(src/main\.js|assets/[^"]+\.js)"' /tmp/page.html | head -n 1 | cut -d '"' -f 2)
+          if [ -z "$js_path" ]; then
+            echo "No local application module is linked from the production homepage."
+            exit 1
+          fi
+          curl --fail --silent --show-error --location "https://kalpshahtester.github.io${js_path}" > /tmp/portfolio.js
+          test -s /tmp/portfolio.js
+          echo "Production application module is reachable."
