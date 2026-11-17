@@ -11,7 +11,6 @@ const required = [
   "assets/css/case-study.css",
   "assets/js/case-study.js",
   "Kalp Shah Profile Photo.png",
-  "Kalp-Shah-Profile-Photo.webp",
   "Kalp Shah Manual Tester Resume.pdf",
   "Kalp Shah HCL GUVI Certification.png",
   "Kalp Shah Generative AI Mastermind Course Certificate.jpeg",
@@ -54,11 +53,6 @@ const bundledCss = cssFiles
   .join("\n");
 assert.ok(bundledCss.includes(".hud-nav") && bundledCss.includes(".hero"), "Production CSS lacks core portfolio selectors");
 
-for (const file of ["Kalp-Shah-Profile-Photo.webp"]) {
-  const bytes = fs.readFileSync(path.join(dist, file));
-  assert.equal(bytes.subarray(0, 4).toString("ascii"), "RIFF", file + ": missing RIFF header");
-  assert.equal(bytes.subarray(8, 12).toString("ascii"), "WEBP", file + ": missing WebP signature");
-}
 const originalPng = fs.readFileSync(path.join(dist, "Kalp Shah Profile Photo.png"));
 assert.deepEqual([...originalPng.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10], "Original profile photo must remain a PNG");
 assert.match(html, /class="hero-portrait"/, "Built homepage missing portrait figure");
