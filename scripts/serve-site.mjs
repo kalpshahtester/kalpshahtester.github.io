@@ -3,7 +3,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const defaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const root = path.resolve(process.env.SITE_ROOT || defaultRoot);
 const port = Number(process.env.PORT || 4173);
 const contentTypes = {
   ".html": "text/html; charset=utf-8",
@@ -14,6 +15,8 @@ const contentTypes = {
   ".png": "image/png",
   ".jpeg": "image/jpeg",
   ".jpg": "image/jpeg",
+  ".webp": "image/webp",
+  ".webp": "image/webp",
   ".pdf": "application/pdf",
   ".xml": "application/xml; charset=utf-8",
   ".txt": "text/plain; charset=utf-8"

@@ -14,16 +14,37 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - run: npm ci
+      - name: Stage the same public URLs used by deployment
+        run: node scripts/stage-pages-assets.mjs
+      - name: Prepare image optimizer
+        run: |
+          python3 -m venv /tmp/portfolio-image-env
+          /tmp/portfolio-image-env/bin/python -m pip install --quiet --disable-pip-version-check Pillow
+      - name: Generate high-quality profile WebP
+        run: /tmp/portfolio-image-env/bin/python scripts/generate-profile-webp.py
       - run: npm run check
       - run: npm run build
-      - name: Validate required routes and public assets
+      - name: Verify the generated Pages artifact
+        run: node scripts/verify-pages-build.mjs
+      - name: Start server against dist
         run: |
-          test -f dist/index.html
-          test -f projects/saucedemo.html
-          test -f projects/makemytrip.html
-          test -f "Kalp Shah Profile Photo.png"
-          test -f "Kalp Shah Manual Tester Resume.pdf"
-
+          SITE_ROOT=dist PORT=4173 node scripts/serve-site.mjs > /tmp/portfolio-test-server.log 2>&1 &
+          echo $! > /tmp/portfolio-test-server.pid
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:4173/ > /dev/null
+      - name: Smoke test built routes and every local resource
+        run: BASE_URL=http://127.0.0.1:4173 npm run smoke
+      - name: Stop test server
+        if: always()
+        run: |
+          if [ -f /tmp/portfolio-test-server.pid ]; then
+            kill "$(cat /tmp/portfolio-test-server.pid)" || true
+          fi

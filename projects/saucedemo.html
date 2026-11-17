@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#080b12">
+  <meta name="theme-color" content="#070709">
   <meta name="description" content="Manual QA case study by Kalp Shah: SauceDemo e-commerce user journeys, 47 test scenarios, 62+ test cases, 282 execution records and traceable project documentation.">
   <meta name="author" content="Kalp Shah">
   <link rel="canonical" href="https://kalpshahtester.github.io/projects/saucedemo.html">
@@ -19,9 +19,15 @@
   <meta property="og:description" content="Manual QA case study by Kalp Shah: SauceDemo e-commerce user journeys, 47 test scenarios, 62+ test cases, 282 execution records and traceable project documentation.">
   <meta property="og:image" content="https://kalpshahtester.github.io/Kalp%20Shah%20Profile%20Photo.png">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SauceDemo Manual QA Case Study | Kalp Shah">
+  <meta name="twitter:description" content="Manual QA case study by Kalp Shah: SauceDemo e-commerce user journeys, 47 test scenarios, 62+ test cases, 282 execution records and traceable project documentation.">
+  <meta name="twitter:image" content="https://kalpshahtester.github.io/Kalp%20Shah%20Profile%20Photo.png">
+  <meta name="twitter:image:alt" content="Kalp Shah — Manual QA Tester">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media=&quot;all&quot;">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet"></noscript>
   <link rel="stylesheet" href="/assets/css/premium.css?v=7">
   <link rel="stylesheet" href="/assets/css/case-study.css">
   <title>SauceDemo Manual QA Case Study | Kalp Shah</title>
@@ -33,13 +39,13 @@
       <a class="brand" href="/"><span class="brand-symbol">K<span>.</span></span><span class="brand-name">KALP SHAH<small>QUALITY ENGINEERING MINDSET</small></span></a>
       <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open navigation"><span></span><span></span></button>
       <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation">
-        <a href="/#about">About</a><a href="/#projects">Selected work</a><a href="/#approach">Approach</a><a href="/#experience">Experience</a><a href="/#toolkit">Toolkit</a><a class="nav-contact" href="/#contact">Let’s talk <span aria-hidden="true">↗</span></a>
+        <a href="/#about">About</a><a href="/#work">Selected work</a><a href="/#approach">Approach</a><a href="/#experience">Experience</a><a href="/#toolkit">Toolkit</a><a class="nav-contact" href="/#contact">Let’s talk <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
   </header>
   <main id="main" class="case-page" tabindex="-1">
     <section class="case-hero page-wrap" aria-labelledby="case-title">
-      <div class="case-breadcrumbs"><a href="/">Home</a><span>/</span><a href="/#projects">Selected work</a><span>/</span><span>SauceDemo</span></div>
+      <div class="case-breadcrumbs"><a href="/">Home</a><span>/</span><a href="/#work">Selected work</a><span>/</span><span>SauceDemo</span></div>
       <div class="case-hero-grid">
         <div>
           <div class="eyebrow"><span class="eyebrow-pulse"></span> CASE STUDY / 001 · MANUAL QA</div>
@@ -47,7 +53,7 @@
           <p class="case-lead">A structured manual QA project for a public e-commerce demo application. The work covers the shopping journey end to end, with positive and negative scenarios, test documentation and execution evidence.</p>
           <div class="case-actions">
             <a class="button button-primary magnetic" href="https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website" target="_blank" rel="noopener noreferrer"><span>Open GitHub project</span><span class="button-arrow" aria-hidden="true">↗</span></a>
-            <a class="button button-ghost" href="/#projects"><span>Back to portfolio</span><span class="button-arrow" aria-hidden="true">↗</span></a>
+            <a class="button button-ghost" href="/#work"><span>Back to portfolio</span><span class="button-arrow" aria-hidden="true">↗</span></a>
           </div>
         </div>
         <aside class="case-summary-card" data-reveal aria-label="Project summary">
@@ -71,7 +77,7 @@
       <aside class="case-sidebar" aria-label="Case study sections">
         <span class="sidebar-label">ON THIS PAGE</span>
         <a href="#overview">01 / Overview</a><a href="#scope">02 / Scope</a><a href="#approach">03 / Approach</a><a href="#evidence">04 / Evidence</a><a href="#transparency">05 / Notes</a>
-        <a class="sidebar-back" href="/#projects">← All projects</a>
+        <a class="sidebar-back" href="/#work">← All projects</a>
       </aside>
       <div class="case-article">
         <section class="case-section" id="overview" data-reveal tabindex="-1">
@@ -115,7 +121,7 @@
           <p>This is a portfolio project against a public demo application. It is not presented as production client work, production-system access or employment by SauceDemo. The metrics above describe project documentation and execution records; they are not a claim about production test coverage.</p>
           <p>Individual defect totals are intentionally not promoted here. The public repository is the source for reviewing actual defect records and their definitions.</p>
         </section>
-        <nav class="case-footer-nav" aria-label="Other case studies"><a href="/#projects">← All projects</a><a href="/projects/makemytrip.html">Next case study: MakeMyTrip →</a></nav>
+        <nav class="case-footer-nav" aria-label="Other case studies"><a href="/#work">← All projects</a><a href="/projects/makemytrip.html">Next case study: MakeMyTrip →</a></nav>
       </div>
     </div>  </main>
   <footer class="site-footer"><div class="footer-inner page-wrap">

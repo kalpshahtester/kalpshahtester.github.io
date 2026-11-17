@@ -20,72 +20,18 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Stage legacy public URLs for Vite
-        run: |
-          mkdir -p public
-          cp -R assets public/assets
-          cp -R projects public/projects
-          cp "Kalp Shah Profile Photo.png" public/
-          cp "Kalp Shah Manual Tester Resume.pdf" public/
-          cp "Kalp Shah HCL GUVI Certification.png" public/
-          cp "Kalp Shah Generative AI Mastermind Course Certificate.jpeg" public/
-          cp "Kalp Shah Outskill Certificate.png" public/
-          cp favicon.ico favicon.svg robots.txt sitemap.xml public/
-      - name: Generate high-quality WebP profile image
+      - name: Stage legacy public URLs
+        run: node scripts/stage-pages-assets.mjs
+      - name: Prepare image optimizer
         run: |
           python3 -m venv /tmp/portfolio-image-env
           /tmp/portfolio-image-env/bin/python -m pip install --quiet --disable-pip-version-check Pillow
-          /tmp/portfolio-image-env/bin/python - <<'PY'
-          from pathlib import Path
-          from PIL import Image
-
-          source = Path("Kalp Shah Profile Photo.png")
-          output = Path("public/Kalp-Shah-Profile-Photo.webp")
-          with Image.open(source) as original:
-              original_size = original.size
-              has_alpha = "A" in original.getbands()
-              optimized = original.convert("RGBA" if has_alpha else "RGB")
-              icc_profile = original.info.get("icc_profile")
-              optimized.save(output, "WEBP", quality=88, method=6, icc_profile=icc_profile)
-          with Image.open(output) as verified:
-              if verified.size != original_size:
-                  raise SystemExit("WebP conversion changed the original image dimensions.")
-          print(f"Original dimensions preserved: {original_size[0]}x{original_size[1]}")
-          print(f"Original PNG: {source.stat().st_size:,} bytes")
-          print(f"High-quality WebP: {output.stat().st_size:,} bytes")
-          PY
-          test -s public/Kalp-Shah-Profile-Photo.webp
+      - name: Generate high-quality profile WebP
+        run: /tmp/portfolio-image-env/bin/python scripts/generate-profile-webp.py
       - run: npm run check
       - run: npm run build
-      - name: Validate generated Vite entry and stylesheet
-        run: |
-          node --input-type=module <<'NODE'
-          import { readFileSync, statSync } from 'node:fs';
-          const html = readFileSync('dist/index.html', 'utf8');
-          const css = [...html.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]+[.]css)"/g)]
-            .map((match) => match[1]).filter((href) => href.startsWith('/assets/'));
-          const js = [...html.matchAll(/<script[^>]+type="module"[^>]+src="([^"]+[.]js)"/g)]
-            .map((match) => match[1]).filter((href) => href.startsWith('/assets/'));
-          if (!css.length || !js.length) throw new Error('Built entry is missing its local CSS or JavaScript bundle.');
-          for (const href of [...css, ...js]) {
-            const file = 'dist' + new URL(href, 'https://kalpshahtester.github.io').pathname;
-            if (statSync(file).size === 0) throw new Error('Empty generated asset: ' + file);
-          }
-          const stylesheet = css.map((href) => readFileSync('dist' + new URL(href, 'https://kalpshahtester.github.io').pathname, 'utf8')).join('\\n');
-          for (const selector of ['--bg:#070709', '.hud-nav', '.hero']) {
-            if (!stylesheet.includes(selector)) throw new Error('Expected visual styles are missing: ' + selector);
-          }
-          console.log('Verified Vite HTML, CSS bundle and JavaScript bundle.');
-          NODE
-      - name: Validate profile and certificate images in deployment artifact
-        run: |
-          for file in "Kalp Shah Profile Photo.png" "Kalp Shah HCL GUVI Certification.png" "Kalp Shah Generative AI Mastermind Course Certificate.jpeg" "Kalp Shah Outskill Certificate.png"; do
-            test -s "dist/$file" || { echo "Missing image asset in dist: $file"; exit 1; }
-          done
-          grep -q 'class="hero-portrait"' dist/index.html
-          grep -q 'class="certificate-card"' dist/index.html
-          test -s "dist/Kalp-Shah-Profile-Photo.webp" || { echo "Missing optimized profile image"; exit 1; }
-          echo "Original profile photo, optimized WebP and all three certificate previews are in the Pages artifact."
+      - name: Verify the exact Pages artifact
+        run: node scripts/verify-pages-build.mjs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

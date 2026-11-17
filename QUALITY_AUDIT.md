@@ -1,65 +1,42 @@
-# Portfolio quality audit — 15 November 2026
+# Portfolio quality audit — 18 November 2026
 
 ## Scope
 
-The audit covered the three published HTML routes and the files that directly control their presentation and behaviour:
+Reviewed the current production source for all three routes and the files responsible for page structure, styling, runtime interactions, asset staging, deployment, and production checks.
 
-- `index.html`
-- `projects/saucedemo.html`
-- `projects/makemytrip.html`
-- `assets/css/premium.css`
-- `assets/css/case-study.css`
-- `assets/js/premium.js`
-- `assets/js/case-study.js`
-- `scripts/verify-site.mjs`
-- `scripts/browser-smoke.mjs`
-- `scripts/serve-site.mjs`
-- GitHub Actions quality and production-smoke workflows
+## Findings
 
-The existing profile image, résumé, certificate files, local URLs, sitemap and robots file were also checked for presence and references.
-
-## Findings addressed
-
-| Area | Finding | Resolution |
+| Priority | Finding | Repair |
 |---|---|---|
-| Keyboard navigation | Skip-link and in-page destinations did not consistently receive keyboard focus when smooth scrolling was active. | Added focusable main/section targets, a consistent anchor handler, URL-history handling and focus restoration. |
-| Back-to-top | Returning to the top could leave a stale hash in the address bar. | Back-to-top now clears the hash, restores focus and returns the viewport to the page top. |
-| Brand accessibility | Explicit brand-link labels replaced the visible name in the accessible name. | Removed the overriding labels so the visible brand text is used. |
-| Decorative semantics | Some complex artwork containers lacked an appropriate semantic role. | Marked the profile visual as a group and project illustrations as labelled images; hid purely decorative glyphs from assistive technology. |
-| Text contrast | Muted labels were slightly below the 4.5:1 WCAG AA threshold on the dark surfaces. | Lightened the shared quiet-text token. |
-| Motion and readability | Fade-in animations could temporarily reduce the contrast of body text while it was moving. | Text now enters with positional motion rather than opacity fades. Image/decorative motion remains intact. |
-| Responsive presentation | Very narrow phones needed additional type and metadata wrapping safeguards. | Added a dedicated 360px breakpoint and retained explicit 280px viewport checks. |
-| Heading overflow | Element boxes alone can miss text glyphs that paint outside the viewport. | Browser QA now measures rendered heading text ranges as well as element boxes. |
-| Pointer treatment | The custom cursor ring could stop interpolating when the pointer paused. | Replaced one-frame interpolation with continuous frame-based easing until the ring catches up. |
-| Regression coverage | Earlier checks did not exercise the deployed runtime, accessibility, browser history, skip link, or CDN fallback paths deeply enough. | Added HTML validation, expanded static checks, Playwright runtime tests and axe accessibility scans. |
+| High | Both case-study pages linked back to `/#projects`, but the homepage section is `#work`. Breadcrumbs and “All projects” links landed at the top instead of the selected-work section. | Updated every cross-page work link to `/#work` and added source/build checks for the target fragment. |
+| Medium | Case-study pages still used a lime-green accent, older navy backgrounds, and different fonts from the homepage. | Harmonized the case-study tokens to the portfolio's gold accent, obsidian surfaces, Syne / Plus Jakarta Sans / JetBrains Mono typography, and matching dark theme color. |
+| Medium | The case-study mobile menu did not move focus to its first link when opened. | Focus now moves into the opened navigation; Escape still closes it and restores focus to the menu button. |
+| Medium | When the case-study motion CDN rejected one import, the settled-promise branch returned without setting the documented fallback state. | The runtime now explicitly records `fallback`; essential page content remains independent of optional animation imports. |
+| High | The prior `npm run check` only performed two JavaScript syntax checks. The active quality workflow built Vite but did not validate the final generated Pages artifact or request every local resource. | Added source-structure validation, deployment-artifact validation, a reusable HTTP smoke test, and made pull-request CI, deployment and post-deployment checks use the same asset model. |
+| High | Old audit scripts referenced a previous homepage structure and imported Playwright / axe packages that were not installed in the project. They were not run by the active workflow. | Removed the obsolete scripts and replaced them with dependency-free tests for the current site. |
+| Medium | Case-study pages used the old font family and loaded Google Fonts as a render-blocking stylesheet. | Updated them to the portfolio font family and non-blocking font loading. Added Twitter card metadata for both case studies. |
 
-## Validation performed
+## Validation design
 
-The audit branch passed its complete quality workflow on GitHub Actions:
+The updated checks are split into three layers:
 
-- HTML5 markup validation: passed for all three pages.
-- JavaScript syntax validation: passed.
-- Static validation: passed for required production assets, image alternatives, semantic landmarks, heading structure, duplicate IDs, ARIA references, anchor targets, cross-page fragments, safe external links, sitemap entries and CSS structure.
-- Chromium browser validation: **117 assertions passed** across all three routes and 11 viewport widths: 280, 320, 360, 390, 430, 540, 768, 1024, 1366, 1920 and 3440 pixels.
-- axe accessibility validation: **9 scans passed** (desktop, tablet and mobile widths for each of the three pages) using WCAG 2 A/AA, WCAG 2.1 A/AA, WCAG 2.2 AA and best-practice rules.
-- Runtime validation: passed for local page resources, images, critical CDN/font requests, animation initialization, reduced-motion mode, CDN-failure fallback, skip links, mobile menu keyboard dismissal, focus restoration, in-page navigation/history, back-to-top, and horizontal/text overflow.
+1. Source validation: all three documents, unique IDs, local and cross-page fragments, ARIA ID references, image alternatives, accessible link / button names, safe external links, local files, social metadata, CSS block balance, and sitemap routes.
+2. Build-artifact validation: the Vite CSS and JavaScript bundles, both project routes, root image assets, original profile PNG, generated WebP, résumé, certificates, favicon, robots and sitemap files.
+3. HTTP smoke validation: requests the homepage, both case studies, and every local URL discovered from their HTML. It validates successful status codes, content types and non-empty responses. The same smoke script runs locally, in CI and against the live site after deployment.
 
-The successful audit run is available at:
-https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/43719875026
+## Production baseline before this audit
 
-## Deployment safeguard
+The last successful production Lighthouse run before this change reported:
 
-A separate production smoke workflow has been added. After a successful GitHub Pages deployment from `main`, it runs the browser and accessibility suite against the public website URL. This makes the deployed copy—not only the source branch—part of future release verification.
+| Category | Score |
+|---|---:|
+| Performance | 99 |
+| Accessibility | 100 |
+| Best Practices | 100 |
+| SEO | 100 |
+
+These values describe that run only. A fresh report must be generated after the current branch is deployed before claiming updated scores.
 
 ## Limitations
 
-Automated checks cannot prove the absence of every possible defect. They do not replace hands-on review with physical touch devices, screen readers, real-world network conditions, or every browser/OS combination. The test suite is designed to catch repeatable structural, accessibility, responsive, loading and interaction regressions before and after release.
-
-
-## Favicon compatibility follow-up — 15 November 2026
-
-A final browser-compatibility review found that the site referenced only an SVG favicon. That left older browser fallbacks and mobile home-screen icons undefined.
-
-The production pages now share a crisp K monogram in five formats: SVG, 16×16 PNG, 32×32 PNG, a multi-size 16/32/48 ICO at the root, and a 180×180 Apple touch icon. The HTML links use a versioned URL so browsers can refresh the previously cached icon.
-
-The static validator checks each file's signature and dimensions, validates the SVG viewBox and checks the ICO directory entries. The browser suite now requests each icon from every published route, checks HTTP 200 and MIME types, validates PNG dimensions and the ICO header, and confirms every page references the expected icon files.
+The automated source and HTTP checks do not execute layout and interaction in a real browser engine. They do not replace manual visual inspection at physical mobile sizes, screen-reader checks, Safari / Firefox review, or keyboard testing on the deployed pages. No such manual review is claimed by this audit.
