@@ -244,3 +244,16 @@ html{scroll-padding-top:76px}
  .skill-list{gap:7px}
  .skill-list li{padding:7px 9px;font-size:11px}
 }
+
+
+/* Reliability fix: keep Experience and Skills readable even if reveal JS is delayed or unavailable. */
+.experience-section .timeline article,
+.toolkit-section .toolkit-grid article{
+  opacity:1;
+  transform:none;
+}
+.experience-section .timeline article.is-visible,
+.toolkit-section .toolkit-grid article.is-visible{
+  opacity:1;
+  transform:none;
+}
