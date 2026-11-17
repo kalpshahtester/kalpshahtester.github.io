@@ -1,0 +1,46 @@
+name: Deploy Vite portfolio to GitHub Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Preserve existing public URLs
+        run: |
+          cp -R assets dist/assets
+          cp -R projects dist/projects
+          cp "Kalp Shah Profile Photo.png" dist/
+          cp "Kalp Shah Manual Tester Resume.pdf" dist/
+          cp "Kalp Shah HCL GUVI Certification.png" dist/
+          cp "Kalp Shah Generative AI Mastermind Course Certificate.jpeg" dist/
+          cp "Kalp Shah Outskill Certificate.png" dist/
+          cp favicon.ico favicon.svg robots.txt sitemap.xml dist/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
