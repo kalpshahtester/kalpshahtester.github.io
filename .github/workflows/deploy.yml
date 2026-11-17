@@ -31,6 +31,30 @@ jobs:
           cp "Kalp Shah Generative AI Mastermind Course Certificate.jpeg" public/
           cp "Kalp Shah Outskill Certificate.png" public/
           cp favicon.ico favicon.svg robots.txt sitemap.xml public/
+      - name: Generate high-quality WebP profile image
+        run: |
+          python3 -m venv /tmp/portfolio-image-env
+          /tmp/portfolio-image-env/bin/python -m pip install --quiet --disable-pip-version-check Pillow
+          /tmp/portfolio-image-env/bin/python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+
+          source = Path("Kalp Shah Profile Photo.png")
+          output = Path("public/Kalp-Shah-Profile-Photo.webp")
+          with Image.open(source) as original:
+              original_size = original.size
+              has_alpha = "A" in original.getbands()
+              optimized = original.convert("RGBA" if has_alpha else "RGB")
+              icc_profile = original.info.get("icc_profile")
+              optimized.save(output, "WEBP", quality=88, method=6, icc_profile=icc_profile)
+          with Image.open(output) as verified:
+              if verified.size != original_size:
+                  raise SystemExit("WebP conversion changed the original image dimensions.")
+          print(f"Original dimensions preserved: {original_size[0]}x{original_size[1]}")
+          print(f"Original PNG: {source.stat().st_size:,} bytes")
+          print(f"High-quality WebP: {output.stat().st_size:,} bytes")
+          PY
+          test -s public/Kalp-Shah-Profile-Photo.webp
       - run: npm run check
       - run: npm run build
       - name: Validate generated Vite entry and stylesheet
@@ -60,7 +84,8 @@ jobs:
           done
           grep -q 'class="hero-portrait"' dist/index.html
           grep -q 'class="certificate-card"' dist/index.html
-          echo "Profile portrait and all three certificate previews are in the Pages artifact."
+          test -s "dist/Kalp-Shah-Profile-Photo.webp" || { echo "Missing optimized profile image"; exit 1; }
+          echo "Original profile photo, optimized WebP and all three certificate previews are in the Pages artifact."
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
