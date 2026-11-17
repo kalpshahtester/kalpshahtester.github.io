@@ -53,6 +53,14 @@ jobs:
           }
           console.log('Verified Vite HTML, CSS bundle and JavaScript bundle.');
           NODE
+      - name: Validate profile and certificate images in deployment artifact
+        run: |
+          for file in "Kalp Shah Profile Photo.png" "Kalp Shah HCL GUVI Certification.png" "Kalp Shah Generative AI Mastermind Course Certificate.jpeg" "Kalp Shah Outskill Certificate.png"; do
+            test -s "dist/$file" || { echo "Missing image asset in dist: $file"; exit 1; }
+          done
+          grep -q 'class="hero-portrait"' dist/index.html
+          grep -q 'class="certificate-card"' dist/index.html
+          echo "Profile portrait and all three certificate previews are in the Pages artifact."
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
