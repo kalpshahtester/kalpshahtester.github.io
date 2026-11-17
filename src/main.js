@@ -1,5 +1,6 @@
 import { createQAScene } from "./scenes/qa-scene.js";
 import "./styles/main.css";
+import "./styles/quality.css";
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = (selector) => document.querySelector(selector);

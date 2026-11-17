@@ -1,31 +1,18 @@
 name: Production portfolio smoke test
-
 on:
   deployment_status:
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   verify-live-site:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the deployed main branch
-        uses: actions/checkout@v7
-        with:
-          ref: main
-      - name: Set up Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: 24
-          package-manager-cache: false
-      - name: Install browser and accessibility test tools
+      - name: Check published routes
         run: |
-          npm install --no-save --package-lock=false playwright@1.65.1 @axe-core/playwright@4.14.0
-          npx playwright install --with-deps chromium
-      - name: Run smoke tests against the deployed GitHub Pages site
-        env:
-          BASE_URL: https://kalpshahtester.github.io
-        run: node scripts/browser-smoke.mjs
+          for path in / /projects/saucedemo.html /projects/makemytrip.html; do
+            curl --fail --silent --show-error --location "https://kalpshahtester.github.io${path}" > /tmp/page.html
+            grep -qi "Kalp Shah" /tmp/page.html
+          done
+

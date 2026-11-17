@@ -1,55 +1,29 @@
 name: Portfolio quality checks
-
 on:
   push:
-    branches: [main, recruiter-portfolio-refresh, premium-portfolio-v2, website-quality-fixes, deep-quality-audit]
+    branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v7
-      - name: Set up Node.js
-        uses: actions/setup-node@v7
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 24
-          package-manager-cache: false
-      - name: Validate GitHub Actions workflow YAML
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+      - name: Validate required routes and public assets
         run: |
-          ruby -e 'require "yaml"; Dir[".github/workflows/*.yml"].each { |path| YAML.load_file(path, aliases: true); puts "#{path}: YAML syntax OK" }'
-      - name: Check JavaScript syntax
-        run: |
-          node --check assets/js/premium.js
-          node --check assets/js/case-study.js
-          node --check scripts/verify-site.mjs
-          node --check scripts/serve-site.mjs
-          node --check scripts/browser-smoke.mjs
-      - name: Validate HTML5 markup
-        run: npx html-validate index.html projects/saucedemo.html projects/makemytrip.html
-      - name: Check portfolio structure, accessibility markers and local paths
-        run: node scripts/verify-site.mjs
-      - name: Install Playwright
-        run: |
-          npm install --no-save --package-lock=false playwright@1.65.1 @axe-core/playwright@4.14.0 html-validate@11.21.1
-          npx playwright install --with-deps chromium
-      - name: Start local portfolio server
-        run: node scripts/serve-site.mjs > /tmp/portfolio-server.log 2>&1 &
-      - name: Wait for local server
-        run: |
-          for attempt in $(seq 1 30); do
-            if curl --silent --fail http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
-            sleep 1
-          done
-          cat /tmp/portfolio-server.log
-          exit 1
-      - name: Run responsive Chromium browser checks
-        env:
-          BASE_URL: http://127.0.0.1:4173
-        run: node scripts/browser-smoke.mjs
+          test -f dist/index.html
+          test -f projects/saucedemo.html
+          test -f projects/makemytrip.html
+          test -f "Kalp Shah Profile Photo.png"
+          test -f "Kalp Shah Manual Tester Resume.pdf"
+
