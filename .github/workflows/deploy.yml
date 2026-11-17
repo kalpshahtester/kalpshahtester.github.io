@@ -17,20 +17,22 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run build
-      - name: Preserve existing public URLs
+      - name: Stage legacy public URLs for Vite
         run: |
-          cp -R assets dist/assets
-          cp -R projects dist/projects
-          cp "Kalp Shah Profile Photo.png" dist/
-          cp "Kalp Shah Manual Tester Resume.pdf" dist/
-          cp "Kalp Shah HCL GUVI Certification.png" dist/
-          cp "Kalp Shah Generative AI Mastermind Course Certificate.jpeg" dist/
-          cp "Kalp Shah Outskill Certificate.png" dist/
-          cp favicon.ico favicon.svg robots.txt sitemap.xml dist/
+          mkdir -p public
+          cp -R assets public/assets
+          cp -R projects public/projects
+          cp "Kalp Shah Profile Photo.png" public/
+          cp "Kalp Shah Manual Tester Resume.pdf" public/
+          cp "Kalp Shah HCL GUVI Certification.png" public/
+          cp "Kalp Shah Generative AI Mastermind Course Certificate.jpeg" public/
+          cp "Kalp Shah Outskill Certificate.png" public/
+          cp favicon.ico favicon.svg robots.txt sitemap.xml public/
+      - run: npm run check
+      - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
@@ -43,4 +45,3 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
-
