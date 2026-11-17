@@ -38,9 +38,9 @@ jobs:
           node --input-type=module <<'NODE'
           import { readFileSync, statSync } from 'node:fs';
           const html = readFileSync('dist/index.html', 'utf8');
-          const css = [...html.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]+\\.css)"/g)]
+          const css = [...html.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]+[.]css)"/g)]
             .map((match) => match[1]).filter((href) => href.startsWith('/assets/'));
-          const js = [...html.matchAll(/<script[^>]+type="module"[^>]+src="([^"]+\\.js)"/g)]
+          const js = [...html.matchAll(/<script[^>]+type="module"[^>]+src="([^"]+[.]js)"/g)]
             .map((match) => match[1]).filter((href) => href.startsWith('/assets/'));
           if (!css.length || !js.length) throw new Error('Built entry is missing its local CSS or JavaScript bundle.');
           for (const href of [...css, ...js]) {
