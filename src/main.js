@@ -1,8 +1,3 @@
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
-
-gsap.registerPlugin(ScrollTrigger);
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -11,26 +6,9 @@ const lowPower = coarse || innerWidth < 760 || (navigator.hardwareConcurrency &&
 document.documentElement.classList.toggle("reduced-motion", reduced);
 $("#year").textContent = new Date().getFullYear();
 
-const preloader = $(".preloader");
-if (preloader && !reduced) {
-  const count = $("#preloaderCount"), bar = $(".preloader-bar i"), started = performance.now();
-  const tick = () => {
-    const value = Math.min(100, Math.round(((performance.now() - started) / 950) * 100));
-    count.textContent = value; bar.style.width = value + "%";
-    if (value < 100) requestAnimationFrame(tick);
-    else setTimeout(() => { preloader.classList.add("is-done"); setTimeout(() => preloader.remove(), 450); }, 80);
-  };
-  requestAnimationFrame(tick);
-} else preloader?.remove();
+let lenis = null;
 
-let lenis;
-if (!reduced && !coarse) {
-  lenis = new Lenis({ duration: 1.05, smoothWheel: true, wheelMultiplier: 0.9 });
-  lenis.on("scroll", ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
-}
-
+// Scroll progress and header state are independent of the animation libraries.
 const progress = $("#scrollProgress");
 const updateProgress = () => {
   const max = document.documentElement.scrollHeight - innerHeight;
@@ -38,78 +16,174 @@ const updateProgress = () => {
   $("#siteHeader")?.classList.toggle("scrolled", scrollY > 20);
 };
 addEventListener("scroll", updateProgress, { passive: true });
+addEventListener("resize", updateProgress, { passive: true });
 updateProgress();
 
-const navToggle = $(".nav-toggle"), nav = $(".hud-nav nav");
+// Accessible mobile navigation, including Escape-to-close and focus restoration.
+const navToggle = $(".nav-toggle");
+const nav = $(".hud-nav nav");
+const closeMenu = (restoreFocus = false) => {
+  navToggle?.setAttribute("aria-expanded", "false");
+  nav?.classList.remove("open");
+  if (restoreFocus) navToggle?.focus();
+};
 navToggle?.addEventListener("click", () => {
   const open = navToggle.getAttribute("aria-expanded") !== "true";
-  navToggle.setAttribute("aria-expanded", String(open)); nav.classList.toggle("open", open);
+  navToggle.setAttribute("aria-expanded", String(open));
+  nav?.classList.toggle("open", open);
+  if (open) nav?.querySelector("a")?.focus();
 });
-$$(".hud-nav nav a").forEach(link => link.addEventListener("click", () => {
-  navToggle?.setAttribute("aria-expanded", "false"); nav?.classList.remove("open");
-}));
+$$(".hud-nav nav a").forEach(link => link.addEventListener("click", () => closeMenu()));
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && navToggle?.getAttribute("aria-expanded") === "true") closeMenu(true);
+});
 
 // Active navigation follows the section currently occupying the reading viewport.
 const navLinks = $$(".hud-nav nav a");
 const sections = navLinks.map(link => $(link.getAttribute("href"))).filter(Boolean);
-const activeObserver = new IntersectionObserver(entries => entries.forEach(entry => {
-  if (!entry.isIntersecting) return;
-  navLinks.forEach(link => {
-    const active = link.hash === "#" + entry.target.id;
-    link.classList.toggle("active", active);
-    if (active) link.setAttribute("aria-current", "location"); else link.removeAttribute("aria-current");
-  });
-}), { rootMargin: "-35% 0px -55% 0px" });
-sections.forEach(section => activeObserver.observe(section));
+if ("IntersectionObserver" in window) {
+  const activeObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    navLinks.forEach(link => {
+      const active = link.hash === "#" + entry.target.id;
+      link.classList.toggle("active", active);
+      if (active) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
+  }), { rootMargin: "-35% 0px -55% 0px" });
+  sections.forEach(section => activeObserver.observe(section));
+}
 
-// Scroll reveals are progressive enhancement; content remains visible without JS or motion.
+// Reveal content without making it dependent on animation-library downloads.
+const revealTargets = $$(".reveal-lines,.reveal-card,.timeline article,.toolkit-grid article");
 if (!reduced && "IntersectionObserver" in window) {
-  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-    if (entry.isIntersecting) { entry.target.classList.add("is-visible"); observer.unobserve(entry.target); }
+  const revealObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("is-visible");
+      revealObserver.unobserve(entry.target);
+    }
   }), { threshold: 0.12 });
-  $$(".reveal-lines,.reveal-card,.timeline article,.toolkit-grid article").forEach(el => observer.observe(el));
-} else $$(".reveal-lines,.reveal-card,.timeline article,.toolkit-grid article").forEach(el => el.classList.add("is-visible"));
+  revealTargets.forEach(el => revealObserver.observe(el));
+} else {
+  revealTargets.forEach(el => el.classList.add("is-visible"));
+}
 
-const counters = new IntersectionObserver(entries => entries.forEach(entry => {
-  if (!entry.isIntersecting) return;
-  const el = entry.target, target = Number(el.dataset.count), suffix = el.dataset.suffix || "";
-  if (reduced) el.textContent = target + suffix;
-  else gsap.to({ value: 0 }, { value: target, duration: 1.35, ease: "power2.out",
-    onUpdate() { el.textContent = Math.round(this.targets()[0].value) + suffix; } });
-  counters.unobserve(el);
-}), { threshold: 0.6 });
-$$("[data-count]").forEach(el => counters.observe(el));
+// Lightweight counters use native animation frames; GSAP is not required for core content.
+const animateCounter = (el, target, suffix) => {
+  if (reduced) {
+    el.textContent = target + suffix;
+    return;
+  }
+  const started = performance.now();
+  const duration = 850;
+  const tick = now => {
+    const ratio = Math.min(1, (now - started) / duration);
+    const eased = 1 - Math.pow(1 - ratio, 3);
+    el.textContent = Math.round(target * eased) + suffix;
+    if (ratio < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+};
+const counterTargets = $$("[data-count]");
+if ("IntersectionObserver" in window) {
+  const counterObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    animateCounter(el, Number(el.dataset.count), el.dataset.suffix || "");
+    counterObserver.unobserve(el);
+  }), { threshold: 0.6 });
+  counterTargets.forEach(el => counterObserver.observe(el));
+} else {
+  counterTargets.forEach(el => animateCounter(el, Number(el.dataset.count), el.dataset.suffix || ""));
+}
 
-// Keep the 3D payload out of the critical path; mobile/reduced-motion uses the CSS fallback.
+// Keep the 3D payload off mobile, reduced-motion and low-power execution paths.
 if (reduced || lowPower) $("#qaScene")?.setAttribute("hidden", "");
+const scheduleIdle = callback => {
+  if ("requestIdleCallback" in window) requestIdleCallback(callback, { timeout: 2200 });
+  else setTimeout(callback, 900);
+};
 if (!reduced && !lowPower && $("#qaScene")) {
-  const loadScene = () => import("./scenes/qa-scene.js").then(({ createQAScene }) => createQAScene($("#qaScene"))).catch(() => {});
-  if ("requestIdleCallback" in window) requestIdleCallback(loadScene, { timeout: 1800 });
-  else setTimeout(loadScene, 500);
+  scheduleIdle(() => {
+    import("./scenes/qa-scene.js")
+      .then(({ createQAScene }) => createQAScene($("#qaScene")))
+      .catch(() => $("#qaScene")?.setAttribute("hidden", ""));
+  });
 }
 
-// Lifecycle choreography: browser layers separate and status pins progress with scroll.
-if (!reduced && !lowPower && $(".hero-scene")) {
-  gsap.to(".hero-scene", { y: -24, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 } });
-  gsap.fromTo(".hero h1 span", { y: 26, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.12, duration: 0.9, ease: "power3.out", delay: 0.1 });
-  gsap.utils.toArray(".timeline article").forEach((item, index) => gsap.fromTo(item, { x: -18, opacity: 0 }, {
-    x: 0, opacity: 1, duration: 0.7, ease: "power2.out",
-    scrollTrigger: { trigger: item, start: "top 82%" }, delay: index * 0.04
-  }));
+// Desktop-only motion is split into deferred chunks. The heading remains visible before they load.
+if (!reduced && !lowPower) {
+  scheduleIdle(async () => {
+    try {
+      const results = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+        import("lenis")
+      ]);
+      const gsap = results[0].gsap;
+      const ScrollTrigger = results[1].ScrollTrigger;
+      const Lenis = results[2].default;
+      gsap.registerPlugin(ScrollTrigger);
+
+      lenis = new Lenis({ duration: 1.05, smoothWheel: true, wheelMultiplier: 0.9 });
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(time => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+
+      if ($(".hero-scene")) {
+        gsap.to(".hero-scene", {
+          y: -24,
+          ease: "none",
+          scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 }
+        });
+        // Keep opacity at 1 so the main heading is eligible for early paint/LCP.
+        gsap.fromTo(".hero h1 span", { y: 18, opacity: 1 }, {
+          y: 0, opacity: 1, stagger: 0.1, duration: 0.7, ease: "power3.out"
+        });
+      }
+
+      gsap.utils.toArray(".timeline article").forEach((item, index) => {
+        gsap.fromTo(item, { x: -18, opacity: 1 }, {
+          x: 0, opacity: 1, duration: 0.65, ease: "power2.out",
+          scrollTrigger: { trigger: item, start: "top 82%" },
+          delay: index * 0.04
+        });
+      });
+
+      const track = $(".approach-track");
+      if (track) {
+        const cards = $$(".approach-track article");
+        const horizontalTween = gsap.to(track, {
+          x: () => -Math.max(0, track.scrollWidth - track.parentElement.clientWidth),
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".approach-section",
+            start: "top top+=90",
+            end: () => "+=" + Math.max(500, track.scrollWidth),
+            pin: true,
+            scrub: 1,
+            invalidateOnRefresh: true
+          }
+        });
+        cards.forEach(card => gsap.fromTo(card, { opacity: 0.7 }, {
+          opacity: 1,
+          scrollTrigger: {
+            trigger: card,
+            containerAnimation: horizontalTween,
+            start: "left 85%",
+            end: "left 45%",
+            scrub: true
+          }
+        }));
+      }
+    } catch (error) {
+      // The site remains completely usable when an optional animation chunk is unavailable.
+      console.warn("Optional motion enhancement could not be initialized.", error);
+    }
+  });
 }
 
-// Four-step pinned horizontal approach on larger screens; natural vertical stack on small screens.
-const track = $(".approach-track");
-if (track && !reduced && !lowPower) {
-  const cards = $$(".approach-track article");
-  gsap.to(track, { x: () => -Math.max(0, track.scrollWidth - track.parentElement.clientWidth),
-    ease: "none", scrollTrigger: { trigger: ".approach-section", start: "top top+=90",
-      end: () => "+=" + Math.max(500, track.scrollWidth), pin: true, scrub: 1, invalidateOnRefresh: true } });
-  cards.forEach((card, i) => gsap.fromTo(card, { opacity: .45 }, { opacity: 1,
-    scrollTrigger: { trigger: card, containerAnimation: gsap.getTweensOf(track)[0], start: "left 85%", end: "left 45%", scrub: true } }));
-}
-
-// Accessible project details: native dialog provides focus handling and Escape behavior.
+// Accessible project details: native dialog handles focus and Escape behavior.
 const dialog = document.createElement("dialog");
 dialog.className = "project-dialog";
 dialog.setAttribute("aria-labelledby", "projectDialogTitle");
@@ -119,42 +193,65 @@ $$(".work-card").forEach(card => {
   const title = $("h3", card)?.textContent || "Selected project";
   const link = $('a[href*="/projects/"]', card);
   const trigger = document.createElement("button");
-  trigger.type = "button"; trigger.className = "project-open"; trigger.textContent = "Quick view ↗";
+  trigger.type = "button";
+  trigger.className = "project-open";
+  trigger.textContent = "Quick view ↗";
   trigger.setAttribute("aria-label", "Quick view: " + title);
   $(".work-body", card)?.append(trigger);
   trigger.addEventListener("click", () => {
     $("#projectDialogTitle").textContent = title;
     $("#projectDialogType").textContent = $(".eyebrow", card)?.textContent || "PROJECT";
     $("#projectDialogCopy").textContent = $("p:not(.eyebrow)", card)?.textContent || "";
-    const target = $("#projectDialogLink"); target.href = link?.href || "#work";
-    dialog.showModal(); $(".dialog-close", dialog).focus();
+    const target = $("#projectDialogLink");
+    target.href = link?.href || "#work";
+    dialog.showModal();
+    $(".dialog-close", dialog).focus();
   });
 });
-dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+dialog.addEventListener("click", event => {
+  if (event.target === dialog) dialog.close();
+});
 
 // Local illustrative checklist only. No remote requests or external-site scanning.
-const checks = $("#consoleChecks"), run = $("#runChecks"), message = $("#consoleMessage");
+const checks = $("#consoleChecks");
+const run = $("#runChecks");
+const message = $("#consoleMessage");
 run?.addEventListener("click", () => {
-  const rows = $$(".console-row", checks); run.disabled = true;
-  rows.forEach(row => { row.classList.remove("done"); $("i", row).textContent = "QUEUED"; });
+  const rows = $$(".console-row", checks);
+  run.disabled = true;
+  rows.forEach(row => {
+    row.classList.remove("done");
+    $("i", row).textContent = "QUEUED";
+  });
   message.textContent = "Running local sample checks…";
   let index = 0;
   const timer = setInterval(() => {
-    const row = rows[index]; row.classList.add("done"); $("i", row).textContent = "CHECKED";
-    index++;
-    message.textContent = index === rows.length ? "4 sample checks complete — no external site accessed." : "Sample step " + index + " / " + rows.length;
-    if (index === rows.length) { clearInterval(timer); run.disabled = false; run.textContent = "Run again ↻"; }
-  }, reduced ? 20 : 300);
+    const row = rows[index];
+    row.classList.add("done");
+    $("i", row).textContent = "CHECKED";
+    index += 1;
+    message.textContent = index === rows.length
+      ? "4 sample checks complete — no external site accessed."
+      : "Sample step " + index + " / " + rows.length;
+    if (index === rows.length) {
+      clearInterval(timer);
+      run.disabled = false;
+      run.textContent = "Run again ↻";
+    }
+  }, reduced ? 20 : 260);
 });
 
 $("#backToTop")?.addEventListener("click", () => {
-  if (lenis) lenis.scrollTo(0); else scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+  if (lenis) lenis.scrollTo(0);
+  else scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
 });
+
 if (!reduced && matchMedia("(pointer:fine) and (hover:hover)").matches) {
-  const dot = $(".cursor-dot"), ring = $(".cursor-ring");
+  const dot = $(".cursor-dot");
+  const ring = $(".cursor-ring");
   addEventListener("pointermove", event => {
-    dot.style.transform = `translate3d(${event.clientX}px,${event.clientY}px,0)`;
-    ring.style.transform = `translate3d(${event.clientX - 16}px,${event.clientY - 16}px,0)`;
+    dot.style.transform = "translate3d(" + event.clientX + "px," + event.clientY + "px,0)";
+    ring.style.transform = "translate3d(" + (event.clientX - 16) + "px," + (event.clientY - 16) + "px,0)";
   }, { passive: true });
   $$("a,button").forEach(el => {
     el.addEventListener("mouseenter", () => ring.classList.add("hover"));
