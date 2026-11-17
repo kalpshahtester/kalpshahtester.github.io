@@ -6,7 +6,6 @@ const lowPower = coarse || innerWidth < 760 || (navigator.hardwareConcurrency &&
 document.documentElement.classList.toggle("reduced-motion", reduced);
 $("#year").textContent = new Date().getFullYear();
 
-let lenis = null;
 
 // Scroll progress and header state are independent of the animation libraries.
 const progress = $("#scrollProgress");
@@ -117,18 +116,11 @@ if (!reduced && !lowPower) {
     try {
       const results = await Promise.all([
         import("gsap"),
-        import("gsap/ScrollTrigger"),
-        import("lenis")
+        import("gsap/ScrollTrigger")
       ]);
       const gsap = results[0].gsap;
       const ScrollTrigger = results[1].ScrollTrigger;
-      const Lenis = results[2].default;
       gsap.registerPlugin(ScrollTrigger);
-
-      lenis = new Lenis({ duration: 1.05, smoothWheel: true, wheelMultiplier: 0.9 });
-      lenis.on("scroll", ScrollTrigger.update);
-      gsap.ticker.add(time => lenis.raf(time * 1000));
-      gsap.ticker.lagSmoothing(0);
 
       if ($(".hero-scene")) {
         gsap.to(".hero-scene", {
@@ -150,32 +142,17 @@ if (!reduced && !lowPower) {
         });
       });
 
-      const track = $(".approach-track");
-      if (track) {
-        const cards = $$(".approach-track article");
-        const horizontalTween = gsap.to(track, {
-          x: () => -Math.max(0, track.scrollWidth - track.parentElement.clientWidth),
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".approach-section",
-            start: "top top+=90",
-            end: () => "+=" + Math.max(500, track.scrollWidth),
-            pin: true,
-            scrub: 1,
-            invalidateOnRefresh: true
-          }
+      // Keep approach steps in normal document flow. Pinned horizontal
+      // scrolling introduced a long artificial scroll segment and broke
+      // predictable touch scrolling and anchor navigation on some screens.
+      gsap.utils.toArray(".approach-track article").forEach((card, index) => {
+        gsap.fromTo(card, { y: 16 }, {
+          y: 0, duration: 0.55, ease: "power2.out",
+          scrollTrigger: { trigger: card, start: "top 88%", once: true },
+          delay: index * 0.04
         });
-        cards.forEach(card => gsap.fromTo(card, { opacity: 0.7 }, {
-          opacity: 1,
-          scrollTrigger: {
-            trigger: card,
-            containerAnimation: horizontalTween,
-            start: "left 85%",
-            end: "left 45%",
-            scrub: true
-          }
-        }));
-      }
+      });
+
     } catch (error) {
       // The site remains completely usable when an optional animation chunk is unavailable.
       console.warn("Optional motion enhancement could not be initialized.", error);
@@ -242,8 +219,7 @@ run?.addEventListener("click", () => {
 });
 
 $("#backToTop")?.addEventListener("click", () => {
-  if (lenis) lenis.scrollTo(0);
-  else scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+  scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
 });
 
 if (!reduced && matchMedia("(pointer:fine) and (hover:hover)").matches) {
