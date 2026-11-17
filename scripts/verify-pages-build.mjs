@@ -34,7 +34,7 @@ const scriptTags = [...html.matchAll(/<script\b[^>]*>/gi)].map(match => match[0]
 const cssFiles = linkTags
   .filter(tag => /rel="stylesheet"/i.test(tag))
   .map(tag => tag.match(/href="([^"]+)"/i)?.[1])
-  .filter(Boolean);
+  .filter(file => file?.startsWith("/assets/") && file.endsWith(".css"));
 const jsFiles = scriptTags
   .map(tag => tag.match(/src="([^"]+)"/i)?.[1])
   .filter(Boolean);
