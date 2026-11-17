@@ -83,6 +83,7 @@ const counters = new IntersectionObserver(entries => entries.forEach(entry => {
 $$("[data-count]").forEach(el => counters.observe(el));
 
 // Keep the 3D payload out of the critical path; mobile/reduced-motion uses the CSS fallback.
+if (reduced || lowPower) $("#qaScene")?.setAttribute("hidden", "");
 if (!reduced && !lowPower && $("#qaScene")) {
   const loadScene = () => import("./scenes/qa-scene.js").then(({ createQAScene }) => createQAScene($("#qaScene"))).catch(() => {});
   if ("requestIdleCallback" in window) requestIdleCallback(loadScene, { timeout: 1800 });
