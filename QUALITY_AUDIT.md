@@ -21,7 +21,7 @@ Reviewed the current production source for all three routes and the files respon
 The updated checks are split into three layers:
 
 1. Source validation: all three documents, unique IDs, local and cross-page fragments, ARIA ID references, image alternatives, accessible link / button names, safe external links, local files, social metadata, CSS block balance, and sitemap routes.
-2. Build-artifact validation: the Vite CSS and JavaScript bundles, both project routes, root image assets, original profile PNG, generated WebP, résumé, certificates, favicon, robots and sitemap files.
+2. Build-artifact validation: the Vite CSS and JavaScript bundles, both project routes, root image assets, original profile PNG, résumé, certificates, favicon, robots and sitemap files.
 3. HTTP smoke validation: requests the homepage, both case studies, and every local URL discovered from their HTML. It validates successful status codes, content types and non-empty responses. The same smoke script runs locally, in CI and against the live site after deployment.
 
 ## Production baseline before this audit
