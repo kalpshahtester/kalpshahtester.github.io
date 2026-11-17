@@ -6,6 +6,9 @@
     <meta name="theme-color" content="#070709" />
     <meta name="description" content="Kalp Shah is a Manual QA Tester focused on web and WordPress quality assurance, test design, defect reporting and retesting." />
     <link rel="canonical" href="https://kalpshahtester.github.io/" />
+    <!-- Load the design stylesheet directly so styling survives a source-branch Pages fallback. Vite rewrites these links to hashed assets during production builds. -->
+    <link rel="stylesheet" href="/src/styles/main.css" />
+    <link rel="stylesheet" href="/src/styles/quality.css" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,6 +23,17 @@
     <meta property="og:url" content="https://kalpshahtester.github.io/" />
     <meta property="og:image" content="https://kalpshahtester.github.io/Kalp%20Shah%20Profile%20Photo.png" />
     <title>Kalp Shah — Manual QA Tester</title>
+    <!-- Browser-native module mapping also keeps the source-branch Pages fallback executable. Vite bundles these packages for the optimized build. -->
+    <script type="importmap">
+      {
+        "imports": {
+          "gsap": "https://esm.sh/gsap@3.13.0",
+          "gsap/ScrollTrigger": "https://esm.sh/gsap@3.13.0/ScrollTrigger",
+          "lenis": "https://unpkg.com/lenis@1.3.4/dist/lenis.mjs",
+          "three": "https://unpkg.com/three@0.180.0/build/three.module.js"
+        }
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -28,7 +42,7 @@
     <div class="cursor-dot" aria-hidden="true"></div><div class="cursor-ring" aria-hidden="true"></div>
     <header class="hud-nav" id="siteHeader">
       <a class="brand" href="#top" aria-label="Kalp Shah home"><span class="brand-mark">K<span>.</span></span><span class="brand-copy">KALP SHAH<small>MANUAL QA / WEB &amp; WORDPRESS</small></span></a>
-      <nav aria-label="Primary navigation"><a href="#about">01 / About</a><a href="#work">02 / Work</a><a href="#approach">03 / Approach</a><a href="#experience">04 / Experience</a><a href="#contact">05 / Contact</a></nav>
+      <nav id="primaryNav" aria-label="Primary navigation"><a href="#about">01 / About</a><a href="#work">02 / Work</a><a href="#approach">03 / Approach</a><a href="#experience">04 / Experience</a><a href="#contact">05 / Contact</a></nav>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
       <span class="scroll-progress" id="scrollProgress" aria-hidden="true"></span>
     </header>
