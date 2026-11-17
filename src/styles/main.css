@@ -33,3 +33,9 @@ html{scroll-behavior:auto}
 @media(max-width:850px){.approach-track{width:100%;grid-template-columns:1fr}.approach-track article{width:auto}}
 @media(max-width:600px){.project-dialog{padding:24px}.hero-scene::before{inset:8%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.preloader{display:none}.hero h1 span{opacity:1!important;transform:none!important}.hero-scene::before{display:none}}
+
+.scene-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:clamp(4px,1vw,14px);flex-wrap:wrap;color:var(--accent);font:500 clamp(8px,1vw,11px) var(--mono);letter-spacing:.08em;pointer-events:none;opacity:.8}
+.scene-fallback i{font-style:normal;color:var(--muted)}
+#qaScene:not([hidden])+.scene-fallback{opacity:.12}
+.project-open:focus-visible,.console-footer button:focus-visible,.nav-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+@media(max-width:759px){.hero-scene canvas{display:none}.scene-fallback{opacity:.8;inset:15% 0}}
