@@ -188,3 +188,59 @@ html{scroll-padding-top:76px}
 .site-footer>span{font-size:8px;line-height:1.6}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+
+/* Focused rebuild: sections 04 Experience & Education and 05 Skills & Toolkit. */
+.experience-section .section-heading{align-items:end}
+.experience-section .section-heading>p{max-width:390px}
+.experience-layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(240px,.75fr);gap:clamp(28px,5vw,72px);align-items:start;margin-top:46px}
+.subsection-heading{display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.subsection-heading>span,.education-panel>span{font:500 9px var(--mono);letter-spacing:.12em;color:var(--accent)}
+.subsection-heading h3{margin:0;font:500 23px var(--display)}
+.experience-layout .timeline{margin-top:0;border-top:0}
+.experience-layout .timeline article{grid-template-columns:minmax(118px,.55fr) minmax(0,1.45fr);gap:24px;padding:25px 0}
+.experience-layout .timeline article time{padding-top:5px;line-height:1.6}
+.experience-layout .timeline article h3{font-size:clamp(19px,2vw,24px);line-height:1.2}
+.experience-layout .timeline article strong{display:block;margin-top:7px;color:var(--paper);font-size:12px}
+.experience-layout .timeline article p{margin:13px 0 0;font-size:13px;line-height:1.8;color:rgba(245,245,247,.76)}
+.timeline-kicker{display:inline-block;margin-bottom:4px;color:var(--accent);font:500 9px var(--mono);letter-spacing:.1em}
+.education-panel{position:relative;min-width:0;overflow:hidden;padding:26px;border:1px solid rgba(226,192,141,.3);background:linear-gradient(145deg,#15120f,#0c0c0f)}
+.education-mark{display:grid;place-items:center;width:58px;height:58px;margin:36px 0 22px;border:1px solid rgba(226,192,141,.45);color:var(--accent);font:600 24px var(--display);letter-spacing:-.06em}
+.education-panel h3{margin:0 0 12px;font:500 clamp(22px,2.5vw,29px)/1.15 var(--display)}
+.education-panel p{margin:0;color:rgba(245,245,247,.8);font-size:13px;line-height:1.75;overflow-wrap:anywhere}
+.education-panel small{display:block;margin-top:22px;padding-top:14px;border-top:1px solid var(--line);color:var(--accent);font:500 9px var(--mono);letter-spacing:.08em}
+.toolkit-section .section-heading{align-items:end}
+.toolkit-section .section-heading>p{max-width:400px}
+.toolkit-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:38px}
+.toolkit-grid article{min-width:0;padding:26px 28px 24px}
+.toolkit-grid article>span{display:block;line-height:1.5}
+.toolkit-grid h3{margin:18px 0 16px;font-size:clamp(21px,2.2vw,26px)}
+.skill-list{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.skill-list li{max-width:100%;padding:7px 10px;border:1px solid rgba(245,245,247,.12);background:rgba(255,255,255,.025);color:rgba(245,245,247,.82);font-size:11px;line-height:1.45;overflow-wrap:anywhere}
+.certificate-grid{align-items:start}
+.certificates .certificate-card{min-width:0}
+@media(max-width:850px){
+ .experience-layout{grid-template-columns:1fr;gap:24px;margin-top:32px}
+ .education-panel{display:grid;grid-template-columns:auto 1fr;column-gap:18px;align-items:center;padding:20px}
+ .education-panel>span{grid-column:1/-1}
+ .education-mark{grid-row:2/4;width:50px;height:50px;margin:18px 0 0}
+ .education-panel h3{align-self:end;margin:16px 0 5px}
+ .education-panel p{align-self:start}
+ .education-panel small{grid-column:1/-1;margin-top:16px}
+ .toolkit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+ .experience-layout{gap:18px;margin-top:25px}
+ .subsection-heading{align-items:flex-start;flex-direction:column;gap:7px}
+ .subsection-heading h3{font-size:21px}
+ .experience-layout .timeline article{grid-template-columns:1fr;gap:9px;padding:20px 0}
+ .experience-layout .timeline article time{font-size:9px}
+ .experience-layout .timeline article h3{font-size:22px}
+ .experience-layout .timeline article p{font-size:13px;line-height:1.75}
+ .education-panel{padding:18px}
+ .toolkit-grid{grid-template-columns:1fr;gap:10px;margin-top:26px}
+ .toolkit-grid article{padding:22px}
+ .toolkit-grid h3{margin:14px 0;font-size:23px}
+ .skill-list{gap:7px}
+ .skill-list li{padding:7px 9px;font-size:11px}
+}
