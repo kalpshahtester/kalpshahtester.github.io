@@ -1,49 +1,59 @@
 # Kalp Shah — Manual QA portfolio
 
-A premium, evidence-led portfolio built with Vite, vanilla JavaScript, Three.js, GSAP / ScrollTrigger and Lenis. The visual language follows a single QA lifecycle: **New → Found → Fixed → Retested → Closed**.
+Premium, evidence-led portfolio for Manual QA, web and WordPress testing. The homepage uses Vite, vanilla JavaScript, Three.js, GSAP / ScrollTrigger and Lenis. The two case studies use the same gold / obsidian palette and shared typography.
 
-## Local setup
+## Local development
 
-Requirements: Node.js 20.19+ (or 22.12+) and npm.
+Requirements: Node.js 22 and npm. Python 3 with Pillow is needed only to generate the optimized profile image for a production-style build.
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Open the local URL printed by Vite. Production build and preview:
+## Reproduce a GitHub Pages build
+
+The user-site uses `base: "/"`. Public case-study routes and root-level assets are staged into Vite's public directory before the build.
 
 ```bash
+node scripts/stage-pages-assets.mjs
+python -m pip install Pillow
+python scripts/generate-profile-webp.py
 npm run check
 npm run build
-npm run preview
+node scripts/verify-pages-build.mjs
 ```
 
-## GitHub Pages deployment
+To serve the exact generated artifact and run the HTTP resource audit:
 
-This is a GitHub **user site**, so `vite.config.js` intentionally uses `base: "/"`.
+```bash
+SITE_ROOT=dist PORT=4173 node scripts/serve-site.mjs
+```
 
-1. Open repository **Settings → Pages**.
-2. Set **Build and deployment → Source** to **GitHub Actions**.
-3. Push to `main`. The Pages workflow installs dependencies with `npm ci`, builds `dist`, preserves the established root-level asset URLs and deploys the artifact.
-4. Check the Actions tab for the build and deployment result.
+In another terminal:
 
-The original profile portrait is displayed in the hero through a high-quality WebP derivative generated at build time without cropping or resizing; the original PNG is retained as a fallback. All three existing certificate images are shown as a responsive preview gallery. The deployment workflow copies the legacy root-level images, resume and project pages into the generated Pages artifact, converts the hero portrait to WebP while preserving its pixel dimensions, then verifies that every image is present before deployment and reachable after deployment.
+```bash
+BASE_URL=http://127.0.0.1:4173 npm run smoke
+```
 
-## Quality and accessibility
+On Windows PowerShell, set environment variables with `$env:SITE_ROOT="dist"`, `$env:PORT="4173"` and `$env:BASE_URL="http://127.0.0.1:4173"`.
 
-- Keyboard-accessible navigation, visible focus, skip link and native dialog semantics.
-- Reduced-motion mode disables the 3D scene, smooth scrolling and heavy choreography.
-- Three.js is dynamically imported after the critical page content; the renderer caps pixel ratio at 2 and pauses when off-screen.
-- The checklist terminal is illustrative and never contacts an external site.
-- Optional GSAP, ScrollTrigger, Lenis and Three.js enhancements load after the initial render; mobile and reduced-motion visitors retain the full content without downloading the motion stack.
-- Google Fonts load non-blockingly, the main heading stays visible before optional animations, and the hero portrait is preloaded.
-- A post-deployment workflow verifies the live image URLs and uploads a Lighthouse JSON / HTML report as an Actions artifact.
+## Quality gates
+
+- `npm run check` validates JavaScript syntax and the current three-page source structure: unique IDs, local anchors and cross-page fragments, ARIA references, accessible names, image alt text, safe external links, local assets, social metadata, CSS block balance and sitemap entries.
+- `node scripts/verify-pages-build.mjs` validates the actual generated Pages artifact, including the bundled Vite CSS / JavaScript, case-study assets, résumé, original portrait, generated WebP and all certificates.
+- `npm run smoke` fetches each published route and every locally referenced resource, checking HTTP status, content type and non-empty responses.
+- The same stage, image generation, build and artifact validation steps run in pull-request CI and Pages deployment. A separate production smoke workflow runs against the public URL after deployment.
+- Lighthouse runs after deployment and stores measured HTML / JSON reports as a GitHub Actions artifact. Scores are not hardcoded into the page.
+
+## Images and identity
+
+The original profile PNG is retained. The build produces a WebP derivative at the same pixel dimensions and uses it as the preferred hero source with the original PNG as fallback. No crop, face replacement or retouching is performed. The three existing certificate files are displayed as responsive previews and link to the full-size originals.
 
 ## Content accuracy
 
-SauceDemo is a public practice application. MakeMyTrip is a testing assessment. Neither is production work for the named companies. The 47 scenarios, 62+ test cases and 282 execution records refer to the SauceDemo practice project. “100+ users supported” refers separately to IT support experience (2020–2025). Training certificates are not represented as professional automation experience.
+SauceDemo is a public practice application. MakeMyTrip is a testing assessment. Neither is represented as production client work or employment. The 47 scenarios, 62+ test cases and 282 execution records refer to the SauceDemo practice project. “100+ users supported” refers separately to prior IT support experience. Training certificates are separate from professional work experience.
 
-## Verify after deployment
+## Limitations
 
-Check 360px and desktop layouts, Safari and Firefox, keyboard-only navigation, reduced motion, the resume / certificate / profile-photo URLs, both project case studies, and the latest Lighthouse artifact. Review real audit values before publishing them on the page.
+Static and HTTP checks do not replace browser-driven visual review, screen-reader testing, or checks on physical iOS / Android devices and multiple browser engines. Those manual checks remain a separate release activity.
