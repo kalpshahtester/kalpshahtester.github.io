@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "node --check src/main.js && node --check src/scenes/qa-scene.js"
+    "check": "node --check src/main.js && node --check src/scenes/qa-scene.js && node --check assets/js/case-study.js && node --check assets/js/premium.js && node scripts/verify-portfolio.mjs",
+    "smoke": "node scripts/http-smoke.mjs"
   },
   "dependencies": {
     "gsap": "^3.13.0",
@@ -18,4 +19,3 @@
     "vite": "^7.1.7"
   }
 }
-
