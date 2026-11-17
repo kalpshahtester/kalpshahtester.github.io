@@ -96,6 +96,10 @@ for (const page of pages) {
   for (const value of urls) {
     const local = toLocalPath(value);
     if (!local) continue;
+    if (local === "Kalp-Shah-Profile-Photo.webp") {
+      assert.ok(fs.existsSync(path.join(root, "Kalp Shah Profile Photo.png")), "Original profile PNG must exist for the build-time WebP derivative");
+      continue;
+    }
     assert.ok(fs.existsSync(path.join(root, local)), page.file + ": broken local resource " + value);
   }
 }
