@@ -16,6 +16,9 @@ jobs:
             grep -qi "Kalp Shah" /tmp/page.html
           done
 
+          # Use the homepage for CSS/JS discovery (the route loop above ends on a case-study page).
+          curl --retry 5 --retry-all-errors --retry-delay 2 --fail --silent --show-error --location "https://kalpshahtester.github.io/" > /tmp/page.html
+
           # Parse the published HTML rather than assuming Vite or source-branch attribute ordering.
           css_path=$(node --input-type=module -e '
             import { readFileSync } from "node:fs";
@@ -53,7 +56,7 @@ jobs:
           echo "Production application module is reachable: $js_path"
 
           for asset_path in "/Kalp-Shah-Profile-Photo.webp" "/Kalp%20Shah%20Profile%20Photo.png" "/Kalp%20Shah%20HCL%20GUVI%20Certification.png" "/Kalp%20Shah%20Generative%20AI%20Mastermind%20Course%20Certificate.jpeg" "/Kalp%20Shah%20Outskill%20Certificate.png"; do
-            curl --fail --silent --show-error --location "https://kalpshahtester.github.io$asset_path" -o /tmp/portfolio-image -w '%{http_code} %{content_type}' > /tmp/image-response.txt
+            curl --retry 8 --retry-all-errors --retry-delay 2 --fail --silent --show-error --location "https://kalpshahtester.github.io$asset_path?v=$GITHUB_SHA" -o /tmp/portfolio-image -w '%{http_code} %{content_type}' > /tmp/image-response.txt
             grep -q '^200 image/' /tmp/image-response.txt
             if [ "$asset_path" = "/Kalp-Shah-Profile-Photo.webp" ]; then grep -qi '^200 image/webp' /tmp/image-response.txt; fi
             test -s /tmp/portfolio-image
