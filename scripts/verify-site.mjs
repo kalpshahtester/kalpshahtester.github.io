@@ -147,7 +147,7 @@ for (const expected of ["16x16", "32x32", "48x48"]) {
 }
 
 const home = pageHtml.get("/");
-assert.ok(home.includes('href="/assets/css/premium.css"'), "homepage must load the premium stylesheet");
+assert.match(home, /href="\/assets\/css\/premium\.css(?:\?[^"]*)?"/, "homepage must load the premium stylesheet");
 assert.ok(home.includes('src="/assets/js/premium.js"'), "homepage must load the premium JavaScript");
 assert.match(home, /role="group" aria-label="Profile portrait/i, "hero profile visual needs an accessible semantic group");
 assert.match(home, /role="img" aria-label="Decorative interface illustration/i, "SauceDemo project visual needs an accessible name");
@@ -159,7 +159,7 @@ assert.doesNotMatch(home, /7 critical defects|Playwright QA Automation|kalp-shah
 
 for (const route of ["/projects/saucedemo.html", "/projects/makemytrip.html"]) {
   const html = pageHtml.get(route);
-  assert.ok(html.includes('href="/assets/css/premium.css"'), route + ": premium global stylesheet missing");
+  assert.match(html, /href="\/assets\/css\/premium\.css(?:\?[^"]*)?"/, route + ": premium global stylesheet missing");
   assert.ok(html.includes('href="/assets/css/case-study.css"'), route + ": case-study stylesheet missing");
   assert.ok(html.includes('src="/assets/js/case-study.js"'), route + ": case-study JavaScript missing");
   assert.match(html, /<main id="main" class="case-page" tabindex="-1">/, route + ": main region must be focusable for the skip link");
