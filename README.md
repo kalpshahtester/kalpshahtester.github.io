@@ -28,7 +28,7 @@ This is a GitHub **user site**, so `vite.config.js` intentionally uses `base: "/
 3. Push to `main`. The Pages workflow installs dependencies with `npm ci`, builds `dist`, preserves the established root-level asset URLs and deploys the artifact.
 4. Check the Actions tab for the build and deployment result.
 
-The existing resume, profile photo, certificate image and case-study URLs are retained. The workflow copies the legacy root-level assets and project pages into the generated Pages artifact; this avoids breaking public URLs while preserving the existing repository source files.
+The profile portrait is displayed in the hero, and all three existing certificate images are shown as a responsive preview gallery. The deployment workflow copies the legacy root-level images, resume and project pages into the generated Pages artifact, then verifies that every image is present before deployment and reachable after deployment.
 
 ## Quality and accessibility
 
@@ -36,7 +36,9 @@ The existing resume, profile photo, certificate image and case-study URLs are re
 - Reduced-motion mode disables the 3D scene, smooth scrolling and heavy choreography.
 - Three.js is dynamically imported after the critical page content; the renderer caps pixel ratio at 2 and pauses when off-screen.
 - The checklist terminal is illustrative and never contacts an external site.
-- The quality-report section does not invent Lighthouse scores. A post-deployment workflow runs Lighthouse against the public URL and uploads JSON / HTML reports as an Actions artifact.
+- Optional GSAP, ScrollTrigger, Lenis and Three.js enhancements load after the initial render; mobile and reduced-motion visitors retain the full content without downloading the motion stack.
+- Google Fonts load non-blockingly, the main heading stays visible before optional animations, and the hero portrait is preloaded.
+- A post-deployment workflow verifies the live image URLs and uploads a Lighthouse JSON / HTML report as an Actions artifact.
 
 ## Content accuracy
 
