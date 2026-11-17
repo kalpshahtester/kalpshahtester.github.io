@@ -1,8 +1,6 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
-import "./styles/main.css";
-import "./styles/quality.css";
 
 gsap.registerPlugin(ScrollTrigger);
 const $ = (selector, root = document) => root.querySelector(selector);
