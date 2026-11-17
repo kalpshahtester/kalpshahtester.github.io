@@ -16,22 +16,39 @@ jobs:
             grep -qi "Kalp Shah" /tmp/page.html
           done
 
-          # Accept both optimized Vite output and raw-source Pages fallback.
-          css_path=$(grep -oE 'href="/(src/styles/main\.css|assets/[^"]+\.css)"' /tmp/page.html | head -n 1 | cut -d '"' -f 2)
+          # Parse the published HTML rather than assuming Vite or source-branch attribute ordering.
+          css_path=$(node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const html = readFileSync("/tmp/page.html", "utf8");
+            const links = [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]);
+            const path = links.find((href) => href === "/src/styles/main.css" || (/^\/assets\//.test(href) && /[.]css$/.test(href)));
+            if (path) process.stdout.write(path);
+          ')
           if [ -z "$css_path" ]; then
             echo "No local portfolio stylesheet is linked from the production homepage."
             exit 1
           fi
           curl --fail --silent --show-error --location "https://kalpshahtester.github.io${css_path}" > /tmp/portfolio.css
-          grep -q -- '--bg:#070709' /tmp/portfolio.css
-          grep -q '\.hud-nav' /tmp/portfolio.css
-          echo "Production stylesheet is reachable and contains the portfolio design rules."
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const css = readFileSync("/tmp/portfolio.css", "utf8");
+            for (const token of ["--bg:#070709", ".hud-nav", ".hero"]) {
+              if (!css.includes(token)) throw new Error("Missing required design rule: " + token);
+            }
+          '
+          echo "Production stylesheet is reachable and contains the portfolio design rules: $css_path"
 
-          js_path=$(grep -oE 'src="/(src/main\.js|assets/[^"]+\.js)"' /tmp/page.html | head -n 1 | cut -d '"' -f 2)
+          js_path=$(node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const html = readFileSync("/tmp/page.html", "utf8");
+            const paths = [...html.matchAll(/src="([^"]+)"/g)].map((m) => m[1]);
+            const path = paths.find((src) => src === "/src/main.js" || (/^\/assets\//.test(src) && /[.]js$/.test(src)));
+            if (path) process.stdout.write(path);
+          ')
           if [ -z "$js_path" ]; then
             echo "No local application module is linked from the production homepage."
             exit 1
           fi
           curl --fail --silent --show-error --location "https://kalpshahtester.github.io${js_path}" > /tmp/portfolio.js
           test -s /tmp/portfolio.js
-          echo "Production application module is reachable."
+          echo "Production application module is reachable: $js_path"
