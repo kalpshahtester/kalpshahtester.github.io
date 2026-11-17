@@ -52,9 +52,10 @@ jobs:
           test -s /tmp/portfolio.js
           echo "Production application module is reachable: $js_path"
 
-          for asset_path in "/Kalp%20Shah%20Profile%20Photo.png" "/Kalp%20Shah%20HCL%20GUVI%20Certification.png" "/Kalp%20Shah%20Generative%20AI%20Mastermind%20Course%20Certificate.jpeg" "/Kalp%20Shah%20Outskill%20Certificate.png"; do
+          for asset_path in "/Kalp-Shah-Profile-Photo.webp" "/Kalp%20Shah%20Profile%20Photo.png" "/Kalp%20Shah%20HCL%20GUVI%20Certification.png" "/Kalp%20Shah%20Generative%20AI%20Mastermind%20Course%20Certificate.jpeg" "/Kalp%20Shah%20Outskill%20Certificate.png"; do
             curl --fail --silent --show-error --location "https://kalpshahtester.github.io$asset_path" -o /tmp/portfolio-image -w '%{http_code} %{content_type}' > /tmp/image-response.txt
             grep -q '^200 image/' /tmp/image-response.txt
+            if [ "$asset_path" = "/Kalp-Shah-Profile-Photo.webp" ]; then grep -qi '^200 image/webp' /tmp/image-response.txt; fi
             test -s /tmp/portfolio-image
             echo "Verified image asset: $asset_path"
           done

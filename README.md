@@ -28,7 +28,7 @@ This is a GitHub **user site**, so `vite.config.js` intentionally uses `base: "/
 3. Push to `main`. The Pages workflow installs dependencies with `npm ci`, builds `dist`, preserves the established root-level asset URLs and deploys the artifact.
 4. Check the Actions tab for the build and deployment result.
 
-The profile portrait is displayed in the hero, and all three existing certificate images are shown as a responsive preview gallery. The deployment workflow copies the legacy root-level images, resume and project pages into the generated Pages artifact, then verifies that every image is present before deployment and reachable after deployment.
+The original profile portrait is displayed in the hero through a high-quality WebP derivative generated at build time without cropping or resizing; the original PNG is retained as a fallback. All three existing certificate images are shown as a responsive preview gallery. The deployment workflow copies the legacy root-level images, resume and project pages into the generated Pages artifact, converts the hero portrait to WebP while preserving its pixel dimensions, then verifies that every image is present before deployment and reachable after deployment.
 
 ## Quality and accessibility
 
