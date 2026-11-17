@@ -8,7 +8,6 @@ const pages = [
 ];
 const responses = new Map();
 const localAssets = new Set([
-  "/Kalp-Shah-Profile-Photo.webp",
   "/Kalp%20Shah%20Profile%20Photo.png",
   "/Kalp%20Shah%20Manual%20Tester%20Resume.pdf",
   "/Kalp%20Shah%20HCL%20GUVI%20Certification.png",
@@ -35,9 +34,6 @@ async function getResource(resourcePath) {
   // responses, with a cache-busting query, before declaring the asset missing.
   for (let attempt = 0; attempt < 8; attempt += 1) {
     const requestUrl = new URL(url);
-    if (requestUrl.pathname.endsWith(".webp")) {
-      requestUrl.searchParams.set("_qa_check", String(Date.now()) + "-" + attempt);
-    }
     const response = await fetch(requestUrl, {
       redirect: "follow",
       cache: "no-store",
