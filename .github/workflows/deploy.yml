@@ -33,6 +33,26 @@ jobs:
           cp favicon.ico favicon.svg robots.txt sitemap.xml public/
       - run: npm run check
       - run: npm run build
+      - name: Validate generated Vite entry and stylesheet
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, statSync } from 'node:fs';
+          const html = readFileSync('dist/index.html', 'utf8');
+          const css = [...html.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]+\\.css)"/g)]
+            .map((match) => match[1]).filter((href) => href.startsWith('/assets/'));
+          const js = [...html.matchAll(/<script[^>]+type="module"[^>]+src="([^"]+\\.js)"/g)]
+            .map((match) => match[1]).filter((href) => href.startsWith('/assets/'));
+          if (!css.length || !js.length) throw new Error('Built entry is missing its local CSS or JavaScript bundle.');
+          for (const href of [...css, ...js]) {
+            const file = 'dist' + new URL(href, 'https://kalpshahtester.github.io').pathname;
+            if (statSync(file).size === 0) throw new Error('Empty generated asset: ' + file);
+          }
+          const stylesheet = css.map((href) => readFileSync('dist' + new URL(href, 'https://kalpshahtester.github.io').pathname, 'utf8')).join('\\n');
+          for (const selector of ['--bg:#070709', '.hud-nav', '.hero']) {
+            if (!stylesheet.includes(selector)) throw new Error('Expected visual styles are missing: ' + selector);
+          }
+          console.log('Verified Vite HTML, CSS bundle and JavaScript bundle.');
+          NODE
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
