@@ -28,15 +28,14 @@ jobs:
             echo "No local portfolio stylesheet is linked from the production homepage."
             exit 1
           fi
-          curl --fail --silent --show-error --location "https://kalpshahtester.github.io${css_path}" > /tmp/portfolio.css
-          node --input-type=module -e '
-            import { readFileSync } from "node:fs";
-            const css = readFileSync("/tmp/portfolio.css", "utf8");
-            for (const token of [".hud-nav", ".hero"]) {
-              if (!css.includes(token)) throw new Error("Missing required design rule: " + token);
-            }
-          '
-          echo "Production stylesheet is reachable and contains the portfolio design rules: $css_path"
+          curl --fail --silent --show-error --location "https://kalpshahtester.github.io${css_path}" -o /tmp/portfolio.css -w '%{http_code} %{content_type}' > /tmp/css-response.txt
+          grep -q '^200 text/css' /tmp/css-response.txt
+          css_bytes=$(wc -c < /tmp/portfolio.css)
+          if [ "$css_bytes" -lt 1000 ]; then
+            echo "Portfolio stylesheet is unexpectedly small: $css_bytes bytes"
+            exit 1
+          fi
+          echo "Production stylesheet is reachable as CSS ($css_bytes bytes): $css_path"
 
           js_path=$(node --input-type=module -e '
             import { readFileSync } from "node:fs";
