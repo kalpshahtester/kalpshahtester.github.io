@@ -29,16 +29,32 @@ async function getResource(resourcePath) {
   const url = new URL(resourcePath, baseURL);
   const key = url.pathname + url.search;
   if (responses.has(key)) return responses.get(key);
-  const response = await fetch(url, { redirect: "follow" });
-  const bytes = Buffer.from(await response.arrayBuffer());
-  const result = {
-    status: response.status,
-    contentType: response.headers.get("content-type") || "",
-    bytes,
-    text: bytes.toString("utf8")
-  };
-  responses.set(key, result);
-  return result;
+  let lastResult;
+  // GitHub Pages can expose the new HTML before the CDN edge has finished
+  // propagating a newly deployed root-level image. Retry transient 404/5xx
+  // responses, with a cache-busting query, before declaring the asset missing.
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    const requestUrl = new URL(url);
+    if (requestUrl.pathname.endsWith(".webp")) {
+      requestUrl.searchParams.set("_qa_check", String(Date.now()) + "-" + attempt);
+    }
+    const response = await fetch(requestUrl, {
+      redirect: "follow",
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache" }
+    });
+    const bytes = Buffer.from(await response.arrayBuffer());
+    lastResult = {
+      status: response.status,
+      contentType: response.headers.get("content-type") || "",
+      bytes,
+      text: bytes.toString("utf8")
+    };
+    if (response.status < 500 && response.status !== 404) break;
+    if (attempt < 7) await new Promise(resolve => setTimeout(resolve, 2500));
+  }
+  responses.set(key, lastResult);
+  return lastResult;
 }
 
 function localUrl(value) {
