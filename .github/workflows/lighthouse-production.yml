@@ -1,0 +1,29 @@
+name: Production Lighthouse audit
+on:
+  deployment_status:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lighthouse:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Lighthouse
+        run: npm install --no-save lighthouse@12
+      - name: Audit deployed portfolio
+        run: |
+          mkdir -p lighthouse-report
+          npx lighthouse https://kalpshahtester.github.io/ --chrome-flags="--headless --no-sandbox" --output=json --output=html --output-path=./lighthouse-report/portfolio
+      - name: Print measured category scores
+        run: |
+          node --input-type=module -e "import fs from 'node:fs'; const r=JSON.parse(fs.readFileSync('./lighthouse-report/portfolio.report.json','utf8')); for (const [k,v] of Object.entries(r.categories)) console.log(k+': '+Math.round(v.score*100));"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-production-report
+          path: lighthouse-report/
+          retention-days: 30
