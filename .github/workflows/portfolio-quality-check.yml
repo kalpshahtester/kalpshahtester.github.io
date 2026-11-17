@@ -19,12 +19,6 @@ jobs:
       - run: npm ci
       - name: Stage the same public URLs used by deployment
         run: node scripts/stage-pages-assets.mjs
-      - name: Prepare image optimizer
-        run: |
-          python3 -m venv /tmp/portfolio-image-env
-          /tmp/portfolio-image-env/bin/python -m pip install --quiet --disable-pip-version-check Pillow
-      - name: Generate high-quality profile WebP
-        run: /tmp/portfolio-image-env/bin/python scripts/generate-profile-webp.py
       - run: npm run check
       - run: npm run build
       - name: Verify the generated Pages artifact
