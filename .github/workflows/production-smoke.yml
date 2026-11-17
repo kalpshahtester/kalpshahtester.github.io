@@ -9,56 +9,9 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Check published routes and visual assets
-        run: |
-          for path in / /projects/saucedemo.html /projects/makemytrip.html; do
-            curl --fail --silent --show-error --location "https://kalpshahtester.github.io${path}" > /tmp/page.html
-            grep -qi "Kalp Shah" /tmp/page.html
-          done
-
-          # Use the homepage for CSS/JS discovery (the route loop above ends on a case-study page).
-          curl --retry 5 --retry-all-errors --retry-delay 2 --fail --silent --show-error --location "https://kalpshahtester.github.io/" > /tmp/page.html
-
-          # Parse the published HTML rather than assuming Vite or source-branch attribute ordering.
-          css_path=$(node --input-type=module -e '
-            import { readFileSync } from "node:fs";
-            const html = readFileSync("/tmp/page.html", "utf8");
-            const links = [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]);
-            const path = links.find((href) => href === "/src/styles/main.css" || (/^\/assets\//.test(href) && /[.]css$/.test(href)));
-            if (path) process.stdout.write(path);
-          ')
-          if [ -z "$css_path" ]; then
-            echo "No local portfolio stylesheet is linked from the production homepage."
-            exit 1
-          fi
-          curl --fail --silent --show-error --location "https://kalpshahtester.github.io${css_path}" -o /tmp/portfolio.css -w '%{http_code} %{content_type}' > /tmp/css-response.txt
-          grep -q '^200 text/css' /tmp/css-response.txt
-          css_bytes=$(wc -c < /tmp/portfolio.css)
-          if [ "$css_bytes" -lt 1000 ]; then
-            echo "Portfolio stylesheet is unexpectedly small: $css_bytes bytes"
-            exit 1
-          fi
-          echo "Production stylesheet is reachable as CSS ($css_bytes bytes): $css_path"
-
-          js_path=$(node --input-type=module -e '
-            import { readFileSync } from "node:fs";
-            const html = readFileSync("/tmp/page.html", "utf8");
-            const paths = [...html.matchAll(/src="([^"]+)"/g)].map((m) => m[1]);
-            const path = paths.find((src) => src === "/src/main.js" || (/^\/assets\//.test(src) && /[.]js$/.test(src)));
-            if (path) process.stdout.write(path);
-          ')
-          if [ -z "$js_path" ]; then
-            echo "No local application module is linked from the production homepage."
-            exit 1
-          fi
-          curl --fail --silent --show-error --location "https://kalpshahtester.github.io${js_path}" > /tmp/portfolio.js
-          test -s /tmp/portfolio.js
-          echo "Production application module is reachable: $js_path"
-
-          for asset_path in "/Kalp-Shah-Profile-Photo.webp" "/Kalp%20Shah%20Profile%20Photo.png" "/Kalp%20Shah%20HCL%20GUVI%20Certification.png" "/Kalp%20Shah%20Generative%20AI%20Mastermind%20Course%20Certificate.jpeg" "/Kalp%20Shah%20Outskill%20Certificate.png"; do
-            curl --retry 8 --retry-all-errors --retry-delay 2 --fail --silent --show-error --location "https://kalpshahtester.github.io$asset_path?v=$GITHUB_SHA" -o /tmp/portfolio-image -w '%{http_code} %{content_type}' > /tmp/image-response.txt
-            grep -q '^200 image/' /tmp/image-response.txt
-            if [ "$asset_path" = "/Kalp-Shah-Profile-Photo.webp" ]; then grep -qi '^200 image/webp' /tmp/image-response.txt; fi
-            test -s /tmp/portfolio-image
-            echo "Verified image asset: $asset_path"
-          done
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify every live route and local resource
+        run: BASE_URL=https://kalpshahtester.github.io npm run smoke
