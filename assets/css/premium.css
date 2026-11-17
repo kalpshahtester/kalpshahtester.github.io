@@ -40,7 +40,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--acid);outline-offse
 .site-header.is-scrolled{height:74px;background:rgba(8,11,18,.82);border-color:var(--line);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
 .nav-shell{width:min(100% - var(--gutter)*2,1380px);height:100%;margin-inline:auto;display:flex;align-items:center;justify-content:space-between}
 .brand{display:inline-flex;align-items:center;gap:12px;flex-shrink:0}
-.brand-symbol{width:39px;height:39px;display:grid;place-items:center;border:1px solid rgba(210,255,75,.5);border-radius:12px;color:var(--white);font:700 23px/1 var(--display);letter-spacing:-2px;background:linear-gradient(145deg,rgba(210,255,75,.13),rgba(210,255,75,.015));box-shadow:inset 0 0 20px rgba(210,255,75,.04)}
+.brand-symbol{width:39px;height:39px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(210,255,75,.5);border-radius:12px;color:var(--white);font:700 23px/1 var(--display);letter-spacing:-2px;background:linear-gradient(145deg,rgba(210,255,75,.13),rgba(210,255,75,.015));box-shadow:inset 0 0 20px rgba(210,255,75,.04)}
 .brand-symbol span{color:var(--acid)}
 .brand-name{display:flex;flex-direction:column;gap:1px;font:700 12px/1.25 var(--display);letter-spacing:.16em}
 .brand-name small{font:400 8px/1.4 var(--mono);letter-spacing:.1em;color:var(--quiet)}
