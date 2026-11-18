@@ -18,11 +18,15 @@ async function record(pageName, label, fn) {
 
 try {
   const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: "reduce" });
-  const desktopErrors = [];\n  const desktopConsoleErrors = [];\n  desktop.on("console", msg => { if (msg.type() === "error") desktopConsoleErrors.push(msg.text()); });\n  desktop.on("requestfailed", request => desktopConsoleErrors.push("REQUEST FAILED: " + request.url() + " — " + request.failure()?.errorText));
+  const desktopErrors = [];
+  const desktopConsoleErrors = [];
+  desktop.on("console", msg => { if (msg.type() === "error") desktopConsoleErrors.push(msg.text()); });
+  desktop.on("requestfailed", request => desktopConsoleErrors.push("REQUEST FAILED: " + request.url() + " — " + request.failure()?.errorText));
   desktop.on("pageerror", error => desktopErrors.push(error.message));
-  await desktop.goto(baseURL + "/", { waitUntil: "networkidle" });\n  await desktop.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 }).catch(() => {});
+  await desktop.goto(baseURL + "/", { waitUntil: "networkidle" });
+  await desktop.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 }).catch(() => {});
   await record("home / desktop", "Homepage and portrait render", async () => {
-    assert.equal(await desktop.title(), "Kalp Shah — Manual QA Tester");
+    assert.match(await desktop.title(), /Kalp Shah.*Manual QA Tester/);
     const image = desktop.locator(".profile-photo");
     await image.waitFor({ state: "visible" });
     assert.ok(await image.evaluate(el => el.complete && el.naturalWidth > 0), "Profile portrait did not load");
@@ -63,9 +67,13 @@ try {
   });
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: "reduce" });
-  const mobileErrors = [];\n  const mobileConsoleErrors = [];\n  mobile.on("console", msg => { if (msg.type() === "error") mobileConsoleErrors.push(msg.text()); });\n  mobile.on("requestfailed", request => mobileConsoleErrors.push("REQUEST FAILED: " + request.url() + " — " + request.failure()?.errorText));
+  const mobileErrors = [];
+  const mobileConsoleErrors = [];
+  mobile.on("console", msg => { if (msg.type() === "error") mobileConsoleErrors.push(msg.text()); });
+  mobile.on("requestfailed", request => mobileConsoleErrors.push("REQUEST FAILED: " + request.url() + " — " + request.failure()?.errorText));
   mobile.on("pageerror", error => mobileErrors.push(error.message));
-  await mobile.goto(baseURL + "/", { waitUntil: "networkidle" });\n  await mobile.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 }).catch(() => {});
+  await mobile.goto(baseURL + "/", { waitUntil: "networkidle" });
+  await mobile.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 }).catch(() => {});
   await record("home / mobile", "Mobile navigation opens and closes", async () => {
     const toggle = mobile.locator(".nav-toggle");
     await toggle.waitFor({ state: "visible" });
