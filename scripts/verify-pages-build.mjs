@@ -39,6 +39,7 @@ const jsFiles = scriptTags
   .filter(Boolean);
 
 assert.ok(cssFiles.some(file => file.startsWith("/assets/") && file.endsWith(".css")), "Built homepage must reference a production CSS bundle");
+assert.ok(!html.includes("/src/styles/main.css") && !html.includes("/src/styles/quality.css"), "Built homepage must not request unbundled source CSS");
 assert.ok(jsFiles.some(file => file.startsWith("/assets/") && file.endsWith(".js")), "Built homepage must reference a production JavaScript bundle");
 
 for (const asset of [...cssFiles, ...jsFiles]) {
