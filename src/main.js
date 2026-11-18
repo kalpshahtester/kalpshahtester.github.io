@@ -12,10 +12,15 @@ $("#year").textContent = new Date().getFullYear();
 
 // Scroll progress and header state are independent of the animation libraries.
 const progress = $("#scrollProgress");
+let progressFrame = 0;
 const updateProgress = () => {
-  const max = document.documentElement.scrollHeight - innerHeight;
-  if (progress) progress.style.width = (max ? scrollY / max * 100 : 0) + "%";
-  $("#siteHeader")?.classList.toggle("scrolled", scrollY > 20);
+  if (progressFrame) return;
+  progressFrame = requestAnimationFrame(() => {
+    progressFrame = 0;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    if (progress) progress.style.width = (max ? scrollY / max * 100 : 0) + "%";
+    $("#siteHeader")?.classList.toggle("scrolled", scrollY > 20);
+  });
 };
 addEventListener("scroll", updateProgress, { passive: true });
 addEventListener("resize", updateProgress, { passive: true });
