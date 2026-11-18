@@ -15,13 +15,15 @@ jobs:
           node-version: 22
       - name: Install Lighthouse
         run: npm install --no-save lighthouse@12
-      - name: Audit deployed portfolio
+      - name: Audit all production routes
         run: |
           mkdir -p lighthouse-report
-          npx lighthouse https://kalpshahtester.github.io/ --chrome-flags="--headless --no-sandbox" --output=json --output=html --output-path=./lighthouse-report/portfolio
-      - name: Print measured category scores
+          npx lighthouse https://kalpshahtester.github.io/ --chrome-flags="--headless --no-sandbox" --output=json --output=html --output-path=./lighthouse-report/homepage
+          npx lighthouse https://kalpshahtester.github.io/projects/saucedemo.html --chrome-flags="--headless --no-sandbox" --output=json --output=html --output-path=./lighthouse-report/saucedemo
+          npx lighthouse https://kalpshahtester.github.io/projects/makemytrip.html --chrome-flags="--headless --no-sandbox" --output=json --output=html --output-path=./lighthouse-report/makemytrip
+      - name: Print measured category scores for every route
         run: |
-          node --input-type=module -e "import fs from 'node:fs'; const r=JSON.parse(fs.readFileSync('./lighthouse-report/portfolio.report.json','utf8')); for (const [k,v] of Object.entries(r.categories)) console.log(k+': '+Math.round(v.score*100));"
+          node --input-type=module -e "import fs from 'node:fs'; for (const route of ['homepage','saucedemo','makemytrip']) { const r=JSON.parse(fs.readFileSync('./lighthouse-report/'+route+'.report.json','utf8')); console.log('['+route+']'); for (const [k,v] of Object.entries(r.categories)) console.log(k+': '+Math.round(v.score*100)); }"
       - uses: actions/upload-artifact@v4
         with:
           name: lighthouse-production-report
