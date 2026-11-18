@@ -18,9 +18,9 @@ async function record(pageName, label, fn) {
 
 try {
   const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: "reduce" });
-  const desktopErrors = [];
+  const desktopErrors = [];\n  const desktopConsoleErrors = [];\n  desktop.on("console", msg => { if (msg.type() === "error") desktopConsoleErrors.push(msg.text()); });\n  desktop.on("requestfailed", request => desktopConsoleErrors.push("REQUEST FAILED: " + request.url() + " — " + request.failure()?.errorText));
   desktop.on("pageerror", error => desktopErrors.push(error.message));
-  await desktop.goto(baseURL + "/", { waitUntil: "networkidle" });
+  await desktop.goto(baseURL + "/", { waitUntil: "networkidle" });\n  await desktop.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 }).catch(() => {});
   await record("home / desktop", "Homepage and portrait render", async () => {
     assert.equal(await desktop.title(), "Kalp Shah — Manual QA Tester");
     const image = desktop.locator(".profile-photo");
@@ -59,13 +59,13 @@ try {
     await desktop.waitForFunction(() => window.scrollY < 100, null, { timeout: 4000 });
   });
   await record("home / desktop", "No uncaught JavaScript errors", async () => {
-    assert.deepEqual(desktopErrors, []);
+    assert.deepEqual([...desktopErrors, ...desktopConsoleErrors], []);
   });
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: "reduce" });
-  const mobileErrors = [];
+  const mobileErrors = [];\n  const mobileConsoleErrors = [];\n  mobile.on("console", msg => { if (msg.type() === "error") mobileConsoleErrors.push(msg.text()); });\n  mobile.on("requestfailed", request => mobileConsoleErrors.push("REQUEST FAILED: " + request.url() + " — " + request.failure()?.errorText));
   mobile.on("pageerror", error => mobileErrors.push(error.message));
-  await mobile.goto(baseURL + "/", { waitUntil: "networkidle" });
+  await mobile.goto(baseURL + "/", { waitUntil: "networkidle" });\n  await mobile.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 }).catch(() => {});
   await record("home / mobile", "Mobile navigation opens and closes", async () => {
     const toggle = mobile.locator(".nav-toggle");
     await toggle.waitFor({ state: "visible" });
@@ -78,11 +78,11 @@ try {
     assert.equal(new URL(mobile.url()).hash, "#about");
   });
   await record("home / mobile", "Mobile layout has no horizontal page overflow", async () => {
-    const sizes = await mobile.evaluate(() => ({ viewport: document.documentElement.clientWidth, page: document.documentElement.scrollWidth }));
+    const sizes = await mobile.evaluate(() => ({ viewport: document.documentElement.clientWidth, page: document.documentElement.scrollWidth, offenders: [...document.querySelectorAll("body *")].map(el => ({tag:el.tagName,cls:typeof el.className==="string"?el.className:"",id:el.id,left:Math.round(el.getBoundingClientRect().left),right:Math.round(el.getBoundingClientRect().right),width:Math.round(el.getBoundingClientRect().width)})).filter(x=>x.right>innerWidth+2||x.left < -2).slice(0,15) }));
     assert.ok(sizes.page <= sizes.viewport + 1, "Horizontal overflow: " + JSON.stringify(sizes));
   });
   await record("home / mobile", "No uncaught JavaScript errors", async () => {
-    assert.deepEqual(mobileErrors, []);
+    assert.deepEqual([...mobileErrors, ...mobileConsoleErrors], []);
   });
 
   for (const route of ["/projects/saucedemo.html", "/projects/makemytrip.html"]) {
