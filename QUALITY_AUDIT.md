@@ -1,42 +1,43 @@
 # Portfolio quality audit — 18 November 2026
 
-## Scope
+## Scope and evidence
 
-Reviewed the current production source for all three routes and the files responsible for page structure, styling, runtime interactions, asset staging, deployment, and production checks.
+Reviewed the current homepage, both case-study pages, navigation and interaction code, stylesheets, Vite build checks, deployment workflow, production smoke workflow and the latest available production Lighthouse report.
 
-## Findings
-
-| Priority | Finding | Repair |
-|---|---|---|
-| High | Both case-study pages linked back to `/#projects`, but the homepage section is `#work`. Breadcrumbs and “All projects” links landed at the top instead of the selected-work section. | Updated every cross-page work link to `/#work` and added source/build checks for the target fragment. |
-| Medium | Case-study pages still used a lime-green accent, older navy backgrounds, and different fonts from the homepage. | Harmonized the case-study tokens to the portfolio's gold accent, obsidian surfaces, Syne / Plus Jakarta Sans / JetBrains Mono typography, and matching dark theme color. |
-| Medium | The case-study mobile menu did not move focus to its first link when opened. | Focus now moves into the opened navigation; Escape still closes it and restores focus to the menu button. |
-| Medium | When the case-study motion CDN rejected one import, the settled-promise branch returned without setting the documented fallback state. | The runtime now explicitly records `fallback`; essential page content remains independent of optional animation imports. |
-| High | The prior `npm run check` only performed two JavaScript syntax checks. The active quality workflow built Vite but did not validate the final generated Pages artifact or request every local resource. | Added source-structure validation, deployment-artifact validation, a reusable HTTP smoke test, and made pull-request CI, deployment and post-deployment checks use the same asset model. |
-| High | Old audit scripts referenced a previous homepage structure and imported Playwright / axe packages that were not installed in the project. They were not run by the active workflow. | Removed the obsolete scripts and replaced them with dependency-free tests for the current site. |
-| Medium | Case-study pages used the old font family and loaded Google Fonts as a render-blocking stylesheet. | Updated them to the portfolio font family and non-blocking font loading. Added Twitter card metadata for both case studies. |
-
-## Validation design
-
-The updated checks are split into three layers:
-
-1. Source validation: all three documents, unique IDs, local and cross-page fragments, ARIA ID references, image alternatives, accessible link / button names, safe external links, local files, social metadata, CSS block balance, and sitemap routes.
-2. Build-artifact validation: the Vite CSS and JavaScript bundles, both project routes, root image assets, original profile PNG, résumé, certificates, favicon, robots and sitemap files.
-3. HTTP smoke validation: requests the homepage, both case studies, and every local URL discovered from their HTML. It validates successful status codes, content types and non-empty responses. The same smoke script runs locally, in CI and against the live site after deployment.
-
-## Production baseline before this audit
-
-The last successful production Lighthouse run before this change reported:
+The latest pre-fix production Lighthouse run (17 November 2026, run 44179526091) measured:
 
 | Category | Score |
 |---|---:|
-| Performance | 99 |
+| Performance | 65 |
 | Accessibility | 100 |
 | Best Practices | 100 |
 | SEO | 100 |
 
-These values describe that run only. A fresh report must be generated after the current branch is deployed before claiming updated scores.
+Key measured lab metrics: First Contentful Paint 2.9 s, Largest Contentful Paint 8.2 s, Speed Index 3.5 s, Total Blocking Time 250 ms, Time to Interactive 8.2 s and Cumulative Layout Shift 0. The LCP element was the profile portrait.
 
-## Limitations
+## Findings and changes implemented
 
-The automated source and HTTP checks do not execute layout and interaction in a real browser engine. They do not replace manual visual inspection at physical mobile sizes, screen-reader checks, Safari / Firefox review, or keyboard testing on the deployed pages. No such manual review is claimed by this audit.
+| Priority | Finding | Action |
+|---|---|---|
+| High | The homepage profile PNG transferred 1,098,777 bytes for a displayed image of about 231 × 201 px. Lighthouse estimated about 1.0 MiB savings from modern image formats and responsive sizing. | Added intrinsic width/height, eager loading, high fetch priority and synchronous decode hints. The original image remains unchanged to preserve identity. A true WebP/AVIF responsive derivative remains a follow-up because the source image must be processed and verified without altering the portrait. |
+| High | The production audit showed an 8.2 s LCP, with about 2.32 s load delay and 2.66 s render delay. | Moved homepage CSS into the Vite entry imports so production can emit versioned, bundled CSS instead of requesting raw source stylesheets. Added source and built-artifact assertions to prevent regression. |
+| Medium | The homepage brand link's accessible name ("Kalp Shah home") did not include its visible logo / brand text. | Updated the accessible name to include the visible brand wording. |
+| Medium | The LinkedIn URL on the homepage differed from the URL published in the résumé. | Aligned the homepage link to the résumé's LinkedIn profile URL. |
+| Medium | Scroll progress calculations ran directly inside each scroll event and read document geometry while writing UI state. | Coalesced progress updates through requestAnimationFrame to avoid redundant work during fast scrolling. |
+| Medium | Lighthouse measured a 10-minute cache lifetime for the root portrait and source assets. | CSS is now bundled through Vite for fingerprinted production assets. GitHub Pages controls cache headers for root-level static files; the original PNG's cache policy cannot be changed in this repository. |
+| Medium | Lighthouse's forced-reflow insight attributed about 193 ms to the scroll-progress handler. | The scroll-progress handler is now frame-coalesced. Re-measure after deployment to confirm the effect. |
+| Medium | Only the homepage received a Lighthouse run; case-study routes were covered by HTTP smoke checks but not performance audits. | Expanded the production Lighthouse workflow to audit the homepage and both case studies separately. |
+
+## Remaining recommendations
+
+1. Create verified WebP or AVIF variants at appropriate responsive widths (for example 320, 480 and 768 px) from the original profile photo, retaining the PNG fallback and the exact original pixels / crop. Do not use generative image editing or face retouching.
+2. Review the fresh Lighthouse report after deployment. Prioritize LCP and image transfer size over chasing a perfect score.
+3. Perform real-browser visual checks at 320, 360, 390, 412, 430, 540, 768, 850, 1024, 1280, 1366 and 1920 px, especially the header, hero portrait, project cards, Experience & Education and Skills & Toolkit sections.
+4. Manually verify keyboard operation, Escape-to-close navigation/dialog, visible focus, touch scrolling, reduced-motion behavior, and the three project routes in Chrome, Firefox and Safari.
+5. Confirm résumé, LinkedIn, email and project repository destinations periodically.
+
+## Validation status and limitations
+
+The repository's source audit validates unique IDs, local and cross-page fragments, ARIA references, image alternatives, accessible names, safe external links, local assets, social metadata, CSS block balance and sitemap entries. The build audit validates generated Vite bundles and required public assets. Production smoke tests request all three routes and their local resources.
+
+These checks do not prove visual correctness on physical devices or replace browser-based interaction testing. A successful build, smoke test or Lighthouse run is not represented as a manual visual inspection. Fresh scores after the current commits must be read from the new workflow artifact.
