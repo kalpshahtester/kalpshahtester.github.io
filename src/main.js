@@ -242,3 +242,7 @@ if (!reduced && matchMedia("(pointer:fine) and (hover:hover)").matches) {
     el.addEventListener("mouseleave", () => ring.classList.remove("hover"));
   });
 }
+
+
+// Expose a deterministic readiness marker for production smoke tests and diagnostics.
+document.documentElement.dataset.appReady = "true";
