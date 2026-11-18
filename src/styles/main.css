@@ -257,3 +257,10 @@ html{scroll-padding-top:76px}
   opacity:1;
   transform:none;
 }
+
+
+/* Mobile viewport containment: prevent intrinsic grid/media content from widening the document. */
+html,body{width:100%;max-width:100%;overflow-x:clip}
+main,.section-wrap,.hero,.proof-grid,.work-grid,.approach-track,.lab-panel,.experience-layout,.toolkit-grid,.contact-section,.quality-grid{min-width:0;max-width:100%}
+img,svg,video,canvas{max-width:100%}
+@media(max-width:850px){.hud-nav{max-width:100vw}.hud-nav nav{max-width:100vw}.hud-nav nav a{overflow-wrap:anywhere}}
