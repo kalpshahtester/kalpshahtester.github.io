@@ -20,10 +20,11 @@ try {
   const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: "reduce" });
   const desktopErrors = [];
   const desktopConsoleErrors = [];
-  desktop.on("console", msg => { if (msg.type() === "error") desktopConsoleErrors.push(msg.text()); });
+  desktop.on("console", msg => { if (msg.type() === "error") desktopConsoleErrors.push(msg.text() + " @ " + JSON.stringify(msg.location())); });
+  desktop.on("response", response => { if (response.request().resourceType() === "script" && (response.headers()["content-type"] || "").includes("text/css")) desktopConsoleErrors.push("SCRIPT URL SERVED AS CSS: " + response.url()); });
   desktop.on("requestfailed", request => desktopConsoleErrors.push("REQUEST FAILED: " + request.url() + " — " + request.failure()?.errorText));
   desktop.on("pageerror", error => desktopErrors.push(error.message));
-  await desktop.goto(baseURL + "/", { waitUntil: "networkidle" });
+  await desktop.goto(baseURL + "/?ci=" + Date.now(), { waitUntil: "networkidle" });
   await desktop.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 }).catch(() => {});
   await record("home / desktop", "Homepage and portrait render", async () => {
     assert.match(await desktop.title(), /Kalp Shah.*Manual QA Tester/);
@@ -69,10 +70,11 @@ try {
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: "reduce" });
   const mobileErrors = [];
   const mobileConsoleErrors = [];
-  mobile.on("console", msg => { if (msg.type() === "error") mobileConsoleErrors.push(msg.text()); });
+  mobile.on("console", msg => { if (msg.type() === "error") mobileConsoleErrors.push(msg.text() + " @ " + JSON.stringify(msg.location())); });
+  mobile.on("response", response => { if (response.request().resourceType() === "script" && (response.headers()["content-type"] || "").includes("text/css")) mobileConsoleErrors.push("SCRIPT URL SERVED AS CSS: " + response.url()); });
   mobile.on("requestfailed", request => mobileConsoleErrors.push("REQUEST FAILED: " + request.url() + " — " + request.failure()?.errorText));
   mobile.on("pageerror", error => mobileErrors.push(error.message));
-  await mobile.goto(baseURL + "/", { waitUntil: "networkidle" });
+  await mobile.goto(baseURL + "/?ci=" + Date.now(), { waitUntil: "networkidle" });
   await mobile.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 }).catch(() => {});
   await record("home / mobile", "Mobile navigation opens and closes", async () => {
     const toggle = mobile.locator(".nav-toggle");
