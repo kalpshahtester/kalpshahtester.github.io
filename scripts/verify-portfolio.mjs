@@ -124,9 +124,8 @@ assert.match(home, /alt="Portrait of Kalp Shah, Manual QA Tester"/, "Profile ima
 assert.match(home, /class="certificate-grid"/, "Homepage must render the certificate gallery");
 assert.equal([...home.matchAll(/class="certificate-card"/g)].length, 3, "Expected three certificate preview cards");
 assert.match(home, /<script\b[^>]*src="\/src\/main\.js"/, "Vite entry module is not linked");
-assert.ok(fs.readFileSync(path.join(root, "src/main.js"), "utf8").includes('import "./styles/main.css"'), "Main stylesheet must be imported into the Vite entry");
-assert.ok(fs.readFileSync(path.join(root, "src/main.js"), "utf8").includes('import "./styles/quality.css"'), "Quality stylesheet must be imported into the Vite entry");
-assert.ok(!home.includes('href="/src/styles/main.css"') && !home.includes('href="/src/styles/quality.css"'), "Homepage must not request unbundled source CSS");
+assert.ok(home.includes('href="/src/styles/main.css"') && home.includes('href="/src/styles/quality.css"'), "Homepage must link both stylesheets for source-branch hosting");
+assert.ok(!fs.readFileSync(path.join(root, "src/main.js"), "utf8").includes('import "./styles/'), "Runtime entry must not load CSS as JavaScript modules");
 assert.match(home, /href="\/Kalp%20Shah%20Manual%20Tester%20Resume\.pdf"/, "Résumé link is missing");
 assert.ok(home.includes('href="#work"'), "Homepage work navigation must target #work");
 assert.doesNotMatch(home, /href="\/#projects"/, "Homepage contains an obsolete #projects destination");
