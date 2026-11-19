@@ -1,43 +1,50 @@
-# Portfolio quality audit — 18 November 2026
+# Portfolio quality audit — 19 November 2026
 
-## Scope and evidence
+## Latest production evidence
 
-Reviewed the current homepage, both case-study pages, navigation and interaction code, stylesheets, Vite build checks, deployment workflow, production smoke workflow and the latest available production Lighthouse report.
+The current release is deployed from commit `b33f5dd682e5983bdd1e5b871039aac4de993cc1` on `main`.
 
-The latest pre-fix production Lighthouse run (17 November 2026, run 44179526091) measured:
+Production GitHub Actions checks completed successfully:
 
-| Category | Score |
-|---|---:|
-| Performance | 65 |
-| Accessibility | 100 |
-| Best Practices | 100 |
-| SEO | 100 |
+| Check | Result |
+|---|---|
+| Vite production build and Pages artifact validation | Passed |
+| Source quality checks and local built-site smoke test | Passed |
+| Live route/resource smoke test | 71 assertions passed across 3 routes and 29 local resources |
+| Real-browser interaction smoke test | 15 passed, 0 failed |
+| Uncaught JavaScript errors | 0 on the tested homepage desktop/mobile and case-study pages |
+| Mobile horizontal overflow | None at the tested 390px viewport |
 
-Key measured lab metrics: First Contentful Paint 2.9 s, Largest Contentful Paint 8.2 s, Speed Index 3.5 s, Total Blocking Time 250 ms, Time to Interactive 8.2 s and Cumulative Layout Shift 0. The LCP element was the profile portrait.
+The latest measured production Lighthouse scores (19 November 2026):
 
-## Findings and changes implemented
+| Route | Performance | Accessibility | Best Practices | SEO |
+|---|---:|---:|---:|---:|
+| Homepage | 76 | 100 | 100 | 100 |
+| SauceDemo case study | 91 | 100 | 100 | 100 |
+| MakeMyTrip case study | 100 | 100 | 100 | 100 |
+
+Homepage lab metrics: First Contentful Paint 1.6 s, Largest Contentful Paint 6.9 s, Speed Index 1.8 s, Total Blocking Time 10 ms, Time to Interactive 7.5 s and Cumulative Layout Shift 0.021. The measured LCP element is the hero introduction paragraph; its render delay accounts for most of the remaining LCP time. The profile portrait is still a large source PNG, with Lighthouse estimating about 1.0 MiB of potential image-delivery savings.
+
+## Fixes added in this pass
 
 | Priority | Finding | Action |
 |---|---|---|
-| High | The homepage profile PNG transferred 1,098,777 bytes for a displayed image of about 231 × 201 px. Lighthouse estimated about 1.0 MiB savings from modern image formats and responsive sizing. | Added intrinsic width/height, eager loading, high fetch priority and synchronous decode hints. The original image remains unchanged to preserve identity. A true WebP/AVIF responsive derivative remains a follow-up because the source image must be processed and verified without altering the portrait. |
-| High | The production audit showed an 8.2 s LCP, with about 2.32 s load delay and 2.66 s render delay. | Moved homepage CSS into the Vite entry imports so production can emit versioned, bundled CSS instead of requesting raw source stylesheets. Added source and built-artifact assertions to prevent regression. |
-| Medium | The homepage brand link's accessible name ("Kalp Shah home") did not include its visible logo / brand text. | Updated the accessible name to include the visible brand wording. |
-| Medium | The LinkedIn URL on the homepage differed from the URL published in the résumé. | Aligned the homepage link to the résumé's LinkedIn profile URL. |
-| Medium | Scroll progress calculations ran directly inside each scroll event and read document geometry while writing UI state. | Coalesced progress updates through requestAnimationFrame to avoid redundant work during fast scrolling. |
-| Medium | Lighthouse measured a 10-minute cache lifetime for the root portrait and source assets. | CSS is now bundled through Vite for fingerprinted production assets. GitHub Pages controls cache headers for root-level static files; the original PNG's cache policy cannot be changed in this repository. |
-| Medium | Lighthouse's forced-reflow insight attributed about 193 ms to the scroll-progress handler. | The scroll-progress handler is now frame-coalesced. Re-measure after deployment to confirm the effect. |
-| Medium | Only the homepage received a Lighthouse run; case-study routes were covered by HTTP smoke checks but not performance audits. | Expanded the production Lighthouse workflow to audit the homepage and both case studies separately. |
+| High | The original portrait PNG is about 1.1 MB for a relatively small on-screen image. | The deployment pipeline now generates 320px, 640px and 768px WebP derivatives from the original PNG, adds a responsive `<picture>` source and an image preload to the built homepage, and retains the existing PNG as the fallback. The original photo remains unchanged. |
+| High | The 280px responsive viewport was not covered by the prior live browser check; the body also had a 320px minimum width. | Reduced the minimum width to 280px and expanded the production browser test to 13 viewport widths from 280px through 1920px, including explicit checks on Experience & Education and Skills & Toolkit. |
+| Medium | Mobile navigation needed a direct keyboard regression check. | Added an Escape-to-close test and verifies focus returns to the Menu button. |
+| Medium | The production artifact needed to prove the responsive formats are actually present and valid. | Added RIFF/WebP signature, file-size, markup and preload assertions to the Pages artifact verifier; live smoke tests request each generated image and verify its MIME type. |
 
-## Remaining recommendations
+The responsive variants are generated in the Pages build rather than committed over the original portrait. This keeps the source image available for local/source fallback and preserves the original unmodified file.
 
-1. Create verified WebP or AVIF variants at appropriate responsive widths (for example 320, 480 and 768 px) from the original profile photo, retaining the PNG fallback and the exact original pixels / crop. Do not use generative image editing or face retouching.
-2. Review the fresh Lighthouse report after deployment. Prioritize LCP and image transfer size over chasing a perfect score.
-3. Perform real-browser visual checks at 320, 360, 390, 412, 430, 540, 768, 850, 1024, 1280, 1366 and 1920 px, especially the header, hero portrait, project cards, Experience & Education and Skills & Toolkit sections.
-4. Manually verify keyboard operation, Escape-to-close navigation/dialog, visible focus, touch scrolling, reduced-motion behavior, and the three project routes in Chrome, Firefox and Safari.
-5. Confirm résumé, LinkedIn, email and project repository destinations periodically.
+## Remaining measured work
 
-## Validation status and limitations
+1. Re-run Lighthouse after this release to measure the actual WebP transfer savings. The scores above describe the release before these newly added image variants are measured in production.
+2. Investigate the homepage hero paragraph's 6.2 s render-delay contribution. Image optimization reduces payload but does not by itself prove that the text LCP delay is fixed.
+3. Continue manual visual checks in Chrome, Firefox and Safari, with particular attention to the 04 / Experience & Education and 05 / Skills & Toolkit layouts, keyboard focus, reduced motion and touch scrolling.
+4. Verify the résumé, LinkedIn, email, WhatsApp and project links periodically.
 
-The repository's source audit validates unique IDs, local and cross-page fragments, ARIA references, image alternatives, accessible names, safe external links, local assets, social metadata, CSS block balance and sitemap entries. The build audit validates generated Vite bundles and required public assets. Production smoke tests request all three routes and their local resources.
+## Validation boundaries
 
-These checks do not prove visual correctness on physical devices or replace browser-based interaction testing. A successful build, smoke test or Lighthouse run is not represented as a manual visual inspection. Fresh scores after the current commits must be read from the new workflow artifact.
+The source audit checks unique IDs, local and cross-page fragments, ARIA references, image alternatives, accessible names, safe external links, local assets, social metadata, CSS structure and sitemap entries. The Pages artifact audit checks generated bundles, routes, downloadable résumé, original portrait fallback, responsive WebP files and certificates. HTTP smoke tests check all live routes and discovered local resources. The Playwright checks exercise real browser interactions at the configured desktop/mobile conditions and the extended responsive viewport matrix.
+
+These automated checks do not replace a complete manual visual inspection on physical devices or across every supported browser. Lighthouse scores are lab measurements and can vary between runs. A passing build or smoke test is not represented as proof of every possible user journey.

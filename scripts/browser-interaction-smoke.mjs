@@ -31,6 +31,10 @@ try {
     const image = desktop.locator(".profile-photo");
     await image.waitFor({ state: "visible" });
     assert.ok(await image.evaluate(el => el.complete && el.naturalWidth > 0), "Profile portrait did not load");
+    const webpSource = desktop.locator('.profile-photo-wrap source[type="image/webp"]');
+    await webpSource.waitFor({ state: "attached" });
+    assert.match(await image.evaluate(el => el.currentSrc), /kalp-shah-profile-(320|640|768)\.webp$/, "Portrait should use a responsive WebP variant");
+    assert.equal(await desktop.locator('link[rel="preload"][as="image"][type="image/webp"]').count(), 1, "Responsive portrait preload is missing");
   });
   await record("home / desktop", "Desktop navigation reaches sections", async () => {
     for (const id of ["about", "work", "approach", "experience", "toolkit", "contact"]) {
@@ -63,6 +67,42 @@ try {
     await desktop.locator("#backToTop").click();
     await desktop.waitForFunction(() => window.scrollY < 100, null, { timeout: 4000 });
   });
+  await record("home / responsive matrix", "Experience and Skills sections fit 280–1920px viewports", async () => {
+    const widths = [280, 320, 360, 390, 412, 430, 540, 768, 850, 1024, 1280, 1366, 1920];
+    for (const width of widths) {
+      await desktop.setViewportSize({ width, height: 900 });
+      const metrics = await desktop.evaluate(() => {
+        const ids = ["experience", "toolkit"];
+        const sections = ids.map(id => {
+          const element = document.getElementById(id);
+          const rect = element.getBoundingClientRect();
+          return {
+            id,
+            left: Math.round(rect.left),
+            right: Math.round(rect.right),
+            clientWidth: element.clientWidth,
+            scrollWidth: element.scrollWidth
+          };
+        });
+        const header = document.getElementById("siteHeader");
+        return {
+          viewport: innerWidth,
+          documentWidth: document.documentElement.scrollWidth,
+          bodyWidth: document.body.scrollWidth,
+          headerWidth: header?.scrollWidth || 0,
+          sections
+        };
+      });
+      assert.ok(metrics.documentWidth <= width + 1, width + "px document overflow: " + JSON.stringify(metrics));
+      assert.ok(metrics.bodyWidth <= width + 1, width + "px body overflow: " + JSON.stringify(metrics));
+      assert.ok(metrics.headerWidth <= width + 1, width + "px navigation overflow: " + JSON.stringify(metrics));
+      for (const section of metrics.sections) {
+        assert.ok(section.left >= -1 && section.right <= width + 1, width + "px " + section.id + " extends beyond viewport: " + JSON.stringify(metrics));
+        assert.ok(section.scrollWidth <= section.clientWidth + 1, width + "px " + section.id + " has internal horizontal overflow: " + JSON.stringify(metrics));
+      }
+    }
+    await desktop.setViewportSize({ width: 1440, height: 1000 });
+  });
   await record("home / desktop", "No uncaught JavaScript errors", async () => {
     assert.deepEqual([...desktopErrors, ...desktopConsoleErrors], []);
   });
@@ -82,6 +122,10 @@ try {
     await toggle.click();
     assert.equal(await toggle.getAttribute("aria-expanded"), "true");
     assert.ok(await mobile.locator(".hud-nav nav").evaluate(el => el.classList.contains("open")));
+    await mobile.keyboard.press("Escape");
+    assert.equal(await toggle.getAttribute("aria-expanded"), "false", "Escape should close the mobile menu");
+    assert.ok(await toggle.evaluate(el => document.activeElement === el), "Escape should restore focus to the menu button");
+    await toggle.click();
     await mobile.locator('.hud-nav nav a[href="#about"]').click();
     assert.equal(await toggle.getAttribute("aria-expanded"), "false");
     assert.ok(!(await mobile.locator(".hud-nav nav").evaluate(el => el.classList.contains("open"))));

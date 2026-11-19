@@ -98,7 +98,7 @@ html{scroll-behavior:auto}
 
 /* Usability pass: compact rhythm, native scrolling and readable content. */
 html{scroll-behavior:smooth;scroll-padding-top:88px}
-body{min-width:320px}
+body{min-width:280px}
 .hero{min-height:min(760px,100svh);padding-top:104px}
 .content-section{padding-block:clamp(68px,8vw,112px)}
 .section-index{margin-bottom:26px}

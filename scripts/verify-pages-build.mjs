@@ -15,6 +15,9 @@ const required = [
   "Kalp Shah HCL GUVI Certification.png",
   "Kalp Shah Generative AI Mastermind Course Certificate.jpeg",
   "Kalp Shah Outskill Certificate.png",
+  "assets/images/kalp-shah-profile-320.webp",
+  "assets/images/kalp-shah-profile-640.webp",
+  "assets/images/kalp-shah-profile-768.webp",
   "favicon.ico",
   "favicon.svg",
   "robots.txt",
@@ -57,6 +60,20 @@ assert.ok(bundledCss.includes(".hud-nav") && bundledCss.includes(".hero"), "Prod
 const originalPng = fs.readFileSync(path.join(dist, "Kalp Shah Profile Photo.png"));
 assert.deepEqual([...originalPng.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10], "Original profile photo must remain a PNG");
 assert.match(html, /class="hero-portrait"/, "Built homepage missing portrait figure");
+assert.match(html, /<source type="image\/webp" srcset="\/assets\/images\/kalp-shah-profile-320\.webp 320w, \/assets\/images\/kalp-shah-profile-640\.webp 640w, \/assets\/images\/kalp-shah-profile-768\.webp 768w"/, "Built homepage missing responsive WebP portrait source");
+assert.match(html, /rel="preload" as="image" type="image\/webp"/, "Built homepage missing responsive portrait preload");
+assert.match(html, /src="\/Kalp%20Shah%20Profile%20Photo\.png"/, "Original profile PNG fallback must remain available");
+const webpFiles = [
+  "assets/images/kalp-shah-profile-320.webp",
+  "assets/images/kalp-shah-profile-640.webp",
+  "assets/images/kalp-shah-profile-768.webp"
+];
+for (const file of webpFiles) {
+  const bytes = fs.readFileSync(path.join(dist, file));
+  assert.equal(bytes.toString("ascii", 0, 4), "RIFF", file + " is not a RIFF container");
+  assert.equal(bytes.toString("ascii", 8, 12), "WEBP", file + " is not a WebP image");
+  assert.ok(bytes.length < originalPng.length, file + " should be smaller than the original PNG");
+}
 assert.match(html, /class="certificate-card"/, "Built homepage missing certificate gallery");
 
 for (const route of ["/projects/saucedemo.html", "/projects/makemytrip.html"]) {
@@ -65,4 +82,4 @@ for (const route of ["/projects/saucedemo.html", "/projects/makemytrip.html"]) {
   assert.ok(!projectHtml.includes("/#projects"), route + " contains an obsolete homepage fragment");
 }
 
-console.log("Pages artifact audit passed: Vite bundles, project routes, résumé, profile image, WebP and certificates.");
+console.log("Pages artifact audit passed: Vite bundles, project routes, résumé, original portrait fallback, three responsive WebP variants and certificates.");

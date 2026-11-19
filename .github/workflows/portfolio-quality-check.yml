@@ -19,8 +19,15 @@ jobs:
       - run: npm ci
       - name: Stage the same public URLs used by deployment
         run: node scripts/stage-pages-assets.mjs
+      - name: Generate responsive WebP portrait variants
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes webp
+          node scripts/generate-responsive-portrait.mjs
       - run: npm run check
       - run: npm run build
+      - name: Inject responsive portrait source into the built homepage
+        run: node scripts/inject-responsive-portrait.mjs
       - name: Verify the generated Pages artifact
         run: node scripts/verify-pages-build.mjs
       - name: Start server against dist
