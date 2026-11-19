@@ -4,6 +4,7 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const coarse = matchMedia("(pointer: coarse)").matches;
 const lowPower = coarse || innerWidth < 760 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
 document.documentElement.classList.toggle("reduced-motion", reduced);
+document.documentElement.classList.add("js-ready");
 $("#year").textContent = new Date().getFullYear();
 
 

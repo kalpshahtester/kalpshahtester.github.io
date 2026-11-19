@@ -35,6 +35,12 @@ try {
     await webpSource.waitFor({ state: "attached" });
     assert.match(await image.evaluate(el => el.currentSrc), /kalp-shah-profile-(320|640|768)\.webp$/, "Portrait should use a responsive WebP variant");
     assert.equal(await desktop.locator('link[rel="preload"][as="image"][type="image/webp"]').count(), 1, "Responsive portrait preload is missing");
+    const linkedin = desktop.locator(".hero-linkedin");
+    assert.equal(await linkedin.getAttribute("href"), "https://www.linkedin.com/in/kalp-shah-software-tester/", "Hero LinkedIn destination is incorrect");
+    assert.equal(await linkedin.getAttribute("target"), "_blank", "LinkedIn should open in a new tab");
+    assert.equal(await desktop.locator('.contact-links a[href="https://www.linkedin.com/in/kalp-shah-software-tester/"]').count(), 1, "Contact LinkedIn link is missing");
+    assert.equal(await desktop.locator('.hero-actions a[download]').count(), 1, "Résumé download link is missing");
+
   });
   await record("home / desktop", "Desktop navigation reaches sections", async () => {
     for (const id of ["about", "work", "approach", "experience", "toolkit", "contact"]) {

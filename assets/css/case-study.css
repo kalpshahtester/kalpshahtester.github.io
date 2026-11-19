@@ -12,12 +12,12 @@
 .case-lead{max-width:680px;margin:25px 0 0;color:#b9c5d2;font-size:15px;line-height:1.85}
 .case-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .case-actions .button{min-height:48px;font-size:10px}
-.case-summary-card{position:relative;padding:25px 25px 18px;border:1px solid rgba(210,255,75,.24);border-radius:7px;background:linear-gradient(145deg,rgba(210,255,75,.07),rgba(255,255,255,.015) 55%);box-shadow:0 28px 70px rgba(0,0,0,.2)}
+.case-summary-card{position:relative;padding:25px 25px 18px;border:1px solid rgba(226,192,141,.28);border-radius:7px;background:linear-gradient(145deg,rgba(226,192,141,.07),rgba(255,255,255,.015) 55%);box-shadow:0 28px 70px rgba(0,0,0,.2)}
 .summary-label{display:block;margin-bottom:20px;color:var(--acid);font:500 8px/1.4 var(--mono);letter-spacing:.16em}
 .summary-line{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 0;border-top:1px solid var(--line)}
 .summary-line span{color:var(--quiet);font:400 8px/1.4 var(--mono);letter-spacing:.1em}
 .summary-line strong{color:#e9edf3;font:500 9px/1.4 var(--mono);letter-spacing:.05em;text-align:right}
-.summary-line strong i{display:inline-block;width:6px;height:6px;margin:0 5px 1px 0;border-radius:50%;background:var(--acid);box-shadow:0 0 10px rgba(210,255,75,.5)}
+.summary-line strong i{display:inline-block;width:6px;height:6px;margin:0 5px 1px 0;border-radius:50%;background:var(--acid);box-shadow:0 0 10px rgba(226,192,141,.5)}
 .summary-footer{margin-top:8px;padding-top:14px;border-top:1px solid var(--line);color:var(--quiet);font:400 7px/1.5 var(--mono);letter-spacing:.12em}
 .case-metrics{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .case-metrics>div{display:flex;flex-direction:column;gap:6px;padding:19px 24px;border-left:1px solid var(--line)}
@@ -40,7 +40,7 @@
 .case-section h2{margin:0 0 23px;font:500 clamp(37px,4.7vw,58px)/1.08 var(--display);letter-spacing:-.065em}
 .case-section h2 em{color:var(--acid);font-style:normal}
 .case-section>p{max-width:760px;color:var(--muted);font-size:13px;line-height:1.95}
-.case-callout{display:grid;grid-template-columns:36px 1fr;gap:14px;margin-top:30px;padding:21px 23px;border-left:2px solid var(--acid);background:linear-gradient(90deg,rgba(210,255,75,.07),rgba(210,255,75,.01))}
+.case-callout{display:grid;grid-template-columns:36px 1fr;gap:14px;margin-top:30px;padding:21px 23px;border-left:2px solid var(--acid);background:linear-gradient(90deg,rgba(226,192,141,.07),rgba(226,192,141,.01))}
 .callout-mark{color:var(--acid);font-size:20px}
 .case-callout p{margin:0;color:#d4dce5;font:500 14px/1.75 var(--display)}
 .scope-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:30px 0 23px}
@@ -85,7 +85,7 @@
   .case-sidebar{position:static;display:flex;flex-direction:row;align-items:center;gap:7px;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin}
   .sidebar-label{display:none}
   .case-sidebar>a{flex:0 0 auto;padding:8px 10px;border:1px solid var(--line);border-radius:3px;font-size:8px;white-space:nowrap}
-  .case-sidebar>a:hover,.case-sidebar>a[aria-current=location]{padding-left:10px;border-color:rgba(210,255,75,.45)}
+  .case-sidebar>a:hover,.case-sidebar>a[aria-current=location]{padding-left:10px;border-color:rgba(226,192,141,.45)}
   .case-sidebar .sidebar-back{margin:0}
   .case-section{padding-bottom:45px;margin-bottom:46px}
   .case-section .section-kicker{margin-bottom:22px}
@@ -108,3 +108,34 @@
   .scope-grid article{min-height:0}
   .evidence-grid{grid-template-columns:1fr}
 }
+
+
+/* Align the case-study detail pages with the homepage's restrained gold visual language. */
+.case-hero { overflow:hidden; background:radial-gradient(ellipse at 82% 12%,rgba(91,112,151,.12),transparent 30rem),radial-gradient(ellipse at 12% 70%,rgba(226,192,141,.045),transparent 25rem); }
+.case-summary-card { border-color:rgba(226,192,141,.28); border-radius:13px; background:radial-gradient(circle at 90% 0,rgba(226,192,141,.12),transparent 15rem),linear-gradient(145deg,rgba(226,192,141,.045),rgba(255,255,255,.012)); box-shadow:0 24px 70px rgba(0,0,0,.24); }
+.summary-line strong i { background:var(--acid); box-shadow:0 0 10px rgba(226,192,141,.5); }
+.case-metrics { background:rgba(255,255,255,.012); }
+.case-callout { border-radius:0 10px 10px 0; background:linear-gradient(90deg,rgba(226,192,141,.075),rgba(226,192,141,.012)); }
+.scope-grid article,.evidence-grid span { min-width:0; border-radius:10px; background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.012)); transition:border-color .24s ease,background .24s ease,transform .24s ease; }
+.scope-grid article:hover { border-color:rgba(226,192,141,.35); background:linear-gradient(145deg,rgba(226,192,141,.07),rgba(255,255,255,.012)); transform:translateY(-2px); }
+.evidence-grid span { overflow-wrap:anywhere; line-height:1.65; }
+.case-sidebar>a { transition:color .2s ease,padding .2s ease,border-color .2s ease; }
+.case-footer-nav { flex-wrap:wrap; }
+.case-page { background:linear-gradient(180deg,rgba(255,255,255,.006),transparent 42rem); }
+@media(max-width:700px) {
+ .case-hero { padding-top:112px; }
+ .case-hero-grid,.case-content,.case-article,.case-section,.case-summary-card { min-width:0; max-width:100%; }
+ .case-breadcrumbs { flex-wrap:wrap; row-gap:6px; }
+ .case-topic-strip { line-height:1.7; }
+ .case-summary-card { padding:20px; }
+}
+@media(max-width:360px) {
+ .case-title { font-size:clamp(35px,12.5vw,43px); overflow-wrap:anywhere; }
+ .summary-line { align-items:flex-start; flex-wrap:wrap; }
+ .summary-line strong { max-width:100%; overflow-wrap:anywhere; text-align:left; }
+ .case-topic-strip { gap:8px; }
+}
+@media(prefers-reduced-motion:reduce) { .scope-grid article { transition:none; } .scope-grid article:hover { transform:none; } }
+.footer-linkedin { display:inline-flex; align-items:center; min-height:36px; padding:0 10px; border:1px solid rgba(226,192,141,.28); border-radius:5px; color:var(--acid); font-size:10px; font-weight:600; }
+.footer-linkedin:hover { border-color:var(--acid); background:rgba(226,192,141,.06); }
+@media(max-width:700px) { .footer-linkedin { margin-right:auto; } }
