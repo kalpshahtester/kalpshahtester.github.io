@@ -518,3 +518,106 @@ main, main > section { min-width: 0; max-width: 100%; }
   .certificate-card, .quality-grid > div { transition: none !important; }
   .work-card:hover, .certificate-card:hover { transform: none; }
 }
+
+
+/* Narrow-screen repair: remove intrinsic sizing pressure from Experience and Skills. */
+@media (max-width: 420px) {
+  #experience,
+  #toolkit {
+    width: calc(100% - 24px);
+    max-width: calc(100% - 24px);
+    min-width: 0;
+    overflow-x: clip;
+  }
+  #experience *,
+  #toolkit * {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+  }
+  #experience .experience-layout,
+  #experience .experience-column,
+  #experience .timeline,
+  #experience .timeline article,
+  #experience .timeline article > div,
+  #experience .education-panel,
+  #toolkit .toolkit-grid,
+  #toolkit .toolkit-grid article,
+  #toolkit .certificates,
+  #toolkit .certificates > div,
+  #toolkit .certificate-grid,
+  #toolkit .certificate-card,
+  #toolkit .skill-list,
+  #toolkit .skill-list li {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  #experience .experience-layout {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+  }
+  #experience .timeline article {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+  }
+  #experience .timeline article time,
+  #experience .timeline article h3,
+  #experience .timeline article p,
+  #experience .education-panel h3,
+  #experience .education-panel p {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+  #experience .education-panel {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+  }
+  #experience .education-panel > * {
+    grid-column: 1;
+  }
+  #toolkit .toolkit-grid {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+  }
+  #toolkit .skill-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #toolkit .skill-list li {
+    flex: 0 1 auto;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  #toolkit .certificates {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+  }
+  #toolkit .certificate-grid {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+  }
+  #toolkit .certificate-card {
+    display: flex;
+    flex-direction: column;
+  }
+  #toolkit .certificate-card img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+  }
+  #toolkit .certificate-card span,
+  #toolkit .certificate-card small {
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+}
+@media (max-width: 360px) {
+  #experience,
+  #toolkit {
+    width: calc(100% - 20px);
+    max-width: calc(100% - 20px);
+  }
+}

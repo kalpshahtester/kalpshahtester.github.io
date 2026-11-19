@@ -9,9 +9,6 @@ const pages = [
 const responses = new Map();
 const localAssets = new Set([
   "/Kalp%20Shah%20Profile%20Photo.png",
-  "/assets/images/kalp-shah-profile-320.webp",
-  "/assets/images/kalp-shah-profile-640.webp",
-  "/assets/images/kalp-shah-profile-768.webp",
   "/Kalp%20Shah%20Manual%20Tester%20Resume.pdf",
   "/Kalp%20Shah%20HCL%20GUVI%20Certification.png",
   "/Kalp%20Shah%20Generative%20AI%20Mastermind%20Course%20Certificate.jpeg",
@@ -88,7 +85,6 @@ const mimeRules = [
   { suffix: ".html", pattern: /text\/html/i },
   { suffix: ".css", pattern: /text\/css/i },
   { suffix: ".js", pattern: /javascript|ecmascript/i },
-  { suffix: ".webp", pattern: /image\/webp/i },
   { suffix: ".png", pattern: /image\/png/i },
   { suffix: ".jpeg", pattern: /image\/jpeg/i },
   { suffix: ".svg", pattern: /image\/svg\+xml/i },

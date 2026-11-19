@@ -29,22 +29,22 @@ Homepage lab metrics: First Contentful Paint 1.6 s, Largest Contentful Paint 6.9
 
 | Priority | Finding | Action |
 |---|---|---|
-| High | The original portrait PNG is about 1.1 MB for a relatively small on-screen image. | The deployment pipeline now generates 320px, 640px and 768px WebP derivatives from the original PNG, adds a responsive `<picture>` source and an image preload to the built homepage, and retains the existing PNG as the fallback. The original photo remains unchanged. |
+| High | The original portrait PNG is about 1.1 MB for a relatively small on-screen image. | A responsive CSS image frame now keeps the original profile PNG centered and fully visible. The photo remains unchanged and is not cropped or replaced. |
 | High | The 280px responsive viewport was not covered by the prior live browser check; the body also had a 320px minimum width. | Reduced the minimum width to 280px and expanded the production browser test to 13 viewport widths from 280px through 1920px, including explicit checks on Experience & Education and Skills & Toolkit. |
 | Medium | Mobile navigation needed a direct keyboard regression check. | Added an Escape-to-close test and verifies focus returns to the Menu button. |
-| Medium | The production artifact needed to prove the responsive formats are actually present and valid. | Added RIFF/WebP signature, file-size, markup and preload assertions to the Pages artifact verifier; live smoke tests request each generated image and verify its MIME type. |
+| Medium | The repository-source Pages build and the Vite Pages artifact use different asset pipelines. | Removed runtime dependence on generated, untracked WebP files. Both deployment paths now use the committed original PNG so the portrait remains available regardless of which Pages build is active. |
 
-The responsive variants are generated in the Pages build rather than committed over the original portrait. This keeps the source image available for local/source fallback and preserves the original unmodified file.
+The original PNG is committed and served directly. Both the source-branch Pages path and the Vite artifact path reference the same file; there is no generated-image/CDN dependency.
 
 ## Remaining measured work
 
-1. Re-run Lighthouse after this release to measure the actual WebP transfer savings. The scores above describe the release before these newly added image variants are measured in production.
+1. Re-run Lighthouse after the layout and content update; the scores above describe the previous release, not this update.
 2. Investigate the homepage hero paragraph's 6.2 s render-delay contribution. Image optimization reduces payload but does not by itself prove that the text LCP delay is fixed.
 3. Continue manual visual checks in Chrome, Firefox and Safari, with particular attention to the 04 / Experience & Education and 05 / Skills & Toolkit layouts, keyboard focus, reduced motion and touch scrolling.
 4. Verify the résumé, LinkedIn, email, WhatsApp and project links periodically.
 
 ## Validation boundaries
 
-The source audit checks unique IDs, local and cross-page fragments, ARIA references, image alternatives, accessible names, safe external links, local assets, social metadata, CSS structure and sitemap entries. The Pages artifact audit checks generated bundles, routes, downloadable résumé, original portrait fallback, responsive WebP files and certificates. HTTP smoke tests check all live routes and discovered local resources. The Playwright checks exercise real browser interactions at the configured desktop/mobile conditions and the extended responsive viewport matrix.
+The source audit checks unique IDs, local and cross-page fragments, ARIA references, image alternatives, accessible names, safe external links, local assets, social metadata, CSS structure and sitemap entries. The Pages artifact audit checks generated bundles, routes, downloadable résumé, original profile portrait and certificates. HTTP smoke tests check all live routes and discovered local resources. The Playwright checks exercise real browser interactions at the configured desktop/mobile conditions and the extended responsive viewport matrix.
 
 These automated checks do not replace a complete manual visual inspection on physical devices or across every supported browser. Lighthouse scores are lab measurements and can vary between runs. A passing build or smoke test is not represented as proof of every possible user journey.

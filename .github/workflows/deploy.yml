@@ -22,15 +22,8 @@ jobs:
       - run: npm ci
       - name: Stage legacy public URLs
         run: node scripts/stage-pages-assets.mjs
-      - name: Generate responsive WebP portrait variants
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes webp
-          node scripts/generate-responsive-portrait.mjs
       - run: npm run check
       - run: npm run build
-      - name: Inject responsive portrait source into the built homepage
-        run: node scripts/inject-responsive-portrait.mjs
       - name: Verify the exact Pages artifact
         run: node scripts/verify-pages-build.mjs
       - uses: actions/upload-pages-artifact@v3

@@ -31,10 +31,8 @@ try {
     const image = desktop.locator(".profile-photo");
     await image.waitFor({ state: "visible" });
     assert.ok(await image.evaluate(el => el.complete && el.naturalWidth > 0), "Profile portrait did not load");
-    const webpSource = desktop.locator('.profile-photo-wrap source[type="image/webp"]');
-    await webpSource.waitFor({ state: "attached" });
-    assert.match(await image.evaluate(el => el.currentSrc), /kalp-shah-profile-(320|640|768)\.webp$/, "Portrait should use a responsive WebP variant");
-    assert.equal(await desktop.locator('link[rel="preload"][as="image"][type="image/webp"]').count(), 1, "Responsive portrait preload is missing");
+    assert.match(await image.evaluate(el => el.currentSrc), /Kalp(?:%20|\s)Shah(?:%20|\s)Profile(?:%20|\s)Photo\.png$/i, "Portrait should use the original profile PNG asset");
+    assert.equal(await image.getAttribute("alt"), "Portrait of Kalp Shah, Manual QA Tester", "Portrait alternative text is missing or inaccurate");
     const linkedin = desktop.locator(".hero-linkedin");
     assert.equal(await linkedin.getAttribute("href"), "https://www.linkedin.com/in/kalp-shah-software-tester/", "Hero LinkedIn destination is incorrect");
     assert.equal(await linkedin.getAttribute("target"), "_blank", "LinkedIn should open in a new tab");
@@ -91,12 +89,31 @@ try {
           };
         });
         const header = document.getElementById("siteHeader");
+        const wideNodes = [...document.querySelectorAll("body *")].map(el => {
+          const rect = el.getBoundingClientRect();
+          const style = getComputedStyle(el);
+          return {
+            tag: el.tagName.toLowerCase(),
+            id: el.id || "",
+            className: typeof el.className === "string" ? el.className.toString().slice(0,90) : "",
+            left: Math.round(rect.left),
+            right: Math.round(rect.right),
+            width: Math.round(rect.width),
+            clientWidth: el.clientWidth,
+            scrollWidth: el.scrollWidth,
+            display: style.display,
+            whiteSpace: style.whiteSpace
+          };
+        }).filter(el => el.right > innerWidth + 2 || el.left < -2 || el.scrollWidth > el.clientWidth + 2)
+          .sort((a,b) => Math.max(b.right-innerWidth, b.scrollWidth-b.clientWidth) - Math.max(a.right-innerWidth, a.scrollWidth-a.clientWidth))
+          .slice(0,18);
         return {
           viewport: innerWidth,
           documentWidth: document.documentElement.scrollWidth,
           bodyWidth: document.body.scrollWidth,
           headerWidth: header?.scrollWidth || 0,
-          sections
+          sections,
+          wideNodes
         };
       });
       assert.ok(metrics.documentWidth <= width + 1, width + "px document overflow: " + JSON.stringify(metrics));

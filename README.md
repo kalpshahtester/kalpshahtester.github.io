@@ -1,6 +1,6 @@
 # Kalp Shah — Manual QA portfolio
 
-Premium, evidence-led portfolio for Manual QA, web and WordPress testing. The homepage uses Vite, vanilla JavaScript, Three.js, GSAP / ScrollTrigger and Lenis. The two case studies use the same gold / obsidian palette and shared typography.
+Premium, evidence-led portfolio for Manual QA, web and WordPress testing. The homepage uses Vite and vanilla JavaScript, with optional Three.js, GSAP / ScrollTrigger and Lenis enhancements. The original profile PNG remains the portrait source of truth. The two case studies use the same gold / obsidian palette and shared typography.
 
 ## Local development
 
@@ -46,7 +46,7 @@ On Windows PowerShell, set environment variables with `$env:SITE_ROOT="dist"`, `
 
 ## Images and identity
 
-The original profile PNG is used directly by the hero image and retained as the source of truth. The deployed page does not depend on an optional image conversion or CDN derivative. No crop, face replacement or retouching is performed. The three existing certificate files are displayed as responsive previews and link to the full-size originals.
+The original profile PNG is used directly by the hero image as the source of truth. It is displayed with `object-fit: contain`; no crop, face replacement or retouching is performed. Keeping one committed source asset also ensures both the GitHub Actions build and the repository-source Pages build can serve the same image reliably. The three existing certificate files are displayed as responsive previews and link to the full-size originals.
 
 ## Content accuracy
 
