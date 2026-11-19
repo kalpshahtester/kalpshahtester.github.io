@@ -785,3 +785,67 @@ main, main > section { min-width: 0; max-width: 100%; }
   .work-visual strong { font-size: 26px; }
   .work-body { padding: 16px; }
 }
+
+
+/* 2026-11-20 visual hierarchy, alignment and interaction polish */
+:root {
+  --surface-1: rgba(18,18,22,.82);
+  --surface-2: rgba(255,255,255,.025);
+  --border-soft: rgba(245,245,247,.105);
+  --border-accent: rgba(226,192,141,.32);
+}
+html { scroll-padding-top: 88px; }
+.hud-nav { padding-inline: clamp(18px, 4.2vw, 64px); }
+.hud-nav nav { align-items: center; gap: clamp(12px, 2vw, 26px); }
+.hud-nav nav a { padding-block: 12px; transition: color .2s ease; }
+.hero { align-items: center; }
+.hero-copy { max-width: 680px; }
+.hero-lede { max-width: 60ch; }
+.content-section { padding-block: clamp(82px, 10vw, 140px); }
+.section-index { margin-bottom: clamp(24px, 4vw, 42px); }
+.split-heading, .section-heading { gap: clamp(28px, 6vw, 84px); }
+.section-heading { margin-bottom: clamp(34px, 5vw, 56px); }
+.work-grid { align-items: stretch; gap: clamp(14px, 2vw, 22px); }
+.work-card { display: flex; flex-direction: column; overflow: clip; border-radius: 6px; }
+.work-body { display: flex; flex: 1; flex-direction: column; }
+.work-body .card-actions { margin-top: auto; padding-top: 10px; }
+.work-visual { min-height: clamp(230px, 24vw, 330px); }
+.work-visual strong { line-height: .9; text-wrap: balance; }
+.approach-track { margin-top: clamp(38px, 6vw, 62px); }
+.approach-track article { min-height: 210px; padding: clamp(18px, 2.4vw, 28px); }
+.approach-track h3 { margin-top: clamp(34px, 5vw, 54px); }
+.lab-panel { gap: clamp(28px, 4vw, 52px); border-radius: 6px; }
+.timeline article { gap: clamp(28px, 6vw, 84px); }
+.toolkit-grid { gap: clamp(12px, 1.8vw, 18px); }
+.toolkit-grid article { border-radius: 6px; }
+.contact-section { gap: clamp(30px, 6vw, 84px); }
+.contact-links a { padding-block: 12px; line-height: 1.55; }
+.button, .nav-toggle, .console-footer button { min-height: 46px; }
+.button:focus-visible, .nav-toggle:focus-visible, .console-footer button:focus-visible, .contact-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (min-width: 851px) {
+  .work-grid { grid-template-columns: minmax(0,1.12fr) minmax(0,.88fr); }
+  .work-card { min-height: 100%; }
+  .proof-grid { gap: clamp(12px, 2vw, 22px); }
+}
+@media (max-width: 850px) {
+  .hud-nav { padding-inline: var(--gutter); }
+  .hud-nav nav { gap: 6px; }
+  .hud-nav nav a { min-height: 44px; display: flex; align-items: center; }
+  .content-section { padding-block: clamp(72px, 12vw, 110px); }
+  .approach-track article { min-height: 0; }
+  .approach-track h3 { margin-top: 24px; }
+  .work-grid { gap: 16px; }
+}
+@media (max-width: 600px) {
+  .hero { gap: 22px; }
+  .hero-scene { margin-inline: -2px; }
+  .section-heading { margin-bottom: 30px; }
+  .work-visual { min-height: 210px; }
+  .stats, .tag-row { gap: 12px; }
+  .lab-panel { border-radius: 4px; }
+  .contact-section { padding-block: 76px 64px; }
+  .site-footer { align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-card:hover, .button:hover { transform: none; }
+}
