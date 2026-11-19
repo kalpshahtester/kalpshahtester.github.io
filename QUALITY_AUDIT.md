@@ -1,50 +1,64 @@
-# Portfolio quality audit — 19 November 2026
+# Portfolio quality audit — 20 November 2026
 
-## Latest production evidence
+## Release under review
 
-The current release is deployed from commit `b33f5dd682e5983bdd1e5b871039aac4de993cc1` on `main`.
+- Website: https://kalpshahtester.github.io/
+- Repository: https://github.com/kalpshahtester/kalpshahtester.github.io
+- Release commit: `a0e96eea71354d20e56672cdbe0040db91b54627`
+- Deployment: GitHub Pages deployment completed successfully.
 
-Production GitHub Actions checks completed successfully:
+## Latest production validation
 
-| Check | Result |
-|---|---|
-| Vite production build and Pages artifact validation | Passed |
-| Source quality checks and local built-site smoke test | Passed |
-| Live route/resource smoke test | 71 assertions passed across 3 routes and 29 local resources |
-| Real-browser interaction smoke test | 15 passed, 0 failed |
-| Uncaught JavaScript errors | 0 on the tested homepage desktop/mobile and case-study pages |
-| Mobile horizontal overflow | None at the tested 390px viewport |
+| Check | Result | Evidence |
+|---|---|---|
+| Source quality, Vite build and Pages artifact validation | Passed | [Portfolio quality checks](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44595633979) |
+| Built-site HTTP resource smoke test | Passed | Included in the quality-check run above |
+| Live route and local-resource smoke test | Passed — 71 assertions across 3 routes and 29 unique local resources | [Production smoke test](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44595751896) |
+| Production browser interaction checks | Passed — 16 passed, 0 failed | [Browser interaction tests](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44595751950) |
+| Responsive viewport matrix | Passed at 13 widths from 280px through 1920px | Included in the browser-interaction run |
+| Browser JavaScript error checks | No uncaught JavaScript errors observed on the tested homepage and project pages | Included in the browser-interaction run |
+| Production Lighthouse audit | Passed on all 3 public routes | [Lighthouse audit and downloadable reports](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44595752231) |
 
-The latest measured production Lighthouse scores (19 November 2026):
+The Playwright run also checked homepage portrait loading, hero and contact LinkedIn destinations, desktop section navigation, the project quick-view dialog, the sample QA interaction, the back-to-top control, mobile navigation and both project-detail pages. The responsive matrix explicitly checked the page, header, Experience section and Skills section for horizontal overflow.
+
+## Latest Lighthouse scores
+
+Measured on the deployed site on 20 November 2026:
 
 | Route | Performance | Accessibility | Best Practices | SEO |
 |---|---:|---:|---:|---:|
-| Homepage | 76 | 100 | 100 | 100 |
-| SauceDemo case study | 91 | 100 | 100 | 100 |
-| MakeMyTrip case study | 100 | 100 | 100 | 100 |
+| Homepage | 71 | 100 | 100 | 100 |
+| SauceDemo case study | 100 | 100 | 100 | 100 |
+| MakeMyTrip case study | 99 | 100 | 100 | 100 |
 
-Homepage lab metrics: First Contentful Paint 1.6 s, Largest Contentful Paint 6.9 s, Speed Index 1.8 s, Total Blocking Time 10 ms, Time to Interactive 7.5 s and Cumulative Layout Shift 0.021. The measured LCP element is the hero introduction paragraph; its render delay accounts for most of the remaining LCP time. The profile portrait is still a large source PNG, with Lighthouse estimating about 1.0 MiB of potential image-delivery savings.
+Lighthouse performance remains the primary improvement area on the homepage. The original committed profile PNG is intentionally used as the single portrait source so both the repository-source Pages build and the Vite Pages artifact resolve the same image. A future image-delivery optimization should use a committed derivative and validate both deployment paths before replacing the current source.
 
-## Fixes added in this pass
+## Changes in this release
 
-| Priority | Finding | Action |
-|---|---|---|
-| High | The original portrait PNG is about 1.1 MB for a relatively small on-screen image. | A responsive CSS image frame now keeps the original profile PNG centered and fully visible. The photo remains unchanged and is not cropped or replaced. |
-| High | The 280px responsive viewport was not covered by the prior live browser check; the body also had a 320px minimum width. | Reduced the minimum width to 280px and expanded the production browser test to 13 viewport widths from 280px through 1920px, including explicit checks on Experience & Education and Skills & Toolkit. |
-| Medium | Mobile navigation needed a direct keyboard regression check. | Added an Escape-to-close test and verifies focus returns to the Menu button. |
-| Medium | The repository-source Pages build and the Vite Pages artifact use different asset pipelines. | Removed runtime dependence on generated, untracked WebP files. Both deployment paths now use the committed original PNG so the portrait remains available regardless of which Pages build is active. |
+| Area | Update |
+|---|---|
+| Visual system | Refined the dark navy/charcoal background, subtle ambient treatment, spacing, typography hierarchy and section widths. |
+| Hero and portrait | Reframed the portrait as a centered, predictable image card. The original image remains uncropped and uses `object-fit: contain`. |
+| Cards and grids | Standardized work-card surfaces, equal-height behaviour, card content flow, spacing and responsive grid sizing. |
+| Responsive layout | Added narrow-screen sizing and wrapping rules; verified Experience and Skills through 280px–1920px viewports. |
+| About and work copy | Clarified the current manual QA responsibilities and the evidence-led testing workflow, including ShareX, Excel/Google Sheets, ClickUp, Slack and retesting. |
+| Experience and skills | Kept current Manual QA work separate from previous IT support experience; strengthened the wording around test design, defect reporting, responsive checks and WordPress QA. |
+| Credentials | Distinguished TOPS Manual Testing training from supplementary certificates and professional work history. |
+| Contact and metadata | Verified LinkedIn in the hero CTA and contact section, and retained the LinkedIn profile in structured profile metadata. Improved search and social descriptions. |
+| Deployment reliability | Removed reliance on generated, untracked WebP files. The committed original portrait is now the shared asset for both Pages build paths. |
 
-The original PNG is committed and served directly. Both the source-branch Pages path and the Vite artifact path reference the same file; there is no generated-image/CDN dependency.
+## Content accuracy
 
-## Remaining measured work
+- Current role: Manual QA Tester at NXS Infotech Private Limited (May 2026–Present).
+- Previous role: Computer Engineer / IT Support at J. B. And Brothers Pvt. Ltd. (June 2020–January 2025).
+- Manual Testing training: TOPS Technologies (April–September 2025).
+- SauceDemo is identified as a public practice application, not production client work. Its figures refer to that practice project.
+- MakeMyTrip is identified as a testing assessment, not a client engagement.
+- Supplementary certificates are presented separately from professional experience.
+- The résumé, education details, project evidence and contact destinations remain linked from the portfolio.
 
-1. Re-run Lighthouse after the layout and content update; the scores above describe the previous release, not this update.
-2. Investigate the homepage hero paragraph's 6.2 s render-delay contribution. Image optimization reduces payload but does not by itself prove that the text LCP delay is fixed.
-3. Continue manual visual checks in Chrome, Firefox and Safari, with particular attention to the 04 / Experience & Education and 05 / Skills & Toolkit layouts, keyboard focus, reduced motion and touch scrolling.
-4. Verify the résumé, LinkedIn, email, WhatsApp and project links periodically.
+## Validation boundaries and remaining work
 
-## Validation boundaries
+The automated checks confirm the tested build, routes, referenced local resources, defined interactions and configured viewport matrix. They do not replace manual visual review on physical iOS/Android devices, keyboard and screen-reader review with assistive technology, or testing across every browser engine.
 
-The source audit checks unique IDs, local and cross-page fragments, ARIA references, image alternatives, accessible names, safe external links, local assets, social metadata, CSS structure and sitemap entries. The Pages artifact audit checks generated bundles, routes, downloadable résumé, original profile portrait and certificates. HTTP smoke tests check all live routes and discovered local resources. The Playwright checks exercise real browser interactions at the configured desktop/mobile conditions and the extended responsive viewport matrix.
-
-These automated checks do not replace a complete manual visual inspection on physical devices or across every supported browser. Lighthouse scores are lab measurements and can vary between runs. A passing build or smoke test is not represented as proof of every possible user journey.
+The homepage's Lighthouse Performance score of 71 is not being represented as fully optimized. The next performance pass should inspect the current report artifact, prioritize the measured largest-contentful-paint path, and test any image compression or delivery changes in both the source-branch and Vite deployment outputs. Lighthouse scores are lab measurements and can vary between runs.
