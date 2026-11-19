@@ -13,17 +13,21 @@ const sourceSet = [
 ].join(", ");
 const sizes = "(max-width: 600px) 260px, 350px";
 const sourceTag = '<source type="image/webp" srcset="' + sourceSet + '" sizes="' + sizes + '" />';
-const picturePattern = /(<picture class="profile-photo-wrap">)([\\s\\S]*?<img\\b[^>]*class="profile-photo"[^>]*\\/?>(?:[\\s\\S]*?))(<\\/picture>)/;
 
-const pictureMatch = html.match(picturePattern);
-assert.ok(pictureMatch, "Could not locate the profile portrait picture in dist/index.html.");
-assert.ok(!pictureMatch[2].includes('type="image/webp"'), "Responsive portrait source has already been injected.");
-html = html.replace(picturePattern, "$1" + sourceTag + "$2$3");
+const pictureStart = '<picture class="profile-photo-wrap">';
+const pictureEnd = "</picture>";
+const start = html.indexOf(pictureStart);
+const end = html.indexOf(pictureEnd, start);
+assert.ok(start >= 0 && end > start, "Could not locate the profile portrait picture in dist/index.html.");
+const pictureContents = html.slice(start + pictureStart.length, end);
+assert.ok(pictureContents.includes('class="profile-photo"'), "Profile portrait fallback image is missing.");
+assert.ok(!pictureContents.includes('type="image/webp"'), "Responsive portrait source has already been injected.");
+html = html.slice(0, start) + pictureStart + sourceTag + pictureContents + pictureEnd + html.slice(end + pictureEnd.length);
 
 const preload = '<link rel="preload" as="image" type="image/webp" href="/assets/images/kalp-shah-profile-768.webp" imagesrcset="' + sourceSet + '" imagesizes="' + sizes + '" fetchpriority="high" />';
-const canonicalPattern = /(<link rel="canonical" href="https:\\/\\/kalpshahtester\\.github\\.io\\/" \\/>)/;
-assert.match(html, canonicalPattern, "Could not locate canonical link for the image preload.");
-html = html.replace(canonicalPattern, "$1\\n    " + preload);
+const canonical = '<link rel="canonical" href="https://kalpshahtester.github.io/" />';
+assert.ok(html.includes(canonical), "Could not locate canonical link for the image preload.");
+html = html.replace(canonical, canonical + "\n    " + preload);
 
 assert.ok(html.includes(sourceTag), "Responsive WebP source was not added.");
 assert.ok(html.includes(preload), "Responsive WebP preload was not added.");
