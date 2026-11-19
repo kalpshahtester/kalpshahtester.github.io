@@ -11,7 +11,7 @@ const pages = [
 const htmlByRoute = new Map();
 const idsByRoute = new Map();
 const requiredFiles = [
-  "src/main.js", "src/scenes/qa-scene.js", "src/styles/main.css", "src/styles/quality.css",
+  "src/main.js", "src/scenes/qa-scene.js", "src/styles/main.css", "src/styles/quality.css", "src/styles/refinements.css",
   "assets/css/premium.css", "assets/css/case-study.css", "assets/js/case-study.js",
   "Kalp Shah Profile Photo.png", "Kalp Shah Manual Tester Resume.pdf",
   "Kalp Shah HCL GUVI Certification.png",
@@ -140,7 +140,7 @@ for (const route of ["/projects/saucedemo.html", "/projects/makemytrip.html"]) {
   assert.ok(!html.includes("/#projects"), route + ": obsolete homepage fragment found");
 }
 
-for (const file of ["src/styles/main.css", "src/styles/quality.css", "assets/css/premium.css", "assets/css/case-study.css"]) {
+for (const file of ["src/styles/main.css", "src/styles/quality.css", "src/styles/refinements.css", "assets/css/premium.css", "assets/css/case-study.css"]) {
   const css = fs.readFileSync(path.join(root, file), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
   let depth = 0;
   for (const char of css) {
