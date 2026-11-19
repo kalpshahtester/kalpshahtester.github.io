@@ -13,11 +13,11 @@
 |---|---|---|
 | Source quality, Vite build and Pages artifact validation | Passed | [Portfolio quality checks](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44595633979) |
 | Built-site HTTP resource smoke test | Passed | Included in the quality-check run above |
-| Live route and local-resource smoke test | Passed — 71 assertions across 3 routes and 29 unique local resources | [Production smoke test](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44595751896) |
-| Production browser interaction checks | Passed — 16 passed, 0 failed | [Browser interaction tests](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44595751950) |
+| Live route and local-resource smoke test | Passed — 71 assertions across 3 routes and 29 unique local resources | [Production smoke test](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44596238698) |
+| Production browser interaction checks | Passed — 16 passed, 0 failed | [Browser interaction tests](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44596238804) |
 | Responsive viewport matrix | Passed at 13 widths from 280px through 1920px | Included in the browser-interaction run |
 | Browser JavaScript error checks | No uncaught JavaScript errors observed on the tested homepage and project pages | Included in the browser-interaction run |
-| Production Lighthouse audit | Passed on all 3 public routes | [Lighthouse audit and downloadable reports](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44595752231) |
+| Production Lighthouse audit | Passed on all 3 public routes | [Lighthouse audit and downloadable reports](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44596238728) |
 
 The Playwright run also checked homepage portrait loading, hero and contact LinkedIn destinations, desktop section navigation, the project quick-view dialog, the sample QA interaction, the back-to-top control, mobile navigation and both project-detail pages. The responsive matrix explicitly checked the page, header, Experience section and Skills section for horizontal overflow.
 
@@ -27,8 +27,8 @@ Measured on the deployed site on 20 November 2026:
 
 | Route | Performance | Accessibility | Best Practices | SEO |
 |---|---:|---:|---:|---:|
-| Homepage | 71 | 100 | 100 | 100 |
-| SauceDemo case study | 100 | 100 | 100 | 100 |
+| Homepage | 76 | 100 | 100 | 100 |
+| SauceDemo case study | 98 | 100 | 100 | 100 |
 | MakeMyTrip case study | 99 | 100 | 100 | 100 |
 
 Lighthouse performance remains the primary improvement area on the homepage. The original committed profile PNG is intentionally used as the single portrait source so both the repository-source Pages build and the Vite Pages artifact resolve the same image. A future image-delivery optimization should use a committed derivative and validate both deployment paths before replacing the current source.
