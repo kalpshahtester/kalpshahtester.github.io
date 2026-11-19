@@ -62,7 +62,7 @@ assert.deepEqual([...originalPng.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 
 assert.match(html, /class="hero-portrait"/, "Built homepage missing portrait figure");
 assert.match(html, /<source type="image\/webp" srcset="\/assets\/images\/kalp-shah-profile-320\.webp 320w, \/assets\/images\/kalp-shah-profile-640\.webp 640w, \/assets\/images\/kalp-shah-profile-768\.webp 768w"/, "Built homepage missing responsive WebP portrait source");
 assert.match(html, /rel="preload" as="image" type="image\/webp"/, "Built homepage missing responsive portrait preload");
-assert.match(html, /src="\/Kalp%20Shah%20Profile%20Photo\.png"/, "Original profile PNG fallback must remain available");
+assert.ok(html.includes('src="/Kalp Shah Profile Photo.png"') || html.includes('src="/Kalp%20Shah%20Profile%20Photo.png"'), "Original profile PNG fallback must remain available");
 const webpFiles = [
   "assets/images/kalp-shah-profile-320.webp",
   "assets/images/kalp-shah-profile-640.webp",
