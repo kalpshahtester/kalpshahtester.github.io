@@ -1,6 +1,3 @@
-import "./styles/main.css";
-import "./styles/quality.css";
-
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
