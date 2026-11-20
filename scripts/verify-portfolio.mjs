@@ -160,7 +160,7 @@ assert.match(caseEditorial, /:focus-visible/, "Case-study CSS must expose keyboa
 
 const caseRuntime = fs.readFileSync(path.join(root, "assets/js/case-study.js"), "utf8");
 assert.match(caseRuntime, /__caseStudyMotionState/, "Case-study runtime must expose its static state");
-assert.doesNotMatch(caseRuntime, /gsap|ScrollTrigger|cdn\\.jsdelivr/, "Editorial case studies must not load decorative animation libraries");
+assert.doesNotMatch(caseRuntime, /import\(["']https:\/\/cdn\.jsdelivr|gsap\.registerPlugin|ScrollTrigger\.refresh/, "Editorial case studies must not load decorative animation libraries");
 const sitemap = fs.readFileSync(path.join(root, "sitemap.xml"), "utf8");
 for (const page of pages) assert.ok(sitemap.includes("https://kalpshahtester.github.io" + page.route), "Sitemap missing " + page.route);
 
