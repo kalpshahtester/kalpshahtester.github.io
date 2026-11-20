@@ -78,12 +78,13 @@ try {
     await desktop.locator("#backToTop").click();
     await desktop.waitForFunction(() => window.scrollY < 100, null, { timeout: 4000 });
   });
-  await record("home / responsive matrix", "Experience and Skills sections fit 280–1920px viewports", async () => {
+  await record("home / responsive matrix", "Primary sections and hero actions fit 280–1920px viewports", async () => {
     const widths = [280, 320, 360, 390, 412, 430, 540, 768, 850, 1024, 1280, 1366, 1920];
     for (const width of widths) {
       await desktop.setViewportSize({ width, height: 900 });
       const metrics = await desktop.evaluate(() => {
         const ids = ["about", "work", "approach", "experience", "toolkit", "footer-contact"];
+        const resumeActions = [...document.querySelectorAll(".hero-actions a")].map(el => { const rect = el.getBoundingClientRect(); return { text: el.textContent.trim(), left: Math.round(rect.left), right: Math.round(rect.right), width: Math.round(rect.width), visible: rect.width > 0 && getComputedStyle(el).visibility !== "hidden" && getComputedStyle(el).display !== "none" }; });
         const sections = ids.map(id => {
           const element = document.getElementById(id);
           const rect = element.getBoundingClientRect();
@@ -120,12 +121,18 @@ try {
           bodyWidth: document.body.scrollWidth,
           headerWidth: header?.scrollWidth || 0,
           sections,
+          resumeActions,
           wideNodes
         };
       });
       assert.ok(metrics.documentWidth <= width + 1, width + "px document overflow: " + JSON.stringify(metrics));
       assert.ok(metrics.bodyWidth <= width + 1, width + "px body overflow: " + JSON.stringify(metrics));
       assert.ok(metrics.headerWidth <= width + 1, width + "px navigation overflow: " + JSON.stringify(metrics));
+      assert.equal(metrics.resumeActions.length, 4, width + "px should render all four hero actions: " + JSON.stringify(metrics.resumeActions));
+      for (const action of metrics.resumeActions) {
+        assert.ok(action.visible && action.width > 0, width + "px hero action is hidden: " + JSON.stringify(action));
+        assert.ok(action.left >= -1 && action.right <= width + 1, width + "px hero action is clipped: " + JSON.stringify(action));
+      }
       for (const section of metrics.sections) {
         assert.ok(section.left >= -1 && section.right <= width + 1, width + "px " + section.id + " extends beyond viewport: " + JSON.stringify(metrics));
         assert.ok(section.scrollWidth <= section.clientWidth + 1, width + "px " + section.id + " has internal horizontal overflow: " + JSON.stringify(metrics));
