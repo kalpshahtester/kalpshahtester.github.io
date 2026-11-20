@@ -195,6 +195,78 @@ dialog.addEventListener("click", event => {
   if (event.target === dialog) dialog.close();
 });
 
+// Accessible QA Lab tabs: mouse, touch and keyboard users can switch sample views.
+const labTabs = $(".lab-tab");
+const setLabTab = (activeTab, moveFocus = false) => {
+  labTabs.forEach(tab => {
+    const selected = tab === activeTab;
+    tab.setAttribute("aria-selected", String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    const panel = $("#" + tab.getAttribute("aria-controls"));
+    if (panel) panel.hidden = !selected;
+  });
+  if (moveFocus) activeTab.focus();
+};
+labTabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => setLabTab(tab));
+  tab.addEventListener("keydown", event => {
+    let nextIndex = index;
+    if (event.key === "ArrowRight") nextIndex = (index + 1) % labTabs.length;
+    else if (event.key === "ArrowLeft") nextIndex = (index - 1 + labTabs.length) % labTabs.length;
+    else if (event.key === "Home") nextIndex = 0;
+    else if (event.key === "End") nextIndex = labTabs.length - 1;
+    else return;
+    event.preventDefault();
+    setLabTab(labTabs[nextIndex], true);
+  });
+});
+
+const sampleText = id => {
+  const root = $("#" + id);
+  if (!root) return "";
+  return [...root.querySelectorAll("dl > div")].map(row => {
+    const label = $("dt", row)?.textContent?.trim() || "";
+    const value = $("dd", row)?.innerText?.trim() || "";
+    return label + ":\n" + value;
+  }).join("\n\n");
+};
+const writeClipboard = async value => {
+  if (navigator.clipboard?.writeText && window.isSecureContext) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = value;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.append(textarea);
+  textarea.select();
+  const copied = document.execCommand("copy");
+  textarea.remove();
+  if (!copied) throw new Error("Clipboard is unavailable in this browser.");
+};
+const bindSampleCopy = (buttonId, sourceId, statusId, successText) => {
+  const button = $("#" + buttonId);
+  const status = $("#" + statusId);
+  button?.addEventListener("click", async () => {
+    const value = sampleText(sourceId);
+    if (!value) return;
+    button.disabled = true;
+    try {
+      await writeClipboard(value);
+      if (status) status.textContent = successText;
+    } catch (error) {
+      if (status) status.textContent = "Copy is unavailable here. Select the sample text to copy it manually.";
+      console.warn("QA Lab copy action was unavailable.", error);
+    } finally {
+      button.disabled = false;
+    }
+  });
+};
+bindSampleCopy("copyBugReport", "sampleBugText", "bugCopyStatus", "Sample bug report copied. This is illustrative data.");
+bindSampleCopy("copyTestCase", "sampleCaseText", "caseCopyStatus", "Sample test case copied. No execution result is claimed.");
+
 // Local illustrative checklist only. No remote requests or external-site scanning.
 const checks = $("#consoleChecks");
 const run = $("#runChecks");
