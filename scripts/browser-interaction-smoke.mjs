@@ -36,18 +36,25 @@ try {
     const linkedin = desktop.locator(".hero-linkedin");
     assert.equal(await linkedin.getAttribute("href"), "https://www.linkedin.com/in/kalp-shah-software-tester/", "Hero LinkedIn destination is incorrect");
     assert.equal(await linkedin.getAttribute("target"), "_blank", "LinkedIn should open in a new tab");
-    assert.equal(await desktop.locator('.contact-links a[href="https://www.linkedin.com/in/kalp-shah-software-tester/"]').count(), 1, "Contact LinkedIn link is missing");
+    assert.equal(await desktop.locator('.footer-contact-links a[href="https://www.linkedin.com/in/kalp-shah-software-tester/"]').count(), 1, "Contact LinkedIn link is missing");
     assert.equal(await desktop.locator('.hero-actions a[download]').count(), 1, "Résumé download link is missing");
 
   });
   await record("home / desktop", "Desktop navigation reaches sections", async () => {
-    for (const id of ["about", "work", "approach", "experience", "toolkit", "contact"]) {
+    for (const id of ["about", "work", "approach", "experience", "toolkit", "footer-contact"]) {
       const link = desktop.locator('.hud-nav nav a[href="#' + id + '"]');
       await link.click();
       await desktop.waitForTimeout(100);
       assert.equal(await desktop.locator("#" + id).count(), 1, "Missing section #" + id);
       assert.equal(new URL(desktop.url()).hash, "#" + id, "Navigation did not update hash for #" + id);
     }
+  });
+  await record("home / desktop", "Standalone sections removed and footer contacts remain usable", async () => {
+    assert.equal(await desktop.locator(".contact-section").count(), 0, "Standalone conversation section should be removed");
+    assert.equal(await desktop.locator(".quality-section").count(), 0, "Site quality report section should be removed");
+    assert.equal(await desktop.locator(".footer-contact-links a").count(), 4, "Footer should expose email, LinkedIn, GitHub and WhatsApp");
+    assert.equal(await desktop.locator('.footer-contact-links a[href^="mailto:"]').count(), 1, "Footer email link is missing");
+    assert.equal(await desktop.locator('.footer-contact-links a[href="https://github.com/kalpshahtester"]').count(), 1, "Footer GitHub link is missing");
   });
   await record("home / desktop", "Project quick-view dialog opens and closes", async () => {
     const trigger = desktop.locator(".project-open").first();
@@ -76,7 +83,7 @@ try {
     for (const width of widths) {
       await desktop.setViewportSize({ width, height: 900 });
       const metrics = await desktop.evaluate(() => {
-        const ids = ["experience", "toolkit"];
+        const ids = ["about", "work", "approach", "experience", "toolkit", "footer-contact"];
         const sections = ids.map(id => {
           const element = document.getElementById(id);
           const rect = element.getBoundingClientRect();
