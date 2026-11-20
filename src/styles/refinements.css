@@ -1457,3 +1457,12 @@ main > .lab-section.content-section {
     transform: none;
   }
 }
+
+/* Tablet hero: keep every headline line inside the text column. */
+@media (min-width: 851px) and (max-width: 1100px) {
+  .hero h1 {
+    max-width: 100%;
+    font-size: clamp(50px, 5.8vw, 60px);
+    letter-spacing: -.065em;
+  }
+}
