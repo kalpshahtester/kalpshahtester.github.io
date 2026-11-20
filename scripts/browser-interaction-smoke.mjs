@@ -48,11 +48,20 @@ try {
     assert.equal(await downloadResume.getAttribute("href"), await viewResume.getAttribute("href"), "View and download actions must point to the same résumé PDF");
     assert.equal(await viewResume.getAttribute("target"), "_blank", "View Resume should open the PDF in a new tab");
     assert.ok((await viewResume.getAttribute("aria-label") || "").includes("résumé"), "View Resume needs a descriptive accessible label");
-    const pdfResponse = await desktop.request.get(baseURL + viewResume.getAttribute("href"));
-    assert.equal(pdfResponse.status(), 200, "Résumé PDF should return HTTP 200");
-    assert.match(pdfResponse.headers()["content-type"] || "", /application\/pdf/i, "Résumé should be served as a PDF");
-    const pdfBytes = await pdfResponse.body();
-    assert.equal(pdfBytes.subarray(0, 5).toString("ascii"), "%PDF-", "Résumé response is not a valid PDF");
+    const pdfInfo = await desktop.evaluate(async href => {
+      const response = await fetch(new URL(href, window.location.origin), { cache: "no-store" });
+      const bytes = await response.arrayBuffer();
+      return {
+        status: response.status,
+        contentType: response.headers.get("content-type") || "",
+        signature: String.fromCharCode(...new Uint8Array(bytes.slice(0, 5))),
+        size: bytes.byteLength
+      };
+    }, await viewResume.getAttribute("href"));
+    assert.equal(pdfInfo.status, 200, "Résumé PDF should return HTTP 200");
+    assert.match(pdfInfo.contentType, /application\/pdf/i, "Résumé should be served as a PDF");
+    assert.equal(pdfInfo.signature, "%PDF-", "Résumé response is not a valid PDF");
+    assert.ok(pdfInfo.size > 1000, "Résumé PDF response is unexpectedly small");
 
   });
   await record("home / desktop", "Desktop navigation reaches sections", async () => {
