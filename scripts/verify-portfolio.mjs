@@ -126,12 +126,9 @@ assert.equal([...home.matchAll(/class="certificate-card"/g)].length, 3, "Expecte
 assert.match(home, /<script\b[^>]*src="\/src\/main\.js"/, "Vite entry module is not linked");
 assert.ok(home.includes('href="/src/styles/main.css"') && home.includes('href="/src/styles/refinements.css"'), "Homepage must link active stylesheets for source-branch hosting");
 assert.ok(!fs.readFileSync(path.join(root, "src/main.js"), "utf8").includes('import "./styles/'), "Runtime entry must not load CSS as JavaScript modules");
-assert.match(home, /href="\/Kalp%20Shah%20Manual%20Tester%20Resume\.pdf"/, "Résumé link is missing");
-assert.match(home, /id="resumeViewButton"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/, "Visible View Resume action must open the résumé PDF safely in a new tab");
-assert.match(home, /id="resumeDownloadButton"[^>]*download="Kalp-Shah-Manual-QA-Tester-Resume\.pdf"/, "Download Resume action is missing or has the wrong filename");
-assert.equal([...home.matchAll(/id="resumeViewButton"/g)].length, 1, "Expected exactly one View Resume action");
+assert.match(home, /id="resumeDownloadButton"[^>]*href="\/Kalp%20Shah%20Manual%20Tester%20Resume\.pdf"[^>]*download="Kalp-Shah-Manual-QA-Tester-Resume\.pdf"/, "Download Resume action is missing or has an incorrect PDF target/filename");
 assert.equal([...home.matchAll(/id="resumeDownloadButton"/g)].length, 1, "Expected exactly one Download Resume action");
-assert.ok(home.includes('aria-label="View Resume. Kalp Shah’s Manual QA Tester résumé (PDF)."'), "View Resume accessible name must include its visible label");
+assert.doesNotMatch(home, /View Resume|resumeViewButton|resume-view-button/i, "The unnecessary View Resume action must not be present");
 assert.ok(home.includes('aria-label="Download Resume. Kalp Shah’s Manual QA Tester résumé (PDF)."'), "Download Resume accessible name must include its visible label");
 assert.ok(home.includes('aria-label="K. Kalp Shah Manual QA / Web &amp; WordPress Home"'), "Header brand accessible name must include its visible branding");
 assert.ok(home.includes('aria-label="K. Kalp Shah Manual QA Tester Home"'), "Footer brand accessible name must include its visible branding");

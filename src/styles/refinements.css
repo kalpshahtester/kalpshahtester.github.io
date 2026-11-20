@@ -957,23 +957,521 @@ html { scroll-padding-top: 88px; }
   .footer-contact-links a { transition: none; }
 }
 
-/* Keep résumé actions legible and fully visible in the responsive hero action row. */
-.hero-actions .resume-view-button,
-.hero-actions .resume-download-button {
-  white-space: nowrap;
+
+
+/* Final site-wide layout pass: shared rhythm, predictable card sizing and responsive alignment. */
+:root {
+  --section-space: clamp(76px, 8.2vw, 116px);
+  --section-gap: clamp(24px, 3.2vw, 42px);
+  --card-gap: clamp(14px, 1.8vw, 22px);
+}
+main > .content-section {
+  padding-block: var(--section-space);
+}
+main > .lab-section.content-section {
+  padding-top: clamp(18px, 2.8vw, 34px);
+  padding-bottom: var(--section-space);
+}
+.content-section .section-index {
+  margin-bottom: clamp(24px, 3.4vw, 38px);
+}
+.split-heading,
+.section-heading {
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+  gap: clamp(30px, 5.4vw, 72px);
+  min-width: 0;
+}
+.split-heading > h2,
+.section-heading > h2 {
+  min-width: 0;
+  max-width: 16ch;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+.section-heading > p {
+  max-width: 42ch;
+  line-height: 1.8;
+}
+#about .split-heading {
+  align-items: start;
+}
+#about .copy {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding-top: 2px;
+}
+#about .copy > p {
+  max-width: 62ch;
+  margin: 0;
+  line-height: 1.8;
+}
+#about .copy .lead {
+  margin-bottom: 2px;
 }
 
-/* Prevent long portfolio headings from overflowing narrow mobile layouts. */
-@media (max-width: 600px) {
+/* Project cards share one visual height and a common action baseline. */
+#work .work-grid {
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+  align-items: stretch;
+  gap: var(--card-gap);
+}
+#work .work-card {
+  display: flex;
+  min-width: 0;
+  height: 100%;
+  flex-direction: column;
+}
+#work .work-visual {
+  flex: 0 0 clamp(220px, 22vw, 286px);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#work .work-body {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(22px, 2.4vw, 32px);
+}
+#work .work-body > p:not(.eyebrow) {
+  max-width: 58ch;
+  margin-bottom: 0;
+  line-height: 1.75;
+}
+#work .stats,
+#work .tag-row {
+  align-items: center;
+  gap: clamp(12px, 1.6vw, 20px);
+  margin-block: 20px 0;
+}
+#work .card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin-top: auto;
+  padding-top: 24px;
+}
+#work .card-actions .button {
+  min-height: 46px;
+}
+
+/* Equal-height workflow cards with consistent internal spacing. */
+#approach .approach-track {
+  display: grid;
+  align-items: stretch;
+  gap: 0;
+  margin-top: clamp(34px, 5vw, 58px);
+}
+#approach .approach-track article {
+  display: flex;
+  min-width: 0;
+  min-height: 220px;
+  flex-direction: column;
+  padding: clamp(20px, 2.2vw, 28px);
+}
+#approach .approach-track h3 {
+  margin: clamp(30px, 4vw, 46px) 0 10px;
+  line-height: 1.2;
+}
+#approach .approach-track p {
+  max-width: 34ch;
+  margin: 0;
+  line-height: 1.75;
+}
+
+/* Align the illustrative checklist panel and its four rows. */
+.lab-panel {
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 52px);
+  padding: clamp(24px, 4vw, 48px);
+}
+.lab-panel > div,
+.lab-console {
+  min-width: 0;
+}
+.lab-panel h2 {
+  max-width: 15ch;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+.lab-console .console-row {
+  min-height: 52px;
+  align-items: center;
+  line-height: 1.5;
+}
+.lab-console .console-footer {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Experience timeline and education panel use a stable two-column baseline. */
+#experience .experience-layout {
+  grid-template-columns: minmax(0, 1.65fr) minmax(260px, .75fr);
+  align-items: stretch;
+  gap: clamp(28px, 4.5vw, 62px);
+  margin-top: clamp(30px, 4vw, 46px);
+}
+#experience .experience-column,
+#experience .timeline,
+#experience .timeline article,
+#experience .timeline article > div {
+  min-width: 0;
+}
+#experience .timeline article {
+  align-items: start;
+  gap: clamp(18px, 2.4vw, 30px);
+}
+#experience .timeline article h3,
+#experience .timeline article strong,
+#experience .timeline article p {
+  overflow-wrap: anywhere;
+}
+#experience .education-panel {
+  display: flex;
+  min-width: 0;
+  height: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+#experience .education-panel .education-mark {
+  margin-block: clamp(24px, 3vw, 36px) 20px;
+}
+#experience .education-panel h3 {
+  max-width: 18ch;
+  line-height: 1.18;
+}
+#experience .education-panel p {
+  line-height: 1.75;
+}
+
+/* Skills and certificate cards align consistently within each grid row. */
+#toolkit .toolkit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: var(--card-gap);
+  margin-top: clamp(30px, 4vw, 42px);
+}
+#toolkit .toolkit-grid article {
+  display: flex;
+  min-width: 0;
+  height: 100%;
+  flex-direction: column;
+  padding: clamp(22px, 2.4vw, 30px);
+}
+#toolkit .toolkit-grid article > span {
+  line-height: 1.6;
+}
+#toolkit .toolkit-grid h3 {
+  min-height: 1.25em;
+  margin: 18px 0 16px;
+  line-height: 1.2;
+}
+#toolkit .skill-list {
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+}
+#toolkit .skill-list li {
+  max-width: 100%;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+#toolkit .certificates {
+  grid-template-columns: minmax(180px, .7fr) minmax(0, 1.3fr);
+  align-items: start;
+  gap: clamp(24px, 4.5vw, 58px);
+  margin-top: clamp(42px, 5vw, 64px);
+}
+#toolkit .certificates > div,
+#toolkit .certificate-grid {
+  min-width: 0;
+}
+#toolkit .certificate-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: clamp(10px, 1.4vw, 16px);
+}
+#toolkit .certificate-card {
+  display: flex;
+  min-width: 0;
+  height: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+#toolkit .certificate-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+}
+#toolkit .certificate-card span,
+#toolkit .certificate-card small {
+  overflow-wrap: anywhere;
+}
+#toolkit .certificates > div > p {
+  max-width: 72ch;
+  margin: 18px 0 0;
+  line-height: 1.75;
+}
+
+/* Keep the footer columns and all contact targets on a common grid. */
+.site-footer {
+  margin-top: 0;
+}
+.footer-primary {
+  align-items: start;
+  gap: clamp(22px, 3.5vw, 48px);
+}
+.footer-contact-links {
+  align-items: stretch;
+}
+.footer-contact-links a {
+  min-height: 58px;
+}
+
+/* Tablet: simplify multi-column compositions before they become cramped. */
+@media (max-width: 1100px) {
+  #experience .experience-layout {
+    grid-template-columns: minmax(0, 1.45fr) minmax(240px, .8fr);
+    gap: 28px;
+  }
+  #experience .timeline article {
+    grid-template-columns: minmax(100px, .5fr) minmax(0, 1.5fr);
+    gap: 18px;
+  }
+  #toolkit .certificates {
+    grid-template-columns: minmax(160px, .6fr) minmax(0, 1.4fr);
+  }
+}
+
+/* Compact tablet and mobile layouts. */
+@media (max-width: 850px) {
+  main > .content-section {
+    padding-block: clamp(68px, 9vw, 92px);
+  }
+  main > .lab-section.content-section {
+    padding-top: 18px;
+    padding-bottom: clamp(68px, 9vw, 92px);
+  }
+  .split-heading,
+  .section-heading {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
   .split-heading > h2,
   .section-heading > h2 {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    font-size: clamp(24px, 7vw, 30px);
-    line-height: 1.1;
+    max-width: 20ch;
+  }
+  #experience .experience-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+  #experience .education-panel {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    height: auto;
+  }
+  #experience .education-panel > span,
+  #experience .education-panel > small {
+    grid-column: 1 / -1;
+  }
+  #experience .education-mark {
+    grid-row: 2 / 4;
+    margin: 16px 0 0;
+  }
+  #experience .education-panel h3 {
+    align-self: end;
+    margin: 12px 0 4px;
+  }
+  #experience .education-panel p {
+    align-self: start;
+  }
+  #toolkit .certificate-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile: one clear reading column, balanced card padding and readable actions. */
+@media (max-width: 600px) {
+  main > .content-section {
+    padding-block: clamp(62px, 13vw, 82px);
+  }
+  main > .lab-section.content-section {
+    padding-top: 14px;
+    padding-bottom: clamp(62px, 13vw, 82px);
+  }
+  .content-section .section-index {
+    margin-bottom: 24px;
+  }
+  .split-heading,
+  .section-heading {
+    gap: 14px;
+  }
+  .split-heading > h2,
+  .section-heading > h2 {
+    max-width: 22ch;
+    font-size: clamp(25px, 7vw, 32px);
+    line-height: 1.12;
     letter-spacing: -.045em;
-    overflow-wrap: anywhere;
-    text-wrap: pretty;
+  }
+  .section-heading > p,
+  #about .copy > p,
+  #work .work-body > p:not(.eyebrow),
+  #approach .approach-track p,
+  #experience .timeline article p,
+  #toolkit .certificates > div > p {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+  #work .work-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  #work .work-visual {
+    flex-basis: 210px;
+  }
+  #work .work-body {
+    padding: 22px;
+  }
+  #work .card-actions {
+    gap: 8px 12px;
+    padding-top: 20px;
+  }
+  #approach .approach-track {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #approach .approach-track article {
+    min-height: 0;
+    padding: 20px;
+  }
+  #approach .approach-track h3 {
+    margin: 20px 0 8px;
+  }
+  .lab-panel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    padding: 22px;
+  }
+  .lab-panel h2 {
+    max-width: 18ch;
+    font-size: clamp(27px, 8vw, 36px);
+  }
+  .lab-console .console-row {
+    grid-template-columns: 24px minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 12px 6px;
+    font-size: 9px;
+  }
+  #experience .timeline article {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+    padding: 22px 0;
+  }
+  #experience .education-panel {
+    padding: 18px;
+  }
+  #toolkit .toolkit-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  #toolkit .toolkit-grid article {
+    padding: 22px;
+  }
+  #toolkit .toolkit-grid h3 {
+    min-height: 0;
+    margin: 14px 0 12px;
+  }
+  #toolkit .certificates {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    margin-top: 38px;
+    padding-top: 24px;
+  }
+  #toolkit .certificate-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  #toolkit .certificate-card {
+    padding: 9px;
+  }
+  #toolkit .certificate-card small {
+    font-size: 7px;
+  }
+  .footer-primary {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+  .footer-contact-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px 14px;
+  }
+}
+
+/* Small phones: avoid narrow certificate cards and keep action labels legible. */
+@media (max-width: 420px) {
+  #toolkit .certificate-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #toolkit .certificate-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #toolkit .certificate-card img {
+    max-height: 260px;
+  }
+  .hero-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .hero-actions .button {
+    min-width: 0;
+    gap: 8px;
+    padding-inline: 10px;
+    font-size: 10px;
+  }
+  .hero-actions .hero-linkedin {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 360px) {
+  .hero-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hero-actions .hero-linkedin {
+    grid-column: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #work .work-card:hover,
+  #approach .approach-track article:hover,
+  #toolkit .certificate-card:hover {
+    transform: none;
+  }
+}
+
+/* Tablet hero: keep every headline line inside the text column. */
+@media (min-width: 851px) and (max-width: 1100px) {
+  .hero h1 {
+    max-width: 100%;
+    font-size: clamp(50px, 5.8vw, 60px);
+    letter-spacing: -.065em;
+  }
+}
+
+/* Keep the long three-line hero statement inside the narrower tablet column. */
+@media (min-width: 851px) and (max-width: 1100px) {
+  .hero .hero-copy > h1#hero-title {
+    max-width: 100%;
+    font-size: clamp(48px, 5.2vw, 56px) !important;
+    letter-spacing: -.065em;
   }
 }

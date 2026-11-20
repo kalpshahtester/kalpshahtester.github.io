@@ -37,17 +37,15 @@ try {
     assert.equal(await linkedin.getAttribute("href"), "https://www.linkedin.com/in/kalp-shah-software-tester/", "Hero LinkedIn destination is incorrect");
     assert.equal(await linkedin.getAttribute("target"), "_blank", "LinkedIn should open in a new tab");
     assert.equal(await desktop.locator('.footer-contact-links a[href="https://www.linkedin.com/in/kalp-shah-software-tester/"]').count(), 1, "Contact LinkedIn link is missing");
-    assert.equal(await desktop.locator('.hero-actions a[download]').count(), 1, "Résumé download link is missing");
-    const viewResume = desktop.locator("#resumeViewButton");
+    assert.equal(await desktop.locator('.hero-actions a[download]').count(), 1, "Exactly one résumé download action should be present");
+    assert.equal(await desktop.locator("#resumeViewButton, .resume-view-button").count(), 0, "View Resume must not be displayed");
+    assert.equal(await desktop.getByText("View Resume", { exact: true }).count(), 0, "Only Download Resume should be offered");
     const downloadResume = desktop.locator("#resumeDownloadButton");
-    await viewResume.waitFor({ state: "visible" });
     await downloadResume.waitFor({ state: "visible" });
-    assert.ok((await viewResume.innerText()).includes("View Resume"), "View Resume label is missing");
     assert.ok((await downloadResume.innerText()).includes("Download Resume"), "Download Resume label is missing");
-    assert.equal(await viewResume.getAttribute("href"), "/Kalp%20Shah%20Manual%20Tester%20Resume.pdf");
-    assert.equal(await downloadResume.getAttribute("href"), await viewResume.getAttribute("href"), "View and download actions must point to the same résumé PDF");
-    assert.equal(await viewResume.getAttribute("target"), "_blank", "View Resume should open the PDF in a new tab");
-    assert.ok((await viewResume.getAttribute("aria-label") || "").includes("résumé"), "View Resume needs a descriptive accessible label");
+    assert.equal(await downloadResume.getAttribute("href"), "/Kalp%20Shah%20Manual%20Tester%20Resume.pdf");
+    assert.equal(await downloadResume.getAttribute("download"), "Kalp-Shah-Manual-QA-Tester-Resume.pdf");
+    assert.ok((await downloadResume.getAttribute("aria-label") || "").includes("Download Resume"), "Download Resume needs a descriptive accessible label");
     const pdfInfo = await desktop.evaluate(async href => {
       const response = await fetch(new URL(href, window.location.origin), { cache: "no-store" });
       const bytes = await response.arrayBuffer();
@@ -57,7 +55,7 @@ try {
         signature: String.fromCharCode(...new Uint8Array(bytes.slice(0, 5))),
         size: bytes.byteLength
       };
-    }, await viewResume.getAttribute("href"));
+    }, await downloadResume.getAttribute("href"));
     assert.equal(pdfInfo.status, 200, "Résumé PDF should return HTTP 200");
     assert.match(pdfInfo.contentType, /application\/pdf/i, "Résumé should be served as a PDF");
     assert.equal(pdfInfo.signature, "%PDF-", "Résumé response is not a valid PDF");
@@ -102,7 +100,7 @@ try {
     await desktop.locator("#backToTop").click();
     await desktop.waitForFunction(() => window.scrollY < 100, null, { timeout: 4000 });
   });
-  await record("home / responsive matrix", "Primary sections and hero actions fit 280–1920px viewports", async () => {
+  await record("home / responsive matrix", "All home sections, cards and hero actions fit 280–1920px viewports", async () => {
     const widths = [280, 320, 360, 390, 412, 430, 540, 768, 850, 1024, 1280, 1366, 1920];
     for (const width of widths) {
       await desktop.setViewportSize({ width, height: 900 });
@@ -119,6 +117,46 @@ try {
             clientWidth: element.clientWidth,
             scrollWidth: element.scrollWidth
           };
+        });
+        const cardGroupSpecs = [
+          { name: "project cards", parent: "#work .work-grid", items: ".work-card" },
+          { name: "approach cards", parent: "#approach .approach-track", items: "article" },
+          { name: "skill cards", parent: "#toolkit .toolkit-grid", items: "article" },
+          { name: "certificate cards", parent: "#toolkit .certificate-grid", items: ".certificate-card" }
+        ];
+        const cardGroups = cardGroupSpecs.map(spec => {
+          const parent = document.querySelector(spec.parent);
+          if (!parent) return { name: spec.name, missing: true, parent: null, rows: [], items: [] };
+          const parentRect = parent.getBoundingClientRect();
+          const items = [...parent.querySelectorAll(spec.items)].map(el => {
+            const rect = el.getBoundingClientRect();
+            return { left: Math.round(rect.left), right: Math.round(rect.right), top: Math.round(rect.top), bottom: Math.round(rect.bottom), width: Math.round(rect.width), height: Math.round(rect.height) };
+          });
+          const rows = [];
+          for (const item of items) {
+            let row = rows.find(candidate => Math.abs(candidate.top - item.top) <= 2);
+            if (!row) { row = { top: item.top, heights: [], widths: [] }; rows.push(row); }
+            row.heights.push(item.height);
+            row.widths.push(item.width);
+          }
+          return {
+            name: spec.name,
+            parent: { left: Math.round(parentRect.left), right: Math.round(parentRect.right), width: Math.round(parentRect.width) },
+            rows,
+            items
+          };
+        });
+        const textOverflows = [...document.querySelectorAll("main h1, main h2, main h3, main p, main li, footer p, footer small")]
+          .filter(el => el.getBoundingClientRect().width > 0)
+          .map(el => {
+            const rect = el.getBoundingClientRect();
+            return { tag: el.tagName.toLowerCase(), text: (el.textContent || "").trim().replace(/\\s+/g, " ").slice(0, 90), left: Math.round(rect.left), right: Math.round(rect.right), clientWidth: el.clientWidth, scrollWidth: el.scrollWidth };
+          })
+          .filter(el => el.scrollWidth > el.clientWidth + 2);
+        const sectionSpacing = ["about", "work", "approach", "experience", "toolkit"].map(id => {
+          const el = document.getElementById(id);
+          const style = getComputedStyle(el);
+          return { id, top: parseFloat(style.paddingTop), bottom: parseFloat(style.paddingBottom) };
         });
         const header = document.getElementById("siteHeader");
         const wideNodes = [...document.querySelectorAll("body *")].map(el => {
@@ -146,13 +184,16 @@ try {
           headerWidth: header?.scrollWidth || 0,
           sections,
           resumeActions,
+          cardGroups,
+          textOverflows,
+          sectionSpacing,
           wideNodes
         };
       });
       assert.ok(metrics.documentWidth <= width + 1, width + "px document overflow: " + JSON.stringify(metrics));
       assert.ok(metrics.bodyWidth <= width + 1, width + "px body overflow: " + JSON.stringify(metrics));
       assert.ok(metrics.headerWidth <= width + 1, width + "px navigation overflow: " + JSON.stringify(metrics));
-      assert.equal(metrics.resumeActions.length, 4, width + "px should render all four hero actions: " + JSON.stringify(metrics.resumeActions));
+      assert.equal(metrics.resumeActions.length, 3, width + "px should render Explore, Download Resume and LinkedIn only: " + JSON.stringify(metrics.resumeActions));
       for (const action of metrics.resumeActions) {
         assert.ok(action.visible && action.width > 0, width + "px hero action is hidden: " + JSON.stringify(action));
         assert.ok(action.left >= -1 && action.right <= width + 1, width + "px hero action is clipped: " + JSON.stringify(action));
@@ -160,6 +201,21 @@ try {
       for (const section of metrics.sections) {
         assert.ok(section.left >= -1 && section.right <= width + 1, width + "px " + section.id + " extends beyond viewport: " + JSON.stringify(metrics));
         assert.ok(section.scrollWidth <= section.clientWidth + 1, width + "px " + section.id + " has internal horizontal overflow: " + JSON.stringify(metrics));
+      }
+      assert.equal(metrics.textOverflows.length, 0, width + "px text is clipped or overflows its own box: " + JSON.stringify(metrics.textOverflows));
+      for (const group of metrics.cardGroups) {
+        assert.ok(!group.missing, width + "px missing " + group.name);
+        for (const item of group.items) {
+          assert.ok(item.left >= group.parent.left - 1 && item.right <= group.parent.right + 1, width + "px " + group.name + " card extends outside its grid: " + JSON.stringify(group));
+        }
+        for (const row of group.rows) {
+          const minHeight = Math.min(...row.heights);
+          const maxHeight = Math.max(...row.heights);
+          assert.ok(maxHeight - minHeight <= 2, width + "px " + group.name + " cards in the same row are misaligned: " + JSON.stringify(group));
+        }
+      }
+      for (const spacing of metrics.sectionSpacing) {
+        assert.ok(spacing.top >= 60 && spacing.bottom >= 60, width + "px inconsistent vertical spacing for #" + spacing.id + ": " + JSON.stringify(spacing));
       }
     }
     await desktop.setViewportSize({ width: 1440, height: 1000 });
@@ -208,9 +264,29 @@ try {
     await record(route, "Project page renders with a heading", async () => {
       assert.ok((await page.locator("h1").first().textContent()).trim().length > 0);
     });
-    await record(route, "Project page has no horizontal overflow", async () => {
-      const sizes = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth, page: document.documentElement.scrollWidth }));
-      assert.ok(sizes.page <= sizes.viewport + 1, "Horizontal overflow: " + JSON.stringify(sizes));
+    await record(route, "Project page layout, headings and cards fit the responsive matrix", async () => {
+      for (const width of [280, 320, 360, 390, 430, 540, 768, 850, 1024, 1366]) {
+        await page.setViewportSize({ width, height: 900 });
+        const metrics = await page.evaluate(() => {
+          const overflowText = [...document.querySelectorAll("main h1, main h2, main h3, main p, main li")]
+            .filter(el => el.getBoundingClientRect().width > 0)
+            .map(el => ({ text: (el.textContent || "").trim().replace(/\\s+/g, " ").slice(0, 75), width: el.clientWidth, scroll: el.scrollWidth }))
+            .filter(el => el.scroll > el.width + 2);
+          const gridItems = [...document.querySelectorAll(".case-hero-grid > *, .scope-grid > *, .evidence-grid > *, .case-metrics > *")]
+            .filter(el => el.getBoundingClientRect().width > 0)
+            .map(el => {
+              const r = el.getBoundingClientRect();
+              const p = el.parentElement.getBoundingClientRect();
+              return { left: Math.round(r.left), right: Math.round(r.right), top: Math.round(r.top), height: Math.round(r.height), parentLeft: Math.round(p.left), parentRight: Math.round(p.right) };
+            });
+          return { viewport: document.documentElement.clientWidth, document: document.documentElement.scrollWidth, body: document.body.scrollWidth, overflowText, gridItems };
+        });
+        assert.ok(metrics.document <= width + 1 && metrics.body <= width + 1, width + "px project page overflows: " + JSON.stringify(metrics));
+        assert.equal(metrics.overflowText.length, 0, width + "px project text is clipped: " + JSON.stringify(metrics.overflowText));
+        for (const item of metrics.gridItems) {
+          assert.ok(item.left >= item.parentLeft - 1 && item.right <= item.parentRight + 1, width + "px project card extends beyond its grid: " + JSON.stringify(item));
+        }
+      }
     });
     await record(route, "Project page has no uncaught JavaScript errors", async () => {
       assert.deepEqual(errors, []);
