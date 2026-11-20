@@ -409,3 +409,18 @@ main { display: block; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .work-card:hover, .button:hover { transform: none; }
 }
+
+/* Small-screen fit and clean static background: keep the layout, not decorative noise. */
+body::before { display: none !important; }
+@media (max-width: 600px) {
+  .hero-copy { order: 0; }
+  .hero-scene { order: 1; }
+}
+@media (max-width: 360px) {
+  .hud-nav { padding-inline: 14px; }
+  .brand { gap: 8px; }
+  .brand-mark { width: 34px; height: 34px; border-radius: 9px; }
+  .brand-copy { font-size: 10px; }
+  .brand-copy small { font-size: 6px; letter-spacing: .06em; }
+  .nav-toggle { min-height: 36px; padding-inline: 10px; font-size: 10px; }
+}
