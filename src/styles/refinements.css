@@ -849,3 +849,110 @@ html { scroll-padding-top: 88px; }
 @media (prefers-reduced-motion: reduce) {
   .work-card:hover, .button:hover { transform: none; }
 }
+
+
+/* Keep the manual QA process fully visible on desktop and tablet widths. */
+.approach-track {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.approach-track article { width: auto; min-width: 0; }
+
+@media (min-width: 851px) and (max-width: 1100px) {
+  .approach-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 850px) {
+  .approach-track { width: 100%; min-width: 0; grid-template-columns: 1fr; }
+}
+
+/* Replace the large standalone contact panel with a compact, useful portfolio footer. */
+.site-footer {
+  display: block;
+  padding-block: 52px 22px;
+  border-top: 1px solid var(--line);
+}
+.footer-primary {
+  display: grid;
+  grid-template-columns: minmax(180px, .8fr) minmax(210px, .9fr) minmax(320px, 1.3fr);
+  gap: clamp(24px, 4vw, 58px);
+  align-items: start;
+  padding-bottom: 38px;
+}
+.footer-availability { padding-top: 5px; }
+.footer-label {
+  color: var(--accent);
+  font: 500 9px/1.5 var(--mono);
+  letter-spacing: .1em;
+}
+.footer-availability p {
+  margin: 11px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.footer-contact-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 22px;
+  min-width: 0;
+}
+.footer-contact-links a {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.footer-contact-links a > span { display: grid; gap: 4px; min-width: 0; }
+.footer-contact-links strong { color: var(--paper); font: 600 11px/1.4 var(--display); }
+.footer-contact-links small {
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font: 400 8px/1.5 var(--mono);
+}
+.footer-contact-links b { flex: 0 0 auto; color: var(--accent); font: 500 12px var(--mono); }
+.footer-contact-links a:hover strong,
+.footer-contact-links a:focus-visible strong { color: var(--accent); }
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.footer-bottom > span {
+  color: var(--muted);
+  font: 400 8px/1.7 var(--mono);
+  letter-spacing: .07em;
+}
+.footer-bottom button {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--accent);
+  padding: 10px 13px;
+  cursor: pointer;
+}
+.footer-bottom button:hover { border-color: var(--accent); }
+.footer-contact-links a:focus-visible,
+.footer-bottom button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+@media (max-width: 1000px) {
+  .footer-primary { grid-template-columns: minmax(160px, .8fr) minmax(190px, 1fr); }
+  .footer-contact-links { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .site-footer { padding-top: 38px; }
+  .footer-primary { grid-template-columns: 1fr; gap: 24px; padding-bottom: 28px; }
+  .footer-contact-links { grid-column: auto; gap: 8px 16px; }
+  .footer-bottom { align-items: flex-start; }
+  .footer-bottom > span { max-width: 32ch; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-contact-links a { transition: none; }
+}
