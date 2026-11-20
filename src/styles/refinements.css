@@ -962,3 +962,18 @@ html { scroll-padding-top: 88px; }
 .hero-actions .resume-download-button {
   white-space: nowrap;
 }
+
+/* Prevent long portfolio headings from overflowing narrow mobile layouts. */
+@media (max-width: 600px) {
+  .split-heading > h2,
+  .section-heading > h2 {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    font-size: clamp(24px, 7vw, 30px);
+    line-height: 1.1;
+    letter-spacing: -.045em;
+    overflow-wrap: anywhere;
+    text-wrap: pretty;
+  }
+}
