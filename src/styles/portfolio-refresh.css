@@ -424,3 +424,45 @@ body::before { display: none !important; }
   .brand-copy small { font-size: 6px; letter-spacing: .06em; }
   .nav-toggle { min-height: 36px; padding-inline: 10px; font-size: 10px; }
 }
+
+/* Editorial restraint: keep the portfolio personal, legible and evidence-led rather than dashboard-like. */
+body {
+  background: #0b1220;
+}
+.hero::before, .portrait-aura { display: none; }
+.hero-scene::before {
+  width: min(88%, 455px);
+  border-color: rgba(167,139,250,.2);
+  background: rgba(91,66,151,.07);
+  box-shadow: none;
+}
+.hero-scene::after { border-color: rgba(103,217,232,.1); }
+.hero-portrait {
+  border-color: rgba(177,196,220,.24);
+  background: #111d30;
+  box-shadow: 0 22px 58px rgba(0,0,0,.28);
+}
+.principle-grid article, .approach-track article, .approach-track article:first-child,
+.toolkit-grid article, .quality-grid>div {
+  background: #111d30;
+  box-shadow: none;
+}
+.work-card { background: #111d30; box-shadow: none; }
+.work-card:hover { box-shadow: 0 12px 28px rgba(0,0,0,.18); }
+.work-visual { background: #1a2841; }
+.work-visual::after { display: none; }
+.visual-mmt { background: #183044; }
+.visual-wordpress { background: #173238; }
+.work-visual strong { color: #f1ecff; }
+.lab-workbench { background: #0f1b2e; box-shadow: none; }
+.lab-tabs { background: #142238; }
+.contact-section {
+  border-radius: 14px;
+  background: linear-gradient(105deg, #5a35a0, #40246f);
+  box-shadow: none;
+}
+.contact-section::after { opacity: .45; }
+@media (prefers-reduced-motion: no-preference) {
+  .work-card, .principle-grid article, .toolkit-grid article { transition: border-color .2s ease, transform .2s ease; }
+  .principle-grid article:hover, .toolkit-grid article:hover { border-color: rgba(167,139,250,.42); }
+}
