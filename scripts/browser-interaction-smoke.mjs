@@ -99,6 +99,18 @@ try {
           documentWidth: document.documentElement.scrollWidth,
           bodyWidth: document.body.scrollWidth,
           headerWidth: document.getElementById("siteHeader").scrollWidth,
+          overflowingElements: [...document.querySelectorAll("body *")].map(el => {
+            const rect = el.getBoundingClientRect();
+            const style = getComputedStyle(el);
+            return {
+              tag: el.tagName, className: typeof el.className === "string" ? el.className : "",
+              text: (el.innerText || "").trim().slice(0, 55),
+              left: Math.round(rect.left), right: Math.round(rect.right),
+              width: Math.round(rect.width), scrollWidth: el.scrollWidth,
+              clientWidth: el.clientWidth, display: style.display, position: style.position
+            };
+          }).filter(el => el.display !== "none" && (el.right > innerWidth + 1 || el.left < -1 || el.scrollWidth > el.clientWidth + 1))
+            .sort((a,b) => b.right - a.right).slice(0, 12),
           sections
         };
       });
