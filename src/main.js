@@ -69,3 +69,41 @@ if ("IntersectionObserver" in window && navSections.length) {
 }
 
 document.documentElement.dataset.appReady = "true";
+
+
+// Progressive reveal: content remains visible when motion is reduced or JS is unavailable.
+const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+const revealTargets = [
+  ".section-topline", ".section-heading", ".project-row", ".about-layout",
+  ".principles-line > div", ".approach-list li", ".experience-row",
+  ".education-row > div", ".skill-index > div", ".certificate-card",
+  ".contact-inner > div"
+].flatMap(selector => $$(selector));
+
+if (!motionPreference.matches && "IntersectionObserver" in window) {
+  revealTargets.forEach((element, index) => {
+    element.classList.add("reveal");
+    element.style.transitionDelay = (index % 4) * 65 + "ms";
+  });
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -35px 0px" });
+  revealTargets.forEach(element => revealObserver.observe(element));
+}
+
+// A restrained pointer response adds depth on desktop without moving content on touch devices.
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches && !motionPreference.matches) {
+  $$(".project-row, .certificate-card").forEach(card => {
+    card.addEventListener("pointermove", event => {
+      const bounds = card.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+      card.style.transform = `translateY(-4px) perspective(900px) rotateX(${-y * 1.8}deg) rotateY(${x * 1.8}deg)`;
+    });
+    card.addEventListener("pointerleave", () => { card.style.transform = ""; });
+  });
+}
