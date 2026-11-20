@@ -127,6 +127,10 @@ assert.match(home, /<script\b[^>]*src="\/src\/main\.js"/, "Vite entry module is 
 assert.ok(home.includes('href="/src/styles/main.css"') && home.includes('href="/src/styles/refinements.css"'), "Homepage must link active stylesheets for source-branch hosting");
 assert.ok(!fs.readFileSync(path.join(root, "src/main.js"), "utf8").includes('import "./styles/'), "Runtime entry must not load CSS as JavaScript modules");
 assert.match(home, /href="\/Kalp%20Shah%20Manual%20Tester%20Resume\.pdf"/, "Résumé link is missing");
+assert.match(home, /id="resumeViewButton"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/, "Visible View Resume action must open the résumé PDF safely in a new tab");
+assert.match(home, /id="resumeDownloadButton"[^>]*download="Kalp-Shah-Manual-QA-Tester-Resume\.pdf"/, "Download Resume action is missing or has the wrong filename");
+assert.equal([...home.matchAll(/id="resumeViewButton"/g)].length, 1, "Expected exactly one View Resume action");
+assert.equal([...home.matchAll(/id="resumeDownloadButton"/g)].length, 1, "Expected exactly one Download Resume action");
 assert.ok(home.includes('href="#work"'), "Homepage work navigation must target #work");
 assert.match(home, /id="footer-contact"/, "Footer contact destination is missing");
 assert.match(home, /class="footer-contact-links"/, "Footer contact links are missing");

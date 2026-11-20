@@ -67,7 +67,11 @@ for (const page of pages) {
   assert.match(result.contentType, /text\/html/i, page.path + " should be served as HTML");
   const heading = result.text.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] || "";
   assert.ok(heading.replace(/<[^>]+>/g, " ").includes(page.heading), page.path + " primary heading is missing");
-  assertions += 3;
+  if (page.path === "/") {
+    assert.match(result.text, /<a\b(?=[^>]*id="resumeViewButton")(?=[^>]*target="_blank")[^>]*>View Resume/i, "Homepage View Resume action is missing or not configured to open a new tab");
+    assert.match(result.text, /<a\b(?=[^>]*id="resumeDownloadButton")(?=[^>]*download="Kalp-Shah-Manual-QA-Tester-Resume\.pdf")[^>]*>Download Resume/i, "Homepage Download Resume action is missing");
+  }
+  assertions += page.path === "/" ? 5 : 3;
 
   for (const match of result.text.matchAll(/\b(?:href|src)="([^"]+)"/gi)) {
     const resource = localUrl(match[1]);
@@ -103,7 +107,10 @@ for (const asset of localAssets) {
   if (rule) {
     assert.match(result.contentType, rule.pattern, asset + " returned an unexpected MIME type: " + result.contentType);
   }
-  assertions += 2;
+  if (pathname.endsWith(".pdf")) {
+    assert.equal(result.bytes.subarray(0, 5).toString("ascii"), "%PDF-", "Résumé resource is not a valid PDF");
+  }
+  assertions += pathname.endsWith(".pdf") ? 3 : 2;
 }
 
 for (const route of ["/projects/saucedemo.html", "/projects/makemytrip.html"]) {
