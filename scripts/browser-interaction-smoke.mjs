@@ -37,17 +37,15 @@ try {
     assert.equal(await linkedin.getAttribute("href"), "https://www.linkedin.com/in/kalp-shah-software-tester/", "Hero LinkedIn destination is incorrect");
     assert.equal(await linkedin.getAttribute("target"), "_blank", "LinkedIn should open in a new tab");
     assert.equal(await desktop.locator('.footer-contact-links a[href="https://www.linkedin.com/in/kalp-shah-software-tester/"]').count(), 1, "Contact LinkedIn link is missing");
-    assert.equal(await desktop.locator('.hero-actions a[download]').count(), 1, "Résumé download link is missing");
-    const viewResume = desktop.locator("#resumeViewButton");
+    assert.equal(await desktop.locator('.hero-actions a[download]').count(), 1, "Exactly one résumé download action should be present");
+    assert.equal(await desktop.locator("#resumeViewButton, .resume-view-button").count(), 0, "View Resume must not be displayed");
+    assert.equal(await desktop.getByText("View Resume", { exact: true }).count(), 0, "Only Download Resume should be offered");
     const downloadResume = desktop.locator("#resumeDownloadButton");
-    await viewResume.waitFor({ state: "visible" });
     await downloadResume.waitFor({ state: "visible" });
-    assert.ok((await viewResume.innerText()).includes("View Resume"), "View Resume label is missing");
     assert.ok((await downloadResume.innerText()).includes("Download Resume"), "Download Resume label is missing");
-    assert.equal(await viewResume.getAttribute("href"), "/Kalp%20Shah%20Manual%20Tester%20Resume.pdf");
-    assert.equal(await downloadResume.getAttribute("href"), await viewResume.getAttribute("href"), "View and download actions must point to the same résumé PDF");
-    assert.equal(await viewResume.getAttribute("target"), "_blank", "View Resume should open the PDF in a new tab");
-    assert.ok((await viewResume.getAttribute("aria-label") || "").includes("résumé"), "View Resume needs a descriptive accessible label");
+    assert.equal(await downloadResume.getAttribute("href"), "/Kalp%20Shah%20Manual%20Tester%20Resume.pdf");
+    assert.equal(await downloadResume.getAttribute("download"), "Kalp-Shah-Manual-QA-Tester-Resume.pdf");
+    assert.ok((await downloadResume.getAttribute("aria-label") || "").includes("Download Resume"), "Download Resume needs a descriptive accessible label");
     const pdfInfo = await desktop.evaluate(async href => {
       const response = await fetch(new URL(href, window.location.origin), { cache: "no-store" });
       const bytes = await response.arrayBuffer();
@@ -57,7 +55,7 @@ try {
         signature: String.fromCharCode(...new Uint8Array(bytes.slice(0, 5))),
         size: bytes.byteLength
       };
-    }, await viewResume.getAttribute("href"));
+    }, await downloadResume.getAttribute("href"));
     assert.equal(pdfInfo.status, 200, "Résumé PDF should return HTTP 200");
     assert.match(pdfInfo.contentType, /application\/pdf/i, "Résumé should be served as a PDF");
     assert.equal(pdfInfo.signature, "%PDF-", "Résumé response is not a valid PDF");
@@ -102,7 +100,7 @@ try {
     await desktop.locator("#backToTop").click();
     await desktop.waitForFunction(() => window.scrollY < 100, null, { timeout: 4000 });
   });
-  await record("home / responsive matrix", "Primary sections and hero actions fit 280–1920px viewports", async () => {
+  await record("home / responsive matrix", "All home sections, cards and hero actions fit 280–1920px viewports", async () => {
     const widths = [280, 320, 360, 390, 412, 430, 540, 768, 850, 1024, 1280, 1366, 1920];
     for (const width of widths) {
       await desktop.setViewportSize({ width, height: 900 });
@@ -152,7 +150,7 @@ try {
       assert.ok(metrics.documentWidth <= width + 1, width + "px document overflow: " + JSON.stringify(metrics));
       assert.ok(metrics.bodyWidth <= width + 1, width + "px body overflow: " + JSON.stringify(metrics));
       assert.ok(metrics.headerWidth <= width + 1, width + "px navigation overflow: " + JSON.stringify(metrics));
-      assert.equal(metrics.resumeActions.length, 4, width + "px should render all four hero actions: " + JSON.stringify(metrics.resumeActions));
+      assert.equal(metrics.resumeActions.length, 3, width + "px should render Explore, Download Resume and LinkedIn only: " + JSON.stringify(metrics.resumeActions));
       for (const action of metrics.resumeActions) {
         assert.ok(action.visible && action.width > 0, width + "px hero action is hidden: " + JSON.stringify(action));
         assert.ok(action.left >= -1 && action.right <= width + 1, width + "px hero action is clipped: " + JSON.stringify(action));
