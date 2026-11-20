@@ -507,3 +507,29 @@ html body, body.editorial-page {
   .editorial-page .nav-toggle { padding: 7px 9px; font-size: 10px; }
   .editorial-page .nav-inner { gap: 10px; }
 }
+
+
+/* Centered content rail with consistent page gutters, including inherited legacy wrappers. */
+.editorial-page .section-wrap {
+  width: 100% !important;
+  max-width: calc(var(--editorial-max) + 2 * var(--editorial-gutter)) !important;
+  padding-inline: var(--editorial-gutter) !important;
+  box-sizing: border-box !important;
+  margin-inline: auto !important;
+}
+.editorial-page .nav-inner {
+  width: 100% !important;
+  max-width: calc(var(--editorial-max) + 2 * var(--editorial-gutter)) !important;
+  padding-inline: var(--editorial-gutter) !important;
+  box-sizing: border-box !important;
+  margin-inline: auto !important;
+}
+.editorial-page .hud-nav { overflow-x: clip; }
+.editorial-page .nav-inner { overflow: clip; }
+@media (max-width: 760px) {
+  .editorial-page .section-wrap,
+  .editorial-page .nav-inner {
+    max-width: 100% !important;
+    padding-inline: var(--editorial-gutter) !important;
+  }
+}
