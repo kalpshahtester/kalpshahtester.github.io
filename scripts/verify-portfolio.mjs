@@ -124,10 +124,19 @@ assert.match(home, /alt="Portrait of Kalp Shah, Manual QA Tester"/, "Profile ima
 assert.match(home, /class="certificate-grid"/, "Homepage must render the certificate gallery");
 assert.equal([...home.matchAll(/class="certificate-card"/g)].length, 3, "Expected three certificate preview cards");
 assert.match(home, /<script\b[^>]*src="\/src\/main\.js"/, "Vite entry module is not linked");
-assert.ok(home.includes('href="/src/styles/main.css"') && home.includes('href="/src/styles/quality.css"'), "Homepage must link both stylesheets for source-branch hosting");
+assert.ok(home.includes('href="/src/styles/main.css"') && home.includes('href="/src/styles/refinements.css"'), "Homepage must link active stylesheets for source-branch hosting");
 assert.ok(!fs.readFileSync(path.join(root, "src/main.js"), "utf8").includes('import "./styles/'), "Runtime entry must not load CSS as JavaScript modules");
 assert.match(home, /href="\/Kalp%20Shah%20Manual%20Tester%20Resume\.pdf"/, "Résumé link is missing");
 assert.ok(home.includes('href="#work"'), "Homepage work navigation must target #work");
+assert.match(home, /id="footer-contact"/, "Footer contact destination is missing");
+assert.match(home, /class="footer-contact-links"/, "Footer contact links are missing");
+assert.match(home, /mailto:manualtesterkalpshah@gmail\.com/, "Footer email link is missing");
+assert.match(home, /href="https:\/\/www\.linkedin\.com\/in\/kalp-shah-software-tester\//, "Footer LinkedIn link is missing");
+assert.match(home, /href="https:\/\/github\.com\/kalpshahtester"/, "Footer GitHub link is missing");
+assert.doesNotMatch(home, /class="(?:contact-section|quality-section)\b/, "Standalone contact and site-quality sections must be removed");
+assert.doesNotMatch(home, /06\s*\/\s*START A CONVERSATION|07\s*\/\s*QUALITY REPORT OF THIS SITE/i, "Removed section labels must not return");
+assert.match(home, /href="#footer-contact">Contact<\/a>/, "Navigation must lead to the footer contact area");
+
 assert.doesNotMatch(home, /href="\/#projects"/, "Homepage contains an obsolete #projects destination");
 
 for (const route of ["/projects/saucedemo.html", "/projects/makemytrip.html"]) {
