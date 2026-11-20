@@ -9,6 +9,7 @@ const required = [
   "projects/makemytrip.html",
   "assets/css/premium.css",
   "assets/css/case-study.css",
+  "assets/css/case-study-refresh.css",
   "assets/js/case-study.js",
   "Kalp Shah Profile Photo.png",
   "Kalp Shah Manual Tester Resume.pdf",
@@ -39,7 +40,7 @@ const jsFiles = scriptTags
   .filter(Boolean);
 
 assert.ok(cssFiles.some(file => file.startsWith("/assets/") && file.endsWith(".css")), "Built homepage must reference a production CSS bundle");
-assert.ok(!html.includes("/src/styles/main.css") && !html.includes("/src/styles/quality.css"), "Built homepage must not request unbundled source CSS");
+assert.ok(!html.includes("/src/styles/main.css") && !html.includes("/src/styles/quality.css") && !html.includes("/src/styles/portfolio-refresh.css"), "Built homepage must not request unbundled source CSS");
 assert.ok(jsFiles.some(file => file.startsWith("/assets/") && file.endsWith(".js")), "Built homepage must reference a production JavaScript bundle");
 
 for (const asset of [...cssFiles, ...jsFiles]) {
@@ -52,7 +53,7 @@ for (const asset of [...cssFiles, ...jsFiles]) {
 const bundledCss = cssFiles
   .map(asset => fs.readFileSync(path.join(dist, decodeURIComponent(new URL(asset, "https://kalpshahtester.github.io").pathname.slice(1))), "utf8"))
   .join("\n");
-assert.ok(bundledCss.includes(".hud-nav") && bundledCss.includes(".hero"), "Production CSS lacks core portfolio selectors");
+assert.ok(bundledCss.includes(".hud-nav") && bundledCss.includes(".hero") && bundledCss.includes(".lab-workbench"), "Production CSS lacks core portfolio or QA Lab selectors");
 
 const originalPng = fs.readFileSync(path.join(dist, "Kalp Shah Profile Photo.png"));
 assert.deepEqual([...originalPng.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10], "Original profile photo must remain a PNG");
