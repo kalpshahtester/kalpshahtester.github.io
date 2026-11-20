@@ -150,9 +150,9 @@ for (const file of cssFiles) {
 }
 
 const editorial = fs.readFileSync(path.join(root, "src/styles/editorial.css"), "utf8");
-assert.match(editorial, /--page:\s*#f6f4ee/i, "Homepage must use the warm editorial canvas");
+assert.match(editorial, /--editorial-page:\s*#f6f4ee/i, "Homepage must use the warm editorial canvas");
 assert.match(editorial, /DM Serif Display/, "Homepage must use the editorial display typeface");
-assert.match(editorial, /--accent:\s*#b54732/i, "Homepage must use the restrained terracotta accent");
+assert.match(editorial, /--editorial-accent:\s*#b54732/i, "Homepage must use the restrained terracotta accent");
 const caseEditorial = fs.readFileSync(path.join(root, "assets/css/case-study-editorial.css"), "utf8");
 assert.match(caseEditorial, /DM Serif Display/, "Case studies must share the editorial display typeface");
 assert.match(caseEditorial, /prefers-reduced-motion/i, "Case-study CSS must respect reduced motion");
