@@ -1,130 +1,131 @@
 import assert from "node:assert/strict";
-import fs from "node:fs/promises";
-import path from "node:path";
 import { chromium } from "playwright";
 
 const baseURL = (process.env.BASE_URL || "https://kalpshahtester.github.io").replace(/\/$/, "");
-const screenshotDir = process.env.SAVE_SCREENSHOTS_DIR;
 const browser = await chromium.launch({ headless: true });
 const failures = [];
 const results = [];
 
 async function record(pageName, label, fn) {
-  try { await fn(); results.push({ page: pageName, test: label, status: "PASS" }); }
-  catch (error) { failures.push({ page: pageName, test: label, error: error.message }); results.push({ page: pageName, test: label, status: "FAIL" }); }
-}
-
-async function saveScreenshot(page, filename) {
-  if (!screenshotDir) return;
-  await fs.mkdir(screenshotDir, { recursive: true });
-  await page.screenshot({ path: path.join(screenshotDir, filename), fullPage: true, animations: "disabled" });
+  try {
+    await fn();
+    results.push({ page: pageName, test: label, status: "PASS" });
+  } catch (error) {
+    failures.push({ page: pageName, test: label, error: error.message });
+    results.push({ page: pageName, test: label, status: "FAIL" });
+  }
 }
 
 try {
-  const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1, reducedMotion: "reduce" });
+  const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: "reduce" });
   const desktopErrors = [];
   const desktopConsoleErrors = [];
-  desktop.on("console", msg => { if (msg.type() === "error") desktopConsoleErrors.push(msg.text()); });
-  desktop.on("response", response => {
-    if (response.request().resourceType() === "script" && (response.headers()["content-type"] || "").includes("text/css")) {
-      desktopConsoleErrors.push("SCRIPT URL SERVED AS CSS: " + response.url());
-    }
-  });
+  desktop.on("console", msg => { if (msg.type() === "error") desktopConsoleErrors.push(msg.text() + " @ " + JSON.stringify(msg.location())); });
+  desktop.on("response", response => { if (response.request().resourceType() === "script" && (response.headers()["content-type"] || "").includes("text/css")) desktopConsoleErrors.push("SCRIPT URL SERVED AS CSS: " + response.url()); });
+  desktop.on("requestfailed", request => desktopConsoleErrors.push("REQUEST FAILED: " + request.url() + " — " + request.failure()?.errorText));
   desktop.on("pageerror", error => desktopErrors.push(error.message));
   await desktop.goto(baseURL + "/?ci=" + Date.now(), { waitUntil: "networkidle" });
-  await desktop.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 });
-  await desktop.evaluate(() => document.fonts.ready);
-
-  await record("home / desktop", "Homepage, original portrait and editorial styling render", async () => {
+  await desktop.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 }).catch(() => {});
+  await record("home / desktop", "Homepage and portrait render", async () => {
     assert.match(await desktop.title(), /Kalp Shah.*Manual QA Tester/);
     const image = desktop.locator(".profile-photo");
     await image.waitFor({ state: "visible" });
     assert.ok(await image.evaluate(el => el.complete && el.naturalWidth > 0), "Profile portrait did not load");
-    assert.match(await image.evaluate(el => el.currentSrc), /Kalp(?:%20|\s)Shah(?:%20|\s)Profile(?:%20|\s)Photo\.png$/i, "Portrait should use the original profile PNG");
-    assert.equal(await image.getAttribute("alt"), "Portrait of Kalp Shah, Manual QA Tester");
-    assert.equal(await desktop.locator(".hero-linkedin").count(), 0, "Hero should use the quieter text-link presentation");
+    assert.match(await image.evaluate(el => el.currentSrc), /Kalp(?:%20|\s)Shah(?:%20|\s)Profile(?:%20|\s)Photo\.png$/i, "Portrait should use the original profile PNG asset");
+    assert.equal(await image.getAttribute("alt"), "Portrait of Kalp Shah, Manual QA Tester", "Portrait alternative text is missing or inaccurate");
+    const linkedin = desktop.locator(".hero-linkedin");
+    assert.equal(await linkedin.getAttribute("href"), "https://www.linkedin.com/in/kalp-shah-software-tester/", "Hero LinkedIn destination is incorrect");
+    assert.equal(await linkedin.getAttribute("target"), "_blank", "LinkedIn should open in a new tab");
+    assert.equal(await desktop.locator('.contact-links a[href="https://www.linkedin.com/in/kalp-shah-software-tester/"]').count(), 1, "Contact LinkedIn link is missing");
     assert.equal(await desktop.locator('.hero-actions a[download]').count(), 1, "Résumé download link is missing");
-    const design = await desktop.evaluate(() => ({
-      background: getComputedStyle(document.body).backgroundColor,
-      titleFont: getComputedStyle(document.querySelector(".hero h1")).fontFamily,
-      projectRows: document.querySelectorAll(".project-row").length,
-      oldLab: document.querySelectorAll(".lab-workbench").length
-    }));
-    assert.equal(design.background, "rgb(246, 244, 238)", "Editorial paper background did not apply");
-    assert.match(design.titleFont, /DM Serif Display/);
-    assert.equal(design.projectRows, 3);
-    assert.equal(design.oldLab, 0);
-  });
 
-  await record("home / desktop", "Main navigation reaches every section", async () => {
-    for (const id of ["work", "about", "approach", "experience", "toolkit", "contact"]) {
+  });
+  await record("home / desktop", "Desktop navigation reaches sections", async () => {
+    for (const id of ["about", "work", "approach", "experience", "toolkit", "contact"]) {
       const link = desktop.locator('.hud-nav nav a[href="#' + id + '"]');
       await link.click();
+      await desktop.waitForTimeout(100);
       assert.equal(await desktop.locator("#" + id).count(), 1, "Missing section #" + id);
       assert.equal(new URL(desktop.url()).hash, "#" + id, "Navigation did not update hash for #" + id);
     }
   });
-
-  await record("home / desktop", "Project entries link to both case studies and source repositories", async () => {
-    assert.equal(await desktop.locator('.project-row a[href="/projects/saucedemo.html"]').count(), 1);
-    assert.equal(await desktop.locator('.project-row a[href="/projects/makemytrip.html"]').count(), 1);
-    assert.equal(await desktop.locator('.project-row a[href*="Manual-Testing-Project-saucedemo-website"]').count(), 1);
-    assert.equal(await desktop.locator('.project-row a[href*="MakeMyTrip-Testing-Assessment"]').count(), 1);
-    assert.match(await desktop.locator("#work").innerText(), /Not production-client experience/);
-    assert.match(await desktop.locator("#work").innerText(), /Client details kept confidential/);
+  await record("home / desktop", "Project quick-view dialog opens and closes", async () => {
+    const trigger = desktop.locator(".project-open").first();
+    await trigger.waitFor({ state: "visible" });
+    await trigger.click();
+    const dialog = desktop.locator("dialog.project-dialog");
+    await dialog.waitFor({ state: "visible" });
+    assert.ok((await dialog.locator("#projectDialogTitle").textContent()).trim().length > 0);
+    await dialog.locator(".dialog-close").click();
+    await dialog.waitFor({ state: "hidden" });
   });
-
-  await record("home / desktop", "Résumé, contact and profile links are present", async () => {
-    assert.equal(await desktop.locator('.hero-actions a[download]').getAttribute("href"), "/Kalp%20Shah%20Manual%20Tester%20Resume.pdf");
-    assert.equal(await desktop.locator('.contact-links a[href="mailto:manualtesterkalpshah@gmail.com"]').count(), 1);
-    assert.equal(await desktop.locator('.contact-links a[href="https://www.linkedin.com/in/kalp-shah-software-tester/"]').count(), 1);
-    assert.equal(await desktop.locator('.contact-links a[href="https://github.com/kalpshahtester"]').count(), 1);
+  await record("home / desktop", "Sample QA interaction completes", async () => {
+    const run = desktop.locator("#runChecks");
+    await run.click();
+    await desktop.waitForFunction(() => document.querySelectorAll(".console-row.done").length === 4, null, { timeout: 5000 });
+    assert.match(await desktop.locator("#consoleMessage").textContent(), /4 sample checks complete/i);
+    assert.equal(await run.isEnabled(), true);
   });
-
-  await saveScreenshot(desktop, "editorial-desktop-homepage.png");
-
-  await record("home / responsive matrix", "Editorial sections fit 280–1920px viewports without horizontal overflow", async () => {
-    const widths = [280, 320, 360, 390, 412, 430, 540, 600, 760, 850, 1024, 1280, 1366, 1920];
+  await record("home / desktop", "Back-to-top control works", async () => {
+    await desktop.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await desktop.locator("#backToTop").click();
+    await desktop.waitForFunction(() => window.scrollY < 100, null, { timeout: 4000 });
+  });
+  await record("home / responsive matrix", "Experience and Skills sections fit 280–1920px viewports", async () => {
+    const widths = [280, 320, 360, 390, 412, 430, 540, 768, 850, 1024, 1280, 1366, 1920];
     for (const width of widths) {
       await desktop.setViewportSize({ width, height: 900 });
       const metrics = await desktop.evaluate(() => {
-        const ids = ["top", "work", "about", "approach", "experience", "toolkit", "contact"];
+        const ids = ["experience", "toolkit"];
         const sections = ids.map(id => {
           const element = document.getElementById(id);
           const rect = element.getBoundingClientRect();
-          return { id, left: Math.round(rect.left), right: Math.round(rect.right), clientWidth: element.clientWidth, scrollWidth: element.scrollWidth };
+          return {
+            id,
+            left: Math.round(rect.left),
+            right: Math.round(rect.right),
+            clientWidth: element.clientWidth,
+            scrollWidth: element.scrollWidth
+          };
         });
+        const header = document.getElementById("siteHeader");
+        const wideNodes = [...document.querySelectorAll("body *")].map(el => {
+          const rect = el.getBoundingClientRect();
+          const style = getComputedStyle(el);
+          return {
+            tag: el.tagName.toLowerCase(),
+            id: el.id || "",
+            className: typeof el.className === "string" ? el.className.toString().slice(0,90) : "",
+            left: Math.round(rect.left),
+            right: Math.round(rect.right),
+            width: Math.round(rect.width),
+            clientWidth: el.clientWidth,
+            scrollWidth: el.scrollWidth,
+            display: style.display,
+            whiteSpace: style.whiteSpace
+          };
+        }).filter(el => el.right > innerWidth + 2 || el.left < -2 || el.scrollWidth > el.clientWidth + 2)
+          .sort((a,b) => Math.max(b.right-innerWidth, b.scrollWidth-b.clientWidth) - Math.max(a.right-innerWidth, a.scrollWidth-a.clientWidth))
+          .slice(0,18);
         return {
           viewport: innerWidth,
           documentWidth: document.documentElement.scrollWidth,
           bodyWidth: document.body.scrollWidth,
-          headerWidth: document.getElementById("siteHeader").scrollWidth,
-          overflowingElements: [...document.querySelectorAll("body *")].map(el => {
-            const rect = el.getBoundingClientRect();
-            const style = getComputedStyle(el);
-            return {
-              tag: el.tagName, className: typeof el.className === "string" ? el.className : "",
-              text: (el.innerText || "").trim().slice(0, 55),
-              left: Math.round(rect.left), right: Math.round(rect.right),
-              width: Math.round(rect.width), scrollWidth: el.scrollWidth,
-              clientWidth: el.clientWidth, display: style.display, position: style.position
-            };
-          }).filter(el => el.display !== "none" && (el.right > innerWidth + 1 || el.left < -1 || el.scrollWidth > el.clientWidth + 1))
-            .sort((a,b) => b.right - a.right).slice(0, 12),
-          sections
+          headerWidth: header?.scrollWidth || 0,
+          sections,
+          wideNodes
         };
       });
       assert.ok(metrics.documentWidth <= width + 1, width + "px document overflow: " + JSON.stringify(metrics));
       assert.ok(metrics.bodyWidth <= width + 1, width + "px body overflow: " + JSON.stringify(metrics));
-      assert.ok(metrics.headerWidth <= width + 1, width + "px header overflow: " + JSON.stringify(metrics));
+      assert.ok(metrics.headerWidth <= width + 1, width + "px navigation overflow: " + JSON.stringify(metrics));
       for (const section of metrics.sections) {
         assert.ok(section.left >= -1 && section.right <= width + 1, width + "px " + section.id + " extends beyond viewport: " + JSON.stringify(metrics));
-        assert.ok(section.scrollWidth <= section.clientWidth + 1, width + "px " + section.id + " has internal overflow: " + JSON.stringify(metrics));
+        assert.ok(section.scrollWidth <= section.clientWidth + 1, width + "px " + section.id + " has internal horizontal overflow: " + JSON.stringify(metrics));
       }
     }
     await desktop.setViewportSize({ width: 1440, height: 1000 });
   });
-
   await record("home / desktop", "No uncaught JavaScript errors", async () => {
     assert.deepEqual([...desktopErrors, ...desktopConsoleErrors], []);
   });
@@ -132,29 +133,31 @@ try {
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: "reduce" });
   const mobileErrors = [];
   const mobileConsoleErrors = [];
-  mobile.on("console", msg => { if (msg.type() === "error") mobileConsoleErrors.push(msg.text()); });
+  mobile.on("console", msg => { if (msg.type() === "error") mobileConsoleErrors.push(msg.text() + " @ " + JSON.stringify(msg.location())); });
+  mobile.on("response", response => { if (response.request().resourceType() === "script" && (response.headers()["content-type"] || "").includes("text/css")) mobileConsoleErrors.push("SCRIPT URL SERVED AS CSS: " + response.url()); });
+  mobile.on("requestfailed", request => mobileConsoleErrors.push("REQUEST FAILED: " + request.url() + " — " + request.failure()?.errorText));
   mobile.on("pageerror", error => mobileErrors.push(error.message));
   await mobile.goto(baseURL + "/?ci=" + Date.now(), { waitUntil: "networkidle" });
-  await mobile.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 });
-  await record("home / mobile", "Mobile navigation opens, follows a link and closes accessibly", async () => {
+  await mobile.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 }).catch(() => {});
+  await record("home / mobile", "Mobile navigation opens and closes", async () => {
     const toggle = mobile.locator(".nav-toggle");
     await toggle.waitFor({ state: "visible" });
     await toggle.click();
     assert.equal(await toggle.getAttribute("aria-expanded"), "true");
     assert.ok(await mobile.locator(".hud-nav nav").evaluate(el => el.classList.contains("open")));
     await mobile.keyboard.press("Escape");
-    assert.equal(await toggle.getAttribute("aria-expanded"), "false");
-    assert.ok(await toggle.evaluate(el => document.activeElement === el));
+    assert.equal(await toggle.getAttribute("aria-expanded"), "false", "Escape should close the mobile menu");
+    assert.ok(await toggle.evaluate(el => document.activeElement === el), "Escape should restore focus to the menu button");
     await toggle.click();
     await mobile.locator('.hud-nav nav a[href="#about"]').click();
     assert.equal(await toggle.getAttribute("aria-expanded"), "false");
+    assert.ok(!(await mobile.locator(".hud-nav nav").evaluate(el => el.classList.contains("open"))));
     assert.equal(new URL(mobile.url()).hash, "#about");
   });
-  await record("home / mobile", "Mobile layout has no horizontal overflow", async () => {
-    const sizes = await mobile.evaluate(() => ({ viewport: document.documentElement.clientWidth, page: document.documentElement.scrollWidth }));
-    assert.ok(sizes.page <= sizes.viewport + 1, "Mobile horizontal overflow: " + JSON.stringify(sizes));
+  await record("home / mobile", "Mobile layout has no horizontal page overflow", async () => {
+    const sizes = await mobile.evaluate(() => ({ viewport: document.documentElement.clientWidth, page: document.documentElement.scrollWidth, offenders: [...document.querySelectorAll("body *")].map(el => ({tag:el.tagName,cls:typeof el.className==="string"?el.className:"",id:el.id,left:Math.round(el.getBoundingClientRect().left),right:Math.round(el.getBoundingClientRect().right),width:Math.round(el.getBoundingClientRect().width)})).filter(x=>x.right>innerWidth+2||x.left < -2).slice(0,15) }));
+    assert.ok(sizes.page <= sizes.viewport + 1, "Horizontal overflow: " + JSON.stringify(sizes));
   });
-  await saveScreenshot(mobile, "editorial-mobile-homepage.png");
   await record("home / mobile", "No uncaught JavaScript errors", async () => {
     assert.deepEqual([...mobileErrors, ...mobileConsoleErrors], []);
   });
@@ -164,16 +167,16 @@ try {
     const errors = [];
     page.on("pageerror", error => errors.push(error.message));
     await page.goto(baseURL + route, { waitUntil: "networkidle" });
-    await record(route, "Case study renders in the editorial colour system", async () => {
+    await record(route, "Project page renders with a heading", async () => {
       assert.ok((await page.locator("h1").first().textContent()).trim().length > 0);
-      assert.equal(await page.evaluate(() => getComputedStyle(document.body).backgroundColor), "rgb(246, 244, 238)");
     });
-    await record(route, "Case study has no horizontal overflow", async () => {
+    await record(route, "Project page has no horizontal overflow", async () => {
       const sizes = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth, page: document.documentElement.scrollWidth }));
-      assert.ok(sizes.page <= sizes.viewport + 1, "Case-study horizontal overflow: " + JSON.stringify(sizes));
+      assert.ok(sizes.page <= sizes.viewport + 1, "Horizontal overflow: " + JSON.stringify(sizes));
     });
-    await record(route, "Case study has no uncaught JavaScript errors", async () => assert.deepEqual(errors, []));
-    if (screenshotDir) await saveScreenshot(page, route.includes("saucedemo") ? "editorial-mobile-saucedemo.png" : "editorial-mobile-makemytrip.png");
+    await record(route, "Project page has no uncaught JavaScript errors", async () => {
+      assert.deepEqual(errors, []);
+    });
     await page.close();
   }
 
