@@ -533,3 +533,25 @@ html body, body.editorial-page {
     padding-inline: var(--editorial-gutter) !important;
   }
 }
+
+
+/* Keep the compact navigation above content and make every footer/contact row wrap. */
+.editorial-page .hud-nav { z-index: 10000 !important; }
+@media (max-width: 760px) {
+  .editorial-page .hud-nav nav.open {
+    top: 68px !important; right: var(--editorial-gutter) !important;
+    left: var(--editorial-gutter) !important; z-index: 10001 !important;
+    pointer-events: auto !important; background: var(--editorial-page) !important;
+  }
+  .editorial-page .site-footer {
+    display: flex !important; flex-wrap: wrap !important;
+    justify-content: space-between; max-width: 100%;
+  }
+  .editorial-page .footer-brand,
+  .editorial-page .footer-back,
+  .editorial-page .footer-note,
+  .editorial-page .contact-links,
+  .editorial-page .contact-links a {
+    min-width: 0; max-width: 100%; overflow-wrap: anywhere;
+  }
+}
