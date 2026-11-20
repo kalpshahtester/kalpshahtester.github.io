@@ -132,7 +132,7 @@ dialog.addEventListener("click", event => {
 });
 
 // Accessible QA Lab tabs: mouse, touch and keyboard users can switch sample views.
-const labTabs = $(".lab-tab");
+const labTabs = $$(".lab-tab");
 const setLabTab = (activeTab, moveFocus = false) => {
   labTabs.forEach(tab => {
     const selected = tab === activeTab;
