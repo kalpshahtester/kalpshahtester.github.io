@@ -11,8 +11,8 @@ const pages = [
 const htmlByRoute = new Map();
 const idsByRoute = new Map();
 const requiredFiles = [
-  "src/main.js", "src/scenes/qa-scene.js", "src/styles/main.css", "src/styles/quality.css", "src/styles/refinements.css",
-  "assets/css/premium.css", "assets/css/case-study.css", "assets/js/case-study.js",
+  "src/main.js", "src/scenes/qa-scene.js", "src/styles/main.css", "src/styles/quality.css", "src/styles/refinements.css", "src/styles/portfolio-refresh.css",
+  "assets/css/premium.css", "assets/css/case-study.css", "assets/css/case-study-refresh.css", "assets/js/case-study.js",
   "Kalp Shah Profile Photo.png", "Kalp Shah Manual Tester Resume.pdf",
   "Kalp Shah HCL GUVI Certification.png",
   "Kalp Shah Generative AI Mastermind Course Certificate.jpeg",
@@ -124,23 +124,26 @@ assert.match(home, /alt="Portrait of Kalp Shah, Manual QA Tester"/, "Profile ima
 assert.match(home, /class="certificate-grid"/, "Homepage must render the certificate gallery");
 assert.equal([...home.matchAll(/class="certificate-card"/g)].length, 3, "Expected three certificate preview cards");
 assert.match(home, /<script\b[^>]*src="\/src\/main\.js"/, "Vite entry module is not linked");
-assert.ok(home.includes('href="/src/styles/main.css"') && home.includes('href="/src/styles/quality.css"'), "Homepage must link both stylesheets for source-branch hosting");
+assert.ok(home.includes('href="/src/styles/main.css"') && home.includes('href="/src/styles/quality.css"') && home.includes('href="/src/styles/portfolio-refresh.css"'), "Homepage must link all design stylesheets for source-branch hosting");
 assert.ok(!fs.readFileSync(path.join(root, "src/main.js"), "utf8").includes('import "./styles/'), "Runtime entry must not load CSS as JavaScript modules");
 assert.match(home, /href="\/Kalp%20Shah%20Manual%20Tester%20Resume\.pdf"/, "Résumé link is missing");
 assert.ok(home.includes('href="#work"'), "Homepage work navigation must target #work");
+assert.match(home, /role="tablist"/, "Homepage must provide an accessible QA Lab tab list");
+for (const id of ["tab-bug", "tab-case", "tab-check", "lab-bug-panel", "lab-case-panel", "lab-check-panel"]) assert.ok(home.includes('id="' + id + '"' ), "QA Lab is missing " + id);
 assert.doesNotMatch(home, /href="\/#projects"/, "Homepage contains an obsolete #projects destination");
 
 for (const route of ["/projects/saucedemo.html", "/projects/makemytrip.html"]) {
   const html = htmlByRoute.get(route);
   assert.ok(html.includes('href="/assets/css/premium.css?v=7"'), route + ": shared case-study CSS missing");
   assert.ok(html.includes('href="/assets/css/case-study.css"'), route + ": case-study CSS missing");
+  assert.ok(html.includes('href="/assets/css/case-study-refresh.css"'), route + ": portfolio design refresh CSS missing");
   assert.ok(html.includes('src="/assets/js/case-study.js"'), route + ": case-study runtime missing");
   assert.ok(html.includes('name="twitter:title"'), route + ": missing Twitter title metadata");
   assert.ok(html.includes('name="twitter:description"'), route + ": missing Twitter description metadata");
   assert.ok(!html.includes("/#projects"), route + ": obsolete homepage fragment found");
 }
 
-for (const file of ["src/styles/main.css", "src/styles/quality.css", "src/styles/refinements.css", "assets/css/premium.css", "assets/css/case-study.css"]) {
+for (const file of ["src/styles/main.css", "src/styles/quality.css", "src/styles/refinements.css", "src/styles/portfolio-refresh.css", "assets/css/premium.css", "assets/css/case-study.css", "assets/css/case-study-refresh.css"]) {
   const css = fs.readFileSync(path.join(root, file), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
   let depth = 0;
   for (const char of css) {
