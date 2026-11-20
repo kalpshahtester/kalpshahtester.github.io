@@ -264,9 +264,29 @@ try {
     await record(route, "Project page renders with a heading", async () => {
       assert.ok((await page.locator("h1").first().textContent()).trim().length > 0);
     });
-    await record(route, "Project page has no horizontal overflow", async () => {
-      const sizes = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth, page: document.documentElement.scrollWidth }));
-      assert.ok(sizes.page <= sizes.viewport + 1, "Horizontal overflow: " + JSON.stringify(sizes));
+    await record(route, "Project page layout, headings and cards fit the responsive matrix", async () => {
+      for (const width of [280, 320, 360, 390, 430, 540, 768, 850, 1024, 1366]) {
+        await page.setViewportSize({ width, height: 900 });
+        const metrics = await page.evaluate(() => {
+          const overflowText = [...document.querySelectorAll("main h1, main h2, main h3, main p, main li")]
+            .filter(el => el.getBoundingClientRect().width > 0)
+            .map(el => ({ text: (el.textContent || "").trim().replace(/\\s+/g, " ").slice(0, 75), width: el.clientWidth, scroll: el.scrollWidth }))
+            .filter(el => el.scroll > el.width + 2);
+          const gridItems = [...document.querySelectorAll(".case-hero-grid > *, .scope-grid > *, .evidence-grid > *, .case-metrics > *")]
+            .filter(el => el.getBoundingClientRect().width > 0)
+            .map(el => {
+              const r = el.getBoundingClientRect();
+              const p = el.parentElement.getBoundingClientRect();
+              return { left: Math.round(r.left), right: Math.round(r.right), top: Math.round(r.top), height: Math.round(r.height), parentLeft: Math.round(p.left), parentRight: Math.round(p.right) };
+            });
+          return { viewport: document.documentElement.clientWidth, document: document.documentElement.scrollWidth, body: document.body.scrollWidth, overflowText, gridItems };
+        });
+        assert.ok(metrics.document <= width + 1 && metrics.body <= width + 1, width + "px project page overflows: " + JSON.stringify(metrics));
+        assert.equal(metrics.overflowText.length, 0, width + "px project text is clipped: " + JSON.stringify(metrics.overflowText));
+        for (const item of metrics.gridItems) {
+          assert.ok(item.left >= item.parentLeft - 1 && item.right <= item.parentRight + 1, width + "px project card extends beyond its grid: " + JSON.stringify(item));
+        }
+      }
     });
     await record(route, "Project page has no uncaught JavaScript errors", async () => {
       assert.deepEqual(errors, []);
