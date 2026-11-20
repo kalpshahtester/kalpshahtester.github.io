@@ -38,6 +38,21 @@ try {
     assert.equal(await linkedin.getAttribute("target"), "_blank", "LinkedIn should open in a new tab");
     assert.equal(await desktop.locator('.footer-contact-links a[href="https://www.linkedin.com/in/kalp-shah-software-tester/"]').count(), 1, "Contact LinkedIn link is missing");
     assert.equal(await desktop.locator('.hero-actions a[download]').count(), 1, "Résumé download link is missing");
+    const viewResume = desktop.locator("#resumeViewButton");
+    const downloadResume = desktop.locator("#resumeDownloadButton");
+    await viewResume.waitFor({ state: "visible" });
+    await downloadResume.waitFor({ state: "visible" });
+    assert.ok((await viewResume.innerText()).includes("View Resume"), "View Resume label is missing");
+    assert.ok((await downloadResume.innerText()).includes("Download Resume"), "Download Resume label is missing");
+    assert.equal(await viewResume.getAttribute("href"), "/Kalp%20Shah%20Manual%20Tester%20Resume.pdf");
+    assert.equal(await downloadResume.getAttribute("href"), await viewResume.getAttribute("href"), "View and download actions must point to the same résumé PDF");
+    assert.equal(await viewResume.getAttribute("target"), "_blank", "View Resume should open the PDF in a new tab");
+    assert.ok((await viewResume.getAttribute("aria-label") || "").includes("résumé"), "View Resume needs a descriptive accessible label");
+    const pdfResponse = await desktop.request.get(baseURL + viewResume.getAttribute("href"));
+    assert.equal(pdfResponse.status(), 200, "Résumé PDF should return HTTP 200");
+    assert.match(pdfResponse.headers()["content-type"] || "", /application\/pdf/i, "Résumé should be served as a PDF");
+    const pdfBytes = await pdfResponse.body();
+    assert.equal(pdfBytes.subarray(0, 5).toString("ascii"), "%PDF-", "Résumé response is not a valid PDF");
 
   });
   await record("home / desktop", "Desktop navigation reaches sections", async () => {
