@@ -139,3 +139,54 @@
 .footer-linkedin { display:inline-flex; align-items:center; min-height:36px; padding:0 10px; border:1px solid rgba(226,192,141,.28); border-radius:5px; color:var(--acid); font-size:10px; font-weight:600; }
 .footer-linkedin:hover { border-color:var(--acid); background:rgba(226,192,141,.06); }
 @media(max-width:700px) { .footer-linkedin { margin-right:auto; } }
+
+/* Narrow-screen case-study containment: keep hero copy, actions and summary inside the page grid. */
+.case-hero-grid > *,
+.case-hero-grid > * > *,
+.case-actions,
+.case-summary-card {
+  min-width: 0;
+  max-width: 100%;
+}
+.case-summary-card {
+  width: 100%;
+}
+.case-title,
+.case-lead,
+.case-hero-grid .eyebrow {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.case-actions .button {
+  min-width: 0;
+  max-width: 100%;
+}
+@media (max-width: 420px) {
+  .case-hero-grid {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .case-hero-grid > * {
+    width: 100%;
+  }
+  .case-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+  .case-actions .button {
+    width: 100%;
+    justify-content: space-between;
+    overflow-wrap: anywhere;
+  }
+  .case-summary-card {
+    padding: 18px;
+  }
+  .case-summary-card .summary-line {
+    min-width: 0;
+  }
+  .case-summary-card .summary-line strong {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+}
