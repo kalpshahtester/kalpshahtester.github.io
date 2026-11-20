@@ -59,7 +59,30 @@ try {
     await dialog.locator(".dialog-close").click();
     await dialog.waitFor({ state: "hidden" });
   });
-  await record("home / desktop", "Sample QA interaction completes", async () => {
+  await record("home / desktop", "QA Lab tabs, keyboard navigation and sample copy work", async () => {
+    const bugTab = desktop.locator("#tab-bug");
+    const caseTab = desktop.locator("#tab-case");
+    const checkTab = desktop.locator("#tab-check");
+    await caseTab.click();
+    assert.equal(await caseTab.getAttribute("aria-selected"), "true");
+    assert.equal(await desktop.locator("#lab-case-panel").isVisible(), true);
+    await caseTab.press("ArrowRight");
+    assert.equal(await checkTab.getAttribute("aria-selected"), "true");
+    assert.equal(await desktop.locator("#lab-check-panel").isVisible(), true);
+    await bugTab.click();
+    await desktop.evaluate(() => {
+      Object.defineProperty(navigator, "clipboard", {
+        configurable: true,
+        value: { writeText: async value => { window.__qaCopiedSample = value; } }
+      });
+    });
+    await desktop.locator("#copyBugReport").click();
+    await desktop.waitForFunction(() => typeof window.__qaCopiedSample === "string");
+    assert.match(await desktop.evaluate(() => window.__qaCopiedSample), /Expected result/);
+    assert.match(await desktop.locator("#bugCopyStatus").textContent(), /copied/i);
+  });
+  await record("home / desktop", "Sample QA checklist interaction completes", async () => {
+    await desktop.locator("#tab-check").click();
     const run = desktop.locator("#runChecks");
     await run.click();
     await desktop.waitForFunction(() => document.querySelectorAll(".console-row.done").length === 4, null, { timeout: 5000 });

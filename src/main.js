@@ -1,8 +1,6 @@
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const coarse = matchMedia("(pointer: coarse)").matches;
-const lowPower = coarse || innerWidth < 760 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
 document.documentElement.classList.toggle("reduced-motion", reduced);
 document.documentElement.classList.add("js-ready");
 $("#year").textContent = new Date().getFullYear();
@@ -102,69 +100,7 @@ if ("IntersectionObserver" in window) {
   counterTargets.forEach(el => animateCounter(el, Number(el.dataset.count), el.dataset.suffix || ""));
 }
 
-// Keep the 3D payload off mobile, reduced-motion and low-power execution paths.
-if (reduced || lowPower) $("#qaScene")?.setAttribute("hidden", "");
-const scheduleIdle = callback => {
-  if ("requestIdleCallback" in window) requestIdleCallback(callback, { timeout: 2200 });
-  else setTimeout(callback, 900);
-};
-if (!reduced && !lowPower && $("#qaScene")) {
-  scheduleIdle(() => {
-    import("./scenes/qa-scene.js")
-      .then(({ createQAScene }) => createQAScene($("#qaScene")))
-      .catch(() => $("#qaScene")?.setAttribute("hidden", ""));
-  });
-}
-
-// Desktop-only motion is split into deferred chunks. The heading remains visible before they load.
-if (!reduced && !lowPower) {
-  scheduleIdle(async () => {
-    try {
-      const results = await Promise.all([
-        import("gsap"),
-        import("gsap/ScrollTrigger")
-      ]);
-      const gsap = results[0].gsap;
-      const ScrollTrigger = results[1].ScrollTrigger;
-      gsap.registerPlugin(ScrollTrigger);
-
-      if ($(".hero-scene")) {
-        gsap.to(".hero-scene", {
-          y: -24,
-          ease: "none",
-          scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 }
-        });
-        // Keep opacity at 1 so the main heading is eligible for early paint/LCP.
-        gsap.fromTo(".hero h1 span", { y: 18, opacity: 1 }, {
-          y: 0, opacity: 1, stagger: 0.1, duration: 0.7, ease: "power3.out"
-        });
-      }
-
-      gsap.utils.toArray(".timeline article").forEach((item, index) => {
-        gsap.fromTo(item, { x: -18, opacity: 1 }, {
-          x: 0, opacity: 1, duration: 0.65, ease: "power2.out",
-          scrollTrigger: { trigger: item, start: "top 82%" },
-          delay: index * 0.04
-        });
-      });
-
-      // Keep approach steps in normal document flow. Pinned horizontal
-      // scrolling introduced a long artificial scroll segment and broke
-      // predictable touch scrolling and anchor navigation on some screens.
-      gsap.utils.toArray(".approach-track article").forEach((card, index) => {
-        gsap.fromTo(card, { y: 16 }, {
-          y: 0, duration: 0.55, ease: "power2.out",
-          scrollTrigger: { trigger: card, start: "top 88%", once: true },
-          delay: index * 0.04
-        });
-      });
-
-    } catch (error) {
-      // The site remains completely usable when an optional animation chunk is unavailable.
-      console.warn("Optional motion enhancement could not be initialized.", error);
-    }
-  });
-}
+// Motion is deliberately CSS-led: no 3D scene or animation-library download is needed for core content.
 
 // Accessible project details: native dialog handles focus and Escape behavior.
 const dialog = document.createElement("dialog");
@@ -194,6 +130,78 @@ $$(".work-card").forEach(card => {
 dialog.addEventListener("click", event => {
   if (event.target === dialog) dialog.close();
 });
+
+// Accessible QA Lab tabs: mouse, touch and keyboard users can switch sample views.
+const labTabs = $$(".lab-tab");
+const setLabTab = (activeTab, moveFocus = false) => {
+  labTabs.forEach(tab => {
+    const selected = tab === activeTab;
+    tab.setAttribute("aria-selected", String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    const panel = $("#" + tab.getAttribute("aria-controls"));
+    if (panel) panel.hidden = !selected;
+  });
+  if (moveFocus) activeTab.focus();
+};
+labTabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => setLabTab(tab));
+  tab.addEventListener("keydown", event => {
+    let nextIndex = index;
+    if (event.key === "ArrowRight") nextIndex = (index + 1) % labTabs.length;
+    else if (event.key === "ArrowLeft") nextIndex = (index - 1 + labTabs.length) % labTabs.length;
+    else if (event.key === "Home") nextIndex = 0;
+    else if (event.key === "End") nextIndex = labTabs.length - 1;
+    else return;
+    event.preventDefault();
+    setLabTab(labTabs[nextIndex], true);
+  });
+});
+
+const sampleText = id => {
+  const root = $("#" + id);
+  if (!root) return "";
+  return [...root.querySelectorAll("dl > div")].map(row => {
+    const label = $("dt", row)?.textContent?.trim() || "";
+    const value = $("dd", row)?.innerText?.trim() || "";
+    return label + ":\n" + value;
+  }).join("\n\n");
+};
+const writeClipboard = async value => {
+  if (navigator.clipboard?.writeText && window.isSecureContext) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = value;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.append(textarea);
+  textarea.select();
+  const copied = document.execCommand("copy");
+  textarea.remove();
+  if (!copied) throw new Error("Clipboard is unavailable in this browser.");
+};
+const bindSampleCopy = (buttonId, sourceId, statusId, successText) => {
+  const button = $("#" + buttonId);
+  const status = $("#" + statusId);
+  button?.addEventListener("click", async () => {
+    const value = sampleText(sourceId);
+    if (!value) return;
+    button.disabled = true;
+    try {
+      await writeClipboard(value);
+      if (status) status.textContent = successText;
+    } catch (error) {
+      if (status) status.textContent = "Copy is unavailable here. Select the sample text to copy it manually.";
+      console.warn("QA Lab copy action was unavailable.", error);
+    } finally {
+      button.disabled = false;
+    }
+  });
+};
+bindSampleCopy("copyBugReport", "sampleBugText", "bugCopyStatus", "Sample bug report copied. This is illustrative data.");
+bindSampleCopy("copyTestCase", "sampleCaseText", "caseCopyStatus", "Sample test case copied. No execution result is claimed.");
 
 // Local illustrative checklist only. No remote requests or external-site scanning.
 const checks = $("#consoleChecks");
