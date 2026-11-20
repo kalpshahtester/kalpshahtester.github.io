@@ -40,10 +40,12 @@ h1, h2, h3, p, figure { margin-top: 0; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
 .hud-nav {
+  display: block; height: auto; padding: 0;
   position: sticky; z-index: 100; top: 0; width: 100%;
   min-height: 76px; border-bottom: 1px solid var(--line);
   background: rgba(246,244,238,.97);
 }
+.hud-nav.scrolled { background: rgba(246,244,238,.97); border-color: var(--line); backdrop-filter: none; }
 .nav-inner {
   width: min(calc(100% - var(--gutter) * 2), var(--max));
   min-height: 76px; margin-inline: auto; display: flex; align-items: center;
