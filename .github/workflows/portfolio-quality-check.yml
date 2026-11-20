@@ -36,6 +36,12 @@ jobs:
           curl --fail --silent http://127.0.0.1:4173/ > /dev/null
       - name: Smoke test built routes and every local resource
         run: BASE_URL=http://127.0.0.1:4173 npm run smoke
+      - name: Install Playwright without changing the project lockfile
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Validate desktop, mobile, navigation and QA Lab interactions against the built site
+        run: BASE_URL=http://127.0.0.1:4173 node scripts/browser-interaction-smoke.mjs
       - name: Stop test server
         if: always()
         run: |
