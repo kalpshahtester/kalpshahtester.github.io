@@ -159,7 +159,8 @@ assert.match(caseEditorial, /prefers-reduced-motion/i, "Case-study CSS must resp
 assert.match(caseEditorial, /:focus-visible/, "Case-study CSS must expose keyboard focus");
 
 const caseRuntime = fs.readFileSync(path.join(root, "assets/js/case-study.js"), "utf8");
-assert.match(caseRuntime, /status: "fallback"/, "Case-study motion CDN failures must set an explicit fallback state");
+assert.match(caseRuntime, /__caseStudyMotionState/, "Case-study runtime must expose its static state");
+assert.doesNotMatch(caseRuntime, /gsap|ScrollTrigger|cdn\\.jsdelivr/, "Editorial case studies must not load decorative animation libraries");
 const sitemap = fs.readFileSync(path.join(root, "sitemap.xml"), "utf8");
 for (const page of pages) assert.ok(sitemap.includes("https://kalpshahtester.github.io" + page.route), "Sitemap missing " + page.route);
 
