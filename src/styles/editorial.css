@@ -555,3 +555,49 @@ html body, body.editorial-page {
     min-width: 0; max-width: 100%; overflow-wrap: anywhere;
   }
 }
+
+
+/* Last-mile 280px viewport fit: break long metric labels and size the narrow heading. */
+@media (max-width: 320px) {
+  .editorial-page .section-heading h2,
+  .editorial-page .about-layout h2 {
+    font-size: 30px !important;
+    line-height: 1.08;
+  }
+  .editorial-page .proof-inner {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+  .editorial-page .proof-metric {
+    min-width: 0 !important;
+    width: 100%;
+    padding-left: 7px !important;
+  }
+  .editorial-page .proof-metric > span {
+    display: block !important;
+    max-width: 100%;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    font-size: 6px !important;
+    letter-spacing: .02em !important;
+  }
+  .editorial-page .proof-metric strong { font-size: 28px !important; }
+  .editorial-page .proof-note { overflow-wrap: anywhere; }
+}
+
+/* The mobile dropdown must escape the header's layout box and sit above the hero. */
+.editorial-page .nav-inner { overflow: visible !important; }
+@media (max-width: 760px) {
+  .editorial-page .hud-nav { overflow: visible !important; }
+  .editorial-page .hud-nav nav.open {
+    position: fixed !important;
+    top: 68px !important;
+    right: var(--editorial-gutter) !important;
+    left: var(--editorial-gutter) !important;
+    width: auto !important;
+    max-width: none !important;
+    z-index: 10001 !important;
+    pointer-events: auto !important;
+    box-shadow: 0 12px 28px rgba(36,36,31,.12);
+  }
+}
