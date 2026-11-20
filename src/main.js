@@ -1,8 +1,6 @@
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const coarse = matchMedia("(pointer: coarse)").matches;
-const lowPower = coarse || innerWidth < 760 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
 document.documentElement.classList.toggle("reduced-motion", reduced);
 document.documentElement.classList.add("js-ready");
 $("#year").textContent = new Date().getFullYear();
@@ -102,69 +100,7 @@ if ("IntersectionObserver" in window) {
   counterTargets.forEach(el => animateCounter(el, Number(el.dataset.count), el.dataset.suffix || ""));
 }
 
-// Keep the 3D payload off mobile, reduced-motion and low-power execution paths.
-if (reduced || lowPower) $("#qaScene")?.setAttribute("hidden", "");
-const scheduleIdle = callback => {
-  if ("requestIdleCallback" in window) requestIdleCallback(callback, { timeout: 2200 });
-  else setTimeout(callback, 900);
-};
-if (!reduced && !lowPower && $("#qaScene")) {
-  scheduleIdle(() => {
-    import("./scenes/qa-scene.js")
-      .then(({ createQAScene }) => createQAScene($("#qaScene")))
-      .catch(() => $("#qaScene")?.setAttribute("hidden", ""));
-  });
-}
-
-// Desktop-only motion is split into deferred chunks. The heading remains visible before they load.
-if (!reduced && !lowPower) {
-  scheduleIdle(async () => {
-    try {
-      const results = await Promise.all([
-        import("gsap"),
-        import("gsap/ScrollTrigger")
-      ]);
-      const gsap = results[0].gsap;
-      const ScrollTrigger = results[1].ScrollTrigger;
-      gsap.registerPlugin(ScrollTrigger);
-
-      if ($(".hero-scene")) {
-        gsap.to(".hero-scene", {
-          y: -24,
-          ease: "none",
-          scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 }
-        });
-        // Keep opacity at 1 so the main heading is eligible for early paint/LCP.
-        gsap.fromTo(".hero h1 span", { y: 18, opacity: 1 }, {
-          y: 0, opacity: 1, stagger: 0.1, duration: 0.7, ease: "power3.out"
-        });
-      }
-
-      gsap.utils.toArray(".timeline article").forEach((item, index) => {
-        gsap.fromTo(item, { x: -18, opacity: 1 }, {
-          x: 0, opacity: 1, duration: 0.65, ease: "power2.out",
-          scrollTrigger: { trigger: item, start: "top 82%" },
-          delay: index * 0.04
-        });
-      });
-
-      // Keep approach steps in normal document flow. Pinned horizontal
-      // scrolling introduced a long artificial scroll segment and broke
-      // predictable touch scrolling and anchor navigation on some screens.
-      gsap.utils.toArray(".approach-track article").forEach((card, index) => {
-        gsap.fromTo(card, { y: 16 }, {
-          y: 0, duration: 0.55, ease: "power2.out",
-          scrollTrigger: { trigger: card, start: "top 88%", once: true },
-          delay: index * 0.04
-        });
-      });
-
-    } catch (error) {
-      // The site remains completely usable when an optional animation chunk is unavailable.
-      console.warn("Optional motion enhancement could not be initialized.", error);
-    }
-  });
-}
+// Motion is deliberately CSS-led: no 3D scene or animation-library download is needed for core content.
 
 // Accessible project details: native dialog handles focus and Escape behavior.
 const dialog = document.createElement("dialog");
