@@ -106,7 +106,7 @@ for (const page of pages) {
 const home = htmlByRoute.get("/");
 assert.match(home, /class="hero-portrait"/, "Homepage must render the profile portrait");
 assert.match(home, /alt="Portrait of Kalp Shah, Manual QA Tester"/, "Profile image needs descriptive alt text");
-assert.match(home, /class="editorial-hero/, "Homepage must use the editorial hero structure");
+assert.match(home, /class="[^"]*\\beditorial-hero\\b/, "Homepage must use the editorial hero structure");
 assert.match(home, /class="project-row"/, "Homepage must show the work in editorial rows, not generic cards");
 assert.equal([...home.matchAll(/class="project-row"/g)].length, 3, "Expected three accurately labelled work entries");
 assert.match(home, /class="certificate-grid"/, "Homepage must render the certificate gallery");
