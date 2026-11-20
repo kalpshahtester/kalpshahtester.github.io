@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+500;600;700&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 :root{--ink:#24241f;--paper:#f6f4ee;--muted:#686961;--quiet:#92938b;--line:#d9d7cf;--accent:#b54732;--accent-dark:#873321;--display:"DM Serif Display",Georgia,serif;--body:"DM Sans",Arial,sans-serif;--mono:"IBM Plex Mono",monospace}
 html{background:var(--paper);scroll-padding-top:90px}body{margin:0;background:var(--paper);color:var(--ink);font:400 14px/1.8 var(--body);overflow-x:hidden}a{color:inherit;text-decoration:none}::selection{background:#e7c3b7;color:var(--ink)}:focus-visible{outline:2px solid var(--accent);outline-offset:4px}.skip-link{background:var(--ink);color:var(--paper)}
 .site-header{position:sticky;top:0;z-index:100;height:auto;border-bottom:1px solid var(--line);background:rgba(246,244,238,.97);box-shadow:none;backdrop-filter:none}
