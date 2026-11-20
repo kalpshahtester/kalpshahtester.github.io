@@ -956,3 +956,9 @@ html { scroll-padding-top: 88px; }
 @media (prefers-reduced-motion: reduce) {
   .footer-contact-links a { transition: none; }
 }
+
+/* Keep résumé actions legible and fully visible in the responsive hero action row. */
+.hero-actions .resume-view-button,
+.hero-actions .resume-download-button {
+  white-space: nowrap;
+}
