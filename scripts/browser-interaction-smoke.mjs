@@ -118,6 +118,46 @@ try {
             scrollWidth: element.scrollWidth
           };
         });
+        const cardGroupSpecs = [
+          { name: "project cards", parent: "#work .work-grid", items: ".work-card" },
+          { name: "approach cards", parent: "#approach .approach-track", items: "article" },
+          { name: "skill cards", parent: "#toolkit .toolkit-grid", items: "article" },
+          { name: "certificate cards", parent: "#toolkit .certificate-grid", items: ".certificate-card" }
+        ];
+        const cardGroups = cardGroupSpecs.map(spec => {
+          const parent = document.querySelector(spec.parent);
+          if (!parent) return { name: spec.name, missing: true, parent: null, rows: [], items: [] };
+          const parentRect = parent.getBoundingClientRect();
+          const items = [...parent.querySelectorAll(spec.items)].map(el => {
+            const rect = el.getBoundingClientRect();
+            return { left: Math.round(rect.left), right: Math.round(rect.right), top: Math.round(rect.top), bottom: Math.round(rect.bottom), width: Math.round(rect.width), height: Math.round(rect.height) };
+          });
+          const rows = [];
+          for (const item of items) {
+            let row = rows.find(candidate => Math.abs(candidate.top - item.top) <= 2);
+            if (!row) { row = { top: item.top, heights: [], widths: [] }; rows.push(row); }
+            row.heights.push(item.height);
+            row.widths.push(item.width);
+          }
+          return {
+            name: spec.name,
+            parent: { left: Math.round(parentRect.left), right: Math.round(parentRect.right), width: Math.round(parentRect.width) },
+            rows,
+            items
+          };
+        });
+        const textOverflows = [...document.querySelectorAll("main h1, main h2, main h3, main p, main li, footer p, footer small")]
+          .filter(el => el.getBoundingClientRect().width > 0)
+          .map(el => {
+            const rect = el.getBoundingClientRect();
+            return { tag: el.tagName.toLowerCase(), text: (el.textContent || "").trim().replace(/\\s+/g, " ").slice(0, 90), left: Math.round(rect.left), right: Math.round(rect.right), clientWidth: el.clientWidth, scrollWidth: el.scrollWidth };
+          })
+          .filter(el => el.scrollWidth > el.clientWidth + 2);
+        const sectionSpacing = ["about", "work", "approach", "experience", "toolkit"].map(id => {
+          const el = document.getElementById(id);
+          const style = getComputedStyle(el);
+          return { id, top: parseFloat(style.paddingTop), bottom: parseFloat(style.paddingBottom) };
+        });
         const header = document.getElementById("siteHeader");
         const wideNodes = [...document.querySelectorAll("body *")].map(el => {
           const rect = el.getBoundingClientRect();
@@ -144,6 +184,9 @@ try {
           headerWidth: header?.scrollWidth || 0,
           sections,
           resumeActions,
+          cardGroups,
+          textOverflows,
+          sectionSpacing,
           wideNodes
         };
       });
@@ -158,6 +201,21 @@ try {
       for (const section of metrics.sections) {
         assert.ok(section.left >= -1 && section.right <= width + 1, width + "px " + section.id + " extends beyond viewport: " + JSON.stringify(metrics));
         assert.ok(section.scrollWidth <= section.clientWidth + 1, width + "px " + section.id + " has internal horizontal overflow: " + JSON.stringify(metrics));
+      }
+      assert.equal(metrics.textOverflows.length, 0, width + "px text is clipped or overflows its own box: " + JSON.stringify(metrics.textOverflows));
+      for (const group of metrics.cardGroups) {
+        assert.ok(!group.missing, width + "px missing " + group.name);
+        for (const item of group.items) {
+          assert.ok(item.left >= group.parent.left - 1 && item.right <= group.parent.right + 1, width + "px " + group.name + " card extends outside its grid: " + JSON.stringify(group));
+        }
+        for (const row of group.rows) {
+          const minHeight = Math.min(...row.heights);
+          const maxHeight = Math.max(...row.heights);
+          assert.ok(maxHeight - minHeight <= 2, width + "px " + group.name + " cards in the same row are misaligned: " + JSON.stringify(group));
+        }
+      }
+      for (const spacing of metrics.sectionSpacing) {
+        assert.ok(spacing.top >= 60 && spacing.bottom >= 60, width + "px inconsistent vertical spacing for #" + spacing.id + ": " + JSON.stringify(spacing));
       }
     }
     await desktop.setViewportSize({ width: 1440, height: 1000 });
