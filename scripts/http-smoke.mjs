@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 
 const baseURL = (process.env.BASE_URL || "http://127.0.0.1:4173").replace(/\/$/, "");
 const pages = [
-  { path: "/", heading: "I look beyond" },
+  { path: "/", heading: "Find the issue." },
   { path: "/projects/saucedemo.html", heading: "Testing the" },
   { path: "/projects/makemytrip.html", heading: "Travel journeys" }
 ];
@@ -68,8 +68,8 @@ for (const page of pages) {
   const heading = result.text.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] || "";
   assert.ok(heading.replace(/<[^>]+>/g, " ").includes(page.heading), page.path + " primary heading is missing");
   if (page.path === "/") {
-    assert.match(result.text, /<a\b(?=[^>]*id="resumeViewButton")(?=[^>]*target="_blank")[^>]*>View Resume/i, "Homepage View Resume action is missing or not configured to open a new tab");
     assert.match(result.text, /<a\b(?=[^>]*id="resumeDownloadButton")(?=[^>]*download="Kalp-Shah-Manual-QA-Tester-Resume\.pdf")[^>]*>Download Resume/i, "Homepage Download Resume action is missing");
+    assert.doesNotMatch(result.text, /View Resume|resumeViewButton|resume-view-button/i, "Homepage must contain only the Download Resume action, not View Resume");
   }
   assertions += page.path === "/" ? 5 : 3;
 
