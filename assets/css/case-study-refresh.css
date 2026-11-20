@@ -1,0 +1,67 @@
+/* Case-study pages share the portfolio's navy and violet design tokens. */
+:root {
+  --ink: #0b1220;
+  --ink-2: #101a2b;
+  --panel: #142238;
+  --panel-2: #192b43;
+  --paper: #f4f7fb;
+  --white: #f4f7fb;
+  --muted: #b2bfd1;
+  --quiet: #8191a8;
+  --line: rgba(177,196,220,.16);
+  --line-strong: rgba(177,196,220,.25);
+  --acid: #a78bfa;
+  --acid-soft: rgba(167,139,250,.13);
+  --blue: #67d9e8;
+}
+body {
+  background:
+    radial-gradient(ellipse at 82% 4%, rgba(113,91,190,.13), transparent 32rem),
+    radial-gradient(ellipse at 7% 48%, rgba(53,122,150,.06), transparent 28rem),
+    var(--ink);
+}
+::selection { background: rgba(167,139,250,.34); color: #fff; }
+button:focus-visible, a:focus-visible { outline-color: var(--blue); }
+.site-header { background: rgba(11,18,32,.86); }
+.site-header.is-scrolled { background: rgba(11,18,32,.96); }
+.brand-symbol { border-color: rgba(167,139,250,.42); background: linear-gradient(145deg,rgba(167,139,250,.22),rgba(167,139,250,.04)); }
+.brand-symbol span { color: #d6c8ff; }
+.primary-nav>a:hover, .primary-nav>a[aria-current=location] { color: #fff; }
+.primary-nav>a:not(.nav-contact)::after { background: var(--acid); }
+.primary-nav .nav-contact { border-color: rgba(167,139,250,.5); color: #d9ccff; }
+.primary-nav .nav-contact:hover { background: var(--acid); color: #17122a; border-color: var(--acid); }
+.hero-eyebrow, .case-breadcrumbs, .case-breadcrumbs a { color: #b6c4d7; }
+.eyebrow-pulse, .summary-line strong i { background: var(--acid); box-shadow: 0 0 0 4px rgba(167,139,250,.12),0 0 14px rgba(167,139,250,.35); }
+.hero-title .accent-word, .hero-title .period, .case-title em, .case-section h2 em { color: var(--acid); }
+.button-primary { border-color: #8b5cf6; background: linear-gradient(135deg,#986bf4,#713ad8); color: #fff; }
+.button-primary:hover { border-color: #b69afc; background: linear-gradient(135deg,#a47df6,#7c4ae1); }
+.button-secondary { border-color: rgba(167,139,250,.5); }
+.button-secondary:hover { border-color: var(--acid); background: var(--acid); color: #17122a; }
+.button-ghost:hover { border-color: var(--acid); color: #e2d8ff; }
+.hero-visual::before, .hero-visual::after { border-color: rgba(167,139,250,.16); }
+.orbit-two { border-color: rgba(103,217,232,.16); }
+.orbit-node { border-color: var(--acid); box-shadow: 0 0 18px rgba(167,139,250,.45); }
+.float-icon { background: var(--acid-soft); color: #d8caff; }
+.float-live { background: var(--green); box-shadow: 0 0 0 4px rgba(110,214,160,.1); }
+.proof-strip { background: #111d30; }
+.micro-label, .section-kicker span:first-child, .section-kicker span:last-child, .summary-label, .sidebar-label { color: #cbbaff; }
+.proof-metric strong, .case-metrics strong { color: #fff; }
+.case-hero { background: radial-gradient(ellipse at 82% 12%,rgba(91,91,165,.13),transparent 30rem),radial-gradient(ellipse at 12% 70%,rgba(167,139,250,.055),transparent 25rem); }
+.case-summary-card { border-color: rgba(167,139,250,.3); background: radial-gradient(circle at 90% 0,rgba(167,139,250,.13),transparent 15rem),linear-gradient(145deg,rgba(167,139,250,.07),rgba(255,255,255,.012)); }
+.summary-line strong i { display: inline-block; width: 6px; height: 6px; margin: 0 5px 1px 0; border-radius: 50%; }
+.case-metrics { background: rgba(255,255,255,.014); }
+.case-callout { border-left-color: var(--acid); background: linear-gradient(90deg,rgba(167,139,250,.09),rgba(167,139,250,.012)); }
+.callout-mark, .scope-grid article>span, .case-process>div>b, .evidence-grid span::before { color: #d2c3ff; }
+.scope-grid article, .evidence-grid span { background: linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.012)); }
+.scope-grid article:hover { border-color: rgba(167,139,250,.4); background: linear-gradient(145deg,rgba(167,139,250,.08),rgba(255,255,255,.012)); }
+.case-sidebar>a:hover, .case-sidebar>a[aria-current=location], .case-sidebar .sidebar-back, .case-footer-nav a { color: #d4c6ff; }
+.case-footer-nav a:hover { color: #fff; }
+.reading-line { background: linear-gradient(90deg,#7c3aed,#67d9e8); box-shadow: 0 0 14px rgba(167,139,250,.35); }
+.ambient-one { background: #5f51ad; }
+.ambient-two { background: #397b95; }
+.footer-linkedin { border-color: rgba(167,139,250,.33); color: #d9ccff; }
+.footer-linkedin:hover { border-color: var(--acid); background: rgba(167,139,250,.09); }
+@media (prefers-reduced-motion: reduce) {
+  .scope-grid article { transition: none; }
+  .scope-grid article:hover { transform: none; }
+}
