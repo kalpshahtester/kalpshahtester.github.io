@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+
+concurrency:
+  group: portfolio-production-smoke
+  cancel-in-progress: true
 jobs:
   verify-live-site:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success' }}

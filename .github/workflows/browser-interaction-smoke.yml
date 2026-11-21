@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+
+concurrency:
+  group: portfolio-production-browser
+  cancel-in-progress: true
 jobs:
   browser-interactions:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success' }}
