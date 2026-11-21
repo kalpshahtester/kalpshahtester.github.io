@@ -1475,3 +1475,13 @@ main > .lab-section.content-section {
     letter-spacing: -.065em;
   }
 }
+
+
+/* Mobile hero copy: prevent long headline spans from forcing page width at 421–600px. */
+@media (max-width: 600px) {
+  .hero h1 span {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
