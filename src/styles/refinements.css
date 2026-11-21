@@ -1490,3 +1490,15 @@ main > .lab-section.content-section {
     overflow-wrap: anywhere;
   }
 }
+
+
+/* 421–600px section headings: fit narrow tablet/large-phone text columns. */
+@media (min-width: 421px) and (max-width: 600px) {
+  .section-heading h2,
+  .split-heading h2 {
+    font-size: clamp(32px, 9.3vw, 40px);
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+}
