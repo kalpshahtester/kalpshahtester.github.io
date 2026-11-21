@@ -9,8 +9,8 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Install Lighthouse
@@ -24,7 +24,7 @@ jobs:
       - name: Print measured category scores for every route
         run: |
           node --input-type=module -e "import fs from 'node:fs'; for (const route of ['homepage','saucedemo','makemytrip']) { const r=JSON.parse(fs.readFileSync('./lighthouse-report/'+route+'.report.json','utf8')); console.log('['+route+']'); for (const [k,v] of Object.entries(r.categories)) console.log(k+': '+Math.round(v.score*100)); }"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: lighthouse-production-report
           path: lighthouse-report/
