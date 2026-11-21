@@ -1,6 +1,12 @@
 name: Production Lighthouse audit
 on:
-  deployment_status:
+  workflow_run:
+    workflows:
+      - Deploy Vite portfolio to GitHub Pages
+    types:
+      - completed
+    branches:
+      - main
   workflow_dispatch:
 permissions:
   contents: read
@@ -10,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   lighthouse:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
