@@ -4,9 +4,9 @@
 
 - Website: https://kalpshahtester.github.io/
 - Repository: https://github.com/kalpshahtester/kalpshahtester.github.io
-- Current main commit: `fec7076a98aa156a75cfaa04d894066bb80c0133` — [visible-text link-name fix](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/fec7076a98aa156a75cfaa04d894066bb80c0133)
+- Portfolio source commit under review: `fec7076a98aa156a75cfaa04d894066bb80c0133` — [visible-text link-name fix](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/fec7076a98aa156a75cfaa04d894066bb80c0133)
 - Latest fully validated deployment before this commit: `a9e57666729d0c16e4d3d57992212b1e56d11a44`
-- Vite deployment succeeded; the current commit's build, deployment, smoke and Lighthouse checks are still running at the time of this update.
+- Vite deployment, live smoke and browser interaction checks succeeded for the source fix; its Lighthouse audit was still pending when this report was updated.
 
 ## Latest completed production validation
 
