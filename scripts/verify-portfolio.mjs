@@ -130,8 +130,10 @@ assert.match(home, /id="resumeDownloadButton"[^>]*href="\/Kalp%20Shah%20Manual%2
 assert.equal([...home.matchAll(/id="resumeDownloadButton"/g)].length, 1, "Expected exactly one Download Resume action");
 assert.doesNotMatch(home, /View Resume|resumeViewButton|resume-view-button/i, "The unnecessary View Resume action must not be present");
 assert.ok(home.includes('aria-label="Download Resume. Kalp Shah’s Manual QA Tester résumé (PDF)."'), "Download Resume accessible name must include its visible label");
-assert.ok(home.includes('aria-label="K. KALP SHAH MANUAL QA / WEB &amp; WORDPRESS Home"'), "Header brand accessible name must include its visible branding");
-assert.ok(home.includes('aria-label="K. KALP SHAH MANUAL QA TESTER Home"'), "Footer brand accessible name must include its visible branding");
+assert.ok(home.includes('aria-labelledby="headerBrandCopy"'), "Header brand should use its visible text as its accessible name");
+assert.ok(home.includes('<span class="brand-mark" aria-hidden="true">K<span>.</span></span><span class="brand-copy" id="headerBrandCopy">KALP SHAH<small>MANUAL QA / WEB &amp; WORDPRESS</small></span>'), "Header decorative mark must be hidden and brand text referenced");
+assert.ok(home.includes('aria-labelledby="footerBrandCopy"'), "Footer brand should use its visible text as its accessible name");
+assert.ok(home.includes('<span class="brand-mark" aria-hidden="true">K<span>.</span></span><span class="brand-copy" id="footerBrandCopy">KALP SHAH<small>MANUAL QA TESTER</small></span>'), "Footer decorative mark must be hidden and brand text referenced");
 assert.ok(home.includes('href="#work"'), "Homepage work navigation must target #work");
 assert.match(home, /id="footer-contact"/, "Footer contact destination is missing");
 assert.match(home, /class="footer-contact-links"/, "Footer contact links are missing");

@@ -31,6 +31,10 @@ try {
     const image = desktop.locator(".profile-photo");
     await image.waitFor({ state: "visible" });
     assert.ok(await image.evaluate(el => el.complete && el.naturalWidth > 0), "Profile portrait did not load");
+    assert.equal(await desktop.locator("header#siteHeader a.brand").getAttribute("aria-labelledby"), "headerBrandCopy");
+    assert.equal(await desktop.locator("header#siteHeader a.brand .brand-mark").getAttribute("aria-hidden"), "true");
+    assert.equal(await desktop.locator("footer#footer-contact a.brand").getAttribute("aria-labelledby"), "footerBrandCopy");
+    assert.equal(await desktop.locator("footer#footer-contact a.brand .brand-mark").getAttribute("aria-hidden"), "true");
     assert.match(await image.evaluate(el => el.currentSrc), /Kalp(?:%20|\s)Shah(?:%20|\s)Profile(?:%20|\s)Photo\.png$/i, "Portrait should use the original profile PNG asset");
     assert.equal(await image.getAttribute("alt"), "Portrait of Kalp Shah, Manual QA Tester", "Portrait alternative text is missing or inaccurate");
     const linkedin = desktop.locator(".hero-linkedin");
