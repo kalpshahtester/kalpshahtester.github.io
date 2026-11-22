@@ -130,8 +130,8 @@ assert.match(home, /id="resumeDownloadButton"[^>]*href="\/Kalp%20Shah%20Manual%2
 assert.equal([...home.matchAll(/id="resumeDownloadButton"/g)].length, 1, "Expected exactly one Download Resume action");
 assert.doesNotMatch(home, /View Resume|resumeViewButton|resume-view-button/i, "The unnecessary View Resume action must not be present");
 assert.ok(home.includes('aria-label="Download Resume. Kalp Shah’s Manual QA Tester résumé (PDF)."'), "Download Resume accessible name must include its visible label");
-assert.ok(home.includes('aria-label="K. Kalp Shah Manual QA / Web &amp; WordPress Home"'), "Header brand accessible name must include its visible branding");
-assert.ok(home.includes('aria-label="K. Kalp Shah Manual QA Tester Home"'), "Footer brand accessible name must include its visible branding");
+assert.ok(home.includes('aria-label="K. KALP SHAH MANUAL QA / WEB &amp; WORDPRESS Home"'), "Header brand accessible name must include its visible branding");
+assert.ok(home.includes('aria-label="K. KALP SHAH MANUAL QA TESTER Home"'), "Footer brand accessible name must include its visible branding");
 assert.ok(home.includes('href="#work"'), "Homepage work navigation must target #work");
 assert.match(home, /id="footer-contact"/, "Footer contact destination is missing");
 assert.match(home, /class="footer-contact-links"/, "Footer contact links are missing");
