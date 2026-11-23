@@ -17,10 +17,18 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Install WebP encoder
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes webp
       - name: Stage the same public URLs used by deployment
         run: node scripts/stage-pages-assets.mjs
+      - name: Generate responsive profile portrait variants
+        run: node scripts/generate-responsive-portrait.mjs
       - run: npm run check
       - run: npm run build
+      - name: Add responsive WebP source and preload
+        run: node scripts/inject-responsive-portrait.mjs
       - name: Verify the generated Pages artifact
         run: node scripts/verify-pages-build.mjs
       - name: Start server against dist

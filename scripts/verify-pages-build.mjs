@@ -11,6 +11,9 @@ const required = [
   "assets/css/case-study.css",
   "assets/js/case-study.js",
   "Kalp Shah Profile Photo.png",
+  "assets/images/kalp-shah-profile-320.webp",
+  "assets/images/kalp-shah-profile-640.webp",
+  "assets/images/kalp-shah-profile-768.webp",
   "Kalp Shah Manual Tester Resume.pdf",
   "Kalp Shah HCL GUVI Certification.png",
   "Kalp Shah Generative AI Mastermind Course Certificate.jpeg",
@@ -56,9 +59,17 @@ assert.ok(bundledCss.includes(".hud-nav") && bundledCss.includes(".hero"), "Prod
 
 const originalPng = fs.readFileSync(path.join(dist, "Kalp Shah Profile Photo.png"));
 assert.deepEqual([...originalPng.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10], "Original profile photo must remain a PNG");
+for (const width of [320, 640, 768]) {
+  const portraitPath = path.join(dist, "assets/images/kalp-shah-profile-" + width + ".webp");
+  const portrait = fs.readFileSync(portraitPath);
+  assert.equal(portrait.toString("ascii", 0, 4), "RIFF", width + "px portrait must be a RIFF container");
+  assert.equal(portrait.toString("ascii", 8, 12), "WEBP", width + "px portrait must be WebP");
+  assert.ok(portrait.length > 0 && portrait.length < originalPng.length, width + "px WebP must be smaller than the original PNG");
+}
 assert.match(html, /class="hero-portrait"/, "Built homepage missing portrait figure");
-assert.ok(html.includes('src="/Kalp%20Shah%20Profile%20Photo.png"') || html.includes('src="/Kalp Shah Profile Photo.png"'), "Original profile PNG must be the deployed portrait source");
-assert.ok(!html.includes("kalp-shah-profile-320.webp"), "Homepage must not reference an untracked generated image variant");
+assert.ok(html.includes('src="/Kalp%20Shah%20Profile%20Photo.png"') || html.includes('src="/Kalp Shah Profile Photo.png"'), "Original profile PNG must remain the portrait fallback");
+assert.match(html, /<source type="image\/webp" srcset="[^"]*kalp-shah-profile-320\.webp 320w[^"]*"/, "Homepage must provide responsive WebP portrait candidates");
+assert.match(html, /<link rel="preload" as="image" type="image\/webp"[^>]*href="\/assets\/images\/kalp-shah-profile-768\.webp"/, "Homepage must preload the responsive portrait");
 assert.match(html, /class="certificate-card"/, "Built homepage missing certificate gallery");
 
 for (const route of ["/projects/saucedemo.html", "/projects/makemytrip.html"]) {

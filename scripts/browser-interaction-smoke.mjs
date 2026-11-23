@@ -41,7 +41,14 @@ try {
     assert.equal(await footerBrand.locator(".brand-mark").getAttribute("aria-hidden"), "true", "Footer monogram should be decorative to assistive technology.");
     assert.equal(await desktop.getByRole("link", { name: /^KALP SHAH\s*MANUAL QA\s*\/\s*WEB & WORDPRESS$/i }).count(), 1, "Header brand accessible name should contain the visible name and descriptor.");
     assert.equal(await desktop.getByRole("link", { name: /^KALP SHAH\s*MANUAL QA TESTER$/i }).count(), 1, "Footer brand accessible name should contain the visible name and descriptor.");
-    assert.match(await image.evaluate(el => el.currentSrc), /Kalp(?:%20|\s)Shah(?:%20|\s)Profile(?:%20|\s)Photo\.png$/i, "Portrait should use the original profile PNG asset");
+    const portraitDetails = await image.evaluate(el => ({
+      fallback: el.getAttribute("src") || "",
+      current: el.currentSrc,
+      webpSrcset: el.closest("picture")?.querySelector('source[type="image/webp"]')?.getAttribute("srcset") || ""
+    }));
+    assert.match(portraitDetails.fallback, /Kalp(?:%20|\s)Shah(?:%20|\s)Profile(?:%20|\s)Photo\.png$/i, "Original profile PNG must remain the fallback asset");
+    assert.match(portraitDetails.webpSrcset, /kalp-shah-profile-320\.webp 320w/, "Responsive WebP portrait source is missing");
+    assert.match(portraitDetails.current, /\/assets\/images\/kalp-shah-profile-(320|640|768)\.webp$/i, "Browser should select an optimized WebP portrait");
     assert.equal(await image.getAttribute("alt"), "Portrait of Kalp Shah, Manual QA Tester", "Portrait alternative text is missing or inaccurate");
     const linkedin = desktop.locator(".hero-linkedin");
     assert.equal(await linkedin.getAttribute("href"), "https://www.linkedin.com/in/kalp-shah-software-tester/", "Hero LinkedIn destination is incorrect");

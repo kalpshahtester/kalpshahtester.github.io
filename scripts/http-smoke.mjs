@@ -90,6 +90,7 @@ const mimeRules = [
   { suffix: ".css", pattern: /text\/css/i },
   { suffix: ".js", pattern: /javascript|ecmascript/i },
   { suffix: ".png", pattern: /image\/png/i },
+  { suffix: ".webp", pattern: /image\/webp/i },
   { suffix: ".jpeg", pattern: /image\/jpeg/i },
   { suffix: ".svg", pattern: /image\/svg\+xml/i },
   { suffix: ".ico", pattern: /image\/x-icon|image\/vnd\.microsoft\.icon/i },

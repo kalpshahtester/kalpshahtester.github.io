@@ -2,6 +2,16 @@ name: Deploy Vite portfolio to GitHub Pages
 on:
   push:
     branches: [main]
+  # GitHub's branch-source Pages workflow can deploy after this Vite build.
+  # Rebuild and redeploy Vite when that workflow finishes so the optimized
+  # dist artifact is the final published version until Pages uses Actions source.
+  workflow_run:
+    workflows:
+      - pages build and deployment
+    types:
+      - completed
+    branches:
+      - main
   workflow_dispatch:
 permissions:
   contents: read
@@ -12,18 +22,29 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.head_sha == github.sha }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
       - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Install WebP encoder
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes webp
       - name: Stage legacy public URLs
         run: node scripts/stage-pages-assets.mjs
+      - name: Generate responsive profile portrait variants
+        run: node scripts/generate-responsive-portrait.mjs
       - run: npm run check
       - run: npm run build
+      - name: Add responsive WebP source and preload
+        run: node scripts/inject-responsive-portrait.mjs
       - name: Verify the exact Pages artifact
         run: node scripts/verify-pages-build.mjs
       - uses: actions/upload-pages-artifact@v5
