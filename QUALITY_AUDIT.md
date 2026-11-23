@@ -17,7 +17,7 @@
 | Responsive browser interaction tests | Passed — 17 passed, 0 failed | [Production browser tests](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108433777) |
 | Responsive viewport matrix | Passed at 13 widths from 280px through 1920px | Included in the browser-interaction run |
 | JavaScript runtime checks | No uncaught errors on the tested homepage and project pages | Included in the browser-interaction run |
-| Live route and local-resource smoke test | Passed — 70 assertions across 3 routes and 27 unique local resources | [Production smoke test](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108433745) |
+| Live route and local-resource smoke test | Passed — 72 assertions across 3 routes and 28 unique local resources | [Production smoke test](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108433745) |
 | Production Lighthouse audit | Completed on all 3 public routes | [Lighthouse audit and reports](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108433660) |
 | Vite GitHub Pages deployment | Passed | [Deployment run](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108381983) |
 
