@@ -11,7 +11,7 @@ async function record(pageName, label, fn) {
     await fn();
     results.push({ page: pageName, test: label, status: "PASS" });
   } catch (error) {
-    failures.push({ page: pageName, test: label, error: error.message });
+    failures.push({ page: pageName, test: label, error: error.message, stack: error.stack?.split("\n").slice(0, 4).join("\n") });
     results.push({ page: pageName, test: label, status: "FAIL" });
   }
 }
@@ -35,8 +35,8 @@ try {
     assert.equal(await desktop.locator("header#siteHeader a.brand").getAttribute("aria-labelledby"), null);
     assert.equal(await desktop.locator("footer#footer-contact a.brand").getAttribute("aria-label"), null);
     assert.equal(await desktop.locator("footer#footer-contact a.brand").getAttribute("aria-labelledby"), null);
-    assert.equal(await desktop.getByRole("link", { name: "K. KALP SHAH MANUAL QA / WEB & WORDPRESS", exact: true }).count(), 1);
-    assert.equal(await desktop.getByRole("link", { name: "K. KALP SHAH MANUAL QA TESTER", exact: true }).count(), 1);
+    assert.equal(await desktop.getByRole("link", { name: /^K\.\s*KALP SHAH\s*MANUAL QA \/ WEB & WORDPRESS$/ }).count(), 1, "Header brand accessible name should match its visible brand text.");
+    assert.equal(await desktop.getByRole("link", { name: /^K\.\s*KALP SHAH\s*MANUAL QA TESTER$/ }).count(), 1, "Footer brand accessible name should match its visible brand text.");
     assert.match(await image.evaluate(el => el.currentSrc), /Kalp(?:%20|\s)Shah(?:%20|\s)Profile(?:%20|\s)Photo\.png$/i, "Portrait should use the original profile PNG asset");
     assert.equal(await image.getAttribute("alt"), "Portrait of Kalp Shah, Manual QA Tester", "Portrait alternative text is missing or inaccurate");
     const linkedin = desktop.locator(".hero-linkedin");
