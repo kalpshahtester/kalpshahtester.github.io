@@ -12,28 +12,28 @@
 
 | Check | Result | Evidence |
 |---|---|---|
-| Source audit, JavaScript syntax, Vite build and Pages artifact verification | Passed | [Portfolio quality checks](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108121183) |
+| Source audit, JavaScript syntax, Vite build and Pages artifact verification | Passed | [Portfolio quality checks](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108382009) |
 | Built-site HTTP smoke test | Passed — 70 assertions across 3 routes and 27 unique local resources | Included in the quality-check run above |
-| Responsive browser interaction tests | Passed — 17 passed, 0 failed | [Production browser tests](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108183382) |
+| Responsive browser interaction tests | Passed — 17 passed, 0 failed | [Production browser tests](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108433777) |
 | Responsive viewport matrix | Passed at 13 widths from 280px through 1920px | Included in the browser-interaction run |
 | JavaScript runtime checks | No uncaught errors on the tested homepage and project pages | Included in the browser-interaction run |
-| Live route and local-resource smoke test | Passed — 70 assertions across 3 routes and 27 unique local resources | [Production smoke test](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108183451) |
-| Production Lighthouse audit | Completed on all 3 public routes | [Lighthouse audit and reports](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108183409) |
-| Vite GitHub Pages deployment | Passed | [Deployment run](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108121282) |
+| Live route and local-resource smoke test | Passed — 70 assertions across 3 routes and 27 unique local resources | [Production smoke test](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108433745) |
+| Production Lighthouse audit | Completed on all 3 public routes | [Lighthouse audit and reports](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108433660) |
+| Vite GitHub Pages deployment | Passed | [Deployment run](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108381983) |
 
 The browser checks cover the profile portrait, hero and footer contact destinations, desktop section navigation, project quick-view dialog, sample QA interaction, back-to-top control, mobile navigation, project pages, responsive layout and horizontal overflow.
 
 ## Latest Lighthouse scores
 
-Measured on the deployed site on 23 November 2026 (commit `dfce48c`):
+Latest recorded measurement on 23 November 2026, from the successful post-deployment Lighthouse run for the same site source (audit run `45108433660`; source commit `dfce48c`):
 
 | Route | Performance | Accessibility | Best Practices | SEO |
 |---|---:|---:|---:|---:|
-| Homepage | 70 | 100 | 100 | 100 |
-| SauceDemo case study | 90 | 100 | 100 | 100 |
-| MakeMyTrip case study | 90 | 100 | 100 | 100 |
+| Homepage | 71 | 100 | 100 | 100 |
+| SauceDemo case study | 100 | 100 | 100 | 100 |
+| MakeMyTrip case study | 91 | 100 | 100 | 100 |
 
-The homepage performance score remains the main technical quality gap. The source portrait PNG is 1,098,777 bytes and is rendered at approximately 282×282px. A previous Lighthouse trace measured an LCP of 7,950ms and estimated roughly 630 KiB of savings from better image sizing. Another trace measured 9,545 bytes of render-blocking `refinements.css` (estimated 154ms) and 2.3 seconds of main-thread work. Treat these as lab measurements; scores and timings fluctuate.
+The homepage performance score remains the main technical quality gap. Scores vary between lab runs; the table records the latest completed run available when this report snapshot was written. The source portrait PNG is 1,098,777 bytes and is rendered at approximately 282×282px. A previous Lighthouse trace measured an LCP of 7,950ms and estimated roughly 630 KiB of savings from better image sizing. Another trace measured 9,545 bytes of render-blocking `refinements.css` (estimated 154ms) and 2.3 seconds of main-thread work. Treat these as lab measurements; scores and timings fluctuate.
 
 An earlier local 512×512 WebP candidate (9,024 bytes) was visually checked but was not published because the binary upload could not be integrity-verified. The original portrait remains unchanged. Image optimization remains open; do not replace or retouch the user's photo without verifying the exact source and output.
 
