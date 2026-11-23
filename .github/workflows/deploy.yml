@@ -2,18 +2,9 @@ name: Deploy Vite portfolio to GitHub Pages
 on:
   push:
     branches: [main]
-  # GitHub's branch-source Pages workflow can deploy after this Vite build.
-  # Rebuild and redeploy Vite when that workflow finishes so the optimized
-  # dist artifact is the final published version until Pages uses Actions source.
-  workflow_run:
-    workflows:
-      - pages build and deployment
-    types:
-      - completed
-    branches:
-      - main
   workflow_dispatch:
 permissions:
+  actions: read
   contents: read
   pages: write
   id-token: write
@@ -22,12 +13,9 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build:
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.head_sha == github.sha }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-        with:
-          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
       - uses: actions/setup-node@v7
         with:
           node-version: 22
@@ -57,5 +45,35 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Wait for branch-based Pages deployment to finish
+        if: ${{ github.event_name == 'push' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          pages_config=$(gh api "repos/${GITHUB_REPOSITORY}/pages")
+          build_type=$(printf '%s' "$pages_config" | jq -r '.build_type // "legacy"')
+          if [ "$build_type" = "workflow" ]; then
+            echo "Pages already uses GitHub Actions; no branch deployment can overwrite this artifact."
+            exit 0
+          fi
+
+          echo "Pages still uses branch-based deployment. Waiting for its run before publishing the Vite artifact."
+          for attempt in $(seq 1 60); do
+            runs=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs?head_sha=${GITHUB_SHA}&per_page=100")
+            branch_run=$(printf '%s' "$runs" | jq -c --arg sha "$GITHUB_SHA" '.workflow_runs[] | select(.name == "pages build and deployment" and .head_sha == $sha)' | head -n 1)
+            if [ -n "$branch_run" ]; then
+              run_status=$(printf '%s' "$branch_run" | jq -r '.status')
+              run_conclusion=$(printf '%s' "$branch_run" | jq -r '.conclusion // ""')
+              if [ "$run_status" = "completed" ]; then
+                echo "Branch-based Pages workflow finished ($run_conclusion). Publishing the Vite artifact last."
+                exit 0
+              fi
+            fi
+            echo "Waiting for branch-based Pages workflow for $GITHUB_SHA ($attempt/60)..."
+            sleep 10
+          done
+
+          echo "Timed out waiting for the branch-based Pages workflow. Refusing to publish out of order."
+          exit 1
       - id: deployment
         uses: actions/deploy-pages@v5
