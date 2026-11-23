@@ -1,55 +1,50 @@
-# Portfolio quality audit — 22 November 2026
+# Portfolio quality audit — 23 November 2026
 
 ## Release under review
 
 - Website: https://kalpshahtester.github.io/
 - Repository: https://github.com/kalpshahtester/kalpshahtester.github.io
-- Portfolio source commit under review: `fec7076a98aa156a75cfaa04d894066bb80c0133` — [visible-text link-name fix](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/fec7076a98aa156a75cfaa04d894066bb80c0133)
-- Latest fully validated deployment before this commit: `a9e57666729d0c16e4d3d57992212b1e56d11a44`
-- Vite deployment and live smoke succeeded for the source fix; its browser interaction and Lighthouse audits were still pending when this report was updated.
+- Source commit: `dfce48c68ea703af33c1c9ff35134bd091f01707` — [hide decorative brand monograms from accessible names](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/dfce48c68ea703af33c1c9ff35134bd091f01707)
+- Vite deployment: succeeded.
+- Production HTTP smoke, Playwright browser checks and Lighthouse: completed successfully for this commit.
 
-## Latest completed production validation
+## Latest validation results
 
 | Check | Result | Evidence |
 |---|---|---|
-| Source quality, Vite build and Pages artifact validation | Passed | [Portfolio quality checks](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44982946003) |
-| Built-site HTTP resource smoke test | Passed | Included in the quality-check run above |
-| Live route and local-resource smoke test | Passed — 70 assertions across 3 routes and 27 unique local resources | [Production smoke test](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44982980815) |
-| Production browser interaction checks | Passed — 17 passed, 0 failed | [Browser interaction tests](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44982980797) |
+| Source audit, JavaScript syntax, Vite build and Pages artifact verification | Passed | [Portfolio quality checks](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108121183) |
+| Built-site HTTP smoke test | Passed — 70 assertions across 3 routes and 27 unique local resources | Included in the quality-check run above |
+| Responsive browser interaction tests | Passed — 17 passed, 0 failed | [Production browser tests](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108183382) |
 | Responsive viewport matrix | Passed at 13 widths from 280px through 1920px | Included in the browser-interaction run |
-| Browser JavaScript error checks | No uncaught JavaScript errors observed on the tested homepage and project pages | Included in the browser-interaction run |
-| Production Lighthouse audit | Completed on all 3 public routes | [Lighthouse audit and downloadable reports](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/44982980799) |
+| JavaScript runtime checks | No uncaught errors on the tested homepage and project pages | Included in the browser-interaction run |
+| Live route and local-resource smoke test | Passed — 70 assertions across 3 routes and 27 unique local resources | [Production smoke test](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108183451) |
+| Production Lighthouse audit | Completed on all 3 public routes | [Lighthouse audit and reports](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108183409) |
+| Vite GitHub Pages deployment | Passed | [Deployment run](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45108121282) |
 
-The browser run checks the portrait, hero and contact LinkedIn destinations, desktop section navigation, project quick-view dialog, sample QA interaction, back-to-top control, mobile navigation, project pages, and horizontal overflow across the tested responsive matrix.
+The browser checks cover the profile portrait, hero and footer contact destinations, desktop section navigation, project quick-view dialog, sample QA interaction, back-to-top control, mobile navigation, project pages, responsive layout and horizontal overflow.
 
 ## Latest Lighthouse scores
 
-Measured on the deployed site on 22 November 2026 (commit `a9e5766`):
+Measured on the deployed site on 23 November 2026 (commit `dfce48c`):
 
 | Route | Performance | Accessibility | Best Practices | SEO |
 |---|---:|---:|---:|---:|
 | Homepage | 70 | 100 | 100 | 100 |
-| SauceDemo case study | 100 | 100 | 100 | 100 |
-| MakeMyTrip case study | 99 | 100 | 100 | 100 |
+| SauceDemo case study | 90 | 100 | 100 | 100 |
+| MakeMyTrip case study | 90 | 100 | 100 | 100 |
 
-The homepage performance score fluctuates between runs (70–73 in the latest two measurements). The latest report recorded an LCP of 7,950ms. The portrait PNG is 1,098,777 bytes but is rendered at 282×282px; Lighthouse estimates about 630 KiB of savings from proper image sizing. Render-blocking `refinements.css` was 9,545 bytes and estimated 154ms, while total main-thread work was 2.3s. These are lab results, not guaranteed user timings.
+The homepage performance score remains the main technical quality gap. The source portrait PNG is 1,098,777 bytes and is rendered at approximately 282×282px. A previous Lighthouse trace measured an LCP of 7,950ms and estimated roughly 630 KiB of savings from better image sizing. Another trace measured 9,545 bytes of render-blocking `refinements.css` (estimated 154ms) and 2.3 seconds of main-thread work. Treat these as lab measurements; scores and timings fluctuate.
 
-A local 512×512 WebP candidate (9,024 bytes) was generated and visually checked, but it was not committed or deployed because the binary upload could not be integrity-verified. The original PNG remains unchanged. The image optimization is still an open, evidence-based performance task.
+An earlier local 512×512 WebP candidate (9,024 bytes) was visually checked but was not published because the binary upload could not be integrity-verified. The original portrait remains unchanged. Image optimization remains open; do not replace or retouch the user's photo without verifying the exact source and output.
 
-The latest completed audit also flagged two brand links for visible-text/accessibility-name mismatch even though the Accessibility category scored 100. Commit `fec7076` removes the custom label overrides and adds browser assertions for the visible link names; its Lighthouse audit is pending.
-
-## Changes in this release
+## Fixes in this audit
 
 | Area | Update |
 |---|---|
-| Visual system | Refined section spacing, alignment, typography hierarchy, cards and responsive sizing. [Commit 60e70e6](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/60e70e683460e41461878b1a5959da8b86fde789) |
-| Responsive layout | Fixed mobile and tablet headline/section-heading overflow issues. [Commit d3f2cd4](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/d3f2cd473d851d2c10e3e957421903c499843a17), [0803766](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/0803766800a0d51fbb8ae6120e9ca6cfcc74cf74), [94efb8c](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/94efb8c40f3f92b0f9b477d93ef29d9acab29d3d) |
-| Accessibility | Brand links now use visible text for their names; the current commit also verifies computed link names in browser tests. [Commit fec7076](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/fec7076a98aa156a75cfaa04d894066bb80c0133) |
-| About and work copy | Clarified current manual QA responsibilities and the evidence-led testing workflow, including ShareX, Excel/Google Sheets, ClickUp, Slack and retesting. |
-| Experience and skills | Kept current Manual QA work separate from previous IT support experience; strengthened wording around test design, defect reporting, responsive checks and WordPress QA. |
-| Credentials | Distinguished TOPS Manual Testing training from supplementary certificates and professional work history. |
-| Contact and metadata | Verified LinkedIn in the hero CTA and contact section; retained the LinkedIn profile in structured profile metadata. |
-| Deployment reliability | Original portrait PNG remains the common source for both Pages build paths; no unverified generated WebP dependency was introduced. |
+| Accessibility | The visible `K.` monogram is decorative and is now marked `aria-hidden="true"` in both brand links. Screen readers receive the actual text brand name and descriptor without the fragmented computed name `K . KALP SHAH...`. [Commit dfce48c](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/dfce48c68ea703af33c1c9ff35134bd091f01707) |
+| Browser regression checks | Updated the accessible-name assertions to validate the semantic brand text and verify the monogram is hidden from assistive technology. Failure output now includes a short stack trace. |
+| Responsive layout | Earlier fixes for mobile/tablet hero and section-heading overflow remain covered by the 13-width browser matrix: [d3f2cd4](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/d3f2cd473d851d2c10e3e957421903c499843a17), [0803766](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/0803766800a0d51fbb8ae6120e9ca6cfcc74cf74), [94efb8c](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/94efb8c40f3f92b0f9b477d93ef29d9acab29d3d). |
+| Visual system | Section spacing, alignment, typography hierarchy, cards and responsive sizing remain in place: [commit 60e70e6](https://github.com/kalpshahtester/kalpshahtester.github.io/commit/60e70e683460e41461878b1a5959da8b86fde789). |
 
 ## Content accuracy
 
@@ -59,16 +54,20 @@ The latest completed audit also flagged two brand links for visible-text/accessi
 - SauceDemo is identified as a public practice application, not production client work. Its figures refer to that practice project.
 - MakeMyTrip is identified as a testing assessment, not a client engagement.
 - Supplementary certificates are presented separately from professional experience.
-- The résumé, education details, project evidence and contact destinations remain linked from the portfolio.
+- Résumé, education details, project evidence and existing contact destinations remain linked.
 
 ## Deployment reliability
 
-The repository still has both the Vite GitHub Actions deployment and the branch-based GitHub Pages (Jekyll) deployment running successfully. These can compete to publish the site. The Pages source setting cannot be changed through the available connector; manually set **Settings → Pages → Build and deployment → Source → GitHub Actions** to use the Vite deployment consistently.
+Both deployment paths still run:
+
+1. Vite GitHub Actions deployment.
+2. GitHub Pages branch-based Jekyll deployment.
+
+Both succeeded on the latest source commit, but they can compete to publish the same site. The repository Pages source setting is not writable through the available GitHub connection. Manual configuration remains necessary: **Settings → Pages → Build and deployment → Source → GitHub Actions**.
 
 ## Validation boundaries and remaining work
 
-The automated checks confirm the tested build, routes, referenced local resources, defined interactions and configured viewport matrix. They do not replace manual visual review on physical iOS/Android devices, keyboard and screen-reader review with assistive technology, or testing across every browser engine.
-
-Direct live-page inspection through this session was unavailable; production verification was performed by the GitHub Actions HTTP smoke test, Playwright interaction test and Lighthouse run. The current `fec7076` deployment/audit cycle is pending.
-
-The homepage is not considered fully performance-optimized. The next pass should prioritize the portrait image's delivery size and LCP path, then inspect the main-thread/render-delay trace before changing animation or CSS behavior. Lighthouse scores are lab measurements and can vary between runs.
+- Automated source, build, route, local-resource, interaction and configured responsive checks passed.
+- Physical iOS/Android device review, keyboard-only review with assistive technology and screen-reader testing have not been performed in this audit.
+- Direct visual browser inspection was unavailable; live verification used GitHub Actions HTTP smoke, Playwright and Lighthouse.
+- Homepage performance and Pages source configuration remain actionable. This is not yet a clean audit, and the two-consecutive-clean-audit stopping condition has not been met.
