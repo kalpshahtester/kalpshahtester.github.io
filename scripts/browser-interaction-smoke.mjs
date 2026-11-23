@@ -37,14 +37,10 @@ try {
     assert.equal(await desktop.locator("footer#footer-contact a.brand").getAttribute("aria-labelledby"), null);
     const headerBrand = desktop.locator("header#siteHeader a.brand");
     const footerBrand = desktop.locator("footer#footer-contact a.brand");
-    console.log("BRAND ACCESSIBILITY SNAPSHOTS", JSON.stringify({
-      header: await headerBrand.ariaSnapshot(),
-      footer: await footerBrand.ariaSnapshot(),
-      headerText: await headerBrand.innerText(),
-      footerText: await footerBrand.innerText()
-    }));
-    assert.equal(await desktop.getByRole("link", { name: /^K\.?\s*KALP SHAH[\s\S]*MANUAL QA[\s\S]*WEB & WORDPRESS$/i }).count(), 1, "Header brand accessible name should contain the visible name and descriptor.");
-    assert.equal(await desktop.getByRole("link", { name: /^K\.?\s*KALP SHAH[\s\S]*MANUAL QA TESTER$/i }).count(), 1, "Footer brand accessible name should contain the visible name and descriptor.");
+    assert.equal(await headerBrand.locator(".brand-mark").getAttribute("aria-hidden"), "true", "Header monogram should be decorative to assistive technology.");
+    assert.equal(await footerBrand.locator(".brand-mark").getAttribute("aria-hidden"), "true", "Footer monogram should be decorative to assistive technology.");
+    assert.equal(await desktop.getByRole("link", { name: /^KALP SHAH\s*MANUAL QA\s*\/\s*WEB & WORDPRESS$/i }).count(), 1, "Header brand accessible name should contain the visible name and descriptor.");
+    assert.equal(await desktop.getByRole("link", { name: /^KALP SHAH\s*MANUAL QA TESTER$/i }).count(), 1, "Footer brand accessible name should contain the visible name and descriptor.");
     assert.match(await image.evaluate(el => el.currentSrc), /Kalp(?:%20|\s)Shah(?:%20|\s)Profile(?:%20|\s)Photo\.png$/i, "Portrait should use the original profile PNG asset");
     assert.equal(await image.getAttribute("alt"), "Portrait of Kalp Shah, Manual QA Tester", "Portrait alternative text is missing or inaccurate");
     const linkedin = desktop.locator(".hero-linkedin");
