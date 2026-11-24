@@ -1543,3 +1543,10 @@ main > .lab-section.content-section {
 .experience-points li { padding-left:3px; }
 .experience-points li::marker { color:var(--accent); }
 @media(max-width:600px) { .experience-points { gap:8px; font-size:13px; line-height:1.7; } }
+
+
+/* Hero role label: clear hierarchy for the recruiter's first scan. */
+.hero-specialism { margin:14px 0 0; color:var(--accent); font:600 10px/1.5 var(--mono); letter-spacing:.18em; }
+.hero-specialism::before { content:""; display:inline-block; width:24px; height:1px; margin:0 10px 3px 0; background:var(--accent); opacity:.7; }
+.hero-lede { margin-top:18px; }
+@media(max-width:600px) { .hero-specialism { font-size:9px; letter-spacing:.14em; } }
