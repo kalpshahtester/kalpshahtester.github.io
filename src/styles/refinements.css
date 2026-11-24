@@ -1536,3 +1536,10 @@ main > .lab-section.content-section {
   .approach-track article { min-height: 0; padding: 22px 20px; }
   .approach-track h3 { margin-top: 22px; }
 }
+
+
+/* Clear, scannable responsibility lists in the professional experience timeline. */
+.experience-points { display:grid; gap:9px; margin:14px 0 0; padding:0 0 0 18px; color:rgba(245,245,247,.76); font-size:12px; line-height:1.75; }
+.experience-points li { padding-left:3px; }
+.experience-points li::marker { color:var(--accent); }
+@media(max-width:600px) { .experience-points { gap:8px; font-size:13px; line-height:1.7; } }
