@@ -122,11 +122,20 @@ if (!reduced && !lowPower) {
     try {
       const results = await Promise.all([
         import("gsap"),
-        import("gsap/ScrollTrigger")
+        import("gsap/ScrollTrigger"),
+        import("lenis")
       ]);
       const gsap = results[0].gsap;
       const ScrollTrigger = results[1].ScrollTrigger;
+      const Lenis = results[2].default;
       gsap.registerPlugin(ScrollTrigger);
+
+      // Smooth desktop scrolling stays optional and is disabled for reduced-motion
+      // and low-power/mobile paths above. Lenis and ScrollTrigger share one clock.
+      const lenis = new Lenis({ autoRaf: false, smoothWheel: true, anchors: true });
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(time => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
 
       if ($(".hero-scene")) {
         gsap.to(".hero-scene", {
