@@ -1508,3 +1508,31 @@ main > .lab-section.content-section {
 .resume-status { display: inline-flex; align-items: center; gap: 9px; min-height: 50px; padding: 0 5px; color: var(--muted); font-size: 10px; font-weight: 600; letter-spacing: .045em; }
 .resume-status i { width: 7px; height: 7px; flex: 0 0 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(226,192,141,.12); }
 @media (max-width: 600px) { .resume-status { justify-content: center; min-height: 42px; } }
+
+
+/* Six-step QA process: balanced editorial grid on desktop, fluid on smaller screens. */
+.approach-track {
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+}
+.approach-track article {
+  width: auto;
+  min-height: 220px;
+  border-bottom: 1px solid var(--line);
+}
+.approach-track article:nth-child(4) { border-left: 1px solid var(--line); }
+.approach-track h3 { margin-top: 38px; }
+@media (max-width: 850px) {
+  .approach-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .approach-track article:nth-child(odd) { border-left: 1px solid var(--line); }
+  .approach-track article:nth-child(even) { border-left: 0; }
+}
+@media (max-width: 600px) {
+  .approach-track { grid-template-columns: 1fr; }
+  .approach-track article,
+  .approach-track article:nth-child(even) { border-left: 1px solid var(--line); }
+  .approach-track article { min-height: 0; padding: 22px 20px; }
+  .approach-track h3 { margin-top: 22px; }
+}
