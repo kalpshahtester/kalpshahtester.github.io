@@ -15,11 +15,11 @@
 | Source audit, JavaScript syntax, Vite build and Pages artifact verification | Passed | [Portfolio quality checks](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45325347587) |
 | Built-site HTTP smoke test | Passed — 76 assertions across 3 routes and 30 unique local resources | Included in the quality-check run above |
 | Built-site responsive browser checks | Passed — 17 passed, 0 failed | Included in the quality-check run above |
-| Production responsive browser interaction tests | Passed — 17 passed, 0 failed | [Production browser tests](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45325584453) |
+| Production responsive browser interaction tests | Passed — 17 passed, 0 failed | [Production browser tests](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45325914850) |
 | Responsive viewport matrix | Passed at 13 widths from 280px through 1920px | Included in the browser-interaction runs |
 | JavaScript runtime checks | No uncaught errors on the tested homepage and project pages | Included in the browser-interaction runs |
-| Live route and local-resource smoke test | Passed — 76 assertions across 3 routes and 30 unique local resources | [Production smoke test](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45325584576) |
-| Production Lighthouse audit | Completed on all 3 public routes; category scores recorded below | [Lighthouse audit and reports](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45325584433) |
+| Live route and local-resource smoke test | Passed — 76 assertions across 3 routes and 30 unique local resources | [Production smoke test](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45325914692) |
+| Production Lighthouse audit | Completed on all 3 public routes; category scores recorded below | [Lighthouse audit and reports](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45325914731) |
 | Vite GitHub Pages deployment | Passed | [Deployment run](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45325347606) |
 | GitHub Pages branch-based build | Passed before the final Vite deployment | [Pages build and deployment](https://github.com/kalpshahtester/kalpshahtester.github.io/actions/runs/45325347354) |
 
@@ -27,12 +27,12 @@ The browser checks cover the profile portrait, hero and footer contact destinati
 
 ## Latest Lighthouse scores
 
-Latest production category scores on 24 November 2026, from Lighthouse run `45325584433` for the validated implementation (source commit `e460898`; the deployed revision contains only audit-document updates):
+Latest production category scores on 24 November 2026, from Lighthouse run `45325914731` for the validated implementation (source commit `e460898`; the deployed revision contains only audit-document updates):
 
 | Route | Performance | Accessibility | Best Practices | SEO |
 |---|---:|---:|---:|---:|
 | Homepage | 99 | 100 | 100 | 100 |
-| SauceDemo case study | 98 | 100 | 100 | 100 |
+| SauceDemo case study | 99 | 100 | 100 | 100 |
 | MakeMyTrip case study | 99 | 100 | 100 | 100 |
 
 Previous detailed homepage lab metrics from 23 November run `45111291779` (not reprinted by the 24 November workflow):
@@ -45,7 +45,7 @@ Previous detailed homepage lab metrics from 23 November run `45111291779` (not r
 | Total Blocking Time | 110 ms |
 | Cumulative Layout Shift | 0 |
 
-A prior production trace recorded a 7.4 s homepage LCP and large image-format/responsive-sizing opportunities. The 23 November detailed run `45111291779` measured a 1.6 s homepage LCP and 110 ms Total Blocking Time. A first 24 November run `45324830287` measured 91/99/99; the subsequent run `45325176035` measured 99/99/99; the latest run `45325584433` measured 99/98/99. Accessibility, Best Practices and SEO were 100 on all three routes in all three 24 November runs. The detailed reports are retained as workflow artifacts. Lighthouse lab scores and timings can vary between runs; use each linked report as the source of truth for its measurement.
+A prior production trace recorded a 7.4 s homepage LCP and large image-format/responsive-sizing opportunities. The 23 November detailed run `45111291779` measured a 1.6 s homepage LCP and 110 ms Total Blocking Time. A first 24 November run `45324830287` measured 91/99/99; the subsequent run `45325176035` measured 99/99/99; the latest run `45325914731` measured 99/99/99. Accessibility, Best Practices and SEO were 100 on all three routes in all three 24 November runs. The detailed reports are retained as workflow artifacts. Lighthouse lab scores and timings can vary between runs; use each linked report as the source of truth for its measurement.
 
 ## Profile image optimization
 
