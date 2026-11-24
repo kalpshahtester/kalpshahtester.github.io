@@ -1502,3 +1502,9 @@ main > .lab-section.content-section {
     text-wrap: balance;
   }
 }
+
+
+/* Clear status in place of an outdated résumé download while the new PDF is being prepared. */
+.resume-status { display: inline-flex; align-items: center; gap: 9px; min-height: 50px; padding: 0 5px; color: var(--muted); font-size: 10px; font-weight: 600; letter-spacing: .045em; }
+.resume-status i { width: 7px; height: 7px; flex: 0 0 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(226,192,141,.12); }
+@media (max-width: 600px) { .resume-status { justify-content: center; min-height: 42px; } }
