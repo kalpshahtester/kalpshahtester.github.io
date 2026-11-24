@@ -120,6 +120,7 @@ for (const page of pages) {
 
 const home = htmlByRoute.get("/");
 assert.match(home, /class="hero-portrait"/, "Homepage must render the profile portrait");
+assert.match(home, /<div class="hero-scene" role="group" aria-label="Kalp Shah profile and QA lifecycle visual">/, "Hero profile and QA visual must expose its accessible group name through a named group role.");
 assert.match(home, /alt="Portrait of Kalp Shah, Manual QA Tester"/, "Profile image needs descriptive alt text");
 assert.match(home, /class="certificate-grid"/, "Homepage must render the certificate gallery");
 assert.equal([...home.matchAll(/class="certificate-card"/g)].length, 3, "Expected three certificate preview cards");
