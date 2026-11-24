@@ -9,7 +9,7 @@ A professional portfolio showcasing manual software testing, WordPress and web q
   &nbsp;·&nbsp;
   <a href="https://github.com/kalpshahtester">GitHub Profile</a>
   &nbsp;·&nbsp;
-  <a href="./Kalp%20Shah%20Manual%20Tester%20Resume.pdf">Download Résumé</a>
+  <strong>Updated résumé in preparation</strong>
 </p>
 
 <p align="left">
@@ -102,7 +102,7 @@ The professional profile is focused on **Manual QA and Web Testing**. Kalp is cu
 ## Portfolio Features
 
 - Responsive portfolio homepage and two project case-study pages.
-- Profile, experience, education, QA skills and downloadable résumé.
+- Profile, experience, education and QA skills; the updated résumé link will be added when the new PDF is ready.
 - Certificate previews linked to their original files.
 - LinkedIn, GitHub and direct contact links.
 - Search and social-sharing metadata, canonical URLs, sitemap and robots file.
@@ -185,7 +185,7 @@ Open the local URL printed by Vite, usually `http://localhost:5173/`.
 
 ## Build & Validate
 
-The Pages build stages the existing project routes, public assets, résumé, certificates and metadata into Vite's `public/` directory before creating the production output.
+The Pages build stages the existing project routes, public assets, certificates and metadata into Vite's `public/` directory before creating the production output. The previous résumé file remains in the repository for now, but it is not promoted as the current downloadable résumé.
 
 Run the build steps in this order:
 
