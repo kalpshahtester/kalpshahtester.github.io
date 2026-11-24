@@ -22,9 +22,9 @@ A professional portfolio showcasing manual software testing, WordPress and web q
 
 ## About
 
-Kalp Shah is a Manual QA Tester based in Surat, Gujarat, India, focused on testing WordPress and web applications from the user's perspective.
+Kalp Shah is a Manual QA Tester based in Gujarat, India, focused on testing WordPress and web applications from the user's perspective. He is currently exploring Manual QA Tester / Web QA opportunities in **Surat and Ahmedabad**.
 
-Current professional work at **NXS Infotech Private Limited** includes manual checks of website functionality, UI consistency, forms, navigation, responsive behaviour, page content and on-page SEO fundamentals. Testing evidence and defect updates are documented with screenshots or recordings, expected-versus-actual results, and retesting notes.
+Most recently, he worked at **NXS Infotech Private Limited (May–November 2026)**, testing website functionality, UI consistency, forms, navigation, responsive behaviour, page content and on-page SEO fundamentals. He captured testing evidence with screenshots or recordings, documented expected-versus-actual results, tracked defects and retested fixes.
 
 **QA focus**
 - Functional, smoke, sanity, regression and exploratory testing
@@ -63,7 +63,7 @@ A manual testing assessment exploring travel-platform user journeys, including l
 
 | Period | Role | Organisation |
 |---|---|---|
-| May 2026 – Present | Manual QA Tester — WordPress & Web QA | NXS Infotech Private Limited |
+| May 2026 – November 2026 | Manual QA Tester — WordPress & Web QA | NXS Infotech Private Limited |
 | June 2020 – January 2025 | Computer Engineer / IT Support | J. B. And Brothers Pvt. Ltd. |
 
 Previous IT support experience included assisting more than 100 users, troubleshooting hardware and software issues, and resolving day-to-day technical problems. This experience developed practical troubleshooting, communication and problem-analysis skills that support the current QA role.
@@ -91,7 +91,7 @@ The portfolio reflects a practical, evidence-led testing process:
 | Development environment | VS Code, Git and GitHub |
 | Portfolio implementation | HTML, CSS, JavaScript, Vite, Three.js, GSAP / ScrollTrigger and Lenis |
 
-The professional profile is focused on **Manual QA and Web Testing**. Supplementary course certificates are displayed separately from professional experience; they do not define the current role.
+The professional profile is focused on **Manual QA and Web Testing**. Kalp is currently seeking Manual QA / Web QA opportunities in Surat and Ahmedabad. Supplementary course certificates are displayed separately from professional experience; they do not define the professional work history.
 
 ## Education & Training
 
