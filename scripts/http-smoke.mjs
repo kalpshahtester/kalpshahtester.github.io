@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 
 const baseURL = (process.env.BASE_URL || "http://127.0.0.1:4173").replace(/\/$/, "");
 const pages = [
-  { path: "/", heading: "Find the issue." },
+  { path: "/", heading: "Manual QA Tester" },
   { path: "/projects/saucedemo.html", heading: "Testing the" },
   { path: "/projects/makemytrip.html", heading: "Travel journeys" }
 ];
