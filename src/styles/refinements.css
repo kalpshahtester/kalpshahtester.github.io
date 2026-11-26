@@ -158,7 +158,6 @@ h2 em{font-family:Georgia,serif;font-weight:400;letter-spacing:-.065em;color:inh
 }
 @media(max-width:760px){
  .hud-nav{background:var(--dark);box-shadow:none}
- .hud-nav nav{color:#171719}
  .nav-toggle{border-color:#84919C;color:white}
  .hero{min-height:0;padding-block:45px 28px}
  .hero-scene{min-height:0;padding-block:32px}
