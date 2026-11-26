@@ -13,6 +13,8 @@ for (const directory of ["assets", "projects"]) {
 for (const file of [
   "Kalp Shah Profile Photo.png",
   "Kalp Shah Manual Tester Resume.pdf",
+  "TOPS_Certificate_Kalp_Shah.pdf",
+  "NSDC_Certificate_Kalp_Shah.pdf",
   "Kalp Shah HCL GUVI Certification.png",
   "Kalp Shah Generative AI Mastermind Course Certificate.jpeg",
   "Kalp Shah Outskill Certificate.png",
