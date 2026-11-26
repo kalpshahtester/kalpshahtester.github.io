@@ -9,7 +9,7 @@ A professional portfolio showcasing manual software testing, WordPress and web q
   &nbsp;·&nbsp;
   <a href="https://github.com/kalpshahtester">GitHub Profile</a>
   &nbsp;·&nbsp;
-  <a href="./Kalp%20Shah%20Manual%20Tester%20Resume.pdf">Download Résumé</a>
+  <a href="./Kalp%20Shah%20Manual%20Tester%20Resume.pdf">Download Resume</a>
 </p>
 
 <p align="left">
