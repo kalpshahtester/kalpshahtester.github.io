@@ -30,9 +30,9 @@ function paint() {
   pending = false;
   const distance = document.documentElement.scrollHeight - innerHeight;
   progress.style.width = (distance ? Math.min(100, Math.max(0, scrollY / distance * 100)) : 0) + "%";
-  const depth = motion.matches ? 0 : Math.min(1, Math.max(0, scrollY / hero.offsetHeight));
-  stack.style.setProperty("--yaw", (-9 + depth * 24) + "deg");
-  stack.style.setProperty("--pitch", (5 - depth * 15) + "deg");
+  const depth = Math.min(1, Math.max(0, scrollY / hero.offsetHeight));
+  stack.style.setProperty("--yaw", (-15 + depth * 46) + "deg");
+  stack.style.setProperty("--pitch", (9 - depth * 22) + "deg");
 }
 function schedulePaint() {
   if (!pending) {
