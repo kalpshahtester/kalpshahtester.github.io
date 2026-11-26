@@ -75,7 +75,7 @@ get("#runChecks").addEventListener("click", () => {
 
 // Load the optional renderer only as the investigation approaches the viewport.
 const investigation = get(".investigation");
-const richScene = matchMedia("(min-width: 761px) and (prefers-reduced-motion: no-preference)");
+const richScene = matchMedia("(min-width: 761px) and (min-height: 601px) and (prefers-reduced-motion: no-preference)");
 let sceneNearby = false;
 let sceneVersion = 0;
 let disposeScene;
@@ -104,3 +104,4 @@ if ("IntersectionObserver" in window) {
   observer.observe(investigation);
   richScene.addEventListener("change", updateInvestigation);
 }
+

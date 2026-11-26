@@ -40,7 +40,10 @@
  .section-heading{display:block}.section-heading>p{margin-top:15px}
  .work-grid,.lab-panel,.experience-layout{grid-template-columns:1fr}
  .approach-track{grid-template-columns:repeat(2,minmax(0,1fr))}
- .hero-actions{gap:10px}.hero-actions .hero-linkedin{display:none}
+ .hero-actions{gap:10px}
+ .hero-actions .button,.nav-toggle,.footer-contact-links a{min-height:44px}
+ .js .hud-nav nav.open{max-height:calc(100dvh - 60px);overflow-y:auto}
+ .hud-nav nav a{display:flex;align-items:center;min-height:44px;padding-inline:8px}
 }
 @media(max-width:460px){.approach-track,.toolkit-grid,.footer-primary{grid-template-columns:1fr}.current{align-items:baseline}.current i{flex:none}.section-wrap,.site-footer{width:89%}.hero-actions .button{padding:10px}.test-slip{right:-18%}figcaption{font-size:.53rem}}
 @media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}.work-card .mini-window,.work-card .ticket{transition:transform .35s}.work-card:hover .mini-window,.work-card:hover .ticket{transform:rotate(0deg) translateY(-2px)}}
@@ -85,9 +88,9 @@ h2 em{font-family:Georgia,serif;font-weight:400;letter-spacing:-.065em;color:inh
 .artifact-meta{position:absolute;top:15px;left:18px;font:600 .7rem var(--mono);letter-spacing:.08em}
 .folio-mark{position:absolute;bottom:-.26em;left:-.01em;font:italic 500 clamp(14rem,24vw,23rem)/1 Georgia,serif;color:#ffffff28;z-index:-1}
 .visual-mmt .folio-mark{color:#85540833}
-.mini-window,.ticket{width:min(62%,320px);color:var(--ink);border:0;border-radius:0;box-shadow:12px 18px 0 #0003}
+.mini-window,.ticket{width:min(78%,320px);color:var(--ink);border:0;border-radius:0;box-shadow:12px 18px 0 #0003}
 .mini-bar{background:#1a1a1b}.mini-items{padding:18px}.mini-items p{padding:6px 0}
-.ticket{padding:22px;background:#fff9eb;border-inline:5px dotted #C5AB82}.route{font-size:clamp(1.8rem,3.5vw,3rem)}
+.ticket{padding:22px;background:#fff9eb;border-inline:5px dotted #C5AB82;container-type:inline-size}.route{font-size:1.35rem;font-size:clamp(1.15rem,15cqi,2.7rem);gap:.35em}
 .work-body{padding:clamp(22px,3.8vw,60px)}
 .work-body h3{font:700 clamp(2.3rem,4.5vw,4.4rem)/1.2 Arial,sans-serif;letter-spacing:-.075em;margin:6px 0 14px}
 .stats b{font:600 1.85rem Arial,sans-serif;letter-spacing:-.07em}
@@ -170,7 +173,7 @@ h2 em{font-family:Georgia,serif;font-weight:400;letter-spacing:-.065em;color:inh
 }
 @media(max-width:375px){.hero h1{font-size:clamp(3.3rem,16.6vw,4rem)}}
 @media(prefers-reduced-motion:reduce){.depth-stack{transform:none}.work-card .mini-window,.work-card .ticket{transition:none}}
-.work-visual{overflow:clip}
+.work-visual{overflow:hidden;overflow:clip}
 .test-slip{bottom:16%}
 
 .investigation{background:#E4E9E3;padding-block:clamp(60px,7vw,110px)}
@@ -184,14 +187,27 @@ h2 em{font-family:Georgia,serif;font-weight:400;letter-spacing:-.065em;color:inh
 .inspection-stage[data-rendered] canvas{visibility:visible}
 .inspection-stage[data-rendered] .inspection-viewport img{visibility:hidden}
 .inspection-stage figcaption{padding-top:15px;align-items:center}
-.inspection-steps article{min-height:52vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding-block:28px;border-top:1px solid #abaea4;display:block;align-content:center}
+.inspection-steps article{min-height:52vh;display:grid;align-content:center;justify-items:start;padding-block:28px;border-top:1px solid #abaea4}
+.inspection-links{display:flex;flex-wrap:wrap;gap:8px 16px}
 .inspection-steps h3{font:600 clamp(1.8rem,3vw,3rem)/1.04 Arial,sans-serif;letter-spacing:-.055em;margin:12px 0}
 .inspection-steps p:not(.eyebrow){margin-bottom:18px}
 .inspection-steps a,.capture-note{font-size:.85rem}
 .capture-note{color:#434941;max-width:75ch;margin-top:22px}
 .comparison-image{display:block;width:100%;max-width:330px;height:auto;margin:12px 0}
 .inspection-stage[data-rendered]+.inspection-steps .comparison-image{display:none}
-@media(max-width:760px),(prefers-reduced-motion:reduce){
+@media(max-width:760px),(max-height:600px),(prefers-reduced-motion:reduce){
  .investigation-layout{display:block}.inspection-stage{position:static;margin-bottom:25px;max-width:640px}
  .inspection-steps article{min-height:0;display:block}.inspection-steps .comparison-image{display:block}
+}
+
+
+/* Keep controls legible against the dark surfaces during keyboard navigation. */
+.hud-nav :focus-visible,.hero :focus-visible,.lab-section :focus-visible,.site-footer :focus-visible{outline-color:#E2C08D}
+.hud-nav nav{color:inherit}
+@media(max-width:760px){
+ .hud-nav nav{color:var(--ink)}
+ .hud-nav nav :focus-visible{outline-color:#805022}
+}
+@media(max-height:600px){
+ .approach-section .section-heading{position:static}
 }
