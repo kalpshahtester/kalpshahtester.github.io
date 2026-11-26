@@ -193,10 +193,10 @@
 
 
 /* Carry the portfolio's print palette and depth through the project documents. */
-.case-page,.case-page + footer{--acid:#ff927c;--display:Arial,Helvetica,sans-serif}
+.case-page,.case-page + footer{--acid:#E2C08D;--display:Arial,Helvetica,sans-serif}
 .case-title,.case-section h2{letter-spacing:-.065em}
 .case-title em,.case-section h2 em{font-family:Georgia,serif;font-weight:400;font-style:italic}
-.case-summary-card{border-radius:0;background:#282628;border-left:4px solid #ff563c}
+.case-summary-card{border-radius:0;background:#1D3345;border-left:4px solid #E2C08D}
 @keyframes inspect-page {
   from {transform:perspective(1150px) rotateX(9deg) translate3d(0,14px,-14px)}
   to {transform:perspective(1150px) rotateX(0) translate3d(0,0,0)}
