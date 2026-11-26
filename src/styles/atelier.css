@@ -65,3 +65,21 @@ body::selection{background:var(--signal);color:var(--dark)}
 .motion-ready .hero-evidence.reveal-item{transform:perspective(1500px) rotateY(var(--depth-y,-5deg)) rotateX(var(--depth-x,2deg)) translateY(var(--depth-shift,0px));transition:opacity .8s ease}
 @media(max-width:760px),(pointer:coarse){.hero-evidence,.motion-ready .hero-evidence.reveal-item{transform:none!important;box-shadow:10px 10px 0 #ffffff15}.motion-ready .reveal-item:not(.hero-evidence){transform:translateY(18px)}.motion-ready .reveal-item.is-visible:not(.hero-evidence){transform:none}}
 @media(prefers-reduced-motion:reduce){.hero-evidence,.motion-ready .reveal-item{transform:none!important;opacity:1!important;transition:none!important}}
+
+/* Editorial layout, second edition */
+.manifesto{display:grid;grid-template-columns:1fr 3fr;gap:clamp(24px,6vw,100px);padding-block:clamp(80px,13vw,200px);background:#fff;color:#111}
+.manifesto h2{font-size:clamp(2.5rem,6.8vw,7rem);line-height:.98;letter-spacing:-.07em;margin:0 0 32px;font-weight:500}
+.manifesto h2 em{font-family:Georgia,serif;font-weight:400;color:#555}
+.manifesto p:not(.section-index){max-width:48ch;font-size:clamp(1rem,1.6vw,1.4rem);line-height:1.65;color:#444}
+.manifesto a{display:inline-block;margin-top:24px;border-bottom:1px solid #111;color:#111;padding-bottom:8px}
+.hero h1{font-size:clamp(3rem,7.3vw,8rem);line-height:.92}
+.hero-specialty{display:block;font-size:clamp(1rem,2vw,1.8rem);letter-spacing:-.025em;margin-top:24px;line-height:1.3}
+.work-grid{grid-template-columns:1fr}
+.work-card{min-height:0;border:0;border-top:1px solid #aaa;border-radius:0;box-shadow:none;background:transparent}
+.work-card .work-body{padding:clamp(24px,5vw,72px) 0}
+.work-card h3{font-size:clamp(2.5rem,7vw,7rem);letter-spacing:-.075em;line-height:1}
+.work-card p{max-width:65ch}
+.approach-track article{border-radius:0;box-shadow:none}
+.toolkit-grid article{border-radius:0;box-shadow:none;border:0;border-top:1px solid #aaa}
+.site-footer h2{font-size:clamp(3rem,10vw,10rem);line-height:.95}
+@media(max-width:760px){.manifesto{grid-template-columns:1fr;gap:16px}.hero h1{font-size:clamp(2.8rem,11vw,5rem)}}
