@@ -22,17 +22,12 @@ get("#backToTop").addEventListener("click", () => {
 });
 
 const motion = matchMedia("(prefers-reduced-motion: reduce)");
-const stack = get(".depth-stack");
-const hero = get(".hero");
 const progress = get("#scrollProgress");
 let pending = false;
 function paint() {
   pending = false;
   const distance = document.documentElement.scrollHeight - innerHeight;
   progress.style.width = (distance ? Math.min(100, Math.max(0, scrollY / distance * 100)) : 0) + "%";
-  const depth = Math.min(1, Math.max(0, scrollY / hero.offsetHeight));
-  stack.style.setProperty("--yaw", (-15 + depth * 46) + "deg");
-  stack.style.setProperty("--pitch", (9 - depth * 22) + "deg");
 }
 function schedulePaint() {
   if (!pending) {
@@ -44,17 +39,6 @@ addEventListener("scroll", schedulePaint, {passive:true});
 addEventListener("resize", schedulePaint);
 motion.addEventListener("change", schedulePaint);
 paint();
-
-const typed = get("#typed");
-const label = typed.textContent;
-if (!motion.matches) {
-  let count = 0;
-  const timer = setInterval(() => {
-    count = motion.matches ? label.length : count + 1;
-    typed.textContent = label.slice(0, count);
-    if (count >= label.length) clearInterval(timer);
-  }, 75);
-}
 
 get("#runChecks").addEventListener("click", () => {
   const statuses = document.querySelectorAll(".console-row i");
