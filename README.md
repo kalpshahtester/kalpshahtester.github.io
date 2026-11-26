@@ -22,7 +22,7 @@ A professional portfolio showcasing manual software testing, WordPress and web q
 
 ## About
 
-Kalp Shah is a Manual QA Tester based in Gujarat, India, focused on testing WordPress and web applications from the user's perspective. He is currently exploring Manual QA Tester / Web QA opportunities in **Surat and Ahmedabad**.
+Kalp Shah is a Manual QA Tester based in Gujarat, India, focused on testing WordPress and web applications from the user's perspective. He is currently exploring Manual QA Tester / Web QA opportunities in **Ahmedabad on-site or remote / work-from-home roles only**.
 
 Most recently, he worked at **NXS Infotech Private Limited (May–November 2026)**, testing website functionality, UI consistency, forms, navigation, responsive behaviour, page content and on-page SEO fundamentals. He captured testing evidence with screenshots or recordings, documented expected-versus-actual results, tracked defects and retested fixes.
 
@@ -91,19 +91,20 @@ The portfolio reflects a practical, evidence-led testing process:
 | Development environment | VS Code, Git and GitHub |
 | Portfolio implementation | HTML, CSS, JavaScript, Vite, Three.js, GSAP / ScrollTrigger and Lenis |
 
-The professional profile is focused on **Manual QA and Web Testing**. Kalp is currently seeking Manual QA / Web QA opportunities in Surat and Ahmedabad. Supplementary course certificates are displayed separately from professional experience; they do not define the professional work history.
+The professional profile is focused on **Manual QA and Web Testing**. Kalp is currently seeking Manual QA / Web QA opportunities in Ahmedabad on-site or remote / work-from-home roles only. Supplementary course certificates are displayed separately from professional experience; they do not define the professional work history.
 
 ## Education & Training
 
 - **Diploma in Information Technology** — Dr. S. & S. S. Ghandhy College of Engineering & Technology.
-- **Manual Testing training** — TOPS Technologies, April–September 2025.
-- Additional course certificates are available in the portfolio's Skills & Toolkit section.
+- **[Manual & Automation Tester](./TOPS_Certificate_Kalp_Shah.pdf)** — TOPS Technologies, issued 25 March 2026.
+- **[Test Engineer — Product Development, Grade A](./NSDC_Certificate_Kalp_Shah.pdf)** — Skill India / NSDC (training provider: TOPS Technologies), issued 27 March 2026.
+- Both PDF certificates can be opened from the portfolio's Training & Certificates cards; other supplementary course certificates are displayed separately.
 
 ## Portfolio Features
 
 - Responsive portfolio homepage and two project case-study pages.
 - Profile, experience, education, QA skills and downloadable résumé.
-- Certificate previews linked to their original files.
+- Accessible certificate preview cards link directly to the original TOPS and NSDC PDFs, alongside existing supplementary certificates.
 - LinkedIn, GitHub and direct contact links.
 - Search and social-sharing metadata, canonical URLs, sitemap and robots file.
 - Accessible page landmarks, skip links, descriptive image alternatives and reduced-motion support.
