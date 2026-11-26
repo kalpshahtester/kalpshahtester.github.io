@@ -190,3 +190,27 @@
     overflow-wrap: anywhere;
   }
 }
+
+
+/* Carry the portfolio's print palette and depth through the project documents. */
+.case-page,.case-page + footer{--acid:#ff927c;--display:Arial,Helvetica,sans-serif}
+.case-title,.case-section h2{letter-spacing:-.065em}
+.case-title em,.case-section h2 em{font-family:Georgia,serif;font-weight:400;font-style:italic}
+.case-summary-card{border-radius:0;background:#282628;border-left:4px solid #ff563c}
+@keyframes inspect-page {
+  from {transform:perspective(1150px) rotateX(9deg) translate3d(0,14px,-14px)}
+  to {transform:perspective(1150px) rotateX(0) translate3d(0,0,0)}
+}
+@keyframes inspect-cover {
+  from {transform:perspective(900px) rotateY(-10deg) rotateX(5deg)}
+  to {transform:perspective(900px) rotateY(5deg) rotateX(-3deg)}
+}
+@supports(animation-timeline:view()){
+ @media(prefers-reduced-motion:no-preference){
+  .case-section>h2,.case-section>ul,.case-section>div:not(.section-kicker),.site-footer .footer-inner,.case-summary-card{
+   animation:inspect-page linear both;animation-timeline:view();animation-range:entry 0% cover 44%;
+   transform-origin:left center;
+  }
+  .case-summary-card{animation-name:inspect-cover;animation-range:cover 0% cover 100%}
+ }
+}
