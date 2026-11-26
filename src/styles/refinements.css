@@ -158,6 +158,7 @@ h2 em{font-family:Georgia,serif;font-weight:400;letter-spacing:-.065em;color:inh
 }
 @media(max-width:760px){
  .hud-nav{background:var(--dark);box-shadow:none}
+ .hud-nav nav{color:#171719}
  .nav-toggle{border-color:#84919C;color:white}
  .hero{min-height:0;padding-block:45px 28px}
  .hero-scene{min-height:0;padding-block:32px}
@@ -209,4 +210,90 @@ h2 em{font-family:Georgia,serif;font-weight:400;letter-spacing:-.065em;color:inh
 }
 @media(max-height:600px){
  .approach-section .section-heading{position:static}
+}
+
+/* Editorial layout with the original QA captures as the lead imagery. */
+:root {
+  --paper:#f3f0e8;
+  --ink:#201c19;
+  --muted:#554d45;
+  --line:#c9beb0;
+  --green:#662e29;
+  --mint:#eae0d2;
+  --dark:#241e1b;
+  --signal:#e8c59e;
+}
+.hud-nav {
+  background:var(--paper);
+  box-shadow:0 0 0 100vmax var(--paper);
+  border-color:var(--line);
+  color:var(--ink);
+}
+.hud-nav :focus-visible,.hero :focus-visible{outline-color:#805022}
+.brand-mark{background:var(--green);color:var(--paper)}
+.scroll-progress{background:var(--green)}
+.hero {
+  color:var(--ink);
+  grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);
+  gap:clamp(28px,6vw,90px);
+  min-height:0;
+  padding-block:clamp(42px,8vw,110px);
+}
+.hero::before{content:none}
+.hero h1 {
+  font:400 clamp(3rem,5.9vw,6.1rem)/.98 Georgia,serif;
+  letter-spacing:-.067em;
+  margin:22px 0;
+}
+.hero-specialty{display:block;margin-top:.16em;font-size:.69em;letter-spacing:-.05em;font-style:italic;color:var(--green)}
+.hero .kicker,.hero-lede{color:var(--muted)}
+.hero-lede{max-width:46ch;line-height:1.65}
+.hero-actions .button{color:var(--ink);border-color:#a69887}
+.hero-actions .button:first-child{color:#fff;background:var(--green);border-color:var(--green)}
+.hero-identity{display:flex;align-items:center;gap:14px;margin-top:30px}
+.hero-identity .hero-portrait{flex:none;width:54px;padding:0;margin:0;transform:none;box-shadow:none;border-color:var(--line)}
+.hero-identity p{font-size:.84rem;line-height:1.4}
+.hero-identity p span{display:block;color:var(--muted)}
+.hero-evidence {
+  margin:0;
+  border:1px solid var(--line);
+  background:#e9dfd1;
+  box-shadow:9px 9px 0 #d9ccbb;
+}
+.evidence-heading {
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:13px 16px;
+  border-bottom:1px solid var(--line);
+  font:600 .73rem/1.4 var(--mono);
+  color:#4e3c31;
+}
+.hero-evidence-link{display:block;overflow:hidden;background:white}
+.hero-evidence-link img{display:block;width:100%;height:auto}
+.hero-evidence figcaption{align-items:center;padding:16px;font:inherit}
+.hero-evidence strong{font:400 clamp(1.15rem,2.1vw,1.65rem)/1.2 Georgia,serif}
+.hero-evidence small{display:block;margin-top:5px;color:var(--muted);font-size:.65rem}
+.hero-evidence figcaption a{display:grid;place-items:center;flex:none;width:44px;height:44px;background:var(--green);color:white;text-decoration:none}
+.investigation{background:#eae1d3;border-block:1px solid var(--line)}
+.inspection-stage,.inspection-viewport{background:#302622}
+.investigation h2,.work-section h2,.approach-section h2{font-family:Georgia,serif;font-weight:400;letter-spacing:-.055em}
+.work-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,5vw,64px)}
+.work-card,.work-card:nth-child(2){display:block;padding:0;border-top:2px solid var(--green)}
+.work-body{padding:22px 0}
+.work-body h3{font:400 clamp(2rem,3.5vw,3.5rem)/1.1 Georgia,serif;letter-spacing:-.05em}
+.education-panel,.lab-console{background:#382a23}
+.lab-console{box-shadow:8px 8px 0 var(--signal)}
+@media(prefers-reduced-motion:no-preference){
+ .hero-evidence-link img{transition:transform .5s cubic-bezier(.2,.7,.3,1)}
+ .hero-evidence-link:is(:hover,:focus-visible) img{transform:scale(1.035)}
+}
+@media(max-width:760px){
+ .hud-nav{box-shadow:none}
+ .nav-toggle{color:var(--ink);border-color:#8b7a69}
+ .hero,.work-grid{grid-template-columns:minmax(0,1fr)}
+ .hero{gap:32px}
+ .hero h1{font-size:clamp(2.5rem,9vw,4.8rem)}
+ .hero-evidence{margin:0 8px 8px 0}
 }
