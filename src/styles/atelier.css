@@ -95,3 +95,8 @@ body::selection{background:var(--signal);color:var(--dark)}
 :focus-visible{outline:2px solid #777;outline-offset:5px}
 @media(max-width:760px){.cinema-enabled :is(.hero-copy,.hero-evidence,.manifesto > div,.section-heading,.inspection-stage,.inspection-steps article,.work-card,.approach-track article,.lab-panel,.timeline article,.education-panel,.toolkit-grid article,.certificate-card,.footer-primary){transform:perspective(1400px) translateY(var(--cinema-y,0px)) rotateX(var(--cinema-rx,0deg))!important}.hero-actions{flex-wrap:wrap}.footer-contact-links a{overflow-wrap:anywhere}}
 @media(prefers-reduced-motion:reduce){.cinema-enabled *{transform:none!important;animation:none!important;transition:none!important}}
+
+.spatial-portfolio{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;opacity:.13;mix-blend-mode:luminosity}
+@media(max-width:760px){.spatial-portfolio{opacity:.075}}
+@media(prefers-reduced-motion:reduce){.spatial-portfolio{display:none}}
+@media print{.spatial-portfolio{display:none}}
