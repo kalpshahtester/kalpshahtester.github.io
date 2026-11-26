@@ -54,6 +54,9 @@
         ]
       }
     </script>
+  <script type="importmap">
+      {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","gsap":"https://cdn.jsdelivr.net/npm/gsap@3.15.1/index.js","gsap/ScrollTrigger":"https://cdn.jsdelivr.net/npm/gsap@3.15.1/ScrollTrigger.js"}}
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -70,13 +73,40 @@
 <h1 id="hero-title">Kalp<br><em>Shah.</em></h1>
 <p class="hero-role">Manual QA Tester</p>
 <p class="hero-lede">I test WordPress sites and checkout flows, document where they break, and follow each fix through retesting.</p>
-<div class="hero-actions"><a class="button magnetic" href="#work">Explore my work <b>↗︎</b></a><a class="button button-accent magnetic resume-download-button" id="resumeDownloadButton" href="/Kalp%20Shah%20Manual%20Tester%20Resume.pdf" download="Kalp-Shah-Manual-QA-Tester-Resume.pdf" aria-label="Download Resume. Kalp Shah’s Manual QA Tester résumé (PDF).">Download Resume <b>↓</b></a><a class="button hero-linkedin" href="https://www.linkedin.com/in/kalp-shah-software-tester/" target="_blank" rel="noopener noreferrer" aria-label="View Kalp Shah’s LinkedIn profile">LinkedIn profile <b>↗︎</b></a></div><p class="current"><i></i>Open to Ahmedabad on-site and remote roles</p></div>
+<div class="hero-actions"><a class="button magnetic" href="#investigation">Follow the test <b>↗︎</b></a><a class="button button-accent magnetic resume-download-button" id="resumeDownloadButton" href="/Kalp%20Shah%20Manual%20Tester%20Resume.pdf" download="Kalp-Shah-Manual-QA-Tester-Resume.pdf" aria-label="Download Resume. Kalp Shah’s Manual QA Tester résumé (PDF).">Download Resume <b>↓</b></a><a class="button hero-linkedin" href="https://www.linkedin.com/in/kalp-shah-software-tester/" target="_blank" rel="noopener noreferrer" aria-label="View Kalp Shah’s LinkedIn profile">LinkedIn profile <b>↗︎</b></a></div><p class="current"><i></i>Open to Ahmedabad on-site and remote roles</p></div>
 <div class="hero-scene" role="group" aria-label="Kalp Shah profile and QA lifecycle visual">
           <div class="depth-stack"><div class="back-sheet" aria-hidden="true"></div><div class="registration" aria-hidden="true"></div>
 <figure class="hero-portrait">
             <picture class="profile-photo-wrap"><img class="profile-photo" src="/Kalp%20Shah%20Profile%20Photo.png" alt="Portrait of Kalp Shah, Manual QA Tester" width="768" height="768" fetchpriority="high" loading="eager" decoding="sync" /></picture>
             <figcaption><span>Kalp Shah</span><span>Web &amp; WordPress QA</span></figcaption>
-</figure><div class="test-slip" aria-hidden="true"><small>Currently inspecting</small><b id="typed">Checkout flow</b></div></div></div>
+</figure><div class="test-slip" aria-hidden="true"><small>Currently inspecting</small><b id="typed">Product images</b></div></div></div>
+</section>
+
+<section class="investigation" id="investigation" aria-labelledby="investigation-title">
+ <div class="section-wrap">
+  <p class="section-index">SauceDemo · Product images</p>
+  <h2 id="investigation-title">Same catalog.<br><em>Different result.</em></h2>
+  <p class="investigation-intro">I checked whether each product showed the right image. Changing the test account changed the result.</p>
+  <div class="investigation-layout">
+   <figure class="inspection-stage">
+    <div class="inspection-viewport"><img src="/assets/standard_user.webp" alt="SauceDemo inventory in the standard account" width="960" height="610"><canvas aria-hidden="true"></canvas></div>
+    <figcaption><span>SauceDemo · Products</span><span id="inspection-caption">Standard account</span></figcaption>
+   </figure>
+   <div class="inspection-steps">
+    <article id="inspection-baseline"><p class="eyebrow">TC17 / Expected</p><h3>Inspect the product images.</h3>
+     <p>Sign in, open Products, and inspect the item images for broken icons or unexpected placeholders. The scenario sheet records a pass for <code>standard_user</code>.</p>
+     <a href="/assets/standard_user.webp">Open standard-account capture</a> · <a href="https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website/blob/94d394d2a6b68d2502845afca07e640d7926a451/04_Test_Cases/TEST%20CASE%20%E2%80%93%20SAUCEDEMO%20WEBSITE.xlsx">Read test case TC17</a></article>
+    <article id="inspection-comparison"><p class="eyebrow">TS17 / Comparison</p><h3>Change the account.</h3>
+     <p>The same scenario failed for <code>problem_user</code>. In the walkthrough captures, the backpack and bike light both show the same dog photo. Their names and prices still differ.</p>
+     <img class="comparison-image" src="/assets/problem_user.webp" alt="A dog photo appears beside both the backpack and bike light in the problem account" loading="lazy" width="960" height="610">
+     <a href="/assets/problem_user.webp">Open problem-account capture</a> · <a href="https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website/blob/94d394d2a6b68d2502845afca07e640d7926a451/03_Test_Scenarios/TEST%20SCENARIOS%20%E2%80%93%20SAUCEDEMO%20WEBSITE.xlsx">View scenario results</a></article>
+    <article id="inspection-finding"><p class="eyebrow">BUG-001 / Finding</p><h3>Document the mismatch.</h3>
+     <p>The defect register links broken or mismatched product images to scenarios TS16 and TS17. The recorded severity is medium, priority P2, and status open.</p>
+     <a href="https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website/blob/94d394d2a6b68d2502845afca07e640d7926a451/06_Bug_Report/Bug%20Report%20-%20SAUCEDEMO%20WEBSITE.xlsx">Inspect original defect register ↗</a></article>
+   </div>
+  </div>
+  <p class="capture-note">The screenshots were captured for this walkthrough. The linked workbooks contain the original test case, execution results and defect record.</p>
+ </div>
 </section>
 <section class="content-section work-section" id="work" aria-labelledby="work-title"><div class="section-wrap"><p class="section-index">Selected work</p><div class="section-heading"><h2 id="work-title">Selected <em>work.</em></h2><p>Two investigations into what happens between a user’s first input and the final confirmation.</p></div><div class="work-grid"><article class="work-card featured reveal-card"><div class="work-visual visual-sauce"><span class="artifact-meta">SauceDemo / Commerce</span><div class="folio-mark" aria-hidden="true">S.</div><div class="mini-window" aria-hidden="true"><div class="mini-bar">SauceDemo <span>Checkout</span></div><div class="mini-items"><b>Order summary</b><p>Backpack <strong>× 1</strong></p><p>Bike light <strong>× 1</strong></p><div class="mini-total">Continue to checkout →</div></div></div></div><div class="work-body"><p class="eyebrow">PUBLIC PRACTICE APPLICATION</p><h3>SauceDemo</h3><p>End-to-end manual testing of login, product browsing, sorting, cart updates and checkout. The project includes 47 scenarios, 62+ test cases, 282 execution records and 7 documented defects.</p><div class="stats"><span><b>47</b>SCENARIOS</span><span><b>62+</b>TEST CASES</span><span><b>282</b>EXECUTIONS</span></div><div class="card-actions"><a class="button button-accent" href="/projects/saucedemo.html">Read case study ↗︎</a><a href="https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website" target="_blank" rel="noopener">GitHub ↗︎</a></div></div></article><article class="work-card reveal-card"><div class="work-visual visual-mmt"><span class="artifact-meta">MakeMyTrip / Travel</span><div class="folio-mark" aria-hidden="true">M.</div><div class="ticket" aria-hidden="true"><small>Flight search</small><div class="route">AMD <i>✈</i> BOM</div><div class="ticket-bottom">One way <span>Economy</span></div></div></div><div class="work-body"><p class="eyebrow">TESTING ASSESSMENT</p><h3>MakeMyTrip</h3><p>Manual assessment of login, flight and hotel search journeys, form validation, navigation and negative scenarios.</p><div class="tag-row"><span>User journeys</span><span>UI testing</span><span>Negative paths</span></div><div class="card-actions"><a class="button" href="/projects/makemytrip.html">Read case study ↗︎</a><a href="https://github.com/kalpshahtester/MakeMyTrip-Testing-Assessment" target="_blank" rel="noopener">GitHub ↗︎</a></div></div></article></div><p class="disclaimer">SauceDemo is a public practice application. MakeMyTrip is a testing assessment. Neither is presented as production work for the companies named.</p></div></section>
       <section class="content-section approach-section" id="approach" aria-labelledby="approach-title"><div class="section-wrap"><p class="section-index">Testing process</p><div class="section-heading"><h2 id="approach-title">From report to <em>retest.</em></h2><p>My process keeps testing repeatable and useful: clear expected results, focused coverage and defect reports developers can reproduce.</p></div><div class="approach-track"><article><b>01</b><h3>Understand</h3><p>Review the website, requirements, user goals and important customer journeys before testing begins.</p></article><article><b>02</b><h3>Plan coverage</h3><p>Prepare positive, negative, boundary and edge-case scenarios with clear, measurable expected results.</p></article><article><b>03</b><h3>Execute tests</h3><p>Manually check functionality, interface behaviour, forms, navigation, content and responsive layouts.</p></article><article><b>04</b><h3>Capture evidence</h3><p>Record clear reproduction steps and screenshots or recordings, then document expected and actual results.</p></article><article><b>05</b><h3>Track &amp; communicate</h3><p>Classify defects by severity and priority, maintain status updates and coordinate findings with developers.</p></article><article><b>06</b><h3>Retest &amp; regress</h3><p>Verify fixes against the original issue and run focused regression checks before closing findings.</p></article></div></div></section>

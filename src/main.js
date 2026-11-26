@@ -72,3 +72,35 @@ get("#runChecks").addEventListener("click", () => {
     }, motion.matches ? 0 : 200 * (index + 1));
   });
 });
+
+// Load the optional renderer only as the investigation approaches the viewport.
+const investigation = get(".investigation");
+const richScene = matchMedia("(min-width: 761px) and (prefers-reduced-motion: no-preference)");
+let sceneNearby = false;
+let sceneVersion = 0;
+let disposeScene;
+async function updateInvestigation() {
+  const version = ++sceneVersion;
+  disposeScene?.();
+  disposeScene = undefined;
+  if (!sceneNearby || !richScene.matches) return;
+  try {
+    const { mountInspection } = await import("./scenes/inspection.js");
+    if (version !== sceneVersion) return;
+    const dispose = await mountInspection(investigation);
+    if (version === sceneVersion) disposeScene = dispose;
+    else dispose();
+  } catch {
+    // Original image captures and workbooks are available without WebGL.
+  }
+}
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    observer.disconnect();
+    sceneNearby = true;
+    updateInvestigation();
+  }, {rootMargin:"350px"});
+  observer.observe(investigation);
+  richScene.addEventListener("change", updateInvestigation);
+}
