@@ -15,17 +15,32 @@ if ("IntersectionObserver" in window && !motionPreference.matches) {
   motionPreference.addEventListener("change", event => { if (event.matches) restore(); }, {once:true});
 }
 const evidence = document.querySelector(".hero-evidence");
-if (evidence && !motionPreference.matches && !coarsePointer.matches) {
-  let frame = 0;
-  const onMove = event => {
-    if(frame) cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(() => {
-      const rect = evidence.getBoundingClientRect();
-      const x = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const y = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
-      evidence.style.transform = `perspective(1400px) rotateY(${(-8 + x * 12).toFixed(2)}deg) rotateX(${(5 - y * 8).toFixed(2)}deg)`;
-    });
+const desktopMotion = matchMedia("(min-width: 761px) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+if (evidence) {
+  let frame = 0, pointerX = 0, pointerY = 0;
+  const render = () => {
+    frame = 0;
+    if (!desktopMotion.matches) {
+      ["--depth-y","--depth-x","--depth-shift"].forEach(p=>evidence.style.removeProperty(p));
+      return;
+    }
+    const hero = evidence.closest(".hero").getBoundingClientRect();
+    if (hero.bottom < 0 || hero.top > innerHeight) return;
+    const progress = Math.max(0, Math.min(1, -hero.top / Math.max(hero.height,1)));
+    evidence.style.setProperty("--depth-y", (-5 + progress * 10 + pointerX * 3).toFixed(2)+"deg");
+    evidence.style.setProperty("--depth-x", (2 - progress * 6 - pointerY * 3).toFixed(2)+"deg");
+    evidence.style.setProperty("--depth-shift", (progress * 36).toFixed(2)+"px");
   };
-  evidence.addEventListener("pointermove", onMove, {passive:true});
-  evidence.addEventListener("pointerleave", () => { cancelAnimationFrame(frame); evidence.style.transform=""; });
+  const schedule = () => { if (!frame) frame=requestAnimationFrame(render); };
+  evidence.addEventListener("pointermove", e => {
+    const r=evidence.getBoundingClientRect();
+    pointerX=Math.max(-1,Math.min(1,(e.clientX-r.left)/r.width*2-1));
+    pointerY=Math.max(-1,Math.min(1,(e.clientY-r.top)/r.height*2-1));
+    schedule();
+  }, {passive:true});
+  evidence.addEventListener("pointerleave",()=>{pointerX=pointerY=0;schedule();});
+  addEventListener("scroll",schedule,{passive:true});
+  addEventListener("resize",schedule);
+  desktopMotion.addEventListener("change",schedule);
+  schedule();
 }
