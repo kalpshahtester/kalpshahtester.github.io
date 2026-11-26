@@ -1550,3 +1550,28 @@ main > .lab-section.content-section {
 .hero-specialism::before { content:""; display:inline-block; width:24px; height:1px; margin:0 10px 3px 0; background:var(--accent); opacity:.7; }
 .hero-lede { margin-top:18px; }
 @media(max-width:600px) { .hero-specialism { font-size:9px; letter-spacing:.14em; } }
+
+
+/* Training certificates: original PDFs open on click, with lightweight accessible visual previews. */
+#toolkit .certificate-grid .certificate-card-primary{display:flex;flex-direction:column;gap:10px;text-decoration:none}
+#toolkit .certificate-card-primary .certificate-pdf-preview{
+  box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:100%;aspect-ratio:4/3;min-height:150px;gap:8px;padding:18px 12px;
+  background:linear-gradient(150deg,#f7fafb 0%,#deedf1 100%);border:1px solid #b9d6de;
+  border-radius:6px;color:#1c4661;text-align:center;overflow:hidden
+}
+#toolkit .certificate-card-primary .certificate-pdf-preview-nsdc{
+  background:linear-gradient(150deg,#fafdf8,#e0f0e8);border-color:#b9d8cb;color:#185b49
+}
+#toolkit .certificate-card-primary .certificate-preview-label{
+  font:600 9px/1.4 var(--mono);letter-spacing:.17em;text-transform:uppercase;color:inherit
+}
+#toolkit .certificate-card-primary .certificate-pdf-preview strong{
+  font:800 clamp(18px,2vw,27px)/1.08 var(--display);letter-spacing:-.02em;color:inherit
+}
+#toolkit .certificate-card-primary .certificate-preview-caption{
+  font:600 11px/1.45 var(--display);max-width:230px;color:inherit
+}
+#toolkit .certificate-card-primary .certificate-preview-date{
+  font:600 9px/1.4 var(--mono);letter-spacing:.08em;color:inherit
+}
