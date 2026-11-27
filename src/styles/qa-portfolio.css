@@ -80,3 +80,10 @@ h2 em {font:inherit; color:var(--green);}
   .qa-results dl div:nth-child(n+3) {border-top:1px solid var(--line);}
   .hero-evidence figcaption {flex-wrap:wrap; gap:4px;}
 }
+
+/* Paint the full-width footer without adding horizontal scrollable space. */
+.site-footer::before {
+  inset:0;
+  box-shadow:0 0 0 100vmax var(--dark);
+  clip-path:inset(0 -100vmax);
+}
