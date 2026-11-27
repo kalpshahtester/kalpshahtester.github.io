@@ -113,3 +113,32 @@ addEventListener("scroll",scheduleSpatial,{passive:true});
 addEventListener("resize",scheduleSpatial);
 spatialMotion.addEventListener("change",scheduleSpatial);
 scheduleSpatial();
+
+ // Progressive cinematic motion: content remains available if CDN or motion fails.
+ async function cinematicMotion(){
+ if(motion.matches)return;
+ try{
+ const [{gsap},{ScrollTrigger}]=await Promise.all([import("gsap"),import("gsap/ScrollTrigger")]);
+ gsap.registerPlugin(ScrollTrigger);
+ const mm=gsap.matchMedia();
+ mm.add("(prefers-reduced-motion: no-preference)",()=>{
+ const desktop=matchMedia("(min-width: 761px)").matches;
+ gsap.fromTo(".hero-copy > *",{y:18,opacity:0.65},{y:0,opacity:1,duration:0.85,stagger:0.09,ease:"power3.out",clearProps:"transform,opacity"});
+ const targets=document.querySelectorAll(".section-heading, .editorial-profile > div, .qa-results dl > div, .work-card, .approach-track article, .timeline article, .education-panel, .toolkit-grid article, .certificate-card, .footer-primary");
+ targets.forEach(el=>{
+ gsap.fromTo(el,{y:desktop?30:14,opacity:0.72},{y:0,opacity:1,duration:0.8,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 92%",once:true},clearProps:"transform,opacity"});
+ });
+ if(desktop){
+ document.querySelectorAll(".hero-evidence,.work-card,.certificate-card").forEach(el=>{
+ const move=e=>{const b=el.getBoundingClientRect();gsap.to(el,{rotationY:((e.clientX-b.left)/b.width-.5)*8,rotationX:(.5-(e.clientY-b.top)/b.height)*6,transformPerspective:1200,duration:.35,overwrite:"auto"});};
+ const leave=()=>gsap.to(el,{rotationX:0,rotationY:0,duration:.45,clearProps:"transform"});
+ if(matchMedia("(hover:hover) and (pointer:fine)").matches){el.addEventListener("pointermove",move);el.addEventListener("pointerleave",leave);}
+ ScrollTrigger.addEventListener("refresh",leave);
+ mm.add("(prefers-reduced-motion: reduce)",()=>{el.removeEventListener("pointermove",move);el.removeEventListener("pointerleave",leave);ScrollTrigger.removeEventListener("refresh",leave);});
+ });
+ gsap.fromTo(".site-footer h2",{y:24},{y:0,ease:"none",scrollTrigger:{trigger:".site-footer",start:"top bottom",end:"top 35%",scrub:true}});
+ }
+ });
+ }catch(e){console.info("Optional cinematic motion unavailable");}
+ }
+ cinematicMotion();
