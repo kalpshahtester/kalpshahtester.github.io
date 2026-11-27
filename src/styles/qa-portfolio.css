@@ -1,0 +1,82 @@
+/* Portfolio surfaces use the same colors as the defect record. */
+:root {
+  --paper: #f5f7fb;
+  --ink: #13213a;
+  --muted: #4b5b72;
+  --line: #d5ddea;
+  --green: #214ad5;
+  --mint: #e7eeff;
+  --dark: #101a2c;
+  --signal: #b8ccff;
+}
+body {font-family: system-ui, sans-serif;}
+.section-wrap,.hud-nav,.site-footer {width:min(1280px,90%);}
+.hud-nav {background:var(--paper); color:var(--ink); border-color:var(--line); box-shadow:0 0 0 100vmax var(--paper);}
+.brand-mark,.scroll-progress {background:var(--green); color:white;}
+.hero {padding-block:clamp(42px,6vw,92px); gap:clamp(28px,5vw,76px); grid-template-columns:minmax(0,1fr) minmax(0,1.16fr);}
+.hero .kicker {color:var(--green);}
+.hero h1 {
+  margin:18px 0 20px;
+  font:750 clamp(3rem,6vw,6.15rem)/.97 system-ui,sans-serif;
+  letter-spacing:-.075em;
+}
+.hero-specialty {margin-top:14px; font:590 clamp(1.25rem,2.55vw,2.3rem)/1.08 system-ui,sans-serif; letter-spacing:-.04em;}
+.hero-lede {max-width:46ch;}
+.hero-actions .button {border-color:#a5b4d0;}
+.hero-actions .button:first-child,.work-body .button {color:white; background:var(--green); border-color:var(--green);}
+.hero-identity .hero-portrait {width:64px;}
+.hero-evidence {
+  margin:0; min-width:0; border:1px solid #303f59; border-radius:9px;
+  background:#18253d; color:#fff; box-shadow:0 20px 48px #1725412e;
+}
+.evidence-heading {padding:14px 20px; align-items:center; border-color:#435372; color:#e0e8fa;}
+.defect-status {border-radius:4px; padding:4px 8px; color:#ffd6b7; background:#502f24;}
+.defect-summary {padding:18px 20px 12px;}
+.hero-evidence strong {display:block; font:650 clamp(1.1rem,2.1vw,1.8rem)/1.2 system-ui,sans-serif; letter-spacing:-.04em;}
+.defect-summary p {margin-top:7px; color:#cad4e7; font-size:.88rem;}
+.evidence-switch {padding:0; margin:14px 0 0; border:0; min-width:0;}
+.evidence-switch legend {padding:0; color:#cad4e7; font-size:.75rem;}
+.evidence-switch button {
+  padding:8px 11px; margin-top:5px; min-height:44px; background:transparent; color:#f9fbff;
+  border:1px solid #7487ab; border-radius:4px;
+}
+.evidence-switch button[aria-pressed="true"] {background:#d9e4ff; color:#172541; border-color:#d9e4ff;}
+.hero-evidence-link {margin-inline:20px; border-radius:4px; aspect-ratio:960/510;}
+.hero-evidence-link img {width:100%; height:100%; object-fit:cover; object-position:top;}
+.hero-evidence-link img[hidden] {display:none;}
+.hero-evidence figcaption {padding:12px 20px;}
+.hero-evidence small {margin:0; color:#cad4e7; letter-spacing:.02em;}
+.hero-evidence figcaption a {display:inline-flex; gap:8px; width:auto; min-height:44px; padding:6px 0; background:transparent; color:#d5e2ff; text-decoration:underline; font-size:.83rem;}
+.hero-evidence :focus-visible {outline-color:#a9c3ff;}
+.qa-results {padding-block:22px 36px;}
+.qa-results h2 {font:650 .95rem/1.4 system-ui,sans-serif; letter-spacing:0; margin-bottom:12px;}
+.qa-results dl {display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); margin:0; border-block:1px solid var(--line);}
+.qa-results dl div {display:flex; flex-direction:column-reverse; gap:3px; padding:14px clamp(10px,2vw,28px); border-inline-start:1px solid var(--line);}
+.qa-results dl div:first-child {border-inline-start:0;}
+.qa-results dt {font-size:.82rem; color:var(--muted);}
+.qa-results dd {font:bold clamp(1.55rem,3vw,2.6rem)/1 system-ui,sans-serif; color:var(--green); margin:0; font-variant-numeric:tabular-nums;}
+.investigation {background:#eaf0fc;}
+.inspection-stage,.inspection-viewport {background:var(--dark);}
+.investigation h2,.work-section h2,.approach-section h2,.work-body h3 {
+  font-family:system-ui,sans-serif; font-weight:730; letter-spacing:-.065em;
+}
+h2 em {font:inherit; color:var(--green);}
+.work-grid {gap:20px;}
+.work-card,.work-card:nth-child(2) {background:white; border:1px solid var(--line); border-top:3px solid var(--green); border-radius:8px;}
+.work-body {padding:clamp(19px,3vw,34px);}
+.work-body h3 {font-size:clamp(1.85rem,3.5vw,3.15rem);}
+.education-panel {background:#18253d;}
+.approach-track b {color:var(--green);}
+.site-footer h2 {font-size:clamp(3rem,6vw,6rem);}
+@media (max-width:760px) {
+  .hud-nav {box-shadow:none;}
+  .hero {grid-template-columns:minmax(0,1fr);}
+  .hero h1 {font-size:clamp(2.5rem,10.5vw,4.5rem);}
+  .hero-evidence {margin:0;}
+}
+@media (max-width:480px) {
+  .qa-results dl {grid-template-columns:repeat(2,minmax(0,1fr));}
+  .qa-results dl div:nth-child(3) {border-inline-start:0;}
+  .qa-results dl div:nth-child(n+3) {border-top:1px solid var(--line);}
+  .hero-evidence figcaption {flex-wrap:wrap; gap:4px;}
+}

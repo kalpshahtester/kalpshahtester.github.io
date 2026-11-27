@@ -11,7 +11,7 @@ export async function mountInspection(section) {
   const caption = stage.querySelector("#inspection-caption");
   const renderer = new THREE.WebGLRenderer({canvas, antialias:true, powerPreference:"low-power"});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
-  renderer.setClearColor(0x302622);
+  renderer.setClearColor(0x101a2c);
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(33, 960/610, 0.1, 30);
   camera.position.z = 5.9;
@@ -50,7 +50,7 @@ export async function mountInspection(section) {
     }
     const width = 4.6;
     const height = width * 610/960;
-    const backing = plane(width+.12, height+.12, {color:0xc2a28b});
+    const backing = plane(width+.12, height+.12, {color:0x9eb8e8});
     const expected = plane(width, height, {map:textures[0]});
     expected.position.z = .025;
     const observed = plane(width, height, {map:textures[1], transparent:true, opacity:0, depthWrite:false});
