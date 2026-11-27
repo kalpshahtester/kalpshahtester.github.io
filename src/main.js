@@ -87,3 +87,29 @@ if ("IntersectionObserver" in window) {
   richScene.addEventListener("change", updateInvestigation);
 }
 
+
+const deviceModel=document.querySelector(".device-model");
+const deviceButtons=[...document.querySelectorAll("[data-device]")];
+const dimensions={desktop:"Desktop · 1366 × 768",tablet:"Tablet · 768 × 1024",mobile:"Mobile · 390 × 844"};
+deviceButtons.forEach(button=>button.addEventListener("click",()=>{
+ const mode=button.dataset.device;
+ if(!deviceModel||!dimensions[mode])return;
+ deviceModel.dataset.mode=mode;
+ deviceButtons.forEach(b=>b.setAttribute("aria-pressed",String(b===button)));
+ document.querySelector("#device-dimensions").textContent=dimensions[mode];
+}));
+const spatialMotion=matchMedia("(prefers-reduced-motion: no-preference) and (min-width: 761px)");
+let spatialFrame=0;
+function renderSpatial(){
+ spatialFrame=0;
+ if(!deviceModel)return;
+ if(!spatialMotion.matches){deviceModel.style.removeProperty("transform");return;}
+ const rect=deviceModel.parentElement.getBoundingClientRect();
+ const p=Math.max(0,Math.min(1,(innerHeight-rect.top)/(innerHeight+rect.height)));
+ deviceModel.style.transform="rotateY("+((p-.5)*36)+"deg) rotateX("+((.5-p)*18)+"deg)";
+}
+function scheduleSpatial(){if(!spatialFrame)spatialFrame=requestAnimationFrame(renderSpatial)}
+addEventListener("scroll",scheduleSpatial,{passive:true});
+addEventListener("resize",scheduleSpatial);
+spatialMotion.addEventListener("change",scheduleSpatial);
+scheduleSpatial();
