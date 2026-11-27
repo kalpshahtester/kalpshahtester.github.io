@@ -123,7 +123,8 @@ assert.match(home, /class="hero-portrait"/, "Homepage must render the profile po
 assert.match(home, /<figure class="hero-evidence" aria-labelledby="evidence-profile-caption">/, "The lead evidence figure must have a visible accessible caption.");
 assert.match(home, /alt="Portrait of Kalp Shah, Manual QA Tester"/, "Profile image needs descriptive alt text");
 assert.match(home, /class="certificate-grid"/, "Homepage must render the certificate gallery");
-assert.equal([...home.matchAll(/class="certificate-card"/g)].length, 3, "Expected three certificate preview cards");
+assert.equal([...home.matchAll(/class="certificate-card(?:\s[^"]*)?"/g)].length, 5, "Expected five certificate preview cards");
+assert.ok(home.includes('href="/TOPS_Certificate_Kalp_Shah.pdf"') && home.includes('href="/NSDC_Certificate_Kalp_Shah.pdf"'), "Primary training certificate links must remain available");
 assert.match(home, /<script\b[^>]*src="\/src\/main\.js"/, "Vite entry module is not linked");
 assert.ok(home.includes('href="/src/styles/main.css"') && home.includes('href="/src/styles/refinements.css"'), "Homepage must link active stylesheets for source-branch hosting");
 assert.ok(!fs.readFileSync(path.join(root, "src/main.js"), "utf8").includes('import "./styles/'), "Runtime entry must not load CSS as JavaScript modules");
