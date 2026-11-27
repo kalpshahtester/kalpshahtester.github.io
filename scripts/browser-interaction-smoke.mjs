@@ -80,7 +80,7 @@ try {
 
   });
   await record("home / desktop", "Desktop navigation reaches sections", async () => {
-    for (const id of ["about", "work", "approach", "experience", "toolkit", "footer-contact"]) {
+    for (const id of ["work", "approach", "experience", "toolkit", "footer-contact"]) {
       const link = desktop.locator('.hud-nav nav a[href="#' + id + '"]');
       await link.click();
       await desktop.waitForTimeout(100);
@@ -95,22 +95,24 @@ try {
     assert.equal(await desktop.locator('.footer-contact-links a[href^="mailto:"]').count(), 1, "Footer email link is missing");
     assert.equal(await desktop.locator('.footer-contact-links a[href="https://github.com/kalpshahtester"]').count(), 1, "Footer GitHub link is missing");
   });
-  await record("home / desktop", "Project quick-view dialog opens and closes", async () => {
-    const trigger = desktop.locator(".project-open").first();
-    await trigger.waitFor({ state: "visible" });
-    await trigger.click();
-    const dialog = desktop.locator("dialog.project-dialog");
-    await dialog.waitFor({ state: "visible" });
-    assert.ok((await dialog.locator("#projectDialogTitle").textContent()).trim().length > 0);
-    await dialog.locator(".dialog-close").click();
-    await dialog.waitFor({ state: "hidden" });
+  await record("home / desktop", "Project links open their case studies", async () => {
+    for (const project of ["saucedemo", "makemytrip"]) {
+      const link = desktop.locator('.work-card a[href="/projects/' + project + '.html"]');
+      await link.click();
+      assert.equal(new URL(desktop.url()).pathname, "/projects/" + project + ".html");
+      await desktop.goBack();
+    }
   });
-  await record("home / desktop", "Sample QA interaction completes", async () => {
-    const run = desktop.locator("#runChecks");
-    await run.click();
-    await desktop.waitForFunction(() => document.querySelectorAll(".console-row.done").length === 4, null, { timeout: 5000 });
-    assert.match(await desktop.locator("#consoleMessage").textContent(), /4 sample checks complete/i);
-    assert.equal(await run.isEnabled(), true);
+  await record("home / desktop", "Evidence switch exposes expected and observed captures", async () => {
+    const expected = desktop.getByRole("button", { name: "Expected", exact: true });
+    const observed = desktop.getByRole("button", { name: "Observed", exact: true });
+    await expected.click();
+    assert.equal(await expected.getAttribute("aria-pressed"), "true");
+    assert.ok(await desktop.locator('[data-evidence-image="expected"]').isVisible());
+    assert.ok(!(await desktop.locator('[data-evidence-image="observed"]').isVisible()));
+    await observed.click();
+    assert.equal(await observed.getAttribute("aria-pressed"), "true");
+    assert.ok(await desktop.locator('[data-evidence-image="observed"]').isVisible());
   });
   await record("home / desktop", "Back-to-top control works", async () => {
     await desktop.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
@@ -122,7 +124,7 @@ try {
     for (const width of widths) {
       await desktop.setViewportSize({ width, height: 900 });
       const metrics = await desktop.evaluate(() => {
-        const ids = ["about", "work", "approach", "experience", "toolkit", "footer-contact"];
+        const ids = ["work", "approach", "experience", "toolkit", "footer-contact"];
         const resumeActions = [...document.querySelectorAll(".hero-actions a")].map(el => { const rect = el.getBoundingClientRect(); return { text: el.textContent.trim(), left: Math.round(rect.left), right: Math.round(rect.right), width: Math.round(rect.width), visible: rect.width > 0 && getComputedStyle(el).visibility !== "hidden" && getComputedStyle(el).display !== "none" }; });
         const sections = ids.map(id => {
           const element = document.getElementById(id);
@@ -170,7 +172,7 @@ try {
             return { tag: el.tagName.toLowerCase(), text: (el.textContent || "").trim().replace(/\\s+/g, " ").slice(0, 90), left: Math.round(rect.left), right: Math.round(rect.right), clientWidth: el.clientWidth, scrollWidth: el.scrollWidth };
           })
           .filter(el => el.scrollWidth > el.clientWidth + 2);
-        const sectionSpacing = ["about", "work", "approach", "experience", "toolkit"].map(id => {
+        const sectionSpacing = ["work", "approach", "experience", "toolkit"].map(id => {
           const el = document.getElementById(id);
           const style = getComputedStyle(el);
           return { id, top: parseFloat(style.paddingTop), bottom: parseFloat(style.paddingBottom) };
@@ -260,10 +262,10 @@ try {
     assert.equal(await toggle.getAttribute("aria-expanded"), "false", "Escape should close the mobile menu");
     assert.ok(await toggle.evaluate(el => document.activeElement === el), "Escape should restore focus to the menu button");
     await toggle.click();
-    await mobile.locator('.hud-nav nav a[href="#about"]').click();
+    await mobile.locator('.hud-nav nav a[href="#work"]').click();
     assert.equal(await toggle.getAttribute("aria-expanded"), "false");
     assert.ok(!(await mobile.locator(".hud-nav nav").evaluate(el => el.classList.contains("open"))));
-    assert.equal(new URL(mobile.url()).hash, "#about");
+    assert.equal(new URL(mobile.url()).hash, "#work");
   });
   await record("home / mobile", "Mobile layout has no horizontal page overflow", async () => {
     const sizes = await mobile.evaluate(() => ({ viewport: document.documentElement.clientWidth, page: document.documentElement.scrollWidth, offenders: [...document.querySelectorAll("body *")].map(el => ({tag:el.tagName,cls:typeof el.className==="string"?el.className:"",id:el.id,left:Math.round(el.getBoundingClientRect().left),right:Math.round(el.getBoundingClientRect().right),width:Math.round(el.getBoundingClientRect().width)})).filter(x=>x.right>innerWidth+2||x.left < -2).slice(0,15) }));

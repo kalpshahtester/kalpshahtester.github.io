@@ -40,20 +40,18 @@ addEventListener("resize", schedulePaint);
 motion.addEventListener("change", schedulePaint);
 paint();
 
-get("#runChecks").addEventListener("click", () => {
-  const statuses = document.querySelectorAll(".console-row i");
-  const button = get("#runChecks");
-  button.disabled = true;
-  statuses.forEach(status => status.textContent = "READY");
-  get("#consoleMessage").textContent = "Running sample checks…";
-  statuses.forEach((status, index) => {
-    setTimeout(() => {
-      status.textContent = "DONE";
-      if (index === statuses.length - 1) {
-        get("#consoleMessage").textContent = "Four sample checks complete.";
-        button.disabled = false;
-      }
-    }, motion.matches ? 0 : 200 * (index + 1));
+const captureSwitch = get(".evidence-switch");
+const captureButtons = captureSwitch.querySelectorAll("[data-capture]");
+const captures = document.querySelectorAll("[data-evidence-image]");
+captureSwitch.hidden = false;
+captureButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    for (const option of captureButtons) {
+      option.setAttribute("aria-pressed", String(option === button));
+    }
+    for (const capture of captures) {
+      capture.hidden = capture.dataset.evidenceImage !== button.dataset.capture;
+    }
   });
 });
 

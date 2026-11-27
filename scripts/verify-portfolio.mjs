@@ -147,8 +147,8 @@ assert.doesNotMatch(home, /href="\/#projects"/, "Homepage contains an obsolete #
 
 for (const route of ["/projects/saucedemo.html", "/projects/makemytrip.html"]) {
   const html = htmlByRoute.get(route);
-  assert.ok(html.includes('href="/assets/css/premium.css?v=7"'), route + ": shared case-study CSS missing");
-  assert.ok(html.includes('href="/assets/css/case-study.css"'), route + ": case-study CSS missing");
+  assert.ok(html.includes('href="/assets/css/premium.css?v=8"'), route + ": shared case-study CSS missing");
+  assert.ok(html.includes('href="/assets/css/case-study.css?v=8"'), route + ": case-study CSS missing");
   assert.ok(html.includes('src="/assets/js/case-study.js"'), route + ": case-study runtime missing");
   assert.ok(html.includes('name="twitter:title"'), route + ": missing Twitter title metadata");
   assert.ok(html.includes('name="twitter:description"'), route + ": missing Twitter description metadata");
@@ -167,7 +167,7 @@ for (const file of ["src/styles/main.css", "src/styles/quality.css", "src/styles
 }
 
 const caseCss = fs.readFileSync(path.join(root, "assets/css/premium.css"), "utf8");
-assert.match(caseCss, /--acid:#e2c08d/i, "Case-study accent must match the homepage gold");
+assert.match(caseCss, /--acid:#b8ccff/i, "Case-study accent must match the homepage accent");
 assert.match(caseCss, /--display:"Syne"/, "Case-study display font must match the homepage");
 assert.match(caseCss, /--body:"Plus Jakarta Sans"/, "Case-study body font must match the homepage");
 assert.match(caseCss, /--mono:"JetBrains Mono"/, "Case-study mono font must match the homepage");
