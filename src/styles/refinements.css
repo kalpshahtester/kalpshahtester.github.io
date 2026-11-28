@@ -120,42 +120,6 @@ h2 em{font-family:Georgia,serif;font-weight:400;letter-spacing:-.065em;color:inh
 .footer-contact-links a{padding:8px 0;margin-right:10px}
 #backToTop{background:var(--signal);color:black}
 
-/* Each scene is driven by its own passage through the viewport. */
-@keyframes checkout-sheet {
-  from {transform:perspective(800px) rotateX(18deg) rotateY(-19deg) rotateZ(-7deg) translateY(16px)}
-  to {transform:perspective(800px) rotateX(-8deg) rotateY(12deg) rotateZ(3deg) translateY(-12px)}
-}
-@keyframes flight-ticket {
-  from {transform:perspective(800px) rotateX(-10deg) rotateY(20deg) rotateZ(8deg) translateX(12px)}
-  to {transform:perspective(800px) rotateX(8deg) rotateY(-12deg) rotateZ(-5deg) translateX(-10px)}
-}
-@keyframes page-turn {
-  from {transform:perspective(1000px) rotateX(12deg) translateY(18px)}
-  to {transform:perspective(1000px) rotateX(0) translateY(0)}
-}
-@keyframes instrument {
-  from {transform:perspective(1000px) rotateY(-10deg) rotateX(6deg)}
-  to {transform:perspective(1000px) rotateY(5deg) rotateX(-3deg)}
-}
-@keyframes lift-print {
-  from {transform:perspective(1000px) translate3d(0,14px,-28px) rotateY(9deg)}
-  to {transform:perspective(1000px) translate3d(0,0,0) rotateY(0)}
-}
-@supports (animation-timeline:view()) {
-  @media(prefers-reduced-motion:no-preference) {
-    .mini-window,.ticket,.approach-track article,.lab-console,.timeline article,.education-panel,
-    .toolkit-grid article,.certificate-card,.site-footer h2 {
-      animation:page-turn linear both;animation-timeline:view();animation-range:entry 0% cover 45%;
-      transform-origin:50% 65%;
-    }
-    .mini-window{animation-name:checkout-sheet;animation-range:cover 0% cover 100%}
-    .ticket{animation-name:flight-ticket;animation-range:cover 0% cover 100%}
-    .lab-console,.education-panel{animation-name:instrument;animation-range:cover 5% cover 90%}
-    .certificate-card,.timeline article{animation-name:lift-print}
-    .site-footer h2{transform-origin:left bottom}
-    .toolkit-grid article:nth-child(even),.certificate-card:nth-child(even){animation-range:entry 5% cover 52%}
-  }
-}
 @media(max-width:760px){
  .hud-nav{background:var(--dark);box-shadow:none}
  .hud-nav nav{color:#171719}

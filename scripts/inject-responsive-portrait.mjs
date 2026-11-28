@@ -9,9 +9,10 @@ let html = fs.readFileSync(outputPath, "utf8");
 const sourceSet = [
   "/assets/images/kalp-shah-profile-320.webp 320w",
   "/assets/images/kalp-shah-profile-640.webp 640w",
-  "/assets/images/kalp-shah-profile-768.webp 768w"
+  "/assets/images/kalp-shah-profile-768.webp 768w",
+  "/assets/images/kalp-shah-profile-960.webp 960w"
 ].join(", ");
-const sizes = "(max-width: 600px) 260px, 350px";
+const sizes = "(max-width: 430px) calc(27vw - 12px), (max-width: 540px) calc(90vw - 20px), (max-width: 760px) 450px, (max-width: 1080px) 37vw, 430px";
 const sourceTag = '<source type="image/webp" srcset="' + sourceSet + '" sizes="' + sizes + '" />';
 
 const pictureStart = '<picture class="profile-photo-wrap">';

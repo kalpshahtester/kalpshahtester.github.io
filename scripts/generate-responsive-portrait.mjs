@@ -3,11 +3,11 @@ import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 
-const source = path.resolve("Kalp Shah Profile Photo.png");
+const source = path.resolve("src/images/kalp-shah-studio.png");
 const outputDirectory = path.resolve("public/assets/images");
-const widths = [320, 640, 768];
+const widths = [320, 640, 768, 960];
 
-assert.ok(fs.existsSync(source), "Original profile portrait is missing.");
+assert.ok(fs.existsSync(source), "Studio portrait source is missing.");
 fs.mkdirSync(outputDirectory, { recursive: true });
 
 const originalSize = fs.statSync(source).size;
@@ -28,4 +28,4 @@ for (const width of widths) {
   assert.ok(bytes.length > 0 && bytes.length < originalSize, "Optimized portrait is not smaller than the original PNG.");
   console.log(width + "px WebP: " + bytes.length.toLocaleString("en-US") + " bytes");
 }
-console.log("Responsive portrait variants generated from the original PNG; the source file was not modified.");
+console.log("Responsive studio portrait variants generated.");

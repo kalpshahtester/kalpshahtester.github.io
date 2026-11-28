@@ -11,6 +11,7 @@ const pages = [
 const htmlByRoute = new Map();
 const idsByRoute = new Map();
 const requiredFiles = [
+  "src/images/kalp-shah-studio.png", "src/styles/portfolio-motion.css",
   "src/main.js", "src/scenes/qa-scene.js", "src/styles/main.css", "src/styles/quality.css", "src/styles/refinements.css",
   "assets/css/premium.css", "assets/css/case-study.css", "assets/js/case-study.js",
   "Kalp Shah Profile Photo.png", "Kalp Shah Manual Tester Resume.pdf",
@@ -149,14 +150,14 @@ assert.doesNotMatch(home, /href="\/#projects"/, "Homepage contains an obsolete #
 for (const route of ["/projects/saucedemo.html", "/projects/makemytrip.html"]) {
   const html = htmlByRoute.get(route);
   assert.ok(html.includes('href="/assets/css/premium.css?v=8"'), route + ": shared case-study CSS missing");
-  assert.ok(html.includes('href="/assets/css/case-study.css?v=8"'), route + ": case-study CSS missing");
-  assert.ok(html.includes('src="/assets/js/case-study.js"'), route + ": case-study runtime missing");
+  assert.ok(html.includes('href="/assets/css/case-study.css?v=9"'), route + ": case-study CSS missing");
+  assert.ok(html.includes('src="/assets/js/case-study.js?v=9"'), route + ": case-study runtime missing");
   assert.ok(html.includes('name="twitter:title"'), route + ": missing Twitter title metadata");
   assert.ok(html.includes('name="twitter:description"'), route + ": missing Twitter description metadata");
   assert.ok(!html.includes("/#projects"), route + ": obsolete homepage fragment found");
 }
 
-for (const file of ["src/styles/main.css", "src/styles/quality.css", "src/styles/refinements.css", "assets/css/premium.css", "assets/css/case-study.css"]) {
+for (const file of ["src/styles/main.css", "src/styles/quality.css", "src/styles/refinements.css", "src/styles/portfolio-motion.css", "assets/css/premium.css", "assets/css/case-study.css"]) {
   const css = fs.readFileSync(path.join(root, file), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
   let depth = 0;
   for (const char of css) {

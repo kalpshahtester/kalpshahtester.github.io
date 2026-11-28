@@ -1,7 +1,7 @@
 (() => {
   "use strict";
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  window.__caseStudyMotionState = { status: reduceMotion ? "reduced-motion" : "loading", gsap: false, scrollTrigger: false };
+  const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  window.__caseStudyMotionState = { status: motion.matches ? "reduced-motion" : "loading", gsap: false, scrollTrigger: false };
   const header = document.getElementById("siteHeader");
   const progress = document.getElementById("readingProgress");
   const backToTop = document.getElementById("backToTop");
@@ -71,13 +71,13 @@
   const scrollToTarget = target => {
     if (!target) return;
     focusTarget(target);
-    target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    target.scrollIntoView({ behavior: motion.matches ? "auto" : "smooth", block: "start" });
   };
 
   backToTop?.addEventListener("click", () => {
     if (location.hash) history.pushState({ portfolioAnchor: "#top" }, "", location.pathname + location.search);
     scrollToTarget(document.getElementById("main"));
-    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    window.scrollTo({ top: 0, behavior: motion.matches ? "auto" : "smooth" });
   });
 
   document.querySelectorAll('a[href^="#"]').forEach(link => {
@@ -102,7 +102,7 @@
     scrollToTarget(document.getElementById(id) || document.getElementById("main"));
   });
 
-  if (!reduceMotion) {
+  if (!motion.matches) {
     Promise.allSettled([
       import("https://cdn.jsdelivr.net/npm/gsap@3.15.1/+esm"),
       import("https://cdn.jsdelivr.net/npm/gsap@3.15.1/ScrollTrigger/+esm")
@@ -121,17 +121,21 @@
       }
       gsap.registerPlugin(ScrollTrigger);
       window.__caseStudyMotionState = { status: "ready", gsap: true, scrollTrigger: true };
-      // Never fade body copy below normal contrast; use a restrained positional entrance.
-      gsap.from(".case-breadcrumbs", { y: 12, duration: .6 });
-      gsap.from(".case-title", { y: 40, duration: .9, delay: .12 });
-      gsap.from(".case-lead", { y: 16, duration: .65, delay: .3 });
-      gsap.utils.toArray("[data-reveal]").forEach((element, index) => {
-        gsap.from(element, {
-          y: 28, duration: .7, delay: (index % 3) * .04,
-          scrollTrigger: { trigger: element, start: "top 88%", once: true }
-        });
+      const media = gsap.matchMedia();
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        document.documentElement.classList.add("case-motion-enhanced");
+        gsap.from(".case-title, .case-summary-card", { y: 12, duration: .65, clearProps: "transform" });
+        for (const element of document.querySelectorAll("[data-reveal]")) {
+          gsap.fromTo(element, { y: 12 }, {
+            y: 0,
+            duration: .55,
+            immediateRender: false,
+            clearProps: "transform",
+            scrollTrigger: { trigger: element, start: "top 88%", once: true }
+          });
+        }
+        return () => document.documentElement.classList.remove("case-motion-enhanced");
       });
-      ScrollTrigger.refresh();
     }).catch(error => {
       window.__caseStudyMotionState = { status: "fallback", gsap: false, scrollTrigger: false };
       console.warn("Optional case-study motion was skipped.", error);
