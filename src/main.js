@@ -27,7 +27,7 @@ let pending = false;
 function paint() {
   pending = false;
   const distance = document.documentElement.scrollHeight - innerHeight;
-  progress.style.width = (distance ? Math.min(100, Math.max(0, scrollY / distance * 100)) : 0) + "%";
+  progress.style.transform = "scaleX(" + (distance ? Math.min(1, Math.max(0, scrollY / distance)) : 0) + ")";
 }
 function schedulePaint() {
   if (!pending) {
@@ -50,7 +50,14 @@ captureButtons.forEach(button => {
       option.setAttribute("aria-pressed", String(option === button));
     }
     for (const capture of captures) {
-      capture.hidden = capture.dataset.evidenceImage !== button.dataset.capture;
+      const selected = capture.dataset.evidenceImage === button.dataset.capture;
+      if (selected && capture.hidden && !motion.matches) {
+        capture.animate?.([{ transform: "scale(1.035)" }, { transform: "scale(1)" }], {
+          duration: 270,
+          easing: "ease-out"
+        });
+      }
+      capture.hidden = !selected;
     }
   });
 });
@@ -87,58 +94,113 @@ if ("IntersectionObserver" in window) {
   richScene.addEventListener("change", updateInvestigation);
 }
 
-
-const deviceModel=document.querySelector(".device-model");
-const deviceButtons=[...document.querySelectorAll("[data-device]")];
-const dimensions={desktop:"Desktop · 1366 × 768",tablet:"Tablet · 768 × 1024",mobile:"Mobile · 390 × 844"};
-deviceButtons.forEach(button=>button.addEventListener("click",()=>{
- const mode=button.dataset.device;
- if(!deviceModel||!dimensions[mode])return;
- deviceModel.dataset.mode=mode;
- deviceButtons.forEach(b=>b.setAttribute("aria-pressed",String(b===button)));
- document.querySelector("#device-dimensions").textContent=dimensions[mode];
-}));
-const spatialMotion=matchMedia("(prefers-reduced-motion: no-preference) and (min-width: 761px)");
-let spatialFrame=0;
-function renderSpatial(){
- spatialFrame=0;
- if(!deviceModel)return;
- if(!spatialMotion.matches){deviceModel.style.removeProperty("transform");return;}
- const rect=deviceModel.parentElement.getBoundingClientRect();
- const p=Math.max(0,Math.min(1,(innerHeight-rect.top)/(innerHeight+rect.height)));
- deviceModel.style.transform="rotateY("+((p-.5)*36)+"deg) rotateX("+((.5-p)*18)+"deg)";
+const deviceModel = get(".device-model");
+const deviceButtons = [...document.querySelectorAll("[data-device]")];
+const dimensions = {
+  desktop: "Desktop · 1366 × 768",
+  tablet: "Tablet · 768 × 1024",
+  mobile: "Mobile · 390 × 844"
+};
+for (const button of deviceButtons) {
+  button.addEventListener("click", () => {
+    const mode = button.dataset.device;
+    deviceModel.dataset.mode = mode;
+    for (const option of deviceButtons) {
+      option.setAttribute("aria-pressed", String(option === button));
+    }
+    get("#device-dimensions").textContent = dimensions[mode];
+  });
 }
-function scheduleSpatial(){if(!spatialFrame)spatialFrame=requestAnimationFrame(renderSpatial)}
-addEventListener("scroll",scheduleSpatial,{passive:true});
-addEventListener("resize",scheduleSpatial);
-spatialMotion.addEventListener("change",scheduleSpatial);
-scheduleSpatial();
 
- // Progressive cinematic motion: content remains available if CDN or motion fails.
- async function cinematicMotion(){
- if(motion.matches)return;
- try{
- const [{gsap},{ScrollTrigger}]=await Promise.all([import("gsap"),import("gsap/ScrollTrigger")]);
- gsap.registerPlugin(ScrollTrigger);
- const mm=gsap.matchMedia();
- mm.add("(prefers-reduced-motion: no-preference)",()=>{
- const desktop=matchMedia("(min-width: 761px)").matches;
- gsap.fromTo(".hero-copy > *",{y:18,opacity:0.65},{y:0,opacity:1,duration:0.85,stagger:0.09,ease:"power3.out",clearProps:"transform,opacity"});
- const targets=document.querySelectorAll(".section-heading, .editorial-profile > div, .qa-results dl > div, .work-card, .approach-track article, .timeline article, .education-panel, .toolkit-grid article, .certificate-card, .footer-primary");
- targets.forEach(el=>{
- gsap.fromTo(el,{y:desktop?30:14,opacity:0.72},{y:0,opacity:1,duration:0.8,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 92%",once:true},clearProps:"transform,opacity"});
- });
- if(desktop){
- document.querySelectorAll(".hero-evidence,.work-card,.certificate-card").forEach(el=>{
- const move=e=>{const b=el.getBoundingClientRect();gsap.to(el,{rotationY:((e.clientX-b.left)/b.width-.5)*8,rotationX:(.5-(e.clientY-b.top)/b.height)*6,transformPerspective:1200,duration:.35,overwrite:"auto"});};
- const leave=()=>gsap.to(el,{rotationX:0,rotationY:0,duration:.45,clearProps:"transform"});
- if(matchMedia("(hover:hover) and (pointer:fine)").matches){el.addEventListener("pointermove",move);el.addEventListener("pointerleave",leave);}
- ScrollTrigger.addEventListener("refresh",leave);
- mm.add("(prefers-reduced-motion: reduce)",()=>{el.removeEventListener("pointermove",move);el.removeEventListener("pointerleave",leave);ScrollTrigger.removeEventListener("refresh",leave);});
- });
- gsap.fromTo(".site-footer h2",{y:24},{y:0,ease:"none",scrollTrigger:{trigger:".site-footer",start:"top bottom",end:"top 35%",scrub:true}});
- }
- });
- }catch(e){console.info("Optional cinematic motion unavailable");}
- }
- cinematicMotion();
+const ruleTargets = [
+  ".defect-preview-copy",
+  ".qa-results dl > div",
+  ".editorial-profile",
+  ".investigation .inspection-steps article",
+  ".work-card",
+  ".approach-track article",
+  ".device-section",
+  ".timeline article",
+  ".toolkit-grid article",
+  ".footer-primary"
+].join(", ");
+let motionLoading = false;
+
+async function mountPortfolioMotion() {
+  if (motion.matches || motionLoading) return;
+  motionLoading = true;
+
+  try {
+    const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+      import("gsap"),
+      import("gsap/ScrollTrigger")
+    ]);
+    gsap.registerPlugin(ScrollTrigger);
+    const media = gsap.matchMedia();
+
+    media.add("(prefers-reduced-motion: no-preference)", () => {
+      for (const target of document.querySelectorAll(ruleTargets)) {
+        gsap.fromTo(target, { "--rule-progress": .16 }, {
+          "--rule-progress": 1,
+          ease: "none",
+          scrollTrigger: { trigger: target, start: "top 90%", end: "top 55%", scrub: true }
+        });
+      }
+
+      const revealTargets = [
+        ".defect-preview .hero-evidence",
+        ".qa-results dd",
+        ".editorial-profile h2",
+        ".work-body",
+        ".approach-track b",
+        ".timeline time",
+        ".education-panel",
+        ".toolkit-grid h3",
+        ".certificate-card",
+        ".site-footer h2"
+      ].join(", ");
+      for (const target of document.querySelectorAll(revealTargets)) {
+        gsap.fromTo(target, { y: 12 }, {
+          y: 0,
+          duration: .58,
+          ease: "power2.out",
+          immediateRender: false,
+          clearProps: "transform",
+          scrollTrigger: { trigger: target, start: "top 88%", once: true }
+        });
+      }
+
+      gsap.fromTo(".device-stage", { "--device-turn": "-7deg" }, {
+        "--device-turn": "7deg",
+        ease: "none",
+        scrollTrigger: { trigger: ".device-stage", start: "top bottom", end: "bottom top", scrub: true }
+      });
+    });
+
+    media.add("(min-width: 1025px) and (prefers-reduced-motion: no-preference)", () => {
+      gsap.to(".hero-portrait", {
+        y: -14,
+        rotationY: -5,
+        transformPerspective: 950,
+        ease: "none",
+        scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+      });
+    });
+  } catch {
+    // Native scrolling and the complete content are independent of motion.
+    motionLoading = false;
+  }
+}
+
+function schedulePortfolioMotion() {
+  if (motion.matches || motionLoading) return;
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(mountPortfolioMotion, { timeout: 1200 });
+  } else {
+    window.setTimeout(mountPortfolioMotion, 200);
+  }
+}
+
+if (document.readyState === "complete") schedulePortfolioMotion();
+else addEventListener("load", schedulePortfolioMotion, { once: true });
+motion.addEventListener("change", schedulePortfolioMotion);

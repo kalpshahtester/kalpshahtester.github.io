@@ -14,6 +14,7 @@ const required = [
   "assets/images/kalp-shah-profile-320.webp",
   "assets/images/kalp-shah-profile-640.webp",
   "assets/images/kalp-shah-profile-768.webp",
+  "assets/images/kalp-shah-profile-960.webp",
   "Kalp Shah Manual Tester Resume.pdf",
   "Kalp Shah HCL GUVI Certification.png",
   "Kalp Shah Generative AI Mastermind Course Certificate.jpeg",
@@ -59,7 +60,7 @@ assert.ok(bundledCss.includes(".hud-nav") && bundledCss.includes(".hero"), "Prod
 
 const originalPng = fs.readFileSync(path.join(dist, "Kalp Shah Profile Photo.png"));
 assert.deepEqual([...originalPng.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10], "Original profile photo must remain a PNG");
-for (const width of [320, 640, 768]) {
+for (const width of [320, 640, 768, 960]) {
   const portraitPath = path.join(dist, "assets/images/kalp-shah-profile-" + width + ".webp");
   const portrait = fs.readFileSync(portraitPath);
   assert.equal(portrait.toString("ascii", 0, 4), "RIFF", width + "px portrait must be a RIFF container");

@@ -25,7 +25,7 @@ try {
   desktop.on("requestfailed", request => desktopConsoleErrors.push("REQUEST FAILED: " + request.url() + " — " + request.failure()?.errorText));
   desktop.on("pageerror", error => desktopErrors.push(error.message));
   await desktop.goto(baseURL + "/?ci=" + Date.now(), { waitUntil: "networkidle" });
-  await desktop.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 }).catch(() => {});
+  await desktop.locator(".evidence-switch").waitFor({ state: "visible" });
   await record("home / desktop", "Homepage and portrait render", async () => {
     assert.match(await desktop.title(), /Kalp Shah.*Manual QA Tester/);
     const image = desktop.locator(".profile-photo");
@@ -48,7 +48,7 @@ try {
     }));
     assert.match(portraitDetails.fallback, /Kalp(?:%20|\s)Shah(?:%20|\s)Profile(?:%20|\s)Photo\.png$/i, "Original profile PNG must remain the fallback asset");
     assert.match(portraitDetails.webpSrcset, /kalp-shah-profile-320\.webp 320w/, "Responsive WebP portrait source is missing");
-    assert.match(portraitDetails.current, /\/assets\/images\/kalp-shah-profile-(320|640|768)\.webp$/i, "Browser should select an optimized WebP portrait");
+    assert.match(portraitDetails.current, /\/assets\/images\/kalp-shah-profile-(320|640|768|960)\.webp$/i, "Browser should select an optimized WebP portrait");
     assert.equal(await image.getAttribute("alt"), "Portrait of Kalp Shah, Manual QA Tester", "Portrait alternative text is missing or inaccurate");
     const linkedin = desktop.locator(".hero-linkedin");
     assert.equal(await linkedin.getAttribute("href"), "https://www.linkedin.com/in/kalp-shah-software-tester/", "Hero LinkedIn destination is incorrect");
@@ -100,7 +100,8 @@ try {
       const link = desktop.locator('.work-card a[href="/projects/' + project + '.html"]');
       await link.click();
       assert.equal(new URL(desktop.url()).pathname, "/projects/" + project + ".html");
-      await desktop.goBack();
+      await desktop.waitForLoadState("load");
+      await desktop.goBack({ waitUntil: "load" });
     }
   });
   await record("home / desktop", "Evidence switch exposes expected and observed captures", async () => {
@@ -251,7 +252,7 @@ try {
   mobile.on("requestfailed", request => mobileConsoleErrors.push("REQUEST FAILED: " + request.url() + " — " + request.failure()?.errorText));
   mobile.on("pageerror", error => mobileErrors.push(error.message));
   await mobile.goto(baseURL + "/?ci=" + Date.now(), { waitUntil: "networkidle" });
-  await mobile.waitForFunction(() => document.documentElement.dataset.appReady === "true", null, { timeout: 8000 }).catch(() => {});
+  await mobile.locator(".evidence-switch").waitFor({ state: "visible" });
   await record("home / mobile", "Mobile navigation opens and closes", async () => {
     const toggle = mobile.locator(".nav-toggle");
     await toggle.waitFor({ state: "visible" });
