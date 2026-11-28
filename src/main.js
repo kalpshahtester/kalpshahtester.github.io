@@ -35,8 +35,14 @@ const progress = get("#scrollProgress");
 let pending = false;
 function paint() {
   pending = false;
+  const offset = scrollY;
+  if (offset <= 0) {
+    progress.style.removeProperty("transform");
+    return;
+  }
+
   const distance = document.documentElement.scrollHeight - innerHeight;
-  progress.style.transform = "scaleX(" + (distance ? Math.min(1, Math.max(0, scrollY / distance)) : 0) + ")";
+  progress.style.transform = "scaleX(" + (distance > 0 ? Math.min(1, offset / distance) : 0) + ")";
 }
 function schedulePaint() {
   if (!pending) {
@@ -46,8 +52,7 @@ function schedulePaint() {
 }
 addEventListener("scroll", schedulePaint, {passive:true});
 addEventListener("resize", schedulePaint);
-motion.addEventListener("change", schedulePaint);
-paint();
+addEventListener("pageshow", schedulePaint);
 
 const captureSwitch = get(".evidence-switch");
 const captureButtons = captureSwitch.querySelectorAll("[data-capture]");
@@ -210,4 +215,4 @@ function startScrollMotion() {
 addEventListener("scroll", startScrollMotion, { passive: true });
 addEventListener("hashchange", startScrollMotion);
 motion.addEventListener("change", startScrollMotion);
-startScrollMotion();
+if (location.hash) startScrollMotion();
