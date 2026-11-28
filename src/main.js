@@ -1,5 +1,4 @@
 const get = (selector) => document.querySelector(selector);
-document.documentElement.classList.add("js");
 get("#year").textContent = new Date().getFullYear();
 
 const menu = get(".nav-toggle");
@@ -9,7 +8,17 @@ function setMenu(open) {
   nav.classList.toggle("open", open);
 }
 menu.addEventListener("click", () => setMenu(menu.getAttribute("aria-expanded") !== "true"));
-nav.addEventListener("click", () => setMenu(false));
+nav.addEventListener("click", event => {
+  const link = event.target.closest('a[href^="#"]');
+  if (!link || menu.getAttribute("aria-expanded") !== "true") return;
+  setMenu(false);
+
+  const target = document.getElementById(link.hash.slice(1));
+  if (target) {
+    target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+  }
+});
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && nav.classList.contains("open")) {
     setMenu(false);
@@ -192,15 +201,13 @@ async function mountPortfolioMotion() {
   }
 }
 
-function schedulePortfolioMotion() {
-  if (motion.matches || motionLoading) return;
-  if ("requestIdleCallback" in window) {
-    window.requestIdleCallback(mountPortfolioMotion, { timeout: 1200 });
-  } else {
-    window.setTimeout(mountPortfolioMotion, 200);
-  }
+function startScrollMotion() {
+  if (motion.matches || (scrollY === 0 && !location.hash)) return;
+  removeEventListener("scroll", startScrollMotion);
+  mountPortfolioMotion();
 }
 
-if (document.readyState === "complete") schedulePortfolioMotion();
-else addEventListener("load", schedulePortfolioMotion, { once: true });
-motion.addEventListener("change", schedulePortfolioMotion);
+addEventListener("scroll", startScrollMotion, { passive: true });
+addEventListener("hashchange", startScrollMotion);
+motion.addEventListener("change", startScrollMotion);
+startScrollMotion();

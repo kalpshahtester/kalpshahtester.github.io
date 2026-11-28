@@ -11,6 +11,16 @@
     <link rel="stylesheet" href="/src/styles/refinements.css" />
     <link rel="stylesheet" href="/src/styles/qa-portfolio.css" />
     <link rel="stylesheet" href="/src/styles/portfolio-motion.css" />
+    <noscript>
+      <style>
+        #main .evidence-switch[hidden], #main .device-controls, #footer-contact #backToTop { display: none; }
+        @media (max-width: 760px) {
+          header.hud-nav { position: static; flex-wrap: wrap; }
+          .hud-nav #primaryNav { position: static; display: flex; width: 100%; padding-inline: 0; }
+          header.hud-nav .nav-toggle { display: none; }
+        }
+      </style>
+    </noscript>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     
     <meta property="og:type" content="website" />
@@ -63,7 +73,8 @@
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="hud-nav" id="siteHeader">
       <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">K<span>.</span></span><span class="brand-copy">KALP SHAH<small>MANUAL QA / WEB &amp; WORDPRESS</small></span></a>
-      <nav id="primaryNav" aria-label="Primary navigation"><a href="#work">Work</a><a href="#approach">Process</a><a href="#responsive">Devices</a><a href="#experience">Experience</a><a href="#toolkit">Skills</a><a href="#footer-contact">Contact</a></nav><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
+      <nav id="primaryNav" aria-label="Primary navigation"><a href="#work">Work</a><a href="#approach">Process</a><a href="#responsive">Devices</a><a href="#experience">Experience</a><a href="#toolkit">Skills</a><a href="#footer-contact">Contact</a></nav>
       <span class="scroll-progress" id="scrollProgress" aria-hidden="true"></span>
     </header>
     <main id="main" tabindex="-1">
@@ -102,8 +113,8 @@
             </fieldset>
           </div>
           <a class="hero-evidence-link" href="#investigation" aria-label="Read the SauceDemo product-image investigation">
-            <img data-evidence-image="observed" src="/assets/problem_user.webp" width="960" height="610" alt="Observed: the backpack and bike light show the same dog photo" loading="lazy" decoding="async" />
-            <img data-evidence-image="expected" src="/assets/standard_user.webp" width="960" height="610" alt="Expected: the backpack and bike light each display their own product photo" loading="lazy" decoding="async" hidden />
+            <img data-evidence-image="observed" src="/assets/problem_user.webp" srcset="/assets/problem_user-360.webp 360w, /assets/problem_user-640.webp 640w, /assets/problem_user.webp 960w" sizes="(max-width: 760px) calc(90vw - 42px), (max-width: 1450px) 42vw, 610px" width="960" height="610" alt="Observed: the backpack and bike light show the same dog photo" loading="lazy" decoding="async" />
+            <img data-evidence-image="expected" src="/assets/standard_user.webp" srcset="/assets/standard_user-360.webp 360w, /assets/standard_user-640.webp 640w, /assets/standard_user.webp 960w" sizes="(max-width: 760px) calc(90vw - 42px), (max-width: 1450px) 42vw, 610px" width="960" height="610" alt="Expected: the backpack and bike light each display their own product photo" loading="lazy" decoding="async" hidden />
           </a>
           <figcaption><small>Scenario TS17 · Medium · P2</small><a href="#investigation">Full defect report <span aria-hidden="true">→</span></a></figcaption>
         </figure>
@@ -126,7 +137,7 @@
   <p class="investigation-intro">I kept the test steps the same and changed the account. That isolated the mismatch and gave the defect report a clear comparison.</p>
   <div class="investigation-layout">
    <figure class="inspection-stage">
-    <div class="inspection-viewport"><img src="/assets/standard_user.webp" alt="SauceDemo inventory in the standard account" width="960" height="610"><canvas aria-hidden="true"></canvas></div>
+    <div class="inspection-viewport"><img src="/assets/standard_user.webp" srcset="/assets/standard_user-360.webp 360w, /assets/standard_user-640.webp 640w, /assets/standard_user.webp 960w" sizes="(max-width: 700px) 90vw, (max-width: 760px) 640px, (max-width: 1420px) 50vw, 710px" loading="lazy" decoding="async" alt="SauceDemo inventory in the standard account" width="960" height="610"><canvas aria-hidden="true"></canvas></div>
     <figcaption><span>SauceDemo · Products</span><span id="inspection-caption">Standard account</span></figcaption>
    </figure>
    <div class="inspection-steps">
@@ -135,7 +146,7 @@
      <div class="inspection-links"><a href="/assets/standard_user.webp">Open standard-account capture</a><a href="https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website/blob/94d394d2a6b68d2502845afca07e640d7926a451/04_Test_Cases/TEST%20CASE%20%E2%80%93%20SAUCEDEMO%20WEBSITE.xlsx">Read test case TC17</a></div></article>
     <article id="inspection-comparison"><p class="eyebrow">TS17 / Comparison</p><h3>Change the account.</h3>
      <p>The same scenario failed for <code>problem_user</code>. In the walkthrough captures, the backpack and bike light both show the same dog photo. Their names and prices still differ.</p>
-     <img class="comparison-image" src="/assets/problem_user.webp" alt="A dog photo appears beside both the backpack and bike light in the problem account" loading="lazy" width="960" height="610">
+     <img class="comparison-image" src="/assets/problem_user.webp" srcset="/assets/problem_user-360.webp 360w, /assets/problem_user-640.webp 640w, /assets/problem_user.webp 960w" sizes="(max-width: 360px) 90vw, 330px" alt="A dog photo appears beside both the backpack and bike light in the problem account" loading="lazy" width="960" height="610">
      <div class="inspection-links"><a href="/assets/problem_user.webp">Open problem-account capture</a><a href="https://github.com/kalpshahtester/Manual-Testing-Project-saucedemo-website/blob/94d394d2a6b68d2502845afca07e640d7926a451/03_Test_Scenarios/TEST%20SCENARIOS%20%E2%80%93%20SAUCEDEMO%20WEBSITE.xlsx">View scenario results</a></div></article>
     <article id="inspection-finding"><p class="eyebrow">BUG-001 / Finding</p><h3>Document the mismatch.</h3>
      <p>The defect register links broken or mismatched product images to scenarios TS16 and TS17. The recorded severity is medium, priority P2, and status open.</p>
