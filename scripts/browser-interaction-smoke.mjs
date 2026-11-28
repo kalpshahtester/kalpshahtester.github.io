@@ -251,9 +251,26 @@ try {
   mobile.on("response", response => { if (response.request().resourceType() === "script" && (response.headers()["content-type"] || "").includes("text/css")) mobileConsoleErrors.push("SCRIPT URL SERVED AS CSS: " + response.url()); });
   mobile.on("requestfailed", request => mobileConsoleErrors.push("REQUEST FAILED: " + request.url() + " — " + request.failure()?.errorText));
   mobile.on("pageerror", error => mobileErrors.push(error.message));
-  await mobile.goto(baseURL + "/?ci=" + Date.now(), { waitUntil: "networkidle" });
+  let releaseScript;
+  const scriptGate = new Promise(resolve => { releaseScript = resolve; });
+  await mobile.route("**/assets/index-*.js", async route => {
+    await scriptGate;
+    await route.continue();
+  });
+
+  let initialHeaderHeight;
+  try {
+    await mobile.goto(baseURL + "/?ci=" + Date.now(), { waitUntil: "commit" });
+    await mobile.waitForFunction(() => document.styleSheets.length > 0);
+    initialHeaderHeight = await mobile.locator("#siteHeader").evaluate(el => el.getBoundingClientRect().height);
+  } finally {
+    releaseScript();
+  }
+
   await mobile.locator(".evidence-switch").waitFor({ state: "visible" });
-  await record("home / mobile", "Mobile navigation opens and closes", async () => {
+  await record("home / mobile", "Mobile navigation stays stable and supports keyboard access", async () => {
+    const enhancedHeaderHeight = await mobile.locator("#siteHeader").evaluate(el => el.getBoundingClientRect().height);
+    assert.ok(Math.abs(initialHeaderHeight - enhancedHeaderHeight) <= 1, "The mobile header must maintain its height while JavaScript loads");
     const toggle = mobile.locator(".nav-toggle");
     await toggle.waitFor({ state: "visible" });
     await toggle.click();
@@ -262,8 +279,12 @@ try {
     await mobile.keyboard.press("Escape");
     assert.equal(await toggle.getAttribute("aria-expanded"), "false", "Escape should close the mobile menu");
     assert.ok(await toggle.evaluate(el => document.activeElement === el), "Escape should restore focus to the menu button");
-    await toggle.click();
-    await mobile.locator('.hud-nav nav a[href="#work"]').click();
+    await toggle.press("Enter");
+    const workLink = mobile.locator('.hud-nav nav a[href="#work"]');
+    await mobile.keyboard.press("Tab");
+    assert.ok(await workLink.evaluate(el => document.activeElement === el), "Tab from the open menu button should reach its first link");
+    await workLink.press("Enter");
+    assert.equal(await mobile.evaluate(() => document.activeElement?.id), "work", "Focus should follow the selected section");
     assert.equal(await toggle.getAttribute("aria-expanded"), "false");
     assert.ok(!(await mobile.locator(".hud-nav nav").evaluate(el => el.classList.contains("open"))));
     assert.equal(new URL(mobile.url()).hash, "#work");
