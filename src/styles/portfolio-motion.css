@@ -186,6 +186,7 @@ body { background: var(--portfolio-paper); }
 
 .approach-section { color: #fff; }
 #approach .section-index { color: #d2d3d5; }
+.approach-section .section-heading h2 { overflow-wrap: anywhere; }
 .approach-section > .section-wrap { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
 .approach-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .approach-track article { min-width: 0; grid-template-columns: 38px minmax(0, 1fr); overflow-wrap: anywhere; }
@@ -242,6 +243,10 @@ body { background: var(--portfolio-paper); }
 .footer-primary::before { color: #a9acb3; }
 .footer-availability p, .footer-label, .site-footer small { color: #d2d3d5; }
 #backToTop:focus-visible, .site-footer a:focus-visible, #approach a:focus-visible { outline-color: #fff; }
+
+@media (min-width: 1025px) {
+  .approach-section .section-heading h2 { font-size: clamp(2.5rem, 5vw, 5.875rem); }
+}
 
 @media (max-width: 1024px) {
   .approach-section > .section-wrap { display: block; }
